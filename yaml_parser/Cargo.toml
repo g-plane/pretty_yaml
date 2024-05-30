@@ -1,0 +1,17 @@
+[package]
+name = "yaml_parser"
+version = "0.0.0"
+edition = "2021"
+authors = ["Pig Fang <g-plane@hotmail.com>"]
+description = "YAML concrete syntax tree parser."
+repository = "https://github.com/g-plane/pretty_yaml"
+license = "MIT"
+exclude = ["/tests"]
+
+[dependencies]
+either = "1.12"
+rowan = "0.15"
+winnow = "0.6"
+
+[dev-dependencies]
+insta = { version = "1.38", features = ["glob"] }
