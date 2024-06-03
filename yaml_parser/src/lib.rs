@@ -2,7 +2,7 @@ use self::{set_state::ParserExt as _, with_state::ParserExt as _};
 use either::Either;
 use rowan::{GreenNode, GreenToken, NodeOrToken};
 use winnow::{
-    ascii::{digit1, multispace1, space1, take_escaped},
+    ascii::{digit1, multispace1, space1, take_escaped, till_line_ending},
     combinator::{alt, cond, dispatch, fail, opt, peek, repeat, terminated},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
@@ -863,7 +863,7 @@ fn document(input: &mut Input) -> GreenResult {
 }
 
 fn comment(input: &mut Input) -> GreenResult {
-    ('#', take_till(0.., ['\n', '\r']))
+    ('#', till_line_ending)
         .recognize()
         .parse_next(input)
         .map(|text| tok(COMMENT, text))
