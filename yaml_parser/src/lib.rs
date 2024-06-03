@@ -1,15 +1,17 @@
+pub use self::error::SyntaxError;
 use self::{set_state::ParserExt as _, with_state::ParserExt as _};
 use either::Either;
 use rowan::{GreenNode, GreenToken, NodeOrToken};
 use winnow::{
     ascii::{digit1, multispace1, space1, take_escaped, till_line_ending},
     combinator::{alt, cond, cut_err, dispatch, fail, opt, peek, repeat, terminated},
-    error::{ContextError, ParseError, StrContext, StrContextValue},
+    error::{StrContext, StrContextValue},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
     PResult, Parser,
 };
 
+mod error;
 mod set_state;
 mod with_state;
 
@@ -919,7 +921,7 @@ fn comments_or_whitespaces1(input: &mut Input) -> PResult<Vec<NodeOrToken<GreenN
     repeat(1.., alt((comment, whitespace))).parse_next(input)
 }
 
-pub fn parse(code: &str) -> Result<SyntaxNode, ContextError> {
+pub fn parse(code: &str) -> Result<SyntaxNode, SyntaxError> {
     let code = code.trim_start_matches('\u{feff}');
     let input = Stateful {
         input: code,
@@ -928,7 +930,7 @@ pub fn parse(code: &str) -> Result<SyntaxNode, ContextError> {
             bf_ctx: BlockFlowCtx::BlockIn,
         },
     };
-    root.parse(input).map_err(ParseError::into_inner)
+    root.parse(input).map_err(SyntaxError::from)
 }
 
 fn is_indicator(c: char) -> bool {
