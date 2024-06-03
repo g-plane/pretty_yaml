@@ -4,6 +4,7 @@ use rowan::{GreenNode, GreenToken, NodeOrToken};
 use winnow::{
     ascii::{digit1, multispace1, space1, take_escaped, till_line_ending},
     combinator::{alt, cond, dispatch, fail, opt, peek, repeat, terminated},
+    error::{ContextError, ParseError},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
     PResult, Parser,
@@ -50,6 +51,7 @@ pub enum SyntaxKind {
     DIRECTIVE_NAME,
     YAML_VERSION,
     DIRECTIVE_PARAM,
+    DOCUMENT_END,
 
     // SyntaxNode
     PROPERTIES,
@@ -96,7 +98,6 @@ impl From<SyntaxKind> for rowan::SyntaxKind {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum YamlLanguage {}
-
 impl rowan::Language for YamlLanguage {
     type Kind = SyntaxKind;
     fn kind_from_raw(raw: rowan::SyntaxKind) -> Self::Kind {
@@ -110,7 +111,7 @@ impl rowan::Language for YamlLanguage {
 
 pub type SyntaxNode = rowan::SyntaxNode<YamlLanguage>;
 pub type SyntaxToken = rowan::SyntaxToken<YamlLanguage>;
-pub type SyntaxElement = NodeOrToken<SyntaxNode, SyntaxToken>;
+pub type SyntaxElement = rowan::SyntaxElement<YamlLanguage>;
 
 type GreenResult = PResult<NodeOrToken<GreenNode, GreenToken>>;
 type Input<'s> = Stateful<&'s str, State>;
@@ -862,6 +863,16 @@ fn document(input: &mut Input) -> GreenResult {
         })
 }
 
+fn document_end(input: &mut Input) -> GreenResult {
+    "...".map(|text| tok(DOCUMENT_END, text)).parse_next(input)
+}
+
+fn root(input: &mut Input) -> PResult<SyntaxNode> {
+    repeat(0.., alt((comment, whitespace, document_end, document)))
+        .parse_next(input)
+        .map(|children: Vec<_>| SyntaxNode::new_root(GreenNode::new(ROOT.into(), children)))
+}
+
 fn comment(input: &mut Input) -> GreenResult {
     ('#', till_line_ending)
         .recognize()
@@ -891,20 +902,16 @@ fn comments_or_whitespaces1(input: &mut Input) -> PResult<Vec<NodeOrToken<GreenN
     repeat(1.., alt((comment, whitespace))).parse_next(input)
 }
 
-pub fn parse(code: &str) -> SyntaxNode {
+pub fn parse(code: &str) -> Result<SyntaxNode, ContextError> {
     let code = code.trim_start_matches('\u{feff}');
-    let mut input = Stateful {
+    let input = Stateful {
         input: code,
         state: State {
             indent: detect_base_indent(code).unwrap_or_default(),
             bf_ctx: BlockFlowCtx::BlockIn,
         },
     };
-    let green_node = repeat(0.., alt((whitespace, document)))
-        .parse_next(&mut input)
-        .map(|children: Vec<_>| GreenNode::new(ROOT.into(), children))
-        .unwrap();
-    SyntaxNode::new_root(green_node)
+    root.parse(input).map_err(ParseError::into_inner)
 }
 
 fn is_indicator(c: char) -> bool {
