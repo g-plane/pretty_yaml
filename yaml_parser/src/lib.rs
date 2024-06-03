@@ -3,8 +3,8 @@ use either::Either;
 use rowan::{GreenNode, GreenToken, NodeOrToken};
 use winnow::{
     ascii::{digit1, multispace1, space1, take_escaped, till_line_ending},
-    combinator::{alt, cond, dispatch, fail, opt, peek, repeat, terminated},
-    error::{ContextError, ParseError},
+    combinator::{alt, cond, cut_err, dispatch, fail, opt, peek, repeat, terminated},
+    error::{ContextError, ParseError, StrContext, StrContextValue},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
     PResult, Parser,
@@ -141,13 +141,15 @@ fn ascii_char<const C: char>(
 
 fn tag_property(input: &mut Input) -> GreenResult {
     alt((verbatim_tag, shorthand_tag, non_specific_tag))
+        .context(StrContext::Label("tag property"))
         .parse_next(input)
         .map(|child| node(TAG_PROPERTY, [child]))
 }
 
 fn verbatim_tag(input: &mut Input) -> GreenResult {
-    ("!<", take_while(1.., is_url_char), '>')
+    ("!<", cut_err((take_while(1.., is_url_char), '>')))
         .recognize()
+        .context(StrContext::Label("verbatim tag"))
         .parse_next(input)
         .map(|text| tok(VERBATIM_TAG, text))
 }
@@ -180,7 +182,8 @@ fn non_specific_tag(input: &mut Input) -> GreenResult {
 }
 
 fn anchor_property(input: &mut Input) -> GreenResult {
-    (ascii_char::<'&'>(AMPERSAND), anchor_name)
+    (ascii_char::<'&'>(AMPERSAND), cut_err(anchor_name))
+        .context(StrContext::Label("anchor property"))
         .parse_next(input)
         .map(|(ampersand, name)| {
             NodeOrToken::Node(GreenNode::new(ANCHOR_PROPERTY.into(), [ampersand, name]))
@@ -190,7 +193,7 @@ fn anchor_property(input: &mut Input) -> GreenResult {
 fn properties(input: &mut Input) -> GreenResult {
     dispatch! {peek(any);
         '&' => (anchor_property, opt((comments_or_whitespaces1, tag_property))),
-        '!' => (tag_property, opt((comments_or_whitespaces1, anchor_property))),
+        '!' => (cut_err(tag_property), opt((comments_or_whitespaces1, anchor_property))),
         _ => fail,
     }
     .parse_next(input)
@@ -205,7 +208,8 @@ fn properties(input: &mut Input) -> GreenResult {
 }
 
 fn alias(input: &mut Input) -> GreenResult {
-    (ascii_char::<'*'>(ASTERISK), anchor_name)
+    (ascii_char::<'*'>(ASTERISK), cut_err(anchor_name))
+        .context(StrContext::Label("alias"))
         .parse_next(input)
         .map(|(asterisk, name)| NodeOrToken::Node(GreenNode::new(ALIAS.into(), [asterisk, name])))
 }
@@ -217,8 +221,12 @@ fn anchor_name(input: &mut Input) -> GreenResult {
 }
 
 fn double_qouted_scalar(input: &mut Input) -> GreenResult {
-    ('"', take_escaped(none_of(['\\', '"']), '\\', any), '"')
+    (
+        '"',
+        cut_err((take_escaped(none_of(['\\', '"']), '\\', any), '"')),
+    )
         .recognize()
+        .context(StrContext::Expected(StrContextValue::CharLiteral('"')))
         .parse_next(input)
         .map(|text| tok(DOUBLE_QUOTED_SCALAR, text))
 }
@@ -226,10 +234,13 @@ fn double_qouted_scalar(input: &mut Input) -> GreenResult {
 fn single_qouted_scalar(input: &mut Input) -> GreenResult {
     (
         '\'',
-        repeat::<_, _, (), _, _>(0.., alt((none_of('\'').void(), "''".void()))),
-        '\'',
+        cut_err((
+            repeat::<_, _, (), _, _>(0.., alt((none_of('\'').void(), "''".void()))),
+            '\'',
+        )),
     )
         .recognize()
+        .context(StrContext::Expected(StrContextValue::CharLiteral('\'')))
         .parse_next(input)
         .map(|text| tok(SINGLE_QUOTED_SCALAR, text))
 }
@@ -311,12 +322,15 @@ fn plain_scalar_chars(input: &mut Input) -> PResult<()> {
 fn flow_sequence(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'['>(L_BRACKET),
-        comments_or_whitespaces,
-        flow_sequence_entries.set_state(flow_collection_state),
-        ascii_char::<']'>(R_BRACKET),
+        cut_err((
+            comments_or_whitespaces,
+            flow_sequence_entries.set_state(flow_collection_state),
+            ascii_char::<']'>(R_BRACKET),
+        )),
     )
+        .context(StrContext::Expected(StrContextValue::CharLiteral(']')))
         .parse_next(input)
-        .map(|(l_bracket, mut leading_trivias, entries, r_bracket)| {
+        .map(|(l_bracket, (mut leading_trivias, entries, r_bracket))| {
             let mut children = Vec::with_capacity(3);
             children.push(l_bracket);
             children.append(&mut leading_trivias);
@@ -366,12 +380,15 @@ fn flow_sequence_entry(input: &mut Input) -> GreenResult {
 fn flow_map(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'{'>(L_BRACE),
-        comments_or_whitespaces,
-        flow_map_entries.set_state(flow_collection_state),
-        ascii_char::<'}'>(R_BRACE),
+        cut_err((
+            comments_or_whitespaces,
+            flow_map_entries.set_state(flow_collection_state),
+            ascii_char::<'}'>(R_BRACE),
+        )),
     )
+        .context(StrContext::Expected(StrContextValue::CharLiteral('}')))
         .parse_next(input)
-        .map(|(l_brace, mut leading_trivias, entries, r_brace)| {
+        .map(|(l_brace, (mut leading_trivias, entries, r_brace))| {
             let mut children = Vec::with_capacity(3);
             children.push(l_brace);
             children.append(&mut leading_trivias);
@@ -749,7 +766,6 @@ fn block_map_implicit_key(input: &mut Input) -> GreenResult {
 }
 
 fn block(input: &mut Input) -> GreenResult {
-    // TODO
     alt((
         (
             opt((properties, comments_or_whitespaces1)),
@@ -835,8 +851,9 @@ fn reserved_directive(input: &mut Input) -> GreenResult {
 fn directive(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'%'>(PERCENT),
-        alt((yaml_directive, tag_directive, reserved_directive)),
+        cut_err(alt((yaml_directive, tag_directive, reserved_directive))),
     )
+        .context(StrContext::Label("directive"))
         .parse_next(input)
         .map(|(percent, directive)| node(DIRECTIVE, [percent, directive]))
 }
