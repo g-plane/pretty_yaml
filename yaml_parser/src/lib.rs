@@ -2,7 +2,7 @@ use self::{set_state::ParserExt as _, with_state::ParserExt as _};
 use either::Either;
 use rowan::{GreenNode, GreenToken, NodeOrToken};
 use winnow::{
-    ascii::{multispace1, space1, take_escaped},
+    ascii::{digit1, multispace1, space1, take_escaped},
     combinator::{alt, cond, dispatch, fail, opt, peek, repeat, terminated},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
@@ -31,6 +31,7 @@ pub enum SyntaxKind {
     MINUS,
     QUESTION_MARK,
     BAR,
+    PERCENT,
     INDENT_INDICATOR,
     GREATER_THAN,
     VERBATIM_TAG,
@@ -39,11 +40,16 @@ pub enum SyntaxKind {
     TAG_HANDLE_NAMED,
     TAG_HANDLE_SECONDARY,
     TAG_HANDLE_PRIMARY,
+    TAG_PREFIX,
     ANCHOR_NAME,
     DOUBLE_QUOTED_SCALAR,
     SINGLE_QUOTED_SCALAR,
     PLAIN_SCALAR,
     BLOCK_SCALAR_TEXT,
+    DIRECTIVES_END,
+    DIRECTIVE_NAME,
+    YAML_VERSION,
+    DIRECTIVE_PARAM,
 
     // SyntaxNode
     PROPERTIES,
@@ -70,6 +76,11 @@ pub enum SyntaxKind {
     BLOCK_MAP_KEY,
     BLOCK_MAP_VALUE,
     BLOCK,
+    YAML_DIRECTIVE,
+    TAG_DIRECTIVE,
+    RESERVED_DIRECTIVE,
+    DIRECTIVE,
+    DOCUMENT,
 
     COMMENT,
     WHITESPACE,
@@ -143,8 +154,7 @@ fn verbatim_tag(input: &mut Input) -> GreenResult {
 fn shorthand_tag(input: &mut Input) -> GreenResult {
     (
         tag_handle,
-        take_while(1.., |c| is_url_char(c) && c != '!' && !is_flow_indicator(c))
-            .map(|text| tok(TAG_CHAR, text)),
+        take_while(1.., is_tag_char).map(|text| tok(TAG_CHAR, text)),
     )
         .parse_next(input)
         .map(|(tag_handle, tag_char)| node(SHORTHAND_TAG, [tag_handle, tag_char]))
@@ -759,6 +769,99 @@ fn block(input: &mut Input) -> GreenResult {
     .parse_next(input)
 }
 
+fn directives_end(input: &mut Input) -> GreenResult {
+    "---"
+        .map(|text| tok(DIRECTIVES_END, text))
+        .parse_next(input)
+}
+
+fn yaml_directive(input: &mut Input) -> GreenResult {
+    ("YAML", space, (digit1, '.', digit1).recognize())
+        .parse_next(input)
+        .map(|(name, space, version)| {
+            node(
+                YAML_DIRECTIVE,
+                [tok(DIRECTIVE_NAME, name), space, tok(YAML_VERSION, version)],
+            )
+        })
+}
+
+fn tag_directive(input: &mut Input) -> GreenResult {
+    ("TAG", space, tag_handle, space, tag_prefix)
+        .parse_next(input)
+        .map(|(name, space1, tag_handle, space2, tag_prefix)| {
+            node(
+                TAG_DIRECTIVE,
+                [
+                    tok(DIRECTIVE_NAME, name),
+                    space1,
+                    tag_handle,
+                    space2,
+                    tag_prefix,
+                ],
+            )
+        })
+}
+fn tag_prefix(input: &mut Input) -> GreenResult {
+    (
+        one_of(|c| c == '!' || is_tag_char(c)),
+        take_till(0.., is_url_char),
+    )
+        .recognize()
+        .parse_next(input)
+        .map(|text| tok(TAG_PREFIX, text))
+}
+
+fn reserved_directive(input: &mut Input) -> GreenResult {
+    (
+        take_till(1.., |c: char| c.is_ascii_whitespace()),
+        space,
+        take_till(1.., |c: char| c.is_ascii_whitespace()),
+    )
+        .parse_next(input)
+        .map(|(name, space, param)| {
+            node(
+                RESERVED_DIRECTIVE,
+                [
+                    tok(DIRECTIVE_NAME, name),
+                    space,
+                    tok(DIRECTIVE_PARAM, param),
+                ],
+            )
+        })
+}
+
+fn directive(input: &mut Input) -> GreenResult {
+    (
+        ascii_char::<'%'>(PERCENT),
+        alt((yaml_directive, tag_directive, reserved_directive)),
+    )
+        .parse_next(input)
+        .map(|(percent, directive)| node(DIRECTIVE, [percent, directive]))
+}
+
+fn document(input: &mut Input) -> GreenResult {
+    (
+        repeat(0.., (directive, comments_or_whitespaces)),
+        opt((directives_end, comments_or_whitespaces)),
+        block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockIn),
+    )
+        .parse_next(input)
+        .map(|(directives, end, block): (Vec<_>, _, _)| {
+            let mut children = Vec::with_capacity(2 + directives.len());
+            directives.into_iter().for_each(|(directive, mut trivias)| {
+                children.push(directive);
+                children.append(&mut trivias);
+            });
+            if let Some((end, mut trivias)) = end {
+                children.push(end);
+                children.append(&mut trivias);
+            }
+            children.push(block);
+            node(DOCUMENT, children)
+        })
+}
+
 fn comment(input: &mut Input) -> GreenResult {
     ('#', take_till(0.., ['\n', '\r']))
         .recognize()
@@ -794,10 +897,10 @@ pub fn parse(code: &str) -> SyntaxNode {
         input: code,
         state: State {
             indent: detect_base_indent(code).unwrap_or_default(),
-            bf_ctx: BlockFlowCtx::BlockOut,
+            bf_ctx: BlockFlowCtx::BlockIn,
         },
     };
-    let green_node = repeat(0.., alt((whitespace, block)))
+    let green_node = repeat(0.., alt((whitespace, document)))
         .parse_next(&mut input)
         .map(|children: Vec<_>| GreenNode::new(ROOT.into(), children))
         .unwrap();
@@ -860,6 +963,10 @@ fn is_url_char(c: char) -> bool {
                 | '['
                 | ']'
         )
+}
+
+fn is_tag_char(c: char) -> bool {
+    is_url_char(c) && c != '!' && !is_flow_indicator(c)
 }
 
 fn detect_base_indent(code: &str) -> Option<usize> {
