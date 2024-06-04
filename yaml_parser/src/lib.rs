@@ -610,7 +610,7 @@ fn block_sequence(input: &mut Input) -> GreenResult {
             0..,
             (
                 comments_or_whitespaces1.verify_indent(),
-                block_sequence_entry,
+                cut_err(block_sequence_entry),
             ),
         ),
     )
@@ -628,7 +628,7 @@ fn block_sequence(input: &mut Input) -> GreenResult {
 
 fn block_sequence_entry(input: &mut Input) -> GreenResult {
     (
-        ascii_char::<'-'>(MINUS),
+        ascii_char::<'-'>(MINUS).context(StrContext::Expected(StrContextValue::CharLiteral('-'))),
         opt(alt((
             (
                 space_before_block_compact_collection.track_indent(),
@@ -665,7 +665,10 @@ fn block_map(input: &mut Input) -> GreenResult {
             0..,
             (
                 comments_or_whitespaces1.verify_indent(),
-                alt((block_map_implicit_entry, block_map_explicit_entry)),
+                cut_err(
+                    alt((block_map_implicit_entry, block_map_explicit_entry))
+                        .context(StrContext::Label("block map entry")),
+                ),
             ),
         ),
     )
