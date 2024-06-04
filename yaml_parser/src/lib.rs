@@ -533,37 +533,36 @@ fn flow(input: &mut Input) -> GreenResult {
 fn block_scalar(input: &mut Input) -> GreenResult {
     (
         (alt((ascii_char::<'|'>(BAR), ascii_char::<'>'>(GREATER_THAN)))),
-        alt((
-            (opt(indent_indicator), opt(chomping_indicator)).map(Either::Left),
-            (opt(chomping_indicator), opt(indent_indicator)).map(Either::Right),
-        )),
-        comments_or_spaces,
+        opt(alt((
+            (indent_indicator, opt(chomping_indicator)).map(Either::Left),
+            (chomping_indicator, cut_err(indent_indicator)).map(Either::Right),
+        )))
+        .context(StrContext::Label("block scalar header")),
+        opt((space, comments_or_spaces)),
         peek(opt(multispace1.verify_map(detect_ws_indent))),
     )
-        .flat_map(|(style, indicator, mut trivias, mut indent)| {
+        .flat_map(|(style, indicator, trivias, mut indent)| {
             let mut children = Vec::with_capacity(3);
             children.push(style);
             match indicator {
-                Either::Left((indent_token, chomping_token)) => {
-                    if let Some((indent_token, indent_value)) = indent_token {
-                        children.push(indent_token);
-                        indent = Some(indent_value);
-                    }
+                Some(Either::Left(((indent_token, indent_value), chomping_token))) => {
+                    children.push(indent_token);
+                    indent = Some(indent_value);
                     if let Some(chomping) = chomping_token {
                         children.push(chomping);
                     }
                 }
-                Either::Right((chomping_token, indent_token)) => {
-                    if let Some(chomping) = chomping_token {
-                        children.push(chomping);
-                    }
-                    if let Some((indent_token, indent_value)) = indent_token {
-                        children.push(indent_token);
-                        indent = Some(indent_value);
-                    }
+                Some(Either::Right((chomping_token, (indent_token, indent_value)))) => {
+                    children.push(chomping_token);
+                    children.push(indent_token);
+                    indent = Some(indent_value);
                 }
+                None => {}
             }
-            children.append(&mut trivias);
+            if let Some((space, mut trivias)) = trivias {
+                children.push(space);
+                children.append(&mut trivias);
+            }
             let indent = indent.unwrap_or_default();
             repeat::<_, _, (), _, _>(
                 0..,
@@ -571,7 +570,7 @@ fn block_scalar(input: &mut Input) -> GreenResult {
                     multispace1.verify(move |text: &str| {
                         detect_ws_indent(text).is_some_and(|detected| detected >= indent)
                     }),
-                    take_till(0.., ['\n', '\r']),
+                    till_line_ending,
                 ),
             )
             .recognize()
@@ -593,7 +592,13 @@ fn indent_indicator(input: &mut Input) -> PResult<(NodeOrToken<GreenNode, GreenT
         .parse_next(input)
 }
 fn chomping_indicator(input: &mut Input) -> GreenResult {
-    alt((ascii_char::<'-'>(MINUS), ascii_char::<'+'>(PLUS))).parse_next(input)
+    dispatch! {peek(any);
+        '+' => ascii_char::<'+'>(PLUS),
+        '-' => ascii_char::<'-'>(MINUS),
+        ' ' | '\n' | '\t' | '\r' => fail,
+        _ => cut_err(fail),
+    }
+    .parse_next(input)
 }
 
 fn block_sequence(input: &mut Input) -> GreenResult {
