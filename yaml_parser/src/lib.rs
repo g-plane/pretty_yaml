@@ -1,5 +1,5 @@
 pub use self::error::SyntaxError;
-use self::{set_state::ParserExt as _, with_state::ParserExt as _};
+use self::{indent::ParserExt as _, set_state::ParserExt as _};
 use either::Either;
 use rowan::{GreenNode, GreenToken, NodeOrToken};
 use winnow::{
@@ -12,8 +12,8 @@ use winnow::{
 };
 
 mod error;
+mod indent;
 mod set_state;
-mod with_state;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[allow(non_camel_case_types)]
@@ -604,15 +604,12 @@ fn chomping_indicator(input: &mut Input) -> GreenResult {
 }
 
 fn block_sequence(input: &mut Input) -> GreenResult {
-    let indent = input.state.indent;
     (
         block_sequence_entry,
         repeat(
             0..,
             (
-                comments_or_whitespaces1
-                    .with_state()
-                    .verify_map(|(trivias, state)| (state.indent == indent).then_some(trivias)),
+                comments_or_whitespaces1.verify_indent(),
                 block_sequence_entry,
             ),
         ),
@@ -630,16 +627,15 @@ fn block_sequence(input: &mut Input) -> GreenResult {
 }
 
 fn block_sequence_entry(input: &mut Input) -> GreenResult {
-    let indent = input.state.indent;
     (
         ascii_char::<'-'>(MINUS),
         opt(alt((
-            space.with_recognized().flat_map(move |(ws, text)| {
-                alt((block_sequence, block_map))
-                    .set_state(move |state| state.indent = indent + text.len() + 1)
-                    .map(move |child| (vec![ws.clone()], child))
-            }),
-            (comments_or_whitespaces1, block),
+            (
+                space_before_block_compact_collection.track_indent(),
+                alt((block_sequence, block_map)),
+            )
+                .map(|(space, collection)| (vec![space], collection)),
+            (comments_or_whitespaces1.track_indent(), block),
         )))
         .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockIn),
     )
@@ -656,17 +652,19 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
             }
         })
 }
+fn space_before_block_compact_collection(input: &mut Input) -> GreenResult {
+    let (space, text) = space.with_recognized().parse_next(input)?;
+    input.state.indent += text.len() + 1;
+    Ok(space)
+}
 
 fn block_map(input: &mut Input) -> GreenResult {
-    let indent = input.state.indent;
     (
         alt((block_map_implicit_entry, block_map_explicit_entry)),
         repeat(
             0..,
             (
-                comments_or_whitespaces1
-                    .with_state()
-                    .verify_map(|(trivias, state)| (state.indent == indent).then_some(trivias)),
+                comments_or_whitespaces1.verify_indent(),
                 alt((block_map_implicit_entry, block_map_explicit_entry)),
             ),
         ),
@@ -684,15 +682,12 @@ fn block_map(input: &mut Input) -> GreenResult {
 }
 
 fn block_map_explicit_entry(input: &mut Input) -> GreenResult {
-    let indent = input.state.indent;
     (
         block_map_explicit_key,
         opt((
-            comments_or_whitespaces
-                .with_state()
-                .verify_map(move |(trivias, state)| (state.indent == indent).then_some(trivias)),
+            comments_or_whitespaces.verify_indent(),
             ascii_char::<':'>(COLON),
-            opt((comments_or_whitespaces1, block)
+            opt((comments_or_whitespaces1.track_indent(), block)
                 .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut)),
         )),
     )
@@ -742,7 +737,7 @@ fn block_map_implicit_entry(input: &mut Input) -> GreenResult {
     (
         opt((block_map_implicit_key, opt(space))),
         ascii_char::<':'>(COLON),
-        comments_or_whitespaces1,
+        comments_or_whitespaces1.track_indent(),
         block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
     )
         .parse_next(input)
@@ -923,10 +918,12 @@ fn comments_or_whitespaces1(input: &mut Input) -> PResult<Vec<NodeOrToken<GreenN
 
 pub fn parse(code: &str) -> Result<SyntaxNode, SyntaxError> {
     let code = code.trim_start_matches('\u{feff}');
+    let base_indent = detect_base_indent(code).unwrap_or_default();
     let input = Stateful {
         input: code,
         state: State {
-            indent: detect_base_indent(code).unwrap_or_default(),
+            indent: base_indent,
+            tracked_indents: 1 << base_indent,
             bf_ctx: BlockFlowCtx::BlockIn,
         },
     };
@@ -978,6 +975,8 @@ fn detect_ws_indent(text: &str) -> Option<usize> {
 #[derive(Clone, Debug)]
 struct State {
     indent: usize,
+    // Does someone's YAML file has more than 63 columns of indentation?
+    tracked_indents: u64,
     bf_ctx: BlockFlowCtx,
 }
 
