@@ -318,7 +318,7 @@ fn flow_sequence(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'['>(L_BRACKET),
         cut_err((
-            comments_or_whitespaces,
+            comments_or_whitespaces0,
             flow_sequence_entries.set_state(flow_collection_state),
             ascii_char::<']'>(R_BRACKET),
         )),
@@ -341,7 +341,7 @@ fn flow_sequence_entries(input: &mut Input) -> GreenResult {
         alt((
             (
                 flow_sequence_entry,
-                comments_or_whitespaces,
+                comments_or_whitespaces0,
                 alt((ascii_char::<','>(COMMA).map(Some), peek(']').value(None))),
             )
                 .map(Either::Left),
@@ -376,7 +376,7 @@ fn flow_map(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'{'>(L_BRACE),
         cut_err((
-            comments_or_whitespaces,
+            comments_or_whitespaces0,
             flow_map_entries.set_state(flow_collection_state),
             ascii_char::<'}'>(R_BRACE),
         )),
@@ -399,7 +399,7 @@ fn flow_map_entries(input: &mut Input) -> GreenResult {
         alt((
             (
                 flow_map_entry,
-                comments_or_whitespaces,
+                comments_or_whitespaces0,
                 alt((ascii_char::<','>(COMMA).map(Some), peek('}').value(None))),
             )
                 .map(Either::Left),
@@ -428,9 +428,9 @@ fn flow_map_entry(input: &mut Input) -> GreenResult {
     alt((
         (
             opt(flow_map_entry_key),
-            comments_or_whitespaces,
+            comments_or_whitespaces0,
             ascii_char::<':'>(COLON),
-            opt((comments_or_whitespaces, flow)),
+            opt((comments_or_whitespaces0, flow)),
         )
             .map(Either::Left),
         flow_map_entry_key.map(Either::Right),
@@ -457,9 +457,9 @@ fn flow_map_entry(input: &mut Input) -> GreenResult {
 fn flow_pair(input: &mut Input) -> GreenResult {
     (
         opt(flow_map_entry_key.set_state(|state| state.bf_ctx = BlockFlowCtx::FlowKey)),
-        comments_or_whitespaces,
+        comments_or_whitespaces0,
         ascii_char::<':'>(COLON),
-        opt((comments_or_whitespaces, flow)),
+        opt((comments_or_whitespaces0, flow)),
     )
         .parse_next(input)
         .map(|(key, mut trivias_before_colon, colon, value)| {
@@ -482,7 +482,7 @@ fn flow_map_entry_key(input: &mut Input) -> GreenResult {
         flow.map(Either::Left),
         (
             ascii_char::<'?'>(QUESTION_MARK),
-            opt((whitespace, comments_or_whitespaces, flow)),
+            opt((whitespace, comments_or_whitespaces0, flow)),
         )
             .map(Either::Right),
     ))
@@ -681,7 +681,7 @@ fn block_map_explicit_entry(input: &mut Input) -> GreenResult {
     (
         block_map_explicit_key,
         opt((
-            comments_or_whitespaces.verify_indent(),
+            comments_or_whitespaces0.verify_indent(),
             ascii_char::<':'>(COLON),
             opt((comments_or_whitespaces1.track_indent(), block)
                 .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut)),
@@ -710,7 +710,7 @@ fn block_map_explicit_key(input: &mut Input) -> GreenResult {
         ascii_char::<'?'>(QUESTION_MARK),
         opt((
             space,
-            comments_or_whitespaces,
+            comments_or_whitespaces0,
             block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
         )),
     )
@@ -853,8 +853,8 @@ fn directive(input: &mut Input) -> GreenResult {
 
 fn document(input: &mut Input) -> GreenResult {
     (
-        repeat(0.., (directive, comments_or_whitespaces)),
-        opt((directives_end, comments_or_whitespaces)),
+        repeat(0.., (directive, comments_or_whitespaces0)),
+        opt((directives_end, comments_or_whitespaces0)),
         block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockIn),
     )
         .parse_next(input)
@@ -878,7 +878,7 @@ fn document_end(input: &mut Input) -> GreenResult {
 }
 
 fn root(input: &mut Input) -> PResult<SyntaxNode> {
-    repeat(0.., alt((comment, whitespace, document_end, document)))
+    repeat(0.., alt((comments_or_whitespaces, document_end, document)))
         .parse_next(input)
         .map(|children: Vec<_>| SyntaxNode::new_root(GreenNode::new(ROOT.into(), children)))
 }
@@ -905,11 +905,19 @@ fn whitespace(input: &mut Input) -> GreenResult {
 fn comments_or_spaces(input: &mut Input) -> PResult<Vec<NodeOrToken<GreenNode, GreenToken>>> {
     repeat(0.., alt((comment, space))).parse_next(input)
 }
-fn comments_or_whitespaces(input: &mut Input) -> PResult<Vec<NodeOrToken<GreenNode, GreenToken>>> {
-    repeat(0.., alt((comment, whitespace))).parse_next(input)
+fn comments_or_whitespaces(input: &mut Input) -> GreenResult {
+    dispatch! {peek(any);
+        ' ' | '\n' | '\t' | '\r' => whitespace,
+        '#' => comment,
+        _ => fail,
+    }
+    .parse_next(input)
+}
+fn comments_or_whitespaces0(input: &mut Input) -> PResult<Vec<NodeOrToken<GreenNode, GreenToken>>> {
+    repeat(0.., comments_or_whitespaces).parse_next(input)
 }
 fn comments_or_whitespaces1(input: &mut Input) -> PResult<Vec<NodeOrToken<GreenNode, GreenToken>>> {
-    repeat(1.., alt((comment, whitespace))).parse_next(input)
+    repeat(1.., comments_or_whitespaces).parse_next(input)
 }
 
 pub fn parse(code: &str) -> Result<SyntaxNode, SyntaxError> {
