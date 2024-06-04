@@ -4,7 +4,7 @@ use either::Either;
 use rowan::{GreenNode, GreenToken, NodeOrToken};
 use winnow::{
     ascii::{digit1, multispace1, space1, take_escaped, till_line_ending},
-    combinator::{alt, cond, cut_err, dispatch, fail, opt, peek, repeat, terminated},
+    combinator::{alt, cut_err, dispatch, fail, opt, peek, repeat, terminated},
     error::{StrContext, StrContextValue},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
@@ -280,21 +280,14 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
     }
 }
 fn plain_scalar_one_line(input: &mut Input) -> PResult<()> {
-    let safe_in = matches!(
-        input.state.bf_ctx,
-        BlockFlowCtx::FlowIn | BlockFlowCtx::FlowKey
-    );
     (
         alt((
             none_of(is_indicator),
             terminated(
                 one_of(['-', ':', '?']),
-                cond(
-                    safe_in,
-                    peek(none_of(|c: char| {
-                        c.is_ascii_whitespace() || is_flow_indicator(c)
-                    })),
-                ),
+                peek(none_of(|c: char| {
+                    c.is_ascii_whitespace() || is_flow_indicator(c)
+                })),
             ),
         )),
         plain_scalar_chars,
