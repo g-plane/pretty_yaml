@@ -19,6 +19,7 @@ mod set_state;
 #[allow(non_camel_case_types)]
 #[allow(clippy::upper_case_acronyms)]
 #[repr(u16)]
+/// Syntax kind enum for nodes and tokens.
 pub enum SyntaxKind {
     // SyntaxToken
     L_BRACE = 0,
@@ -925,6 +926,7 @@ fn comments_or_whitespaces1(input: &mut Input) -> PResult<Vec<NodeOrToken<GreenN
     repeat(1.., comments_or_whitespaces).parse_next(input)
 }
 
+/// Parse the given YAML code into CST.
 pub fn parse(code: &str) -> Result<SyntaxNode, SyntaxError> {
     let code = code.trim_start_matches('\u{feff}');
     let base_indent = detect_base_indent(code).unwrap_or_default();
