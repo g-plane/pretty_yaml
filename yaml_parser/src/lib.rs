@@ -609,7 +609,7 @@ fn block_sequence(input: &mut Input) -> GreenResult {
             0..,
             (
                 comments_or_whitespaces1.verify_indent(),
-                cut_err(block_sequence_entry),
+                block_sequence_entry,
             ),
         ),
     )
@@ -634,7 +634,7 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
                 alt((block_sequence, block_map)),
             )
                 .map(|(space, collection)| (vec![space], collection)),
-            (comments_or_whitespaces1.track_indent(), block),
+            (comments_or_whitespaces1.track_indent(), cut_err(block)),
         )))
         .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockIn),
     )
@@ -664,10 +664,7 @@ fn block_map(input: &mut Input) -> GreenResult {
             0..,
             (
                 comments_or_whitespaces1.verify_indent(),
-                cut_err(
-                    alt((block_map_implicit_entry, block_map_explicit_entry))
-                        .context(StrContext::Label("block map entry")),
-                ),
+                alt((block_map_implicit_entry, block_map_explicit_entry)),
             ),
         ),
     )
