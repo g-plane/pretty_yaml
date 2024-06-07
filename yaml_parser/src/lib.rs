@@ -283,7 +283,7 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
 fn plain_scalar_one_line(input: &mut Input) -> PResult<()> {
     (
         alt((
-            none_of(is_indicator),
+            none_of(|c: char| c.is_ascii_whitespace() || is_indicator(c)),
             terminated(
                 one_of(['-', ':', '?']),
                 peek(none_of(|c: char| {

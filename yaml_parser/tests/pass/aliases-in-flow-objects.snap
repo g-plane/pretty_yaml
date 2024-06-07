@@ -1,0 +1,77 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..37
+  DOCUMENT@0..36
+    BLOCK@0..36
+      FLOW@0..36
+        FLOW_MAP@0..36
+          L_BRACE@0..1 "{"
+          WHITESPACE@1..2 " "
+          FLOW_MAP_ENTRIES@2..35
+            FLOW_MAP_ENTRY@2..18
+              FLOW_MAP_KEY@2..14
+                FLOW@2..14
+                  PROPERTIES@2..4
+                    ANCHOR_PROPERTY@2..4
+                      AMPERSAND@2..3 "&"
+                      ANCHOR_NAME@3..4 "a"
+                  WHITESPACE@4..5 " "
+                  FLOW_SEQ@5..14
+                    L_BRACKET@5..6 "["
+                    FLOW_SEQ_ENTRIES@6..13
+                      FLOW_SEQ_ENTRY@6..7
+                        FLOW@6..7
+                          PLAIN_SCALAR@6..7 "a"
+                      COMMA@7..8 ","
+                      WHITESPACE@8..9 " "
+                      FLOW_SEQ_ENTRY@9..13
+                        FLOW@9..13
+                          PROPERTIES@9..11
+                            ANCHOR_PROPERTY@9..11
+                              AMPERSAND@9..10 "&"
+                              ANCHOR_NAME@10..11 "b"
+                          WHITESPACE@11..12 " "
+                          PLAIN_SCALAR@12..13 "b"
+                    R_BRACKET@13..14 "]"
+              COLON@14..15 ":"
+              WHITESPACE@15..16 " "
+              FLOW_MAP_VALUE@16..18
+                FLOW@16..18
+                  ALIAS@16..18
+                    ASTERISK@16..17 "*"
+                    ANCHOR_NAME@17..18 "b"
+            COMMA@18..19 ","
+            WHITESPACE@19..20 " "
+            FLOW_MAP_ENTRY@20..35
+              FLOW_MAP_KEY@20..22
+                FLOW@20..22
+                  ALIAS@20..22
+                    ASTERISK@20..21 "*"
+                    ANCHOR_NAME@21..22 "a"
+              WHITESPACE@22..23 " "
+              COLON@23..24 ":"
+              WHITESPACE@24..25 " "
+              FLOW_MAP_VALUE@25..35
+                FLOW@25..35
+                  FLOW_SEQ@25..35
+                    L_BRACKET@25..26 "["
+                    FLOW_SEQ_ENTRIES@26..34
+                      FLOW_SEQ_ENTRY@26..27
+                        FLOW@26..27
+                          PLAIN_SCALAR@26..27 "c"
+                      COMMA@27..28 ","
+                      WHITESPACE@28..29 " "
+                      FLOW_SEQ_ENTRY@29..31
+                        FLOW@29..31
+                          ALIAS@29..31
+                            ASTERISK@29..30 "*"
+                            ANCHOR_NAME@30..31 "b"
+                      COMMA@31..32 ","
+                      WHITESPACE@32..33 " "
+                      FLOW_SEQ_ENTRY@33..34
+                        FLOW@33..34
+                          PLAIN_SCALAR@33..34 "d"
+                    R_BRACKET@34..35 "]"
+          R_BRACE@35..36 "}"
+  WHITESPACE@36..37 "\n"
