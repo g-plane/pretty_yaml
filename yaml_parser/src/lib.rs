@@ -3,7 +3,7 @@ use self::{indent::ParserExt as _, set_state::ParserExt as _};
 use either::Either;
 use rowan::{GreenNode, GreenToken, NodeOrToken};
 use winnow::{
-    ascii::{digit1, multispace1, space1, take_escaped, till_line_ending},
+    ascii::{digit1, line_ending, multispace1, space1, take_escaped, till_line_ending},
     combinator::{alt, cut_err, dispatch, fail, opt, peek, repeat, terminated},
     error::{StrContext, StrContextValue},
     stream::Stateful,
@@ -628,14 +628,15 @@ fn block_sequence(input: &mut Input) -> GreenResult {
 fn block_sequence_entry(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'-'>(MINUS).context(StrContext::Expected(StrContextValue::CharLiteral('-'))),
-        opt(alt((
+        alt((
             (
                 space_before_block_compact_collection.track_indent(),
                 alt((block_sequence, block_map)),
             )
-                .map(|(space, collection)| (vec![space], collection)),
-            (comments_or_whitespaces1.track_indent(), cut_err(block)),
-        )))
+                .map(|(space, collection)| Some((vec![space], collection))),
+            line_ending.value(None),
+            (comments_or_whitespaces1.track_indent(), cut_err(block)).map(Some),
+        ))
         .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockIn),
     )
         .parse_next(input)
@@ -711,10 +712,14 @@ fn block_map_explicit_entry(input: &mut Input) -> GreenResult {
 fn block_map_explicit_key(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'?'>(QUESTION_MARK),
-        opt((
-            space,
-            comments_or_whitespaces0,
-            block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
+        alt((
+            (
+                space,
+                comments_or_whitespaces0,
+                block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
+            )
+                .map(Some),
+            line_ending.value(None),
         )),
     )
         .parse_next(input)
