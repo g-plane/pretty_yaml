@@ -1,0 +1,21 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..27
+  DOCUMENT@0..26
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    BLOCK@4..26
+      BLOCK_SEQ@4..26
+        BLOCK_SEQ_ENTRY@4..26
+          MINUS@4..5 "-"
+          WHITESPACE@5..6 " "
+          BLOCK@6..26
+            FLOW@6..26
+              PROPERTIES@6..11
+                ANCHOR_PROPERTY@6..11
+                  AMPERSAND@6..7 "&"
+                  ANCHOR_NAME@7..11 "😁"
+              WHITESPACE@11..12 " "
+              PLAIN_SCALAR@12..26 "unicode anchor"
+  WHITESPACE@26..27 "\n"

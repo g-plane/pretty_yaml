@@ -1,0 +1,62 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..127
+  DOCUMENT@0..126
+    BLOCK@0..126
+      BLOCK_MAP@0..126
+        BLOCK_MAP_ENTRY@0..45
+          BLOCK_MAP_KEY@0..39
+            FLOW@0..39
+              PLAIN_SCALAR@0..39 "a!\"#$%&'()*+,-./09:;< ..."
+          COLON@39..40 ":"
+          WHITESPACE@40..41 " "
+          BLOCK_MAP_VALUE@41..45
+            BLOCK@41..45
+              FLOW@41..45
+                PLAIN_SCALAR@41..45 "safe"
+        WHITESPACE@45..46 "\n"
+        BLOCK_MAP_ENTRY@46..70
+          BLOCK_MAP_KEY@46..50
+            FLOW@46..50
+              PLAIN_SCALAR@46..50 "?foo"
+          COLON@50..51 ":"
+          WHITESPACE@51..52 " "
+          BLOCK_MAP_VALUE@52..70
+            BLOCK@52..70
+              FLOW@52..70
+                PLAIN_SCALAR@52..70 "safe question mark"
+        WHITESPACE@70..71 "\n"
+        BLOCK_MAP_ENTRY@71..87
+          BLOCK_MAP_KEY@71..75
+            FLOW@71..75
+              PLAIN_SCALAR@71..75 ":foo"
+          COLON@75..76 ":"
+          WHITESPACE@76..77 " "
+          BLOCK_MAP_VALUE@77..87
+            BLOCK@77..87
+              FLOW@77..87
+                PLAIN_SCALAR@77..87 "safe colon"
+        WHITESPACE@87..88 "\n"
+        BLOCK_MAP_ENTRY@88..103
+          BLOCK_MAP_KEY@88..92
+            FLOW@88..92
+              PLAIN_SCALAR@88..92 "-foo"
+          COLON@92..93 ":"
+          WHITESPACE@93..94 " "
+          BLOCK_MAP_VALUE@94..103
+            BLOCK@94..103
+              FLOW@94..103
+                PLAIN_SCALAR@94..103 "safe dash"
+        WHITESPACE@103..104 "\n"
+        BLOCK_MAP_ENTRY@104..126
+          BLOCK_MAP_KEY@104..115
+            FLOW@104..115
+              PLAIN_SCALAR@104..115 "this is#not"
+          COLON@115..116 ":"
+          WHITESPACE@116..117 " "
+          BLOCK_MAP_VALUE@117..126
+            BLOCK@117..126
+              FLOW@117..126
+                PLAIN_SCALAR@117..126 "a comment"
+  WHITESPACE@126..127 "\n"

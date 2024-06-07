@@ -1,0 +1,36 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..43
+  DOCUMENT@0..42
+    BLOCK@0..42
+      BLOCK_MAP@0..42
+        BLOCK_MAP_ENTRY@0..25
+          BLOCK_MAP_KEY@0..1
+            FLOW@0..1
+              PLAIN_SCALAR@0..1 "a"
+          COLON@1..2 ":"
+          WHITESPACE@2..3 " "
+          BLOCK_MAP_VALUE@3..25
+            BLOCK@3..25
+              FLOW@3..25
+                PROPERTIES@3..16
+                  ANCHOR_PROPERTY@3..16
+                    AMPERSAND@3..4 "&"
+                    ANCHOR_NAME@4..16 ":@*!$\"<foo>:"
+                WHITESPACE@16..17 " "
+                PLAIN_SCALAR@17..25 "scalar a"
+        WHITESPACE@25..26 "\n"
+        BLOCK_MAP_ENTRY@26..42
+          BLOCK_MAP_KEY@26..27
+            FLOW@26..27
+              PLAIN_SCALAR@26..27 "b"
+          COLON@27..28 ":"
+          WHITESPACE@28..29 " "
+          BLOCK_MAP_VALUE@29..42
+            BLOCK@29..42
+              FLOW@29..42
+                ALIAS@29..42
+                  ASTERISK@29..30 "*"
+                  ANCHOR_NAME@30..42 ":@*!$\"<foo>:"
+  WHITESPACE@42..43 "\n"

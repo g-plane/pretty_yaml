@@ -1,0 +1,29 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..58
+  DOCUMENT@0..57
+    BLOCK@0..57
+      BLOCK_MAP@0..57
+        BLOCK_MAP_ENTRY@0..32
+          BLOCK_MAP_KEY@0..28
+            FLOW@0..28
+              DOUBLE_QUOTED_SCALAR@0..28 "\"foo\\nbar:baz\\tx \\\\$% ..."
+          COLON@28..29 ":"
+          WHITESPACE@29..30 " "
+          BLOCK_MAP_VALUE@30..32
+            BLOCK@30..32
+              FLOW@30..32
+                PLAIN_SCALAR@30..32 "23"
+        WHITESPACE@32..33 "\n"
+        BLOCK_MAP_ENTRY@33..57
+          BLOCK_MAP_KEY@33..53
+            FLOW@33..53
+              SINGLE_QUOTED_SCALAR@33..53 "'x\\ny:z\\tx $%^&*()x'"
+          COLON@53..54 ":"
+          WHITESPACE@54..55 " "
+          BLOCK_MAP_VALUE@55..57
+            BLOCK@55..57
+              FLOW@55..57
+                PLAIN_SCALAR@55..57 "24"
+  WHITESPACE@57..58 "\n"
