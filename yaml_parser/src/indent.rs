@@ -64,6 +64,39 @@ where
     }
 }
 
+pub(super) struct RequireDeeperIndent<'s, O, E, P>
+where
+    E: ParserError<Input<'s>>,
+    P: Parser<Input<'s>, O, E>,
+{
+    parser: P,
+    s: PhantomData<&'s ()>,
+    o: PhantomData<O>,
+    e: PhantomData<E>,
+}
+
+impl<'s, O, E, P> Parser<Input<'s>, O, E> for RequireDeeperIndent<'s, O, E, P>
+where
+    E: ParserError<Input<'s>>,
+    P: Parser<Input<'s>, O, E>,
+{
+    fn parse_next(&mut self, input: &mut Input<'s>) -> PResult<O, E> {
+        if input.state.last_ws_has_nl
+            && input
+                .state
+                .prev_indent
+                .is_some_and(|prev_indent| prev_indent >= input.state.indent)
+        {
+            Err(ErrMode::Backtrack(E::from_error_kind(
+                input,
+                ErrorKind::Verify,
+            )))
+        } else {
+            self.parser.parse_next(input)
+        }
+    }
+}
+
 pub(super) trait ParserExt<'s, O, E, P>
 where
     E: ParserError<Input<'s>> + AddContext<Input<'s>, StrContext>,
@@ -71,6 +104,7 @@ where
 {
     fn track_indent(self) -> TrackIndent<'s, O, E, P>;
     fn verify_indent(self) -> Context<VerifyIndent<'s, O, E, P>, Input<'s>, O, E, StrContext>;
+    fn require_deeper_indent(self) -> RequireDeeperIndent<'s, O, E, P>;
 }
 
 impl<'s, O, E, P> ParserExt<'s, O, E, P> for P
@@ -95,5 +129,14 @@ where
             e: PhantomData,
         }
         .context(StrContext::Label("indentation"))
+    }
+
+    fn require_deeper_indent(self) -> RequireDeeperIndent<'s, O, E, P> {
+        RequireDeeperIndent {
+            parser: self,
+            s: PhantomData,
+            o: PhantomData,
+            e: PhantomData,
+        }
     }
 }

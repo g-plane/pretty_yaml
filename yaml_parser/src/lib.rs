@@ -2,6 +2,7 @@ pub use self::error::SyntaxError;
 use self::{indent::ParserExt as _, set_state::ParserExt as _};
 use either::Either;
 use rowan::{GreenNode, GreenToken, NodeOrToken};
+use std::mem;
 use winnow::{
     ascii::{digit1, line_ending, multispace1, space1, take_escaped, till_line_ending},
     combinator::{alt, cut_err, dispatch, fail, opt, peek, repeat, terminated},
@@ -741,11 +742,13 @@ fn block_map_implicit_entry(input: &mut Input) -> GreenResult {
     (
         opt((block_map_implicit_key, opt(space))),
         ascii_char::<':'>(COLON),
-        comments_or_whitespaces1.track_indent(),
-        block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
+        opt((
+            comments_or_whitespaces1.track_indent(),
+            block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
+        )),
     )
         .parse_next(input)
-        .map(|(key, colon, mut trivias, value)| {
+        .map(|(key, colon, value)| {
             let mut children = Vec::with_capacity(4);
             if let Some((key, space)) = key {
                 children.push(key);
@@ -754,8 +757,10 @@ fn block_map_implicit_entry(input: &mut Input) -> GreenResult {
                 }
             }
             children.push(colon);
-            children.append(&mut trivias);
-            children.push(node(BLOCK_MAP_VALUE, [value]));
+            if let Some((mut trivias, value)) = value {
+                children.append(&mut trivias);
+                children.push(node(BLOCK_MAP_VALUE, [value]));
+            }
             node(BLOCK_MAP_ENTRY, children)
         })
 }
@@ -767,10 +772,21 @@ fn block_map_implicit_key(input: &mut Input) -> GreenResult {
 }
 
 fn block(input: &mut Input) -> GreenResult {
+    let mut is_block_out = |input: &mut Input| -> PResult<bool> {
+        Ok(matches!(input.state.bf_ctx, BlockFlowCtx::BlockOut))
+    };
+
     alt((
         (
             opt((properties, comments_or_whitespaces1)),
-            alt((block_sequence, block_map, block_scalar)),
+            alt((
+                block_sequence,
+                dispatch! {is_block_out;
+                    true => block_map.require_deeper_indent(),
+                    false => block_map,
+                },
+                block_scalar,
+            )),
         )
             .map(|(properties, block)| {
                 let mut children = Vec::with_capacity(3);
@@ -781,7 +797,8 @@ fn block(input: &mut Input) -> GreenResult {
                 children.push(block);
                 node(BLOCK, children)
             }),
-        flow.set_state(|state| state.bf_ctx = BlockFlowCtx::FlowOut)
+        flow.require_deeper_indent()
+            .set_state(|state| state.bf_ctx = BlockFlowCtx::FlowOut)
             .map(|child| node(BLOCK, [child])),
     ))
     .parse_next(input)
@@ -905,7 +922,10 @@ fn space(input: &mut Input) -> GreenResult {
 fn whitespace(input: &mut Input) -> GreenResult {
     let text = multispace1.parse_next(input)?;
     if let Some(indent) = detect_ws_indent(text) {
-        input.state.indent = indent;
+        input.state.prev_indent = Some(mem::replace(&mut input.state.indent, indent));
+        input.state.last_ws_has_nl = true;
+    } else {
+        input.state.last_ws_has_nl = false;
     }
     Ok(tok(WHITESPACE, text))
 }
@@ -935,8 +955,10 @@ pub fn parse(code: &str) -> Result<SyntaxNode, SyntaxError> {
     let input = Stateful {
         input: code,
         state: State {
+            prev_indent: None,
             indent: base_indent,
             tracked_indents: 1 << base_indent,
+            last_ws_has_nl: false,
             bf_ctx: BlockFlowCtx::BlockIn,
         },
     };
@@ -987,9 +1009,12 @@ fn detect_ws_indent(text: &str) -> Option<usize> {
 
 #[derive(Clone, Debug)]
 struct State {
+    prev_indent: Option<usize>,
     indent: usize,
     // Does someone's YAML file has more than 63 columns of indentation?
     tracked_indents: u64,
+    // Indicates if the last whitespace token has linebreaks.
+    last_ws_has_nl: bool,
     bf_ctx: BlockFlowCtx,
 }
 
