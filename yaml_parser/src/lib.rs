@@ -800,6 +800,7 @@ fn block(input: &mut Input) -> GreenResult {
         flow.require_deeper_indent()
             .set_state(|state| state.bf_ctx = BlockFlowCtx::FlowOut)
             .map(|child| node(BLOCK, [child])),
+        properties.map(|child| node(BLOCK, [child])),
     ))
     .parse_next(input)
 }
