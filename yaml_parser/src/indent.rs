@@ -50,7 +50,7 @@ where
     fn parse_next(&mut self, input: &mut Input<'s>) -> PResult<O, E> {
         let indent = input.state.indent;
         let output = self.parser.parse_next(input)?;
-        if input.state.indent == indent {
+        if input.state.indent == indent || input.is_empty() {
             Ok(output)
         } else if input.state.tracked_indents & (1 << input.state.indent) == 0 {
             Err(ErrMode::Cut(E::from_error_kind(input, ErrorKind::Verify)))
