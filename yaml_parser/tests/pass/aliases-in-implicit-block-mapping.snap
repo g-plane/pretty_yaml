@@ -4,15 +4,15 @@ source: yaml_parser/tests/pass.rs
 ROOT@0..19
   DOCUMENT@0..18
     BLOCK@0..18
-      PROPERTIES@0..2
-        ANCHOR_PROPERTY@0..2
-          AMPERSAND@0..1 "&"
-          ANCHOR_NAME@1..2 "a"
-      WHITESPACE@2..3 " "
-      BLOCK_MAP@3..18
-        BLOCK_MAP_ENTRY@3..10
-          BLOCK_MAP_KEY@3..4
-            FLOW@3..4
+      BLOCK_MAP@0..18
+        BLOCK_MAP_ENTRY@0..10
+          BLOCK_MAP_KEY@0..4
+            FLOW@0..4
+              PROPERTIES@0..2
+                ANCHOR_PROPERTY@0..2
+                  AMPERSAND@0..1 "&"
+                  ANCHOR_NAME@1..2 "a"
+              WHITESPACE@2..3 " "
               PLAIN_SCALAR@3..4 "a"
           COLON@4..5 ":"
           WHITESPACE@5..6 " "

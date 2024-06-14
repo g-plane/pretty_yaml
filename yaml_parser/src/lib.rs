@@ -1,5 +1,5 @@
 pub use self::error::SyntaxError;
-use self::{indent::ParserExt as _, set_state::ParserExt as _};
+use self::{indent::ParserExt as _, set_state::ParserExt as _, verify_state::verify_state};
 use either::Either;
 use rowan::{GreenNode, GreenToken, NodeOrToken};
 use std::mem;
@@ -15,6 +15,7 @@ use winnow::{
 mod error;
 mod indent;
 mod set_state;
+mod verify_state;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[allow(non_camel_case_types)]
@@ -782,7 +783,13 @@ fn block(input: &mut Input) -> GreenResult {
 
     alt((
         (
-            opt((properties, comments_or_whitespaces1)),
+            opt((
+                properties,
+                terminated(
+                    comments_or_whitespaces1,
+                    verify_state(|state| state.last_ws_has_nl),
+                ),
+            )),
             alt((
                 block_sequence,
                 dispatch! {is_block_out;
