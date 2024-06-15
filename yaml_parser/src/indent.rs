@@ -81,7 +81,8 @@ where
     P: Parser<Input<'s>, O, E>,
 {
     fn parse_next(&mut self, input: &mut Input<'s>) -> PResult<O, E> {
-        if input.state.last_ws_has_nl
+        if !input.state.document_top
+            && input.state.last_ws_has_nl
             && input
                 .state
                 .prev_indent

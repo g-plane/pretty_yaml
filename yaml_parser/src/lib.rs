@@ -795,7 +795,8 @@ fn block(input: &mut Input) -> GreenResult {
                     _ => block_map,
                 },
                 block_scalar,
-            )),
+            ))
+            .set_state(|state| state.document_top = false),
         )
             .map(|(properties, block)| {
                 let mut children = Vec::with_capacity(3);
@@ -890,7 +891,10 @@ fn document(input: &mut Input) -> GreenResult {
     (
         repeat(0.., (directive, comments_or_whitespaces0)),
         opt((directives_end, comments_or_whitespaces0)),
-        block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockIn),
+        block.set_state(|state| {
+            state.bf_ctx = BlockFlowCtx::BlockIn;
+            state.document_top = true;
+        }),
     )
         .parse_next(input)
         .map(|(directives, end, block): (Vec<_>, _, _)| {
@@ -970,6 +974,7 @@ pub fn parse(code: &str) -> Result<SyntaxNode, SyntaxError> {
             tracked_indents: 1 << base_indent,
             last_ws_has_nl: false,
             bf_ctx: BlockFlowCtx::BlockIn,
+            document_top: true,
         },
     };
     root.parse(input).map_err(SyntaxError::from)
@@ -1026,6 +1031,7 @@ struct State {
     // Indicates if the last whitespace token has linebreaks.
     last_ws_has_nl: bool,
     bf_ctx: BlockFlowCtx,
+    document_top: bool,
 }
 
 #[derive(Clone, Debug)]
