@@ -966,7 +966,9 @@ fn comment(input: &mut Input) -> GreenResult {
 }
 
 fn space(input: &mut Input) -> GreenResult {
-    space1.parse_next(input).map(|text| tok(WHITESPACE, text))
+    let text = space1.parse_next(input)?;
+    input.state.last_ws_has_nl = false;
+    Ok(tok(WHITESPACE, text))
 }
 
 fn whitespace(input: &mut Input) -> GreenResult {
