@@ -1,0 +1,18 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..18
+  DOCUMENT@0..17
+    BLOCK@0..17
+      BLOCK_MAP@0..17
+        BLOCK_MAP_ENTRY@0..17
+          BLOCK_MAP_KEY@0..11
+            FLOW@0..11
+              SINGLE_QUOTED_SCALAR@0..11 "'foo: bar\\'"
+          COLON@11..12 ":"
+          WHITESPACE@12..13 " "
+          BLOCK_MAP_VALUE@13..17
+            BLOCK@13..17
+              FLOW@13..17
+                PLAIN_SCALAR@13..17 "baz'"
+  WHITESPACE@17..18 "\n"
