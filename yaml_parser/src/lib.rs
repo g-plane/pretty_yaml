@@ -777,9 +777,7 @@ fn block_map_implicit_key(input: &mut Input) -> GreenResult {
 }
 
 fn block(input: &mut Input) -> GreenResult {
-    let mut is_block_out = |input: &mut Input| -> PResult<bool> {
-        Ok(matches!(input.state.bf_ctx, BlockFlowCtx::BlockOut))
-    };
+    let mut bf_ctx = |input: &mut Input| -> PResult<_> { Ok(input.state.bf_ctx.clone()) };
 
     alt((
         (
@@ -792,9 +790,9 @@ fn block(input: &mut Input) -> GreenResult {
             )),
             alt((
                 block_sequence,
-                dispatch! {is_block_out;
-                    true => block_map.require_deeper_indent(),
-                    false => block_map,
+                dispatch! {bf_ctx;
+                    BlockFlowCtx::BlockOut => block_map.require_deeper_indent(),
+                    _ => block_map,
                 },
                 block_scalar,
             )),
