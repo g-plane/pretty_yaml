@@ -552,7 +552,7 @@ fn block_scalar(input: &mut Input) -> GreenResult {
         (alt((ascii_char::<'|'>(BAR), ascii_char::<'>'>(GREATER_THAN)))),
         opt(alt((
             (indent_indicator, opt(chomping_indicator)).map(Either::Left),
-            (chomping_indicator, cut_err(indent_indicator)).map(Either::Right),
+            (chomping_indicator, opt(indent_indicator)).map(Either::Right),
         )))
         .context(StrContext::Label("block scalar header")),
         opt((space, comments_or_spaces)),
@@ -569,10 +569,12 @@ fn block_scalar(input: &mut Input) -> GreenResult {
                         children.push(chomping);
                     }
                 }
-                Some(Either::Right((chomping_token, (indent_token, indent_value)))) => {
+                Some(Either::Right((chomping_token, indent_indicator))) => {
                     children.push(chomping_token);
-                    children.push(indent_token);
-                    indent = Some(indent_value);
+                    if let Some((indent_token, indent_value)) = indent_indicator {
+                        children.push(indent_token);
+                        indent = Some(indent_value);
+                    }
                 }
                 None => {}
             }
