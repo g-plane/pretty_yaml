@@ -75,6 +75,7 @@ pub enum SyntaxKind {
     FLOW_MAP_VALUE,
     FLOW_PAIR,
     FLOW,
+    CHOMPING_INDICATOR,
     BLOCK_SCALAR,
     BLOCK_SEQ,
     BLOCK_SEQ_ENTRY,
@@ -618,6 +619,7 @@ fn chomping_indicator(input: &mut Input) -> GreenResult {
         _ => cut_err(fail),
     }
     .parse_next(input)
+    .map(|child| node(CHOMPING_INDICATOR, [child]))
 }
 
 fn block_sequence(input: &mut Input) -> GreenResult {
