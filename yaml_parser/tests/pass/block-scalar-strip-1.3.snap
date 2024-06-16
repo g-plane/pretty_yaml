@@ -1,0 +1,26 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..23
+  DOCUMENT@0..10
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 " "
+    BLOCK@4..10
+      BLOCK_SCALAR@4..10
+        BAR@4..5 "|"
+        CHOMPING_INDICATOR@5..6
+          MINUS@5..6 "-"
+        BLOCK_SCALAR_TEXT@6..10 "\n ab"
+  WHITESPACE@10..11 "\n"
+  DOCUMENT@11..14
+    BLOCK@11..14
+      FLOW@11..14
+        PLAIN_SCALAR@11..14 "␣"
+  WHITESPACE@14..15 "\n"
+  DOCUMENT@15..18
+    BLOCK@15..18
+      FLOW@15..18
+        PLAIN_SCALAR@15..18 "␣"
+  WHITESPACE@18..19 "\n"
+  DOCUMENT_END@19..22 "..."
+  WHITESPACE@22..23 "\n"

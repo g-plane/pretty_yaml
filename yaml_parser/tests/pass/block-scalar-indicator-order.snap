@@ -1,0 +1,29 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..68
+  DOCUMENT@0..67
+    BLOCK@0..67
+      BLOCK_SEQ@0..67
+        BLOCK_SEQ_ENTRY@0..33
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          BLOCK@2..33
+            BLOCK_SCALAR@2..33
+              BAR@2..3 "|"
+              INDENT_INDICATOR@3..4 "2"
+              CHOMPING_INDICATOR@4..5
+                MINUS@4..5 "-"
+              BLOCK_SCALAR_TEXT@5..33 "\n  explicit indent an ..."
+        WHITESPACE@33..34 "\n"
+        BLOCK_SEQ_ENTRY@34..67
+          MINUS@34..35 "-"
+          WHITESPACE@35..36 " "
+          BLOCK@36..67
+            BLOCK_SCALAR@36..67
+              BAR@36..37 "|"
+              CHOMPING_INDICATOR@37..38
+                MINUS@37..38 "-"
+              INDENT_INDICATOR@38..39 "2"
+              BLOCK_SCALAR_TEXT@39..67 "\n  chomp and explicit ..."
+  WHITESPACE@67..68 "\n"
