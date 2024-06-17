@@ -266,6 +266,7 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
         input.state.bf_ctx,
         BlockFlowCtx::FlowIn | BlockFlowCtx::FlowOut
     ) {
+        let safe_in = matches!(input.state.bf_ctx, BlockFlowCtx::FlowIn);
         trace(
             "plain_scalar",
             (
@@ -273,7 +274,11 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
                 repeat::<_, _, (), _, _>(
                     0..,
                     (
-                        multispace1.verify(move |text: &str| {
+                        terminated(
+                            multispace1,
+                            peek(none_of(move |c| safe_in && is_flow_indicator(c))),
+                        )
+                        .verify(move |text: &str| {
                             if let Some(detected) = detect_ws_indent(text) {
                                 detected > indent
                             } else {
@@ -323,7 +328,12 @@ fn plain_scalar_chars(input: &mut Input) -> PResult<()> {
             })
             .void(),
             terminated(':'.void(), peek(none_of(|c: char| c.is_ascii_whitespace()))),
-            terminated(space1.void(), peek(none_of('#'))),
+            terminated(
+                space1.void(),
+                peek(none_of(move |c: char| {
+                    c == '#' || safe_in && is_flow_indicator(c)
+                })),
+            ),
         )),
     )
     .parse_next(input)
