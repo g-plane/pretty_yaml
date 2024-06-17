@@ -838,7 +838,10 @@ fn block(input: &mut Input) -> GreenResult {
                     properties,
                     terminated(
                         comments_or_whitespaces1,
-                        verify_state(|state| state.last_ws_has_nl),
+                        alt((
+                            verify_state(|state| state.last_ws_has_nl),
+                            peek(one_of(['|', '>'])).void(),
+                        )),
                     ),
                 )),
                 alt((
