@@ -690,6 +690,7 @@ fn space_before_block_compact_collection(input: &mut Input) -> GreenResult {
 }
 
 fn block_map(input: &mut Input) -> GreenResult {
+    let indent = input.state.indent;
     trace(
         "block_map",
         (
@@ -697,7 +698,10 @@ fn block_map(input: &mut Input) -> GreenResult {
             repeat(
                 0..,
                 (
-                    comments_or_whitespaces1.verify_indent(),
+                    terminated(
+                        comments_or_whitespaces1,
+                        verify_state(move |state| state.indent == indent),
+                    ),
                     alt((block_map_implicit_entry, block_map_explicit_entry)),
                 ),
             ),
