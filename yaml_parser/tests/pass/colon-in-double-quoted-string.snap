@@ -1,0 +1,9 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..18
+  DOCUMENT@0..17
+    BLOCK@0..17
+      FLOW@0..17
+        DOUBLE_QUOTED_SCALAR@0..17 "\"foo: bar\\\": baz\""
+  WHITESPACE@17..18 "\n"

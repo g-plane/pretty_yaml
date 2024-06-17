@@ -1,0 +1,47 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..37
+  DOCUMENT@0..36
+    BLOCK@0..36
+      BLOCK_SEQ@0..36
+        BLOCK_SEQ_ENTRY@0..17
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          BLOCK@2..17
+            FLOW@2..17
+              FLOW_MAP@2..17
+                L_BRACE@2..3 "{"
+                WHITESPACE@3..4 " "
+                FLOW_MAP_ENTRIES@4..16
+                  FLOW_MAP_ENTRY@4..15
+                    FLOW_MAP_KEY@4..9
+                      FLOW@4..9
+                        DOUBLE_QUOTED_SCALAR@4..9 "\"key\""
+                    COLON@9..10 ":"
+                    FLOW_MAP_VALUE@10..15
+                      FLOW@10..15
+                        PLAIN_SCALAR@10..15 "value"
+                  WHITESPACE@15..16 " "
+                R_BRACE@16..17 "}"
+        WHITESPACE@17..18 "\n"
+        BLOCK_SEQ_ENTRY@18..36
+          MINUS@18..19 "-"
+          WHITESPACE@19..20 " "
+          BLOCK@20..36
+            FLOW@20..36
+              FLOW_MAP@20..36
+                L_BRACE@20..21 "{"
+                WHITESPACE@21..22 " "
+                FLOW_MAP_ENTRIES@22..35
+                  FLOW_MAP_ENTRY@22..34
+                    FLOW_MAP_KEY@22..27
+                      FLOW@22..27
+                        DOUBLE_QUOTED_SCALAR@22..27 "\"key\""
+                    COLON@27..28 ":"
+                    FLOW_MAP_VALUE@28..34
+                      FLOW@28..34
+                        PLAIN_SCALAR@28..34 ":value"
+                  WHITESPACE@34..35 " "
+                R_BRACE@35..36 "}"
+  WHITESPACE@36..37 "\n"
