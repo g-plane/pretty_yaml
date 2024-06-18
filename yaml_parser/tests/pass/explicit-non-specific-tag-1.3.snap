@@ -5,12 +5,11 @@ ROOT@0..8
   DOCUMENT@0..7
     DIRECTIVES_END@0..3 "---"
     WHITESPACE@3..4 "\n"
-    BLOCK@4..7
-      FLOW@4..7
-        PROPERTIES@4..5
-          TAG_PROPERTY@4..5
-            NON_SPECIFIC_TAG@4..5
-              EXCLAMATION_MARK@4..5 "!"
-        WHITESPACE@5..6 " "
-        PLAIN_SCALAR@6..7 "a"
+    FLOW@4..7
+      PROPERTIES@4..5
+        TAG_PROPERTY@4..5
+          NON_SPECIFIC_TAG@4..5
+            EXCLAMATION_MARK@4..5 "!"
+      WHITESPACE@5..6 " "
+      PLAIN_SCALAR@6..7 "a"
   WHITESPACE@7..8 "\n"

@@ -17,14 +17,12 @@ ROOT@0..23
                 BLOCK_SEQ_ENTRY@6..13
                   MINUS@6..7 "-"
                   WHITESPACE@7..8 " "
-                  BLOCK@8..13
-                    FLOW@8..13
-                      PLAIN_SCALAR@8..13 "item1"
+                  FLOW@8..13
+                    PLAIN_SCALAR@8..13 "item1"
                 WHITESPACE@13..15 "\n "
                 BLOCK_SEQ_ENTRY@15..22
                   MINUS@15..16 "-"
                   WHITESPACE@16..17 " "
-                  BLOCK@17..22
-                    FLOW@17..22
-                      PLAIN_SCALAR@17..22 "item2"
+                  FLOW@17..22
+                    PLAIN_SCALAR@17..22 "item2"
   WHITESPACE@22..23 "\n"

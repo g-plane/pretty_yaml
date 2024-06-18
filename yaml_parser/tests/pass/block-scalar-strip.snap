@@ -11,14 +11,12 @@ ROOT@0..19
         BLOCK_SCALAR_TEXT@2..6 "\n ab"
   WHITESPACE@6..7 "\n"
   DOCUMENT@7..10
-    BLOCK@7..10
-      FLOW@7..10
-        PLAIN_SCALAR@7..10 "␣"
+    FLOW@7..10
+      PLAIN_SCALAR@7..10 "␣"
   WHITESPACE@10..11 "\n"
   DOCUMENT@11..14
-    BLOCK@11..14
-      FLOW@11..14
-        PLAIN_SCALAR@11..14 "␣"
+    FLOW@11..14
+      PLAIN_SCALAR@11..14 "␣"
   WHITESPACE@14..15 "\n"
   DOCUMENT_END@15..18 "..."
   WHITESPACE@18..19 "\n"

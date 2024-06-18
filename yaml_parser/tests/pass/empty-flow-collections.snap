@@ -27,12 +27,11 @@ ROOT@0..58
                         BLOCK_SEQ_ENTRY@26..30
                           MINUS@26..27 "-"
                           WHITESPACE@27..28 " "
-                          BLOCK@28..30
-                            FLOW@28..30
-                              FLOW_SEQ@28..30
-                                L_BRACKET@28..29 "["
-                                FLOW_SEQ_ENTRIES@29..29
-                                R_BRACKET@29..30 "]"
+                          FLOW@28..30
+                            FLOW_SEQ@28..30
+                              L_BRACKET@28..29 "["
+                              FLOW_SEQ_ENTRIES@29..29
+                              R_BRACKET@29..30 "]"
                 WHITESPACE@30..31 "\n"
                 BLOCK_SEQ_ENTRY@31..39
                   MINUS@31..32 "-"
@@ -45,12 +44,11 @@ ROOT@0..58
                         BLOCK_SEQ_ENTRY@35..39
                           MINUS@35..36 "-"
                           WHITESPACE@36..37 " "
-                          BLOCK@37..39
-                            FLOW@37..39
-                              FLOW_MAP@37..39
-                                L_BRACE@37..38 "{"
-                                FLOW_MAP_ENTRIES@38..38
-                                R_BRACE@38..39 "}"
+                          FLOW@37..39
+                            FLOW_MAP@37..39
+                              L_BRACE@37..38 "{"
+                              FLOW_MAP_ENTRIES@38..38
+                              R_BRACE@38..39 "}"
         WHITESPACE@39..40 "\n"
         BLOCK_MAP_ENTRY@40..48
           BLOCK_MAP_KEY@40..44
@@ -59,12 +57,11 @@ ROOT@0..58
           COLON@44..45 ":"
           WHITESPACE@45..46 " "
           BLOCK_MAP_VALUE@46..48
-            BLOCK@46..48
-              FLOW@46..48
-                FLOW_SEQ@46..48
-                  L_BRACKET@46..47 "["
-                  FLOW_SEQ_ENTRIES@47..47
-                  R_BRACKET@47..48 "]"
+            FLOW@46..48
+              FLOW_SEQ@46..48
+                L_BRACKET@46..47 "["
+                FLOW_SEQ_ENTRIES@47..47
+                R_BRACKET@47..48 "]"
         WHITESPACE@48..49 "\n"
         BLOCK_MAP_ENTRY@49..57
           BLOCK_MAP_KEY@49..53
@@ -73,10 +70,9 @@ ROOT@0..58
           COLON@53..54 ":"
           WHITESPACE@54..55 " "
           BLOCK_MAP_VALUE@55..57
-            BLOCK@55..57
-              FLOW@55..57
-                FLOW_MAP@55..57
-                  L_BRACE@55..56 "{"
-                  FLOW_MAP_ENTRIES@56..56
-                  R_BRACE@56..57 "}"
+            FLOW@55..57
+              FLOW_MAP@55..57
+                L_BRACE@55..56 "{"
+                FLOW_MAP_ENTRIES@56..56
+                R_BRACE@56..57 "}"
   WHITESPACE@57..58 "\n"

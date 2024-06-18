@@ -9,34 +9,31 @@ ROOT@0..19
           BLOCK_MAP_KEY@0..6
             QUESTION_MARK@0..1 "?"
             WHITESPACE@1..2 " "
-            BLOCK@2..6
-              FLOW@2..6
-                PROPERTIES@2..4
-                  ANCHOR_PROPERTY@2..4
-                    AMPERSAND@2..3 "&"
-                    ANCHOR_NAME@3..4 "a"
-                WHITESPACE@4..5 " "
-                PLAIN_SCALAR@5..6 "a"
+            FLOW@2..6
+              PROPERTIES@2..4
+                ANCHOR_PROPERTY@2..4
+                  AMPERSAND@2..3 "&"
+                  ANCHOR_NAME@3..4 "a"
+              WHITESPACE@4..5 " "
+              PLAIN_SCALAR@5..6 "a"
           WHITESPACE@6..7 "\n"
           COLON@7..8 ":"
           WHITESPACE@8..9 " "
           BLOCK_MAP_VALUE@9..13
-            BLOCK@9..13
-              FLOW@9..13
-                PROPERTIES@9..11
-                  ANCHOR_PROPERTY@9..11
-                    AMPERSAND@9..10 "&"
-                    ANCHOR_NAME@10..11 "b"
-                WHITESPACE@11..12 " "
-                PLAIN_SCALAR@12..13 "b"
+            FLOW@9..13
+              PROPERTIES@9..11
+                ANCHOR_PROPERTY@9..11
+                  AMPERSAND@9..10 "&"
+                  ANCHOR_NAME@10..11 "b"
+              WHITESPACE@11..12 " "
+              PLAIN_SCALAR@12..13 "b"
         WHITESPACE@13..14 "\n"
         BLOCK_MAP_ENTRY@14..18
           COLON@14..15 ":"
           WHITESPACE@15..16 " "
           BLOCK_MAP_VALUE@16..18
-            BLOCK@16..18
-              FLOW@16..18
-                ALIAS@16..18
-                  ASTERISK@16..17 "*"
-                  ANCHOR_NAME@17..18 "a"
+            FLOW@16..18
+              ALIAS@16..18
+                ASTERISK@16..17 "*"
+                ANCHOR_NAME@17..18 "a"
   WHITESPACE@18..19 "\n"

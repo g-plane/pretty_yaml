@@ -12,9 +12,8 @@ ROOT@0..148
           COLON@4..5 ":"
           WHITESPACE@5..6 " "
           BLOCK_MAP_VALUE@6..89
-            BLOCK@6..89
-              FLOW@6..89
-                PLAIN_SCALAR@6..89 "a!\"#$%&'()*+,-./09:;< ..."
+            FLOW@6..89
+              PLAIN_SCALAR@6..89 "a!\"#$%&'()*+,-./09:;< ..."
         WHITESPACE@89..90 "\n"
         BLOCK_MAP_ENTRY@90..114
           BLOCK_MAP_KEY@90..108
@@ -23,9 +22,8 @@ ROOT@0..148
           COLON@108..109 ":"
           WHITESPACE@109..110 " "
           BLOCK_MAP_VALUE@110..114
-            BLOCK@110..114
-              FLOW@110..114
-                PLAIN_SCALAR@110..114 "?foo"
+            FLOW@110..114
+              PLAIN_SCALAR@110..114 "?foo"
         WHITESPACE@114..115 "\n"
         BLOCK_MAP_ENTRY@115..131
           BLOCK_MAP_KEY@115..125
@@ -34,9 +32,8 @@ ROOT@0..148
           COLON@125..126 ":"
           WHITESPACE@126..127 " "
           BLOCK_MAP_VALUE@127..131
-            BLOCK@127..131
-              FLOW@127..131
-                PLAIN_SCALAR@127..131 ":foo"
+            FLOW@127..131
+              PLAIN_SCALAR@127..131 ":foo"
         WHITESPACE@131..132 "\n"
         BLOCK_MAP_ENTRY@132..147
           BLOCK_MAP_KEY@132..141
@@ -45,7 +42,6 @@ ROOT@0..148
           COLON@141..142 ":"
           WHITESPACE@142..143 " "
           BLOCK_MAP_VALUE@143..147
-            BLOCK@143..147
-              FLOW@143..147
-                PLAIN_SCALAR@143..147 "-foo"
+            FLOW@143..147
+              PLAIN_SCALAR@143..147 "-foo"
   WHITESPACE@147..148 "\n"

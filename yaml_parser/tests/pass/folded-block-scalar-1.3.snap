@@ -11,7 +11,6 @@ ROOT@0..28
         BLOCK_SCALAR_TEXT@5..13 "\n ab\n cd"
   WHITESPACE@13..14 "\n"
   DOCUMENT@14..27
-    BLOCK@14..27
-      FLOW@14..27
-        PLAIN_SCALAR@14..27 "␣\n ef\n\n\n gh"
+    FLOW@14..27
+      PLAIN_SCALAR@14..27 "␣\n ef\n\n\n gh"
   WHITESPACE@27..28 "\n"

@@ -14,7 +14,6 @@ ROOT@0..20
           COLON@7..8 ":"
           WHITESPACE@8..9 " "
           BLOCK_MAP_VALUE@9..19
-            BLOCK@9..19
-              FLOW@9..19
-                DOUBLE_QUOTED_SCALAR@9..19 "\"\\tstring\""
+            FLOW@9..19
+              DOUBLE_QUOTED_SCALAR@9..19 "\"\\tstring\""
   WHITESPACE@19..20 "\n"

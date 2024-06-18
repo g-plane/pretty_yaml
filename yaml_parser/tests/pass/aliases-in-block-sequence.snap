@@ -8,42 +8,38 @@ ROOT@0..24
         BLOCK_SEQ_ENTRY@0..6
           MINUS@0..1 "-"
           WHITESPACE@1..2 " "
-          BLOCK@2..6
-            FLOW@2..6
-              PROPERTIES@2..4
-                ANCHOR_PROPERTY@2..4
-                  AMPERSAND@2..3 "&"
-                  ANCHOR_NAME@3..4 "a"
-              WHITESPACE@4..5 " "
-              PLAIN_SCALAR@5..6 "a"
+          FLOW@2..6
+            PROPERTIES@2..4
+              ANCHOR_PROPERTY@2..4
+                AMPERSAND@2..3 "&"
+                ANCHOR_NAME@3..4 "a"
+            WHITESPACE@4..5 " "
+            PLAIN_SCALAR@5..6 "a"
         WHITESPACE@6..7 "\n"
         BLOCK_SEQ_ENTRY@7..13
           MINUS@7..8 "-"
           WHITESPACE@8..9 " "
-          BLOCK@9..13
-            FLOW@9..13
-              PROPERTIES@9..11
-                ANCHOR_PROPERTY@9..11
-                  AMPERSAND@9..10 "&"
-                  ANCHOR_NAME@10..11 "b"
-              WHITESPACE@11..12 " "
-              PLAIN_SCALAR@12..13 "b"
+          FLOW@9..13
+            PROPERTIES@9..11
+              ANCHOR_PROPERTY@9..11
+                AMPERSAND@9..10 "&"
+                ANCHOR_NAME@10..11 "b"
+            WHITESPACE@11..12 " "
+            PLAIN_SCALAR@12..13 "b"
         WHITESPACE@13..14 "\n"
         BLOCK_SEQ_ENTRY@14..18
           MINUS@14..15 "-"
           WHITESPACE@15..16 " "
-          BLOCK@16..18
-            FLOW@16..18
-              ALIAS@16..18
-                ASTERISK@16..17 "*"
-                ANCHOR_NAME@17..18 "a"
+          FLOW@16..18
+            ALIAS@16..18
+              ASTERISK@16..17 "*"
+              ANCHOR_NAME@17..18 "a"
         WHITESPACE@18..19 "\n"
         BLOCK_SEQ_ENTRY@19..23
           MINUS@19..20 "-"
           WHITESPACE@20..21 " "
-          BLOCK@21..23
-            FLOW@21..23
-              ALIAS@21..23
-                ASTERISK@21..22 "*"
-                ANCHOR_NAME@22..23 "b"
+          FLOW@21..23
+            ALIAS@21..23
+              ASTERISK@21..22 "*"
+              ANCHOR_NAME@22..23 "b"
   WHITESPACE@23..24 "\n"

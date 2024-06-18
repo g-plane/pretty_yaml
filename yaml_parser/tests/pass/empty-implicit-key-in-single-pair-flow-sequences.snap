@@ -8,36 +8,34 @@ ROOT@0..42
         BLOCK_SEQ_ENTRY@0..17
           MINUS@0..1 "-"
           WHITESPACE@1..2 " "
-          BLOCK@2..17
-            FLOW@2..17
-              FLOW_SEQ@2..17
-                L_BRACKET@2..3 "["
-                WHITESPACE@3..4 " "
-                FLOW_SEQ_ENTRIES@4..16
-                  FLOW_SEQ_ENTRY@4..15
-                    FLOW_PAIR@4..15
-                      COLON@4..5 ":"
-                      WHITESPACE@5..6 " "
-                      FLOW_MAP_VALUE@6..15
-                        FLOW@6..15
-                          PLAIN_SCALAR@6..15 "empty key"
-                  WHITESPACE@15..16 " "
-                R_BRACKET@16..17 "]"
+          FLOW@2..17
+            FLOW_SEQ@2..17
+              L_BRACKET@2..3 "["
+              WHITESPACE@3..4 " "
+              FLOW_SEQ_ENTRIES@4..16
+                FLOW_SEQ_ENTRY@4..15
+                  FLOW_PAIR@4..15
+                    COLON@4..5 ":"
+                    WHITESPACE@5..6 " "
+                    FLOW_MAP_VALUE@6..15
+                      FLOW@6..15
+                        PLAIN_SCALAR@6..15 "empty key"
+                WHITESPACE@15..16 " "
+              R_BRACKET@16..17 "]"
         WHITESPACE@17..18 "\n"
         BLOCK_SEQ_ENTRY@18..41
           MINUS@18..19 "-"
           WHITESPACE@19..20 " "
-          BLOCK@20..41
-            FLOW@20..41
-              FLOW_SEQ@20..41
-                L_BRACKET@20..21 "["
-                FLOW_SEQ_ENTRIES@21..40
-                  FLOW_SEQ_ENTRY@21..40
-                    FLOW_PAIR@21..40
-                      COLON@21..22 ":"
-                      WHITESPACE@22..23 " "
-                      FLOW_MAP_VALUE@23..40
-                        FLOW@23..40
-                          PLAIN_SCALAR@23..40 "another empty key"
-                R_BRACKET@40..41 "]"
+          FLOW@20..41
+            FLOW_SEQ@20..41
+              L_BRACKET@20..21 "["
+              FLOW_SEQ_ENTRIES@21..40
+                FLOW_SEQ_ENTRY@21..40
+                  FLOW_PAIR@21..40
+                    COLON@21..22 ":"
+                    WHITESPACE@22..23 " "
+                    FLOW_MAP_VALUE@23..40
+                      FLOW@23..40
+                        PLAIN_SCALAR@23..40 "another empty key"
+              R_BRACKET@40..41 "]"
   WHITESPACE@41..42 "\n"

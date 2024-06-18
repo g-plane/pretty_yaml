@@ -12,16 +12,15 @@ ROOT@0..636
           COLON@9..10 ":"
           WHITESPACE@10..11 " "
           BLOCK_MAP_VALUE@11..282
-            BLOCK@11..282
-              FLOW@11..282
-                PROPERTIES@11..19
-                  TAG_PROPERTY@11..19
-                    SHORTHAND_TAG@11..19
-                      TAG_HANDLE@11..13
-                        TAG_HANDLE_SECONDARY@11..13 "!!"
-                      TAG_CHAR@13..19 "binary"
-                WHITESPACE@19..20 " "
-                DOUBLE_QUOTED_SCALAR@20..282 "\"\\\n R0lGODlhDAAMAIQAA ..."
+            FLOW@11..282
+              PROPERTIES@11..19
+                TAG_PROPERTY@11..19
+                  SHORTHAND_TAG@11..19
+                    TAG_HANDLE@11..13
+                      TAG_HANDLE_SECONDARY@11..13 "!!"
+                    TAG_CHAR@13..19 "binary"
+              WHITESPACE@19..20 " "
+              DOUBLE_QUOTED_SCALAR@20..282 "\"\\\n R0lGODlhDAAMAIQAA ..."
         WHITESPACE@282..283 "\n"
         BLOCK_MAP_ENTRY@283..558
           BLOCK_MAP_KEY@283..290
@@ -49,7 +48,6 @@ ROOT@0..636
           COLON@570..571 ":"
           WHITESPACE@571..573 "\n "
           BLOCK_MAP_VALUE@573..635
-            BLOCK@573..635
-              FLOW@573..635
-                PLAIN_SCALAR@573..635 "The binary value abov ..."
+            FLOW@573..635
+              PLAIN_SCALAR@573..635 "The binary value abov ..."
   WHITESPACE@635..636 "\n"

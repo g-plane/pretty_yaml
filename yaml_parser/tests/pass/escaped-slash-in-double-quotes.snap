@@ -12,7 +12,6 @@ ROOT@0..22
           COLON@13..14 ":"
           WHITESPACE@14..15 " "
           BLOCK_MAP_VALUE@15..21
-            BLOCK@15..21
-              FLOW@15..21
-                DOUBLE_QUOTED_SCALAR@15..21 "\"a\\/b\""
+            FLOW@15..21
+              DOUBLE_QUOTED_SCALAR@15..21 "\"a\\/b\""
   WHITESPACE@21..22 "\n"

@@ -14,46 +14,43 @@ ROOT@0..120
           COLON@7..8 ":"
           WHITESPACE@8..9 " "
           BLOCK_MAP_VALUE@9..14
-            BLOCK@9..14
-              FLOW@9..14
-                PLAIN_SCALAR@9..14 "value"
+            FLOW@9..14
+              PLAIN_SCALAR@9..14 "value"
         WHITESPACE@14..15 "\n"
         BLOCK_MAP_ENTRY@15..26
           COLON@15..16 ":"
           WHITESPACE@16..17 " "
           BLOCK_MAP_VALUE@17..26
-            BLOCK@17..26
-              FLOW@17..26
-                PLAIN_SCALAR@17..26 "empty key"
+            FLOW@17..26
+              PLAIN_SCALAR@17..26 "empty key"
   WHITESPACE@26..27 "\n"
   DOCUMENT@27..59
     DIRECTIVES_END@27..30 "---"
     WHITESPACE@30..31 "\n"
-    BLOCK@31..59
-      FLOW@31..59
-        FLOW_MAP@31..59
-          L_BRACE@31..32 "{"
-          WHITESPACE@32..34 "\n "
-          FLOW_MAP_ENTRIES@34..58
-            FLOW_MAP_ENTRY@34..44
-              FLOW_MAP_KEY@34..37
-                FLOW@34..37
-                  PLAIN_SCALAR@34..37 "key"
-              COLON@37..38 ":"
-              WHITESPACE@38..39 " "
-              FLOW_MAP_VALUE@39..44
-                FLOW@39..44
-                  PLAIN_SCALAR@39..44 "value"
-            COMMA@44..45 ","
-            WHITESPACE@45..46 " "
-            FLOW_MAP_ENTRY@46..57
-              COLON@46..47 ":"
-              WHITESPACE@47..48 " "
-              FLOW_MAP_VALUE@48..57
-                FLOW@48..57
-                  PLAIN_SCALAR@48..57 "empty key"
-            WHITESPACE@57..58 "\n"
-          R_BRACE@58..59 "}"
+    FLOW@31..59
+      FLOW_MAP@31..59
+        L_BRACE@31..32 "{"
+        WHITESPACE@32..34 "\n "
+        FLOW_MAP_ENTRIES@34..58
+          FLOW_MAP_ENTRY@34..44
+            FLOW_MAP_KEY@34..37
+              FLOW@34..37
+                PLAIN_SCALAR@34..37 "key"
+            COLON@37..38 ":"
+            WHITESPACE@38..39 " "
+            FLOW_MAP_VALUE@39..44
+              FLOW@39..44
+                PLAIN_SCALAR@39..44 "value"
+          COMMA@44..45 ","
+          WHITESPACE@45..46 " "
+          FLOW_MAP_ENTRY@46..57
+            COLON@46..47 ":"
+            WHITESPACE@47..48 " "
+            FLOW_MAP_VALUE@48..57
+              FLOW@48..57
+                PLAIN_SCALAR@48..57 "empty key"
+          WHITESPACE@57..58 "\n"
+        R_BRACE@58..59 "}"
   WHITESPACE@59..60 "\n"
   DOCUMENT@60..87
     DIRECTIVES_END@60..63 "---"
@@ -70,14 +67,13 @@ ROOT@0..120
     WHITESPACE@91..92 "\n"
     COMMENT@92..113 "# empty key and value"
     WHITESPACE@113..114 "\n"
-    BLOCK@114..119
-      FLOW@114..119
-        FLOW_MAP@114..119
-          L_BRACE@114..115 "{"
-          WHITESPACE@115..116 " "
-          FLOW_MAP_ENTRIES@116..118
-            FLOW_MAP_ENTRY@116..117
-              COLON@116..117 ":"
-            WHITESPACE@117..118 " "
-          R_BRACE@118..119 "}"
+    FLOW@114..119
+      FLOW_MAP@114..119
+        L_BRACE@114..115 "{"
+        WHITESPACE@115..116 " "
+        FLOW_MAP_ENTRIES@116..118
+          FLOW_MAP_ENTRY@116..117
+            COLON@116..117 ":"
+          WHITESPACE@117..118 " "
+        R_BRACE@118..119 "}"
   WHITESPACE@119..120 "\n"

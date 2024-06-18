@@ -873,8 +873,7 @@ fn block(input: &mut Input) -> GreenResult {
                     node(BLOCK, children)
                 }),
             flow.require_deeper_indent()
-                .set_state(|state| state.bf_ctx = BlockFlowCtx::FlowOut)
-                .map(|child| node(BLOCK, [child])),
+                .set_state(|state| state.bf_ctx = BlockFlowCtx::FlowOut),
             properties.map(|child| node(BLOCK, [child])),
         )),
     )

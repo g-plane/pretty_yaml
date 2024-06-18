@@ -5,22 +5,21 @@ ROOT@0..31
   DOCUMENT@0..30
     DIRECTIVES_END@0..3 "---"
     WHITESPACE@3..4 "\n"
-    BLOCK@4..30
-      FLOW@4..30
-        FLOW_SEQ@4..30
-          L_BRACKET@4..5 "["
-          WHITESPACE@5..6 " "
-          FLOW_SEQ_ENTRIES@6..29
-            FLOW_SEQ_ENTRY@6..11
-              FLOW@6..11
-                PLAIN_SCALAR@6..11 "word1"
-            WHITESPACE@11..12 "\n"
-            COMMENT@12..21 "# comment"
-            WHITESPACE@21..22 "\n"
-            COMMA@22..23 ","
-            WHITESPACE@23..24 " "
-            FLOW_SEQ_ENTRY@24..29
-              FLOW@24..29
-                PLAIN_SCALAR@24..29 "word2"
-          R_BRACKET@29..30 "]"
+    FLOW@4..30
+      FLOW_SEQ@4..30
+        L_BRACKET@4..5 "["
+        WHITESPACE@5..6 " "
+        FLOW_SEQ_ENTRIES@6..29
+          FLOW_SEQ_ENTRY@6..11
+            FLOW@6..11
+              PLAIN_SCALAR@6..11 "word1"
+          WHITESPACE@11..12 "\n"
+          COMMENT@12..21 "# comment"
+          WHITESPACE@21..22 "\n"
+          COMMA@22..23 ","
+          WHITESPACE@23..24 " "
+          FLOW_SEQ_ENTRY@24..29
+            FLOW@24..29
+              PLAIN_SCALAR@24..29 "word2"
+        R_BRACKET@29..30 "]"
   WHITESPACE@30..31 "\n"

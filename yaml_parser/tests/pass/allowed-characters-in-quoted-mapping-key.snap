@@ -12,9 +12,8 @@ ROOT@0..58
           COLON@28..29 ":"
           WHITESPACE@29..30 " "
           BLOCK_MAP_VALUE@30..32
-            BLOCK@30..32
-              FLOW@30..32
-                PLAIN_SCALAR@30..32 "23"
+            FLOW@30..32
+              PLAIN_SCALAR@30..32 "23"
         WHITESPACE@32..33 "\n"
         BLOCK_MAP_ENTRY@33..57
           BLOCK_MAP_KEY@33..53
@@ -23,7 +22,6 @@ ROOT@0..58
           COLON@53..54 ":"
           WHITESPACE@54..55 " "
           BLOCK_MAP_VALUE@55..57
-            BLOCK@55..57
-              FLOW@55..57
-                PLAIN_SCALAR@55..57 "24"
+            FLOW@55..57
+              PLAIN_SCALAR@55..57 "24"
   WHITESPACE@57..58 "\n"

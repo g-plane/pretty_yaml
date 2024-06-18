@@ -16,9 +16,8 @@ ROOT@0..32
               COLON@10..11 ":"
               WHITESPACE@11..12 " "
               BLOCK_MAP_VALUE@12..15
-                BLOCK@12..15
-                  FLOW@12..15
-                    PLAIN_SCALAR@12..15 "foo"
+                FLOW@12..15
+                  PLAIN_SCALAR@12..15 "foo"
         WHITESPACE@15..16 "\n"
         BLOCK_SEQ_ENTRY@16..31
           MINUS@16..17 "-"
@@ -31,7 +30,6 @@ ROOT@0..32
               COLON@26..27 ":"
               WHITESPACE@27..28 " "
               BLOCK_MAP_VALUE@28..31
-                BLOCK@28..31
-                  FLOW@28..31
-                    PLAIN_SCALAR@28..31 "foo"
+                FLOW@28..31
+                  PLAIN_SCALAR@28..31 "foo"
   WHITESPACE@31..32 "\n"

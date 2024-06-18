@@ -9,17 +9,15 @@ ROOT@0..11
           BLOCK_MAP_KEY@0..3
             QUESTION_MARK@0..1 "?"
             WHITESPACE@1..2 " "
-            BLOCK@2..3
-              FLOW@2..3
-                PLAIN_SCALAR@2..3 "a"
+            FLOW@2..3
+              PLAIN_SCALAR@2..3 "a"
         WHITESPACE@3..4 "\n"
         BLOCK_MAP_ENTRY@4..7
           BLOCK_MAP_KEY@4..7
             QUESTION_MARK@4..5 "?"
             WHITESPACE@5..6 " "
-            BLOCK@6..7
-              FLOW@6..7
-                PLAIN_SCALAR@6..7 "b"
+            FLOW@6..7
+              PLAIN_SCALAR@6..7 "b"
         WHITESPACE@7..8 "\n"
         BLOCK_MAP_ENTRY@8..10
           BLOCK_MAP_KEY@8..9

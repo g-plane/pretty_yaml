@@ -24,14 +24,12 @@ ROOT@0..26
                 BLOCK_SEQ_ENTRY@18..21
                   MINUS@18..19 "-"
                   WHITESPACE@19..20 " "
-                  BLOCK@20..21
-                    FLOW@20..21
-                      PLAIN_SCALAR@20..21 "a"
+                  FLOW@20..21
+                    PLAIN_SCALAR@20..21 "a"
                 WHITESPACE@21..22 "\n"
                 BLOCK_SEQ_ENTRY@22..25
                   MINUS@22..23 "-"
                   WHITESPACE@23..24 " "
-                  BLOCK@24..25
-                    FLOW@24..25
-                      PLAIN_SCALAR@24..25 "b"
+                  FLOW@24..25
+                    PLAIN_SCALAR@24..25 "b"
   WHITESPACE@25..26 "\n"

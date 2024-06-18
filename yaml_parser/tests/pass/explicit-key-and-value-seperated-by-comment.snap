@@ -11,16 +11,14 @@ ROOT@0..28
           BLOCK_MAP_KEY@4..9
             QUESTION_MARK@4..5 "?"
             WHITESPACE@5..6 " "
-            BLOCK@6..9
-              FLOW@6..9
-                PLAIN_SCALAR@6..9 "key"
+            FLOW@6..9
+              PLAIN_SCALAR@6..9 "key"
           WHITESPACE@9..10 "\n"
           COMMENT@10..19 "# comment"
           WHITESPACE@19..20 "\n"
           COLON@20..21 ":"
           WHITESPACE@21..22 " "
           BLOCK_MAP_VALUE@22..27
-            BLOCK@22..27
-              FLOW@22..27
-                PLAIN_SCALAR@22..27 "value"
+            FLOW@22..27
+              PLAIN_SCALAR@22..27 "value"
   WHITESPACE@27..28 "\n"

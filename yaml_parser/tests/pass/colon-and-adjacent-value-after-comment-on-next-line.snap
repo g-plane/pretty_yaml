@@ -5,23 +5,22 @@ ROOT@0..31
   DOCUMENT@0..30
     DIRECTIVES_END@0..3 "---"
     WHITESPACE@3..4 "\n"
-    BLOCK@4..30
-      FLOW@4..30
-        FLOW_MAP@4..30
-          L_BRACE@4..5 "{"
-          WHITESPACE@5..6 " "
-          FLOW_MAP_ENTRIES@6..29
-            FLOW_MAP_ENTRY@6..28
-              FLOW_MAP_KEY@6..11
-                FLOW@6..11
-                  DOUBLE_QUOTED_SCALAR@6..11 "\"foo\""
-              WHITESPACE@11..12 " "
-              COMMENT@12..21 "# comment"
-              WHITESPACE@21..24 "\n  "
-              COLON@24..25 ":"
-              FLOW_MAP_VALUE@25..28
-                FLOW@25..28
-                  PLAIN_SCALAR@25..28 "bar"
-            WHITESPACE@28..29 " "
-          R_BRACE@29..30 "}"
+    FLOW@4..30
+      FLOW_MAP@4..30
+        L_BRACE@4..5 "{"
+        WHITESPACE@5..6 " "
+        FLOW_MAP_ENTRIES@6..29
+          FLOW_MAP_ENTRY@6..28
+            FLOW_MAP_KEY@6..11
+              FLOW@6..11
+                DOUBLE_QUOTED_SCALAR@6..11 "\"foo\""
+            WHITESPACE@11..12 " "
+            COMMENT@12..21 "# comment"
+            WHITESPACE@21..24 "\n  "
+            COLON@24..25 ":"
+            FLOW_MAP_VALUE@25..28
+              FLOW@25..28
+                PLAIN_SCALAR@25..28 "bar"
+          WHITESPACE@28..29 " "
+        R_BRACE@29..30 "}"
   WHITESPACE@30..31 "\n"

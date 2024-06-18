@@ -27,9 +27,8 @@ ROOT@0..26
           COLON@16..17 ":"
           WHITESPACE@17..18 " "
           BLOCK_MAP_VALUE@18..25
-            BLOCK@18..25
-              FLOW@18..25
-                ALIAS@18..25
-                  ASTERISK@18..19 "*"
-                  ANCHOR_NAME@19..25 "anchor"
+            FLOW@18..25
+              ALIAS@18..25
+                ASTERISK@18..19 "*"
+                ANCHOR_NAME@19..25 "anchor"
   WHITESPACE@25..26 "\n"

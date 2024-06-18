@@ -18,7 +18,6 @@ ROOT@0..14
           COLON@6..7 ":"
           WHITESPACE@7..8 " "
           BLOCK_MAP_VALUE@8..13
-            BLOCK@8..13
-              FLOW@8..13
-                PLAIN_SCALAR@8..13 "block"
+            FLOW@8..13
+              PLAIN_SCALAR@8..13 "block"
   WHITESPACE@13..14 "\n"

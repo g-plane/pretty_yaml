@@ -12,18 +12,17 @@ ROOT@0..10
           COLON@1..2 ":"
           WHITESPACE@2..3 " "
           BLOCK_MAP_VALUE@3..9
-            BLOCK@3..9
-              FLOW@3..9
-                FLOW_SEQ@3..9
-                  L_BRACKET@3..4 "["
-                  FLOW_SEQ_ENTRIES@4..8
-                    FLOW_SEQ_ENTRY@4..5
-                      FLOW@4..5
-                        PLAIN_SCALAR@4..5 "b"
-                    COMMA@5..6 ","
-                    WHITESPACE@6..7 " "
-                    FLOW_SEQ_ENTRY@7..8
-                      FLOW@7..8
-                        PLAIN_SCALAR@7..8 "c"
-                  R_BRACKET@8..9 "]"
+            FLOW@3..9
+              FLOW_SEQ@3..9
+                L_BRACKET@3..4 "["
+                FLOW_SEQ_ENTRIES@4..8
+                  FLOW_SEQ_ENTRY@4..5
+                    FLOW@4..5
+                      PLAIN_SCALAR@4..5 "b"
+                  COMMA@5..6 ","
+                  WHITESPACE@6..7 " "
+                  FLOW_SEQ_ENTRY@7..8
+                    FLOW@7..8
+                      PLAIN_SCALAR@7..8 "c"
+                R_BRACKET@8..9 "]"
   WHITESPACE@9..10 "\n"

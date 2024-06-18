@@ -12,7 +12,6 @@ ROOT@0..18
           COLON@11..12 ":"
           WHITESPACE@12..13 " "
           BLOCK_MAP_VALUE@13..17
-            BLOCK@13..17
-              FLOW@13..17
-                PLAIN_SCALAR@13..17 "baz'"
+            FLOW@13..17
+              PLAIN_SCALAR@13..17 "baz'"
   WHITESPACE@17..18 "\n"

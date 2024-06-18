@@ -17,9 +17,8 @@ ROOT@0..16
           COLON@4..5 ":"
           WHITESPACE@5..6 " "
           BLOCK_MAP_VALUE@6..7
-            BLOCK@6..7
-              FLOW@6..7
-                PLAIN_SCALAR@6..7 "b"
+            FLOW@6..7
+              PLAIN_SCALAR@6..7 "b"
         WHITESPACE@7..8 "\n"
         BLOCK_MAP_ENTRY@8..15
           BLOCK_MAP_KEY@8..9
@@ -28,12 +27,11 @@ ROOT@0..16
           COLON@9..10 ":"
           WHITESPACE@10..11 " "
           BLOCK_MAP_VALUE@11..15
-            BLOCK@11..15
-              FLOW@11..15
-                PROPERTIES@11..13
-                  ANCHOR_PROPERTY@11..13
-                    AMPERSAND@11..12 "&"
-                    ANCHOR_NAME@12..13 "d"
-                WHITESPACE@13..14 " "
-                PLAIN_SCALAR@14..15 "d"
+            FLOW@11..15
+              PROPERTIES@11..13
+                ANCHOR_PROPERTY@11..13
+                  AMPERSAND@11..12 "&"
+                  ANCHOR_NAME@12..13 "d"
+              WHITESPACE@13..14 " "
+              PLAIN_SCALAR@14..15 "d"
   WHITESPACE@15..16 "\n"

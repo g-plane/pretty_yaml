@@ -3,7 +3,6 @@ source: yaml_parser/tests/pass.rs
 ---
 ROOT@0..32
   DOCUMENT@0..31
-    BLOCK@0..31
-      FLOW@0..31
-        DOUBLE_QUOTED_SCALAR@0..31 "\"2 leading\n    \\—— ..."
+    FLOW@0..31
+      DOUBLE_QUOTED_SCALAR@0..31 "\"2 leading\n    \\—— ..."
   WHITESPACE@31..32 "\n"

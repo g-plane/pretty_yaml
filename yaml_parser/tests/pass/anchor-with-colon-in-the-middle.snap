@@ -14,12 +14,11 @@ ROOT@0..24
           COLON@7..8 ":"
           WHITESPACE@8..9 " "
           BLOCK_MAP_VALUE@9..23
-            BLOCK@9..23
-              FLOW@9..23
-                PROPERTIES@9..17
-                  ANCHOR_PROPERTY@9..17
-                    AMPERSAND@9..10 "&"
-                    ANCHOR_NAME@10..17 "an:chor"
-                WHITESPACE@17..18 " "
-                PLAIN_SCALAR@18..23 "value"
+            FLOW@9..23
+              PROPERTIES@9..17
+                ANCHOR_PROPERTY@9..17
+                  AMPERSAND@9..10 "&"
+                  ANCHOR_NAME@10..17 "an:chor"
+              WHITESPACE@17..18 " "
+              PLAIN_SCALAR@18..23 "value"
   WHITESPACE@23..24 "\n"
