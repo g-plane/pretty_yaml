@@ -452,8 +452,7 @@ fn flow_map_entries(input: &mut Input) -> GreenResult {
 fn flow_map_entry(input: &mut Input) -> GreenResult {
     alt((
         (
-            opt(flow_map_entry_key),
-            comments_or_whitespaces0,
+            opt((flow_map_entry_key, comments_or_whitespaces0)),
             ascii_char::<':'>(COLON),
             opt((comments_or_whitespaces0, flow)),
         )
@@ -462,12 +461,12 @@ fn flow_map_entry(input: &mut Input) -> GreenResult {
     ))
     .parse_next(input)
     .map(|either| match either {
-        Either::Left((key, mut trivias_before_colon, colon, value)) => {
+        Either::Left((key, colon, value)) => {
             let mut children = Vec::with_capacity(3);
-            if let Some(key) = key {
+            if let Some((key, mut trivias_before_colon)) = key {
                 children.push(key);
+                children.append(&mut trivias_before_colon);
             }
-            children.append(&mut trivias_before_colon);
             children.push(colon);
             if let Some((mut trivias_after_colon, value)) = value {
                 children.append(&mut trivias_after_colon);
