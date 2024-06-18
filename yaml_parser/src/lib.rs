@@ -5,7 +5,7 @@ use rowan::{GreenNode, GreenToken, NodeOrToken};
 use std::mem;
 use winnow::{
     ascii::{digit1, line_ending, multispace1, space1, take_escaped, till_line_ending},
-    combinator::{alt, cut_err, dispatch, fail, opt, peek, repeat, terminated, trace},
+    combinator::{alt, cut_err, dispatch, fail, not, opt, peek, repeat, terminated, trace},
     error::{StrContext, StrContextValue},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
@@ -276,7 +276,11 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
                     (
                         terminated(
                             multispace1,
-                            peek(none_of(move |c| safe_in && is_flow_indicator(c))),
+                            peek(not(alt((
+                                one_of(move |c: char| c == '#' || safe_in && is_flow_indicator(c))
+                                    .void(),
+                                (':', space1).void(),
+                            )))),
                         )
                         .verify(move |text: &str| {
                             if let Some(detected) = detect_ws_indent(text) {
@@ -330,9 +334,10 @@ fn plain_scalar_chars(input: &mut Input) -> PResult<()> {
             terminated(':'.void(), peek(none_of(|c: char| c.is_ascii_whitespace()))),
             terminated(
                 space1.void(),
-                peek(none_of(move |c: char| {
-                    c == '#' || safe_in && is_flow_indicator(c)
-                })),
+                peek(not(alt((
+                    one_of(move |c: char| c == '#' || safe_in && is_flow_indicator(c)).void(),
+                    (':', space1).void(),
+                )))),
             ),
         )),
     )
