@@ -945,28 +945,49 @@ fn directive(input: &mut Input) -> GreenResult {
 }
 
 fn document(input: &mut Input) -> GreenResult {
-    (
-        repeat(0.., (directive, comments_or_whitespaces0)),
-        opt((directives_end, comments_or_whitespaces0)),
-        block.set_state(|state| {
-            state.bf_ctx = BlockFlowCtx::BlockIn;
-            state.document_top = true;
-        }),
-    )
-        .parse_next(input)
-        .map(|(directives, end, block): (Vec<_>, _, _)| {
-            let mut children = Vec::with_capacity(2 + directives.len());
-            directives.into_iter().for_each(|(directive, mut trivias)| {
-                children.push(directive);
-                children.append(&mut trivias);
-            });
-            if let Some((end, mut trivias)) = end {
+    alt((
+        (
+            repeat(1.., (directive, comments_or_whitespaces0)),
+            directives_end,
+            opt((
+                comments_or_whitespaces0,
+                block.set_state(|state| {
+                    state.bf_ctx = BlockFlowCtx::BlockIn;
+                    state.document_top = true;
+                }),
+            )),
+        )
+            .map(|(directives, end, block): (Vec<_>, _, _)| {
+                let mut children = Vec::with_capacity(3 + directives.len());
+                directives.into_iter().for_each(|(directive, mut trivias)| {
+                    children.push(directive);
+                    children.append(&mut trivias);
+                });
                 children.push(end);
-                children.append(&mut trivias);
-            }
-            children.push(block);
-            node(DOCUMENT, children)
-        })
+                if let Some((mut trivias, block)) = block {
+                    children.append(&mut trivias);
+                    children.push(block);
+                }
+                node(DOCUMENT, children)
+            }),
+        (
+            opt((directives_end, comments_or_whitespaces0)),
+            block.set_state(|state| {
+                state.bf_ctx = BlockFlowCtx::BlockIn;
+                state.document_top = true;
+            }),
+        )
+            .map(|(end, block)| {
+                let mut children = Vec::with_capacity(1);
+                if let Some((end, mut trivias)) = end {
+                    children.push(end);
+                    children.append(&mut trivias);
+                }
+                children.push(block);
+                node(DOCUMENT, children)
+            }),
+    ))
+    .parse_next(input)
 }
 
 fn document_end(input: &mut Input) -> GreenResult {
