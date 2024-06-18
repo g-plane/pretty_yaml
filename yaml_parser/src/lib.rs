@@ -331,7 +331,12 @@ fn plain_scalar_chars(input: &mut Input) -> PResult<()> {
                 c.is_ascii_whitespace() || c == ':' || safe_in && is_flow_indicator(c)
             })
             .void(),
-            terminated(':'.void(), peek(none_of(|c: char| c.is_ascii_whitespace()))),
+            terminated(
+                ':'.void(),
+                peek(none_of(move |c: char| {
+                    c.is_ascii_whitespace() || safe_in && is_flow_indicator(c)
+                })),
+            ),
             terminated(
                 space1.void(),
                 peek(not(alt((
