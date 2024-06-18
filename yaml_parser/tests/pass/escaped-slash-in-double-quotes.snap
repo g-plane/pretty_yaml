@@ -1,0 +1,18 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..22
+  DOCUMENT@0..21
+    BLOCK@0..21
+      BLOCK_MAP@0..21
+        BLOCK_MAP_ENTRY@0..21
+          BLOCK_MAP_KEY@0..13
+            FLOW@0..13
+              PLAIN_SCALAR@0..13 "escaped slash"
+          COLON@13..14 ":"
+          WHITESPACE@14..15 " "
+          BLOCK_MAP_VALUE@15..21
+            BLOCK@15..21
+              FLOW@15..21
+                DOUBLE_QUOTED_SCALAR@15..21 "\"a\\/b\""
+  WHITESPACE@21..22 "\n"

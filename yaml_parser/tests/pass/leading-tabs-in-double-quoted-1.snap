@@ -1,0 +1,9 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..22
+  DOCUMENT@0..21
+    BLOCK@0..21
+      FLOW@0..21
+        DOUBLE_QUOTED_SCALAR@0..21 "\"1 leading\n    \\ttab\""
+  WHITESPACE@21..22 "\n"

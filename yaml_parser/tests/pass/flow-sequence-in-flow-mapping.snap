@@ -1,0 +1,54 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..23
+  DOCUMENT@0..22
+    BLOCK@0..22
+      FLOW@0..22
+        FLOW_MAP@0..22
+          L_BRACE@0..1 "{"
+          FLOW_MAP_ENTRIES@1..21
+            FLOW_MAP_ENTRY@1..10
+              FLOW_MAP_KEY@1..2
+                FLOW@1..2
+                  PLAIN_SCALAR@1..2 "a"
+              COLON@2..3 ":"
+              WHITESPACE@3..4 " "
+              FLOW_MAP_VALUE@4..10
+                FLOW@4..10
+                  FLOW_SEQ@4..10
+                    L_BRACKET@4..5 "["
+                    FLOW_SEQ_ENTRIES@5..9
+                      FLOW_SEQ_ENTRY@5..6
+                        FLOW@5..6
+                          PLAIN_SCALAR@5..6 "b"
+                      COMMA@6..7 ","
+                      WHITESPACE@7..8 " "
+                      FLOW_SEQ_ENTRY@8..9
+                        FLOW@8..9
+                          PLAIN_SCALAR@8..9 "c"
+                    R_BRACKET@9..10 "]"
+            COMMA@10..11 ","
+            WHITESPACE@11..12 " "
+            FLOW_MAP_ENTRY@12..21
+              FLOW_MAP_KEY@12..18
+                FLOW@12..18
+                  FLOW_SEQ@12..18
+                    L_BRACKET@12..13 "["
+                    FLOW_SEQ_ENTRIES@13..17
+                      FLOW_SEQ_ENTRY@13..14
+                        FLOW@13..14
+                          PLAIN_SCALAR@13..14 "d"
+                      COMMA@14..15 ","
+                      WHITESPACE@15..16 " "
+                      FLOW_SEQ_ENTRY@16..17
+                        FLOW@16..17
+                          PLAIN_SCALAR@16..17 "e"
+                    R_BRACKET@17..18 "]"
+              COLON@18..19 ":"
+              WHITESPACE@19..20 " "
+              FLOW_MAP_VALUE@20..21
+                FLOW@20..21
+                  PLAIN_SCALAR@20..21 "f"
+          R_BRACE@21..22 "}"
+  WHITESPACE@22..23 "\n"

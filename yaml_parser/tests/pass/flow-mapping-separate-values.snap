@@ -1,0 +1,38 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..59
+  DOCUMENT@0..58
+    BLOCK@0..58
+      FLOW@0..58
+        FLOW_MAP@0..58
+          L_BRACE@0..1 "{"
+          WHITESPACE@1..2 "\n"
+          FLOW_MAP_ENTRIES@2..57
+            FLOW_MAP_ENTRY@2..23
+              FLOW_MAP_KEY@2..10
+                FLOW@2..10
+                  PLAIN_SCALAR@2..10 "unquoted"
+              WHITESPACE@10..11 " "
+              COLON@11..12 ":"
+              WHITESPACE@12..13 " "
+              FLOW_MAP_VALUE@13..23
+                FLOW@13..23
+                  DOUBLE_QUOTED_SCALAR@13..23 "\"separate\""
+            COMMA@23..24 ","
+            WHITESPACE@24..25 "\n"
+            FLOW_MAP_ENTRY@25..39
+              FLOW_MAP_KEY@25..39
+                FLOW@25..39
+                  PLAIN_SCALAR@25..39 "http://foo.com"
+            COMMA@39..40 ","
+            WHITESPACE@40..41 "\n"
+            FLOW_MAP_ENTRY@41..55
+              FLOW_MAP_KEY@41..54
+                FLOW@41..54
+                  PLAIN_SCALAR@41..54 "omitted value"
+              COLON@54..55 ":"
+            COMMA@55..56 ","
+            WHITESPACE@56..57 "\n"
+          R_BRACE@57..58 "}"
+  WHITESPACE@58..59 "\n"

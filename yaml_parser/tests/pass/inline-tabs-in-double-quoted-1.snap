@@ -1,0 +1,9 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..16
+  DOCUMENT@0..15
+    BLOCK@0..15
+      FLOW@0..15
+        DOUBLE_QUOTED_SCALAR@0..15 "\"1 inline\\ttab\""
+  WHITESPACE@15..16 "\n"

@@ -1,0 +1,24 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..14
+  DOCUMENT@0..13
+    BLOCK@0..13
+      BLOCK_MAP@0..13
+        BLOCK_MAP_ENTRY@0..13
+          BLOCK_MAP_KEY@0..6
+            FLOW@0..6
+              FLOW_SEQ@0..6
+                L_BRACKET@0..1 "["
+                FLOW_SEQ_ENTRIES@1..5
+                  FLOW_SEQ_ENTRY@1..5
+                    FLOW@1..5
+                      PLAIN_SCALAR@1..5 "flow"
+                R_BRACKET@5..6 "]"
+          COLON@6..7 ":"
+          WHITESPACE@7..8 " "
+          BLOCK_MAP_VALUE@8..13
+            BLOCK@8..13
+              FLOW@8..13
+                PLAIN_SCALAR@8..13 "block"
+  WHITESPACE@13..14 "\n"

@@ -1,0 +1,9 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..25
+  DOCUMENT@0..24
+    BLOCK@0..24
+      FLOW@0..24
+        DOUBLE_QUOTED_SCALAR@0..24 "\"3 inline———»tab\""
+  WHITESPACE@24..25 "\n"

@@ -1,0 +1,15 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..24
+  DOCUMENT@0..9
+    BLOCK@0..9
+      BLOCK_SCALAR@0..9
+        GREATER_THAN@0..1 ">"
+        BLOCK_SCALAR_TEXT@1..9 "\n ab\n cd"
+  WHITESPACE@9..10 "\n"
+  DOCUMENT@10..23
+    BLOCK@10..23
+      FLOW@10..23
+        PLAIN_SCALAR@10..23 "␣\n ef\n\n\n gh"
+  WHITESPACE@23..24 "\n"

@@ -1,0 +1,20 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..20
+  DOCUMENT@0..19
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    BLOCK@4..19
+      BLOCK_MAP@4..19
+        BLOCK_MAP_ENTRY@4..19
+          BLOCK_MAP_KEY@4..7
+            FLOW@4..7
+              PLAIN_SCALAR@4..7 "tab"
+          COLON@7..8 ":"
+          WHITESPACE@8..9 " "
+          BLOCK_MAP_VALUE@9..19
+            BLOCK@9..19
+              FLOW@9..19
+                DOUBLE_QUOTED_SCALAR@9..19 "\"\\tstring\""
+  WHITESPACE@19..20 "\n"

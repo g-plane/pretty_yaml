@@ -1,0 +1,14 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..4
+  DOCUMENT@0..3
+    BLOCK@0..3
+      FLOW@0..3
+        PROPERTIES@0..1
+          TAG_PROPERTY@0..1
+            NON_SPECIFIC_TAG@0..1
+              EXCLAMATION_MARK@0..1 "!"
+        WHITESPACE@1..2 " "
+        PLAIN_SCALAR@2..3 "a"
+  WHITESPACE@3..4 "\n"
