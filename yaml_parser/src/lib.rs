@@ -986,6 +986,7 @@ fn document(input: &mut Input) -> GreenResult {
                 children.push(block);
                 node(DOCUMENT, children)
             }),
+        directives_end.map(|child| node(DOCUMENT, [child])),
     ))
     .parse_next(input)
 }
