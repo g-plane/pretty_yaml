@@ -2,7 +2,7 @@ use insta::{assert_snapshot, glob, Settings};
 use std::{fs, path::Path};
 
 #[test]
-fn fmt_snapshot() {
+fn fail_snapshot() {
     glob!("fail/*.yaml", |path| {
         let input = fs::read_to_string(path).unwrap();
         let err_msg = if let Err(err) = yaml_parser::parse(&input) {

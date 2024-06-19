@@ -2,7 +2,7 @@ use insta::{assert_snapshot, glob, Settings};
 use std::{fs, path::Path};
 
 #[test]
-fn fmt_snapshot() {
+fn pass_snapshot() {
     glob!("pass/*.yaml", |path| {
         let input = fs::read_to_string(path).unwrap();
         let tree = match yaml_parser::parse(&input) {
