@@ -1,0 +1,52 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..43
+  DOCUMENT@0..42
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    BLOCK@4..42
+      PROPERTIES@4..12
+        ANCHOR_PROPERTY@4..12
+          AMPERSAND@4..5 "&"
+          ANCHOR_NAME@5..12 "mapping"
+      WHITESPACE@12..13 "\n"
+      BLOCK_MAP@13..42
+        BLOCK_MAP_ENTRY@13..42
+          BLOCK_MAP_KEY@13..35
+            FLOW@13..35
+              PROPERTIES@13..17
+                ANCHOR_PROPERTY@13..17
+                  AMPERSAND@13..14 "&"
+                  ANCHOR_NAME@14..17 "key"
+              WHITESPACE@17..18 " "
+              FLOW_SEQ@18..35
+                L_BRACKET@18..19 "["
+                WHITESPACE@19..20 " "
+                FLOW_SEQ_ENTRIES@20..34
+                  FLOW_SEQ_ENTRY@20..27
+                    FLOW@20..27
+                      PROPERTIES@20..25
+                        ANCHOR_PROPERTY@20..25
+                          AMPERSAND@20..21 "&"
+                          ANCHOR_NAME@21..25 "item"
+                      WHITESPACE@25..26 " "
+                      PLAIN_SCALAR@26..27 "a"
+                  COMMA@27..28 ","
+                  WHITESPACE@28..29 " "
+                  FLOW_SEQ_ENTRY@29..30
+                    FLOW@29..30
+                      PLAIN_SCALAR@29..30 "b"
+                  COMMA@30..31 ","
+                  WHITESPACE@31..32 " "
+                  FLOW_SEQ_ENTRY@32..33
+                    FLOW@32..33
+                      PLAIN_SCALAR@32..33 "c"
+                  WHITESPACE@33..34 " "
+                R_BRACKET@34..35 "]"
+          COLON@35..36 ":"
+          WHITESPACE@36..37 " "
+          BLOCK_MAP_VALUE@37..42
+            FLOW@37..42
+              PLAIN_SCALAR@37..42 "value"
+  WHITESPACE@42..43 "\n"

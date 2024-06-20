@@ -1,0 +1,64 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..36
+  DOCUMENT@0..35
+    BLOCK@0..35
+      BLOCK_MAP@0..35
+        BLOCK_MAP_ENTRY@0..30
+          BLOCK_MAP_KEY@0..1
+            FLOW@0..1
+              PLAIN_SCALAR@0..1 "a"
+          COLON@1..2 ":"
+          WHITESPACE@2..5 "\n  "
+          BLOCK_MAP_VALUE@5..30
+            BLOCK@5..30
+              BLOCK_MAP@5..30
+                BLOCK_MAP_ENTRY@5..16
+                  BLOCK_MAP_KEY@5..6
+                    FLOW@5..6
+                      PLAIN_SCALAR@5..6 "b"
+                  COLON@6..7 ":"
+                  WHITESPACE@7..12 "\n    "
+                  BLOCK_MAP_VALUE@12..16
+                    BLOCK@12..16
+                      BLOCK_MAP@12..16
+                        BLOCK_MAP_ENTRY@12..16
+                          BLOCK_MAP_KEY@12..13
+                            FLOW@12..13
+                              PLAIN_SCALAR@12..13 "c"
+                          COLON@13..14 ":"
+                          WHITESPACE@14..15 " "
+                          BLOCK_MAP_VALUE@15..16
+                            FLOW@15..16
+                              PLAIN_SCALAR@15..16 "d"
+                WHITESPACE@16..19 "\n  "
+                BLOCK_MAP_ENTRY@19..30
+                  BLOCK_MAP_KEY@19..20
+                    FLOW@19..20
+                      PLAIN_SCALAR@19..20 "e"
+                  COLON@20..21 ":"
+                  WHITESPACE@21..26 "\n    "
+                  BLOCK_MAP_VALUE@26..30
+                    BLOCK@26..30
+                      BLOCK_MAP@26..30
+                        BLOCK_MAP_ENTRY@26..30
+                          BLOCK_MAP_KEY@26..27
+                            FLOW@26..27
+                              PLAIN_SCALAR@26..27 "f"
+                          COLON@27..28 ":"
+                          WHITESPACE@28..29 " "
+                          BLOCK_MAP_VALUE@29..30
+                            FLOW@29..30
+                              PLAIN_SCALAR@29..30 "g"
+        WHITESPACE@30..31 "\n"
+        BLOCK_MAP_ENTRY@31..35
+          BLOCK_MAP_KEY@31..32
+            FLOW@31..32
+              PLAIN_SCALAR@31..32 "h"
+          COLON@32..33 ":"
+          WHITESPACE@33..34 " "
+          BLOCK_MAP_VALUE@34..35
+            FLOW@34..35
+              PLAIN_SCALAR@34..35 "i"
+  WHITESPACE@35..36 "\n"

@@ -1,0 +1,59 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..55
+  DOCUMENT@0..54
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    BLOCK@4..54
+      BLOCK_SEQ@4..54
+        BLOCK_SEQ_ENTRY@4..28
+          MINUS@4..5 "-"
+          WHITESPACE@5..6 " "
+          FLOW@6..28
+            FLOW_MAP@6..28
+              L_BRACE@6..7 "{"
+              WHITESPACE@7..8 " "
+              FLOW_MAP_ENTRIES@8..27
+                FLOW_MAP_ENTRY@8..21
+                  FLOW_MAP_KEY@8..21
+                    FLOW@8..21
+                      DOUBLE_QUOTED_SCALAR@8..21 "\"single line\""
+                COMMA@21..22 ","
+                WHITESPACE@22..23 " "
+                FLOW_MAP_ENTRY@23..27
+                  FLOW_MAP_KEY@23..24
+                    FLOW@23..24
+                      PLAIN_SCALAR@23..24 "a"
+                  COLON@24..25 ":"
+                  WHITESPACE@25..26 " "
+                  FLOW_MAP_VALUE@26..27
+                    FLOW@26..27
+                      PLAIN_SCALAR@26..27 "b"
+              R_BRACE@27..28 "}"
+        WHITESPACE@28..29 "\n"
+        BLOCK_SEQ_ENTRY@29..54
+          MINUS@29..30 "-"
+          WHITESPACE@30..31 " "
+          FLOW@31..54
+            FLOW_MAP@31..54
+              L_BRACE@31..32 "{"
+              WHITESPACE@32..33 " "
+              FLOW_MAP_ENTRIES@33..53
+                FLOW_MAP_ENTRY@33..47
+                  FLOW_MAP_KEY@33..47
+                    FLOW@33..47
+                      DOUBLE_QUOTED_SCALAR@33..47 "\"multi\n  line\""
+                COMMA@47..48 ","
+                WHITESPACE@48..49 " "
+                FLOW_MAP_ENTRY@49..53
+                  FLOW_MAP_KEY@49..50
+                    FLOW@49..50
+                      PLAIN_SCALAR@49..50 "a"
+                  COLON@50..51 ":"
+                  WHITESPACE@51..52 " "
+                  FLOW_MAP_VALUE@52..53
+                    FLOW@52..53
+                      PLAIN_SCALAR@52..53 "b"
+              R_BRACE@53..54 "}"
+  WHITESPACE@54..55 "\n"

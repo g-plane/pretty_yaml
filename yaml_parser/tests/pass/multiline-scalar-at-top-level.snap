@@ -1,0 +1,20 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..19
+  DOCUMENT@0..1
+    FLOW@0..1
+      PLAIN_SCALAR@0..1 "a"
+  WHITESPACE@1..2 "\n"
+  DOCUMENT@2..13
+    FLOW@2..13
+      PLAIN_SCALAR@2..13 "b␣␣\n  c"
+  WHITESPACE@13..14 "\n"
+  DOCUMENT@14..15
+    FLOW@14..15
+      PLAIN_SCALAR@14..15 "d"
+  WHITESPACE@15..17 "\n\n"
+  DOCUMENT@17..18
+    FLOW@17..18
+      PLAIN_SCALAR@17..18 "e"
+  WHITESPACE@18..19 "\n"

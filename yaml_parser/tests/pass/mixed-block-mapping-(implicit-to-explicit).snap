@@ -1,0 +1,30 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..16
+  DOCUMENT@0..15
+    BLOCK@0..15
+      BLOCK_MAP@0..15
+        BLOCK_MAP_ENTRY@0..6
+          BLOCK_MAP_KEY@0..1
+            FLOW@0..1
+              PLAIN_SCALAR@0..1 "a"
+          COLON@1..2 ":"
+          WHITESPACE@2..3 " "
+          BLOCK_MAP_VALUE@3..6
+            FLOW@3..6
+              PLAIN_SCALAR@3..6 "4.2"
+        WHITESPACE@6..7 "\n"
+        BLOCK_MAP_ENTRY@7..15
+          BLOCK_MAP_KEY@7..10
+            QUESTION_MARK@7..8 "?"
+            WHITESPACE@8..9 " "
+            FLOW@9..10
+              PLAIN_SCALAR@9..10 "d"
+          WHITESPACE@10..11 "\n"
+          COLON@11..12 ":"
+          WHITESPACE@12..13 " "
+          BLOCK_MAP_VALUE@13..15
+            FLOW@13..15
+              PLAIN_SCALAR@13..15 "23"
+  WHITESPACE@15..16 "\n"

@@ -1,0 +1,35 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..72
+  DOCUMENT@0..71
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    BLOCK@4..71
+      BLOCK_MAP@4..71
+        BLOCK_MAP_ENTRY@4..36
+          BLOCK_MAP_KEY@4..5
+            FLOW@4..5
+              PLAIN_SCALAR@4..5 "a"
+          COLON@5..6 ":"
+          WHITESPACE@6..7 " "
+          BLOCK_MAP_VALUE@7..36
+            BLOCK@7..36
+              BLOCK_SCALAR@7..36
+                GREATER_THAN@7..8 ">"
+                INDENT_INDICATOR@8..9 "2"
+                BLOCK_SCALAR_TEXT@9..36 "\n   more indented\n  r ..."
+        WHITESPACE@36..37 "\n"
+        BLOCK_MAP_ENTRY@37..71
+          BLOCK_MAP_KEY@37..38
+            FLOW@37..38
+              PLAIN_SCALAR@37..38 "b"
+          COLON@38..39 ":"
+          WHITESPACE@39..40 " "
+          BLOCK_MAP_VALUE@40..71
+            BLOCK@40..71
+              BLOCK_SCALAR@40..71
+                GREATER_THAN@40..41 ">"
+                INDENT_INDICATOR@41..42 "2"
+                BLOCK_SCALAR_TEXT@42..71 "\n\n\n   more indented\n  ..."
+  WHITESPACE@71..72 "\n"
