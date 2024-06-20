@@ -567,6 +567,7 @@ fn flow(input: &mut Input) -> GreenResult {
 }
 
 fn block_scalar(input: &mut Input) -> GreenResult {
+    let base_indent = input.state.indent;
     (
         (alt((ascii_char::<'|'>(BAR), ascii_char::<'>'>(GREATER_THAN)))),
         opt(alt((
@@ -583,7 +584,7 @@ fn block_scalar(input: &mut Input) -> GreenResult {
             match indicator {
                 Some(Either::Left(((indent_token, indent_value), chomping_token))) => {
                     children.push(indent_token);
-                    indent = Some(indent_value);
+                    indent = Some(base_indent + indent_value);
                     if let Some(chomping) = chomping_token {
                         children.push(chomping);
                     }
@@ -592,7 +593,7 @@ fn block_scalar(input: &mut Input) -> GreenResult {
                     children.push(chomping_token);
                     if let Some((indent_token, indent_value)) = indent_indicator {
                         children.push(indent_token);
-                        indent = Some(indent_value);
+                        indent = Some(base_indent + indent_value);
                     }
                 }
                 None => {}
