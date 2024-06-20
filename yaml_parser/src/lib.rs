@@ -351,15 +351,13 @@ fn plain_scalar_chars(input: &mut Input) -> PResult<()> {
 fn flow_sequence(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'['>(L_BRACKET),
-        cut_err((
-            comments_or_whitespaces0,
-            flow_sequence_entries.set_state(flow_collection_state),
-            ascii_char::<']'>(R_BRACKET),
-        )),
+        comments_or_whitespaces0,
+        flow_sequence_entries.set_state(flow_collection_state),
+        ascii_char::<']'>(R_BRACKET),
     )
         .context(StrContext::Expected(StrContextValue::CharLiteral(']')))
         .parse_next(input)
-        .map(|(l_bracket, (mut leading_trivias, entries, r_bracket))| {
+        .map(|(l_bracket, mut leading_trivias, entries, r_bracket)| {
             let mut children = Vec::with_capacity(3);
             children.push(l_bracket);
             children.append(&mut leading_trivias);
@@ -409,15 +407,13 @@ fn flow_sequence_entry(input: &mut Input) -> GreenResult {
 fn flow_map(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'{'>(L_BRACE),
-        cut_err((
-            comments_or_whitespaces0,
-            flow_map_entries.set_state(flow_collection_state),
-            ascii_char::<'}'>(R_BRACE),
-        )),
+        comments_or_whitespaces0,
+        flow_map_entries.set_state(flow_collection_state),
+        ascii_char::<'}'>(R_BRACE),
     )
         .context(StrContext::Expected(StrContextValue::CharLiteral('}')))
         .parse_next(input)
-        .map(|(l_brace, (mut leading_trivias, entries, r_brace))| {
+        .map(|(l_brace, mut leading_trivias, entries, r_brace)| {
             let mut children = Vec::with_capacity(3);
             children.push(l_brace);
             children.append(&mut leading_trivias);
