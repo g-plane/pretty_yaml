@@ -119,22 +119,21 @@ pub type SyntaxNode = rowan::SyntaxNode<YamlLanguage>;
 pub type SyntaxToken = rowan::SyntaxToken<YamlLanguage>;
 pub type SyntaxElement = rowan::SyntaxElement<YamlLanguage>;
 
-type GreenResult = PResult<NodeOrToken<GreenNode, GreenToken>>;
+type GreenElement = NodeOrToken<GreenNode, GreenToken>;
+type GreenResult = PResult<GreenElement>;
 type Input<'s> = Stateful<&'s str, State>;
 
-fn tok(kind: SyntaxKind, text: &str) -> NodeOrToken<GreenNode, GreenToken> {
+fn tok(kind: SyntaxKind, text: &str) -> GreenElement {
     NodeOrToken::Token(GreenToken::new(kind.into(), text))
 }
-fn node<I>(kind: SyntaxKind, children: I) -> NodeOrToken<GreenNode, GreenToken>
+fn node<I>(kind: SyntaxKind, children: I) -> GreenElement
 where
-    I: IntoIterator<Item = NodeOrToken<GreenNode, GreenToken>>,
+    I: IntoIterator<Item = GreenElement>,
     I::IntoIter: ExactSizeIterator,
 {
     NodeOrToken::Node(GreenNode::new(kind.into(), children))
 }
-fn ascii_char<const C: char>(
-    kind: SyntaxKind,
-) -> impl FnMut(&mut Input) -> PResult<NodeOrToken<GreenNode, GreenToken>> {
+fn ascii_char<const C: char>(kind: SyntaxKind) -> impl FnMut(&mut Input) -> GreenResult {
     debug_assert!(C.is_ascii());
     move |input| {
         C.map(|_| {
@@ -621,7 +620,7 @@ fn block_scalar(input: &mut Input) -> GreenResult {
         })
         .parse_next(input)
 }
-fn indent_indicator(input: &mut Input) -> PResult<(NodeOrToken<GreenNode, GreenToken>, usize)> {
+fn indent_indicator(input: &mut Input) -> PResult<(GreenElement, usize)> {
     one_of(|c: char| c.is_ascii_digit())
         .recognize()
         .try_map(|text: &str| {
@@ -674,11 +673,7 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
             ascii_char::<'-'>(MINUS)
                 .context(StrContext::Expected(StrContextValue::CharLiteral('-'))),
             alt((
-                (
-                    space_before_block_compact_collection.track_indent(),
-                    alt((block_sequence, block_map)),
-                )
-                    .map(|(space, collection)| Some((vec![space], collection))),
+                block_compact_collection,
                 (
                     comments_or_whitespaces1.track_indent(),
                     cut_err(block.require_deeper_indent()),
@@ -702,8 +697,23 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
         }
     })
 }
+
+fn block_compact_collection(
+    input: &mut Input,
+) -> PResult<Option<(Vec<GreenElement>, GreenElement)>> {
+    let original_state = input.state.clone();
+    let result = (
+        space_before_block_compact_collection.track_indent(),
+        alt((block_sequence, block_map)),
+    )
+        .map(|(space, collection)| Some((vec![space], collection)))
+        .parse_next(input);
+    input.state = original_state;
+    result
+}
 fn space_before_block_compact_collection(input: &mut Input) -> GreenResult {
     let (space, text) = space.with_recognized().parse_next(input)?;
+    input.state.prev_indent = Some(input.state.indent);
     input.state.indent += text.len() + 1;
     Ok(space)
 }
@@ -1033,7 +1043,7 @@ fn whitespace(input: &mut Input) -> GreenResult {
     Ok(tok(WHITESPACE, text))
 }
 
-fn comments_or_spaces(input: &mut Input) -> PResult<Vec<NodeOrToken<GreenNode, GreenToken>>> {
+fn comments_or_spaces(input: &mut Input) -> PResult<Vec<GreenElement>> {
     repeat(0.., alt((comment, space))).parse_next(input)
 }
 fn comments_or_whitespaces(input: &mut Input) -> GreenResult {
@@ -1047,10 +1057,10 @@ fn comments_or_whitespaces(input: &mut Input) -> GreenResult {
     )
     .parse_next(input)
 }
-fn comments_or_whitespaces0(input: &mut Input) -> PResult<Vec<NodeOrToken<GreenNode, GreenToken>>> {
+fn comments_or_whitespaces0(input: &mut Input) -> PResult<Vec<GreenElement>> {
     repeat(0.., comments_or_whitespaces).parse_next(input)
 }
-fn comments_or_whitespaces1(input: &mut Input) -> PResult<Vec<NodeOrToken<GreenNode, GreenToken>>> {
+fn comments_or_whitespaces1(input: &mut Input) -> PResult<Vec<GreenElement>> {
     repeat(1.., comments_or_whitespaces).parse_next(input)
 }
 
