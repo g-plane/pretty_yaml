@@ -1,0 +1,19 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..38
+  DOCUMENT@0..37
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    BLOCK@4..37
+      BLOCK_MAP@4..37
+        BLOCK_MAP_ENTRY@4..37
+          BLOCK_MAP_KEY@4..30
+            FLOW@4..30
+              PLAIN_SCALAR@4..30 "key ends with two col ..."
+          COLON@30..31 ":"
+          WHITESPACE@31..32 " "
+          BLOCK_MAP_VALUE@32..37
+            FLOW@32..37
+              PLAIN_SCALAR@32..37 "value"
+  WHITESPACE@37..38 "\n"

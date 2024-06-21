@@ -1,0 +1,21 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..34
+  DOCUMENT@0..19
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 " "
+    FLOW@4..19
+      DOUBLE_QUOTED_SCALAR@4..19 "\"quoted\nstring\""
+  WHITESPACE@19..20 "\n"
+  DOCUMENT@20..33
+    DIRECTIVES_END@20..23 "---"
+    WHITESPACE@23..24 " "
+    FLOW@24..33
+      PROPERTIES@24..29
+        ANCHOR_PROPERTY@24..29
+          AMPERSAND@24..25 "&"
+          ANCHOR_NAME@25..29 "node"
+      WHITESPACE@29..30 " "
+      PLAIN_SCALAR@30..33 "foo"
+  WHITESPACE@33..34 "\n"

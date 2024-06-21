@@ -1,0 +1,9 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..1
+  DOCUMENT@0..1
+    BLOCK@0..1
+      BLOCK_MAP@0..1
+        BLOCK_MAP_ENTRY@0..1
+          COLON@0..1 ":"

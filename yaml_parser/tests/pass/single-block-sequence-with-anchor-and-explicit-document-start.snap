@@ -1,0 +1,20 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..18
+  DOCUMENT@0..17
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 " "
+    BLOCK@4..17
+      PROPERTIES@4..13
+        ANCHOR_PROPERTY@4..13
+          AMPERSAND@4..5 "&"
+          ANCHOR_NAME@5..13 "sequence"
+      WHITESPACE@13..14 "\n"
+      BLOCK_SEQ@14..17
+        BLOCK_SEQ_ENTRY@14..17
+          MINUS@14..15 "-"
+          WHITESPACE@15..16 " "
+          FLOW@16..17
+            PLAIN_SCALAR@16..17 "a"
+  WHITESPACE@17..18 "\n"

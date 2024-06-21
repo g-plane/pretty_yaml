@@ -1,0 +1,81 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..77
+  DOCUMENT@0..76
+    BLOCK@0..76
+      BLOCK_SEQ@0..76
+        BLOCK_SEQ_ENTRY@0..21
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          FLOW@2..21
+            FLOW_SEQ@2..21
+              L_BRACKET@2..3 "["
+              WHITESPACE@3..4 " "
+              FLOW_SEQ_ENTRIES@4..20
+                FLOW_SEQ_ENTRY@4..19
+                  FLOW_PAIR@4..19
+                    FLOW_MAP_KEY@4..8
+                      FLOW@4..8
+                        PLAIN_SCALAR@4..8 "YAML"
+                    WHITESPACE@8..9 " "
+                    COLON@9..10 ":"
+                    WHITESPACE@10..11 " "
+                    FLOW_MAP_VALUE@11..19
+                      FLOW@11..19
+                        PLAIN_SCALAR@11..19 "separate"
+                WHITESPACE@19..20 " "
+              R_BRACKET@20..21 "]"
+        WHITESPACE@21..22 "\n"
+        BLOCK_SEQ_ENTRY@22..48
+          MINUS@22..23 "-"
+          WHITESPACE@23..24 " "
+          FLOW@24..48
+            FLOW_SEQ@24..48
+              L_BRACKET@24..25 "["
+              WHITESPACE@25..26 " "
+              FLOW_SEQ_ENTRIES@26..47
+                FLOW_SEQ_ENTRY@26..46
+                  FLOW_PAIR@26..46
+                    FLOW_MAP_KEY@26..37
+                      FLOW@26..37
+                        DOUBLE_QUOTED_SCALAR@26..37 "\"JSON like\""
+                    COLON@37..38 ":"
+                    FLOW_MAP_VALUE@38..46
+                      FLOW@38..46
+                        PLAIN_SCALAR@38..46 "adjacent"
+                WHITESPACE@46..47 " "
+              R_BRACKET@47..48 "]"
+        WHITESPACE@48..49 "\n"
+        BLOCK_SEQ_ENTRY@49..76
+          MINUS@49..50 "-"
+          WHITESPACE@50..51 " "
+          FLOW@51..76
+            FLOW_SEQ@51..76
+              L_BRACKET@51..52 "["
+              WHITESPACE@52..53 " "
+              FLOW_SEQ_ENTRIES@53..75
+                FLOW_SEQ_ENTRY@53..74
+                  FLOW_PAIR@53..74
+                    FLOW_MAP_KEY@53..65
+                      FLOW@53..65
+                        FLOW_MAP@53..65
+                          L_BRACE@53..54 "{"
+                          FLOW_MAP_ENTRIES@54..64
+                            FLOW_MAP_ENTRY@54..64
+                              FLOW_MAP_KEY@54..58
+                                FLOW@54..58
+                                  PLAIN_SCALAR@54..58 "JSON"
+                              COLON@58..59 ":"
+                              WHITESPACE@59..60 " "
+                              FLOW_MAP_VALUE@60..64
+                                FLOW@60..64
+                                  PLAIN_SCALAR@60..64 "like"
+                          R_BRACE@64..65 "}"
+                    COLON@65..66 ":"
+                    FLOW_MAP_VALUE@66..74
+                      FLOW@66..74
+                        PLAIN_SCALAR@66..74 "adjacent"
+                WHITESPACE@74..75 " "
+              R_BRACKET@75..76 "]"
+  WHITESPACE@76..77 "\n"

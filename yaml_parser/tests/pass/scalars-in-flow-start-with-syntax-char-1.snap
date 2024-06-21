@@ -1,0 +1,14 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..5
+  DOCUMENT@0..4
+    FLOW@0..4
+      FLOW_SEQ@0..4
+        L_BRACKET@0..1 "["
+        FLOW_SEQ_ENTRIES@1..3
+          FLOW_SEQ_ENTRY@1..3
+            FLOW@1..3
+              PLAIN_SCALAR@1..3 ":x"
+        R_BRACKET@3..4 "]"
+  WHITESPACE@4..5 "\n"

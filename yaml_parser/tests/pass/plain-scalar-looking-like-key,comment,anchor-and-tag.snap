@@ -1,0 +1,9 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..20
+  DOCUMENT@0..20
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    FLOW@4..20
+      PLAIN_SCALAR@4..20 "k:#foo\n &a !t s\n"

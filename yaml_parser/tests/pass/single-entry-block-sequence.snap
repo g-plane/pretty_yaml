@@ -1,0 +1,13 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..6
+  DOCUMENT@0..5
+    BLOCK@0..5
+      BLOCK_SEQ@0..5
+        BLOCK_SEQ_ENTRY@0..5
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          FLOW@2..5
+            PLAIN_SCALAR@2..5 "foo"
+  WHITESPACE@5..6 "\n"
