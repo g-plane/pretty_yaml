@@ -5,7 +5,7 @@ use rowan::{GreenNode, GreenToken, NodeOrToken};
 use std::mem;
 use winnow::{
     ascii::{digit1, line_ending, multispace1, space1, take_escaped, till_line_ending},
-    combinator::{alt, cut_err, dispatch, fail, not, opt, peek, repeat, terminated, trace},
+    combinator::{alt, cut_err, dispatch, eof, fail, not, opt, peek, repeat, terminated, trace},
     error::{StrContext, StrContextValue},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
@@ -686,7 +686,7 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
                     cut_err(block.require_deeper_indent()),
                 )
                     .map(Some),
-                line_ending.value(None),
+                alt((line_ending, eof)).value(None),
             ))
             .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockIn),
         ),
