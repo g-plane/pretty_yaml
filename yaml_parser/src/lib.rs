@@ -414,9 +414,12 @@ fn flow_sequence_entries(input: &mut Input) -> GreenResult {
 }
 
 fn flow_sequence_entry(input: &mut Input) -> GreenResult {
-    alt((flow, flow_pair))
-        .parse_next(input)
-        .map(|child| node(FLOW_SEQ_ENTRY, [child]))
+    alt((
+        terminated(flow, peek(not((comments_or_whitespaces0, ':')))),
+        flow_pair,
+    ))
+    .parse_next(input)
+    .map(|child| node(FLOW_SEQ_ENTRY, [child]))
 }
 
 fn flow_map(input: &mut Input) -> GreenResult {
