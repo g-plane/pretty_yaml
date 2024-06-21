@@ -1,21 +1,21 @@
 ---
 source: yaml_parser/tests/pass.rs
 ---
-ROOT@0..21
-  DOCUMENT@0..20
-    BLOCK@0..20
-      BLOCK_MAP@0..20
-        BLOCK_MAP_ENTRY@0..20
+ROOT@0..16
+  DOCUMENT@0..15
+    BLOCK@0..15
+      BLOCK_MAP@0..15
+        BLOCK_MAP_ENTRY@0..15
           BLOCK_MAP_KEY@0..3
             FLOW@0..3
               PLAIN_SCALAR@0..3 "foo"
           COLON@3..4 ":"
           WHITESPACE@4..5 " "
-          BLOCK_MAP_VALUE@5..20
-            BLOCK@5..20
-              BLOCK_SCALAR@5..20
+          BLOCK_MAP_VALUE@5..15
+            BLOCK@5..15
+              BLOCK_SCALAR@5..15
                 BAR@5..6 "|"
                 CHOMPING_INDICATOR@6..7
                   MINUS@6..7 "-"
-                BLOCK_SCALAR_TEXT@7..20 "\n ——»bar"
-  WHITESPACE@20..21 "\n"
+                BLOCK_SCALAR_TEXT@7..15 "\n    bar"
+  WHITESPACE@15..16 "\n"

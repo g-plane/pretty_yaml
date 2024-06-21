@@ -1,7 +1,7 @@
 ---
 source: yaml_parser/tests/pass.rs
 ---
-ROOT@0..26
+ROOT@0..20
   DOCUMENT@0..10
     DIRECTIVES_END@0..3 "---"
     WHITESPACE@3..4 " "
@@ -11,14 +11,6 @@ ROOT@0..26
         CHOMPING_INDICATOR@5..6
           PLUS@5..6 "+"
         BLOCK_SCALAR_TEXT@6..10 "\n ab"
-  WHITESPACE@10..11 "\n"
-  DOCUMENT@11..14
-    FLOW@11..14
-      PLAIN_SCALAR@11..14 "␣"
-  WHITESPACE@14..15 "\n"
-  DOCUMENT@15..21
-    FLOW@15..21
-      PLAIN_SCALAR@15..21 "␣␣"
-  WHITESPACE@21..22 "\n"
-  DOCUMENT_END@22..25 "..."
-  WHITESPACE@25..26 "\n"
+  WHITESPACE@10..16 "\n \n  \n"
+  DOCUMENT_END@16..19 "..."
+  WHITESPACE@19..20 "\n"

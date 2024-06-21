@@ -1,0 +1,14 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..7
+  DOCUMENT@0..7
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 " "
+    BLOCK@4..7
+      BLOCK_SCALAR@4..7
+        BAR@4..5 "|"
+        INDENT_INDICATOR@5..6 "1"
+        CHOMPING_INDICATOR@6..7
+          MINUS@6..7 "-"
+        BLOCK_SCALAR_TEXT@7..7 ""

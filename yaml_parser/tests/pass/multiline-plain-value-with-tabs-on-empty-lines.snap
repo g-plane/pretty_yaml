@@ -1,7 +1,7 @@
 ---
 source: yaml_parser/tests/pass.rs
 ---
-ROOT@0..35
+ROOT@0..31
   DOCUMENT@0..12
     BLOCK@0..12
       BLOCK_MAP@0..12
@@ -18,12 +18,8 @@ ROOT@0..35
   DOCUMENT@15..19
     FLOW@15..19
       PLAIN_SCALAR@15..19 "with"
-  WHITESPACE@19..22 "\n  "
-  DOCUMENT@22..27
-    FLOW@22..27
-      PLAIN_SCALAR@22..27 "—»"
-  WHITESPACE@27..30 "\n  "
-  DOCUMENT@30..34
-    FLOW@30..34
-      PLAIN_SCALAR@30..34 "tabs"
-  WHITESPACE@34..35 "\n"
+  WHITESPACE@19..26 "\n  \t\n  "
+  DOCUMENT@26..30
+    FLOW@26..30
+      PLAIN_SCALAR@26..30 "tabs"
+  WHITESPACE@30..31 "\n"

@@ -1,22 +1,22 @@
 ---
 source: yaml_parser/tests/pass.rs
 ---
-ROOT@0..23
+ROOT@0..19
   DOCUMENT@0..5
     DIRECTIVES_END@0..3 "---"
     WHITESPACE@3..4 "\n"
     FLOW@4..5
       PLAIN_SCALAR@4..5 "a"
   WHITESPACE@5..6 "\n"
-  DOCUMENT@6..17
-    FLOW@6..17
-      PLAIN_SCALAR@6..17 "b␣␣\n  c"
-  WHITESPACE@17..18 "\n"
-  DOCUMENT@18..19
-    FLOW@18..19
-      PLAIN_SCALAR@18..19 "d"
-  WHITESPACE@19..21 "\n\n"
-  DOCUMENT@21..22
-    FLOW@21..22
-      PLAIN_SCALAR@21..22 "e"
-  WHITESPACE@22..23 "\n"
+  DOCUMENT@6..13
+    FLOW@6..13
+      PLAIN_SCALAR@6..13 "b  \n  c"
+  WHITESPACE@13..14 "\n"
+  DOCUMENT@14..15
+    FLOW@14..15
+      PLAIN_SCALAR@14..15 "d"
+  WHITESPACE@15..17 "\n\n"
+  DOCUMENT@17..18
+    FLOW@17..18
+      PLAIN_SCALAR@17..18 "e"
+  WHITESPACE@18..19 "\n"

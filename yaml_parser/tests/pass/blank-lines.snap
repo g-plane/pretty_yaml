@@ -1,10 +1,10 @@
 ---
 source: yaml_parser/tests/pass.rs
 ---
-ROOT@0..70
-  DOCUMENT@0..14
-    BLOCK@0..14
-      BLOCK_MAP@0..14
+ROOT@0..52
+  DOCUMENT@0..51
+    BLOCK@0..51
+      BLOCK_MAP@0..51
         BLOCK_MAP_ENTRY@0..6
           BLOCK_MAP_KEY@0..3
             FLOW@0..3
@@ -24,31 +24,16 @@ ROOT@0..70
           BLOCK_MAP_VALUE@13..14
             FLOW@13..14
               PLAIN_SCALAR@13..14 "2"
-  WHITESPACE@14..15 "\n"
-  DOCUMENT@15..27
-    FLOW@15..27
-      PLAIN_SCALAR@15..27 "␣␣␣␣"
-  WHITESPACE@27..28 "\n"
-  DOCUMENT@28..39
-    BLOCK@28..39
-      BLOCK_MAP@28..39
-        BLOCK_MAP_ENTRY@28..39
-          BLOCK_MAP_KEY@28..32
-            FLOW@28..32
-              PLAIN_SCALAR@28..32 "text"
-          COLON@32..33 ":"
-          WHITESPACE@33..34 " "
-          BLOCK_MAP_VALUE@34..39
-            BLOCK@34..39
-              BLOCK_SCALAR@34..39
-                BAR@34..35 "|"
-                BLOCK_SCALAR_TEXT@35..39 "\n  a"
-  WHITESPACE@39..40 "\n"
-  DOCUMENT@40..61
-    FLOW@40..61
-      PLAIN_SCALAR@40..61 "␣␣␣␣\n  b\n\n  c"
-  WHITESPACE@61..62 "\n"
-  DOCUMENT@62..69
-    FLOW@62..69
-      PLAIN_SCALAR@62..69 "␣\n  d"
-  WHITESPACE@69..70 "\n"
+        WHITESPACE@14..20 "\n    \n"
+        BLOCK_MAP_ENTRY@20..51
+          BLOCK_MAP_KEY@20..24
+            FLOW@20..24
+              PLAIN_SCALAR@20..24 "text"
+          COLON@24..25 ":"
+          WHITESPACE@25..26 " "
+          BLOCK_MAP_VALUE@26..51
+            BLOCK@26..51
+              BLOCK_SCALAR@26..51
+                BAR@26..27 "|"
+                BLOCK_SCALAR_TEXT@27..51 "\n  a\n    \n  b\n\n  c\n \n  d"
+  WHITESPACE@51..52 "\n"

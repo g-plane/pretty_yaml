@@ -1,16 +1,12 @@
 ---
 source: yaml_parser/tests/pass.rs
 ---
-ROOT@0..28
-  DOCUMENT@0..13
+ROOT@0..26
+  DOCUMENT@0..25
     DIRECTIVES_END@0..3 "---"
     WHITESPACE@3..4 " "
-    BLOCK@4..13
-      BLOCK_SCALAR@4..13
+    BLOCK@4..25
+      BLOCK_SCALAR@4..25
         GREATER_THAN@4..5 ">"
-        BLOCK_SCALAR_TEXT@5..13 "\n ab\n cd"
-  WHITESPACE@13..14 "\n"
-  DOCUMENT@14..27
-    FLOW@14..27
-      PLAIN_SCALAR@14..27 "␣\n ef\n\n\n gh"
-  WHITESPACE@27..28 "\n"
+        BLOCK_SCALAR_TEXT@5..25 "\n ab\n cd\n \n ef\n\n\n gh"
+  WHITESPACE@25..26 "\n"
