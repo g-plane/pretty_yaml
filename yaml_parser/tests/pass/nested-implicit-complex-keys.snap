@@ -1,0 +1,72 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..37
+  DOCUMENT@0..36
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    FLOW@4..36
+      FLOW_SEQ@4..36
+        L_BRACKET@4..5 "["
+        WHITESPACE@5..8 "\n  "
+        FLOW_SEQ_ENTRIES@8..35
+          FLOW_SEQ_ENTRY@8..34
+            FLOW_PAIR@8..34
+              FLOW_MAP_KEY@8..30
+                FLOW@8..30
+                  FLOW_SEQ@8..30
+                    L_BRACKET@8..9 "["
+                    WHITESPACE@9..10 " "
+                    FLOW_SEQ_ENTRIES@10..29
+                      FLOW_SEQ_ENTRY@10..11
+                        FLOW@10..11
+                          PLAIN_SCALAR@10..11 "a"
+                      COMMA@11..12 ","
+                      WHITESPACE@12..13 " "
+                      FLOW_SEQ_ENTRY@13..29
+                        FLOW@13..29
+                          FLOW_SEQ@13..29
+                            L_BRACKET@13..14 "["
+                            WHITESPACE@14..15 " "
+                            FLOW_SEQ_ENTRIES@15..28
+                              FLOW_SEQ_ENTRY@15..25
+                                FLOW_PAIR@15..25
+                                  FLOW_MAP_KEY@15..22
+                                    FLOW@15..22
+                                      FLOW_SEQ@15..22
+                                        L_BRACKET@15..16 "["
+                                        FLOW_SEQ_ENTRIES@16..21
+                                          FLOW_SEQ_ENTRY@16..21
+                                            FLOW@16..21
+                                              FLOW_SEQ@16..21
+                                                L_BRACKET@16..17 "["
+                                                FLOW_SEQ_ENTRIES@17..20
+                                                  FLOW_SEQ_ENTRY@17..18
+                                                    FLOW@17..18
+                                                      PLAIN_SCALAR@17..18 "b"
+                                                  COMMA@18..19 ","
+                                                  FLOW_SEQ_ENTRY@19..20
+                                                    FLOW@19..20
+                                                      PLAIN_SCALAR@19..20 "c"
+                                                R_BRACKET@20..21 "]"
+                                        R_BRACKET@21..22 "]"
+                                  COLON@22..23 ":"
+                                  WHITESPACE@23..24 " "
+                                  FLOW_MAP_VALUE@24..25
+                                    FLOW@24..25
+                                      PLAIN_SCALAR@24..25 "d"
+                              COMMA@25..26 ","
+                              WHITESPACE@26..27 " "
+                              FLOW_SEQ_ENTRY@27..28
+                                FLOW@27..28
+                                  PLAIN_SCALAR@27..28 "e"
+                            R_BRACKET@28..29 "]"
+                    R_BRACKET@29..30 "]"
+              COLON@30..31 ":"
+              WHITESPACE@31..32 " "
+              FLOW_MAP_VALUE@32..34
+                FLOW@32..34
+                  PLAIN_SCALAR@32..34 "23"
+          WHITESPACE@34..35 "\n"
+        R_BRACKET@35..36 "]"
+  WHITESPACE@36..37 "\n"

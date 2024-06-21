@@ -1,0 +1,63 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..59
+  DOCUMENT@0..58
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    FLOW@4..58
+      FLOW_MAP@4..58
+        L_BRACE@4..5 "{"
+        WHITESPACE@5..6 " "
+        FLOW_MAP_ENTRIES@6..57
+          FLOW_MAP_ENTRY@6..42
+            FLOW_MAP_KEY@6..10
+              FLOW@6..10
+                PLAIN_SCALAR@6..10 "top1"
+            COLON@10..11 ":"
+            WHITESPACE@11..12 " "
+            FLOW_MAP_VALUE@12..42
+              FLOW@12..42
+                FLOW_SEQ@12..42
+                  L_BRACKET@12..13 "["
+                  FLOW_SEQ_ENTRIES@13..41
+                    FLOW_SEQ_ENTRY@13..18
+                      FLOW@13..18
+                        PLAIN_SCALAR@13..18 "item1"
+                    COMMA@18..19 ","
+                    WHITESPACE@19..20 " "
+                    FLOW_SEQ_ENTRY@20..34
+                      FLOW@20..34
+                        FLOW_MAP@20..34
+                          L_BRACE@20..21 "{"
+                          FLOW_MAP_ENTRIES@21..33
+                            FLOW_MAP_ENTRY@21..33
+                              FLOW_MAP_KEY@21..25
+                                FLOW@21..25
+                                  PLAIN_SCALAR@21..25 "key2"
+                              COLON@25..26 ":"
+                              WHITESPACE@26..27 " "
+                              FLOW_MAP_VALUE@27..33
+                                FLOW@27..33
+                                  PLAIN_SCALAR@27..33 "value2"
+                          R_BRACE@33..34 "}"
+                    COMMA@34..35 ","
+                    WHITESPACE@35..36 " "
+                    FLOW_SEQ_ENTRY@36..41
+                      FLOW@36..41
+                        PLAIN_SCALAR@36..41 "item3"
+                  R_BRACKET@41..42 "]"
+          COMMA@42..43 ","
+          WHITESPACE@43..44 " "
+          FLOW_MAP_ENTRY@44..56
+            FLOW_MAP_KEY@44..48
+              FLOW@44..48
+                PLAIN_SCALAR@44..48 "top2"
+            COLON@48..49 ":"
+            WHITESPACE@49..50 " "
+            FLOW_MAP_VALUE@50..56
+              FLOW@50..56
+                PLAIN_SCALAR@50..56 "value2"
+          WHITESPACE@56..57 " "
+        R_BRACE@57..58 "}"
+  WHITESPACE@58..59 "\n"

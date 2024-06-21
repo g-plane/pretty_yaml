@@ -1,0 +1,39 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..70
+  DOCUMENT@0..69
+    BLOCK@0..69
+      BLOCK_SEQ@0..69
+        BLOCK_SEQ_ENTRY@0..7
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          FLOW@2..7
+            PLAIN_SCALAR@2..7 "plain"
+        WHITESPACE@7..8 "\n"
+        BLOCK_SEQ_ENTRY@8..25
+          MINUS@8..9 "-"
+          WHITESPACE@9..10 " "
+          FLOW@10..25
+            DOUBLE_QUOTED_SCALAR@10..25 "\"double quoted\""
+        WHITESPACE@25..26 "\n"
+        BLOCK_SEQ_ENTRY@26..43
+          MINUS@26..27 "-"
+          WHITESPACE@27..28 " "
+          FLOW@28..43
+            SINGLE_QUOTED_SCALAR@28..43 "'single quoted'"
+        WHITESPACE@43..44 "\n"
+        BLOCK_SEQ_ENTRY@44..55
+          MINUS@44..45 "-"
+          WHITESPACE@45..46 " "
+          BLOCK@46..55
+            BLOCK_SCALAR@46..55
+              GREATER_THAN@46..47 ">"
+              BLOCK_SCALAR_TEXT@47..55 "\n  block"
+        WHITESPACE@55..56 "\n"
+        BLOCK_SEQ_ENTRY@56..69
+          MINUS@56..57 "-"
+          WHITESPACE@57..58 " "
+          FLOW@58..69
+            PLAIN_SCALAR@58..69 "plain again"
+  WHITESPACE@69..70 "\n"

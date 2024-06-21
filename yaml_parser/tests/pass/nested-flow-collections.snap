@@ -1,0 +1,67 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..44
+  DOCUMENT@0..43
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    FLOW@4..43
+      FLOW_MAP@4..43
+        L_BRACE@4..5 "{"
+        WHITESPACE@5..7 "\n "
+        FLOW_MAP_ENTRIES@7..42
+          FLOW_MAP_ENTRY@7..41
+            FLOW_MAP_KEY@7..8
+              FLOW@7..8
+                PLAIN_SCALAR@7..8 "a"
+            COLON@8..9 ":"
+            WHITESPACE@9..10 " "
+            FLOW_MAP_VALUE@10..41
+              FLOW@10..41
+                FLOW_SEQ@10..41
+                  L_BRACKET@10..11 "["
+                  WHITESPACE@11..14 "\n  "
+                  FLOW_SEQ_ENTRIES@14..40
+                    FLOW_SEQ_ENTRY@14..15
+                      FLOW@14..15
+                        PLAIN_SCALAR@14..15 "b"
+                    COMMA@15..16 ","
+                    WHITESPACE@16..17 " "
+                    FLOW_SEQ_ENTRY@17..18
+                      FLOW@17..18
+                        PLAIN_SCALAR@17..18 "c"
+                    COMMA@18..19 ","
+                    WHITESPACE@19..20 " "
+                    FLOW_SEQ_ENTRY@20..38
+                      FLOW@20..38
+                        FLOW_MAP@20..38
+                          L_BRACE@20..21 "{"
+                          WHITESPACE@21..25 "\n   "
+                          FLOW_MAP_ENTRIES@25..37
+                            FLOW_MAP_ENTRY@25..34
+                              FLOW_MAP_KEY@25..26
+                                FLOW@25..26
+                                  PLAIN_SCALAR@25..26 "d"
+                              COLON@26..27 ":"
+                              WHITESPACE@27..28 " "
+                              FLOW_MAP_VALUE@28..34
+                                FLOW@28..34
+                                  FLOW_SEQ@28..34
+                                    L_BRACKET@28..29 "["
+                                    FLOW_SEQ_ENTRIES@29..33
+                                      FLOW_SEQ_ENTRY@29..30
+                                        FLOW@29..30
+                                          PLAIN_SCALAR@29..30 "e"
+                                      COMMA@30..31 ","
+                                      WHITESPACE@31..32 " "
+                                      FLOW_SEQ_ENTRY@32..33
+                                        FLOW@32..33
+                                          PLAIN_SCALAR@32..33 "f"
+                                    R_BRACKET@33..34 "]"
+                            WHITESPACE@34..37 "\n  "
+                          R_BRACE@37..38 "}"
+                    WHITESPACE@38..40 "\n "
+                  R_BRACKET@40..41 "]"
+          WHITESPACE@41..42 "\n"
+        R_BRACE@42..43 "}"
+  WHITESPACE@43..44 "\n"
