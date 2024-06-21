@@ -261,6 +261,7 @@ fn single_qouted_scalar(input: &mut Input) -> GreenResult {
 
 fn plain_scalar(input: &mut Input) -> GreenResult {
     let indent = input.state.indent;
+    let last_ws_has_nl = input.state.last_ws_has_nl;
     if matches!(
         input.state.bf_ctx,
         BlockFlowCtx::FlowIn | BlockFlowCtx::FlowOut
@@ -273,21 +274,35 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
                 repeat::<_, _, (), _, _>(
                     0..,
                     (
-                        terminated(
+                        (
                             multispace1,
-                            peek(not(alt((
+                            peek(opt(alt((
                                 one_of(move |c: char| c == '#' || safe_in && is_flow_indicator(c))
-                                    .void(),
-                                (':', space1).void(),
+                                    .recognize(),
+                                (':', multispace1).recognize(),
+                                terminated(alt(("---", "...")), multispace1),
                             )))),
                         )
-                        .verify(move |text: &str| {
-                            if let Some(detected) = detect_ws_indent(text) {
-                                detected > indent
-                            } else {
-                                true
-                            }
-                        }),
+                            .verify_map(
+                                move |(text, peeked): (&str, _)| {
+                                    match peeked {
+                                        Some("---" | "...") => !text.ends_with(['\n', '\r']),
+                                        Some(..) => false,
+                                        None => {
+                                            if let Some(detected) = detect_ws_indent(text) {
+                                                if last_ws_has_nl {
+                                                    detected >= indent
+                                                } else {
+                                                    detected > indent
+                                                }
+                                            } else {
+                                                true
+                                            }
+                                        }
+                                    }
+                                    .then_some(text)
+                                },
+                            ),
                         plain_scalar_chars,
                     ),
                 ),

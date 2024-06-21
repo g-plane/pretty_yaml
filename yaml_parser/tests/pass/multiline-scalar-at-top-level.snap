@@ -6,15 +6,6 @@ ROOT@0..15
     FLOW@0..1
       PLAIN_SCALAR@0..1 "a"
   WHITESPACE@1..2 "\n"
-  DOCUMENT@2..9
-    FLOW@2..9
-      PLAIN_SCALAR@2..9 "b  \n  c"
-  WHITESPACE@9..10 "\n"
-  DOCUMENT@10..11
-    FLOW@10..11
-      PLAIN_SCALAR@10..11 "d"
-  WHITESPACE@11..13 "\n\n"
-  DOCUMENT@13..14
-    FLOW@13..14
-      PLAIN_SCALAR@13..14 "e"
-  WHITESPACE@14..15 "\n"
+  DOCUMENT@2..15
+    FLOW@2..15
+      PLAIN_SCALAR@2..15 "b  \n  c\nd\n\ne\n"
