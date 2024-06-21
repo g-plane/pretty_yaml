@@ -461,26 +461,22 @@ fn flow_map_entry(input: &mut Input) -> GreenResult {
             ascii_char::<':'>(COLON),
             opt((comments_or_whitespaces0, flow)),
         )
-            .map(Either::Left),
-        flow_map_entry_key.map(Either::Right),
+            .map(|(key, colon, value)| {
+                let mut children = Vec::with_capacity(3);
+                if let Some((key, mut trivias_before_colon)) = key {
+                    children.push(key);
+                    children.append(&mut trivias_before_colon);
+                }
+                children.push(colon);
+                if let Some((mut trivias_after_colon, value)) = value {
+                    children.append(&mut trivias_after_colon);
+                    children.push(node(FLOW_MAP_VALUE, [value]));
+                }
+                node(FLOW_MAP_ENTRY, children)
+            }),
+        flow_map_entry_key.map(|child| node(FLOW_MAP_ENTRY, [child])),
     ))
     .parse_next(input)
-    .map(|either| match either {
-        Either::Left((key, colon, value)) => {
-            let mut children = Vec::with_capacity(3);
-            if let Some((key, mut trivias_before_colon)) = key {
-                children.push(key);
-                children.append(&mut trivias_before_colon);
-            }
-            children.push(colon);
-            if let Some((mut trivias_after_colon, value)) = value {
-                children.append(&mut trivias_after_colon);
-                children.push(node(FLOW_MAP_VALUE, [value]));
-            }
-            node(FLOW_MAP_ENTRY, children)
-        }
-        Either::Right(key) => node(FLOW_MAP_ENTRY, [key]),
-    })
 }
 
 fn flow_pair(input: &mut Input) -> GreenResult {
@@ -508,27 +504,23 @@ fn flow_pair(input: &mut Input) -> GreenResult {
 
 fn flow_map_entry_key(input: &mut Input) -> GreenResult {
     alt((
-        flow.map(Either::Left),
+        flow.map(|child| node(FLOW_MAP_KEY, [child])),
         (
             ascii_char::<'?'>(QUESTION_MARK),
             opt((whitespace, comments_or_whitespaces0, flow)),
         )
-            .map(Either::Right),
+            .map(|(question_mark, key)| {
+                let mut children = Vec::with_capacity(3);
+                children.push(question_mark);
+                if let Some((ws, mut trivias, key)) = key {
+                    children.push(ws);
+                    children.append(&mut trivias);
+                    children.push(key);
+                }
+                node(FLOW_MAP_KEY, children)
+            }),
     ))
     .parse_next(input)
-    .map(|either| match either {
-        Either::Left(key) => node(FLOW_MAP_KEY, [key]),
-        Either::Right((question_mark, key)) => {
-            let mut children = Vec::with_capacity(3);
-            children.push(question_mark);
-            if let Some((ws, mut trivias, key)) = key {
-                children.push(ws);
-                children.append(&mut trivias);
-                children.push(key);
-            }
-            node(FLOW_MAP_KEY, children)
-        }
-    })
 }
 
 fn flow_content(input: &mut Input) -> GreenResult {
