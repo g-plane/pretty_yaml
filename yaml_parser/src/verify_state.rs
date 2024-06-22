@@ -1,17 +1,16 @@
 use super::{Input, State};
 use winnow::{
+    combinator::trace,
     error::{ErrMode, ErrorKind, ParserError},
-    PResult,
+    Parser,
 };
 
-pub(super) fn verify_state<'s, E, F>(
-    mut predicate: F,
-) -> impl FnMut(&mut Input<'s>) -> PResult<(), E>
+pub(super) fn verify_state<'s, E, F>(mut predicate: F) -> impl Parser<Input<'s>, (), E>
 where
     E: ParserError<Input<'s>>,
     F: FnMut(&State) -> bool,
 {
-    move |input: &mut Input| {
+    trace("verify_state", move |input: &mut Input<'s>| {
         if predicate(&input.state) {
             Ok(())
         } else {
@@ -20,5 +19,5 @@ where
                 ErrorKind::Verify,
             )))
         }
-    }
+    })
 }
