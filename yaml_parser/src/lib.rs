@@ -581,10 +581,11 @@ fn block_scalar(input: &mut Input) -> GreenResult {
             (chomping_indicator, opt(indent_indicator)).map(Either::Right),
         )))
         .context(StrContext::Label("block scalar header")),
-        opt((space, comments_or_spaces)),
+        opt(space),
+        opt(comment),
         peek(opt(multispace1.verify_map(detect_ws_indent))),
     )
-        .flat_map(|(style, indicator, trivias, mut indent)| {
+        .flat_map(|(style, indicator, space, comment, mut indent)| {
             let mut children = Vec::with_capacity(3);
             children.push(style);
             match indicator {
@@ -604,9 +605,11 @@ fn block_scalar(input: &mut Input) -> GreenResult {
                 }
                 None => {}
             }
-            if let Some((space, mut trivias)) = trivias {
+            if let Some(space) = space {
                 children.push(space);
-                children.append(&mut trivias);
+            }
+            if let Some(comment) = comment {
+                children.push(comment);
             }
             let indent = indent.unwrap_or_default();
             repeat::<_, _, (), _, _>(
@@ -1050,9 +1053,6 @@ fn whitespace(input: &mut Input) -> GreenResult {
     Ok(tok(WHITESPACE, text))
 }
 
-fn comments_or_spaces(input: &mut Input) -> PResult<Vec<GreenElement>> {
-    repeat(0.., alt((comment, space))).parse_next(input)
-}
 fn comments_or_whitespaces(input: &mut Input) -> GreenResult {
     trace(
         "comments_or_whitespaces",
