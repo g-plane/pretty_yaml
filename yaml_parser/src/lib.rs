@@ -199,8 +199,8 @@ fn properties(input: &mut Input) -> GreenResult {
     trace(
         "properties",
         dispatch! {peek(any);
-            '&' => (anchor_property, opt((comments_or_whitespaces1, tag_property))),
-            '!' => (cut_err(tag_property), opt((comments_or_whitespaces1, anchor_property))),
+            '&' => (anchor_property, opt((repeat(1.., stateless_cmt_or_ws), tag_property))),
+            '!' => (cut_err(tag_property), opt((repeat(1.., stateless_cmt_or_ws), anchor_property))),
             _ => fail,
         },
     )
@@ -366,7 +366,7 @@ fn plain_scalar_chars(input: &mut Input) -> PResult<()> {
 fn flow_sequence(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'['>(L_BRACKET),
-        comments_or_whitespaces0,
+        cmts_or_ws0,
         flow_sequence_entries.set_state(flow_collection_state),
         ascii_char::<']'>(R_BRACKET),
     )
@@ -388,11 +388,11 @@ fn flow_sequence_entries(input: &mut Input) -> GreenResult {
         alt((
             (
                 flow_sequence_entry,
-                comments_or_whitespaces0,
+                cmts_or_ws0,
                 alt((ascii_char::<','>(COMMA).map(Some), peek(']').value(None))),
             )
                 .map(Either::Left),
-            comments_or_whitespaces1.map(Either::Right),
+            cmts_or_ws1.map(Either::Right),
         )),
     )
     .fold(Vec::new, |mut children, either| {
@@ -414,18 +414,15 @@ fn flow_sequence_entries(input: &mut Input) -> GreenResult {
 }
 
 fn flow_sequence_entry(input: &mut Input) -> GreenResult {
-    alt((
-        terminated(flow, peek(not((comments_or_whitespaces0, ':')))),
-        flow_pair,
-    ))
-    .parse_next(input)
-    .map(|child| node(FLOW_SEQ_ENTRY, [child]))
+    alt((terminated(flow, peek(not((cmts_or_ws0, ':')))), flow_pair))
+        .parse_next(input)
+        .map(|child| node(FLOW_SEQ_ENTRY, [child]))
 }
 
 fn flow_map(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'{'>(L_BRACE),
-        comments_or_whitespaces0,
+        cmts_or_ws0,
         flow_map_entries.set_state(flow_collection_state),
         ascii_char::<'}'>(R_BRACE),
     )
@@ -447,11 +444,11 @@ fn flow_map_entries(input: &mut Input) -> GreenResult {
         alt((
             (
                 flow_map_entry,
-                comments_or_whitespaces0,
+                cmts_or_ws0,
                 alt((ascii_char::<','>(COMMA).map(Some), peek('}').value(None))),
             )
                 .map(Either::Left),
-            comments_or_whitespaces1.map(Either::Right),
+            cmts_or_ws1.map(Either::Right),
         )),
     )
     .fold(Vec::new, |mut children, either| {
@@ -475,9 +472,9 @@ fn flow_map_entries(input: &mut Input) -> GreenResult {
 fn flow_map_entry(input: &mut Input) -> GreenResult {
     alt((
         (
-            opt((flow_map_entry_key, comments_or_whitespaces0)),
+            opt((flow_map_entry_key, cmts_or_ws0)),
             ascii_char::<':'>(COLON),
-            opt((comments_or_whitespaces0, flow)),
+            opt((cmts_or_ws0, flow)),
         )
             .map(|(key, colon, value)| {
                 let mut children = Vec::with_capacity(3);
@@ -500,9 +497,9 @@ fn flow_map_entry(input: &mut Input) -> GreenResult {
 fn flow_pair(input: &mut Input) -> GreenResult {
     (
         opt(flow_map_entry_key.set_state(|state| state.bf_ctx = BlockFlowCtx::FlowKey)),
-        comments_or_whitespaces0,
+        cmts_or_ws0,
         ascii_char::<':'>(COLON),
-        opt((comments_or_whitespaces0, flow)),
+        opt((cmts_or_ws0, flow)),
     )
         .parse_next(input)
         .map(|(key, mut trivias_before_colon, colon, value)| {
@@ -525,7 +522,7 @@ fn flow_map_entry_key(input: &mut Input) -> GreenResult {
         flow.map(|child| node(FLOW_MAP_KEY, [child])),
         (
             ascii_char::<'?'>(QUESTION_MARK),
-            opt((whitespace, comments_or_whitespaces0, flow)),
+            opt((ws, cmts_or_ws0, flow)),
         )
             .map(|(question_mark, key)| {
                 let mut children = Vec::with_capacity(3);
@@ -558,7 +555,7 @@ fn flow_content(input: &mut Input) -> GreenResult {
 fn flow(input: &mut Input) -> GreenResult {
     trace("flow", dispatch! {peek(any);
         '*' => alias.map(|child| node(FLOW, [child])),
-        '&' | '!' => (properties, opt((comments_or_whitespaces1, flow_content))).map(|(properties, content)| {
+        '&' | '!' => (properties, opt((cmts_or_ws1, flow_content))).map(|(properties, content)| {
             let mut children = Vec::with_capacity(3);
             children.push(properties);
             if let Some((mut trivias, content)) = content {
@@ -655,13 +652,7 @@ fn block_sequence(input: &mut Input) -> GreenResult {
         "block_sequence",
         (
             block_sequence_entry,
-            repeat(
-                0..,
-                (
-                    comments_or_whitespaces1.verify_indent(),
-                    block_sequence_entry,
-                ),
-            ),
+            repeat(0.., (cmts_or_ws1.verify_indent(), block_sequence_entry)),
         ),
     )
     .parse_next(input)
@@ -685,7 +676,7 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
             alt((
                 block_compact_collection,
                 (
-                    comments_or_whitespaces1.track_indent(),
+                    cmts_or_ws1.track_indent(),
                     cut_err(block.require_deeper_indent()),
                 )
                     .map(Some),
@@ -738,7 +729,7 @@ fn block_map(input: &mut Input) -> GreenResult {
                 0..,
                 (
                     terminated(
-                        comments_or_whitespaces1,
+                        cmts_or_ws1,
                         verify_state(move |state| state.indent == indent),
                     ),
                     alt((block_map_implicit_entry, block_map_explicit_entry)),
@@ -764,9 +755,9 @@ fn block_map_explicit_entry(input: &mut Input) -> GreenResult {
         (
             trace("block_map_explicit_key", block_map_explicit_key),
             opt((
-                comments_or_whitespaces0.verify_indent(),
+                cmts_or_ws0.verify_indent(),
                 ascii_char::<':'>(COLON),
-                opt((comments_or_whitespaces1.track_indent(), block)
+                opt((cmts_or_ws1.track_indent(), block)
                     .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut)),
             )),
         ),
@@ -795,7 +786,7 @@ fn block_map_explicit_key(input: &mut Input) -> GreenResult {
         alt((
             (
                 space,
-                comments_or_whitespaces0,
+                cmts_or_ws0,
                 block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
             )
                 .map(Some),
@@ -824,7 +815,7 @@ fn block_map_implicit_entry(input: &mut Input) -> GreenResult {
             opt((block_map_implicit_key, opt(space))),
             ascii_char::<':'>(COLON),
             opt((
-                comments_or_whitespaces1.track_indent(),
+                cmts_or_ws1.track_indent(),
                 block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
             )),
         ),
@@ -866,7 +857,7 @@ fn block(input: &mut Input) -> GreenResult {
                 opt((
                     properties,
                     terminated(
-                        comments_or_whitespaces1,
+                        cmts_or_ws1,
                         alt((
                             verify_state(|state| state.last_ws_has_nl),
                             peek(one_of(['|', '>'])).void(),
@@ -975,10 +966,10 @@ fn directive(input: &mut Input) -> GreenResult {
 fn document(input: &mut Input) -> GreenResult {
     alt((
         (
-            repeat(1.., (directive, comments_or_whitespaces0)),
+            repeat(1.., (directive, cmts_or_ws0)),
             directives_end,
             opt((
-                comments_or_whitespaces0,
+                cmts_or_ws0,
                 block.set_state(|state| {
                     state.bf_ctx = BlockFlowCtx::BlockIn;
                     state.document_top = true;
@@ -999,7 +990,7 @@ fn document(input: &mut Input) -> GreenResult {
                 node(DOCUMENT, children)
             }),
         (
-            opt((directives_end, comments_or_whitespaces0)),
+            opt((directives_end, cmts_or_ws0)),
             block.set_state(|state| {
                 state.bf_ctx = BlockFlowCtx::BlockIn;
                 state.document_top = true;
@@ -1024,7 +1015,7 @@ fn document_end(input: &mut Input) -> GreenResult {
 }
 
 fn root(input: &mut Input) -> PResult<SyntaxNode> {
-    repeat(0.., alt((comments_or_whitespaces, document_end, document)))
+    repeat(0.., alt((cmt_or_ws, document_end, document)))
         .parse_next(input)
         .map(|children: Vec<_>| SyntaxNode::new_root(GreenNode::new(ROOT.into(), children)))
 }
@@ -1042,7 +1033,7 @@ fn space(input: &mut Input) -> GreenResult {
     Ok(tok(WHITESPACE, text))
 }
 
-fn whitespace(input: &mut Input) -> GreenResult {
+fn ws(input: &mut Input) -> GreenResult {
     let text = multispace1.parse_next(input)?;
     if let Some(indent) = detect_ws_indent(text) {
         input.state.prev_indent = Some(mem::replace(&mut input.state.indent, indent));
@@ -1053,22 +1044,37 @@ fn whitespace(input: &mut Input) -> GreenResult {
     Ok(tok(WHITESPACE, text))
 }
 
-fn comments_or_whitespaces(input: &mut Input) -> GreenResult {
+/// Parse single comment or whitespace.
+fn cmt_or_ws(input: &mut Input) -> GreenResult {
     trace(
-        "comments_or_whitespaces",
+        "cmt_or_ws",
         dispatch! {peek(any);
-            ' ' | '\n' | '\t' | '\r' => whitespace,
+            ' ' | '\n' | '\t' | '\r' => ws,
             '#' => comment,
             _ => fail,
         },
     )
     .parse_next(input)
 }
-fn comments_or_whitespaces0(input: &mut Input) -> PResult<Vec<GreenElement>> {
-    repeat(0.., comments_or_whitespaces).parse_next(input)
+/// Parse zero or more comments or whitespaces.
+fn cmts_or_ws0(input: &mut Input) -> PResult<Vec<GreenElement>> {
+    repeat(0.., cmt_or_ws).parse_next(input)
 }
-fn comments_or_whitespaces1(input: &mut Input) -> PResult<Vec<GreenElement>> {
-    repeat(1.., comments_or_whitespaces).parse_next(input)
+/// Parse one or more comments or whitespaces.
+fn cmts_or_ws1(input: &mut Input) -> PResult<Vec<GreenElement>> {
+    repeat(1.., cmt_or_ws).parse_next(input)
+}
+/// Parse one or more comments or whitespaces without updating state.
+fn stateless_cmt_or_ws(input: &mut Input) -> GreenResult {
+    trace(
+        "stateless_cmt_or_ws",
+        dispatch! {peek(any);
+            ' ' | '\n' | '\t' | '\r' => multispace1.map(|text| tok(WHITESPACE, text)),
+            '#' => comment,
+            _ => fail,
+        },
+    )
+    .parse_next(input)
 }
 
 /// Parse the given YAML code into CST.
