@@ -1,0 +1,40 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..43
+  DOCUMENT@0..42
+    BLOCK@0..42
+      BLOCK_MAP@0..42
+        BLOCK_MAP_ENTRY@0..19
+          BLOCK_MAP_KEY@0..7
+            FLOW@0..7
+              PLAIN_SCALAR@0..7 "literal"
+          COLON@7..8 ":"
+          WHITESPACE@8..9 " "
+          BLOCK_MAP_VALUE@9..19
+            BLOCK@9..19
+              BLOCK_SCALAR@9..19
+                BAR@9..10 "|"
+                INDENT_INDICATOR@10..11 "2"
+                BLOCK_SCALAR_TEXT@11..19 "\n  value"
+        WHITESPACE@19..20 "\n"
+        BLOCK_MAP_ENTRY@20..42
+          BLOCK_MAP_KEY@20..26
+            FLOW@20..26
+              PLAIN_SCALAR@20..26 "folded"
+          COLON@26..27 ":"
+          WHITESPACE@27..28 " "
+          BLOCK_MAP_VALUE@28..42
+            BLOCK@28..42
+              PROPERTIES@28..32
+                TAG_PROPERTY@28..32
+                  SHORTHAND_TAG@28..32
+                    TAG_HANDLE@28..29
+                      TAG_HANDLE_PRIMARY@28..29 "!"
+                    TAG_CHAR@29..32 "foo"
+              WHITESPACE@32..33 " "
+              BLOCK_SCALAR@33..42
+                GREATER_THAN@33..34 ">"
+                INDENT_INDICATOR@34..35 "1"
+                BLOCK_SCALAR_TEXT@35..42 "\n value"
+  WHITESPACE@42..43 "\n"

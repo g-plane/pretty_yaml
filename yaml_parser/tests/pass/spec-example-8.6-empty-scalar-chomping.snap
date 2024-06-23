@@ -1,0 +1,44 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..31
+  DOCUMENT@0..28
+    BLOCK@0..28
+      BLOCK_MAP@0..28
+        BLOCK_MAP_ENTRY@0..9
+          BLOCK_MAP_KEY@0..5
+            FLOW@0..5
+              PLAIN_SCALAR@0..5 "strip"
+          COLON@5..6 ":"
+          WHITESPACE@6..7 " "
+          BLOCK_MAP_VALUE@7..9
+            BLOCK@7..9
+              BLOCK_SCALAR@7..9
+                GREATER_THAN@7..8 ">"
+                CHOMPING_INDICATOR@8..9
+                  MINUS@8..9 "-"
+        WHITESPACE@9..11 "\n\n"
+        BLOCK_MAP_ENTRY@11..18
+          BLOCK_MAP_KEY@11..15
+            FLOW@11..15
+              PLAIN_SCALAR@11..15 "clip"
+          COLON@15..16 ":"
+          WHITESPACE@16..17 " "
+          BLOCK_MAP_VALUE@17..18
+            BLOCK@17..18
+              BLOCK_SCALAR@17..18
+                GREATER_THAN@17..18 ">"
+        WHITESPACE@18..20 "\n\n"
+        BLOCK_MAP_ENTRY@20..28
+          BLOCK_MAP_KEY@20..24
+            FLOW@20..24
+              PLAIN_SCALAR@20..24 "keep"
+          COLON@24..25 ":"
+          WHITESPACE@25..26 " "
+          BLOCK_MAP_VALUE@26..28
+            BLOCK@26..28
+              BLOCK_SCALAR@26..28
+                BAR@26..27 "|"
+                CHOMPING_INDICATOR@27..28
+                  PLUS@27..28 "+"
+  WHITESPACE@28..31 "\n\n\n"

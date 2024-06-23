@@ -1,0 +1,40 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..66
+  DOCUMENT@0..65
+    BLOCK@0..65
+      BLOCK_SEQ@0..65
+        BLOCK_SEQ_ENTRY@0..13
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          BLOCK@2..13
+            BLOCK_SCALAR@2..13
+              BAR@2..3 "|"
+              BLOCK_SCALAR_TEXT@3..13 "\n detected"
+        WHITESPACE@13..14 "\n"
+        BLOCK_SEQ_ENTRY@14..35
+          MINUS@14..15 "-"
+          WHITESPACE@15..16 " "
+          BLOCK@16..35
+            BLOCK_SCALAR@16..35
+              GREATER_THAN@16..17 ">"
+              BLOCK_SCALAR_TEXT@17..35 "\n \n  \n  # detected"
+        WHITESPACE@35..36 "\n"
+        BLOCK_SEQ_ENTRY@36..51
+          MINUS@36..37 "-"
+          WHITESPACE@37..38 " "
+          BLOCK@38..51
+            BLOCK_SCALAR@38..51
+              BAR@38..39 "|"
+              INDENT_INDICATOR@39..40 "1"
+              BLOCK_SCALAR_TEXT@40..51 "\n  explicit"
+        WHITESPACE@51..52 "\n"
+        BLOCK_SEQ_ENTRY@52..65
+          MINUS@52..53 "-"
+          WHITESPACE@53..54 " "
+          BLOCK@54..65
+            BLOCK_SCALAR@54..65
+              GREATER_THAN@54..55 ">"
+              BLOCK_SCALAR_TEXT@55..65 "\n detected"
+  WHITESPACE@65..66 "\n"

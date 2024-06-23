@@ -1,0 +1,37 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..62
+  DOCUMENT@0..61
+    BLOCK@0..61
+      BLOCK_MAP@0..61
+        BLOCK_MAP_ENTRY@0..24
+          BLOCK_MAP_KEY@0..9
+            FLOW@0..9
+              PLAIN_SCALAR@0..9 "plain key"
+          COLON@9..10 ":"
+          WHITESPACE@10..11 " "
+          BLOCK_MAP_VALUE@11..24
+            FLOW@11..24
+              PLAIN_SCALAR@11..24 "in-line value"
+        WHITESPACE@24..25 "\n"
+        BLOCK_MAP_ENTRY@25..26
+          COLON@25..26 ":"
+        WHITESPACE@26..27 " "
+        COMMENT@27..39 "# Both empty"
+        WHITESPACE@39..40 "\n"
+        BLOCK_MAP_ENTRY@40..61
+          BLOCK_MAP_KEY@40..52
+            FLOW@40..52
+              DOUBLE_QUOTED_SCALAR@40..52 "\"quoted key\""
+          COLON@52..53 ":"
+          WHITESPACE@53..54 "\n"
+          BLOCK_MAP_VALUE@54..61
+            BLOCK@54..61
+              BLOCK_SEQ@54..61
+                BLOCK_SEQ_ENTRY@54..61
+                  MINUS@54..55 "-"
+                  WHITESPACE@55..56 " "
+                  FLOW@56..61
+                    PLAIN_SCALAR@56..61 "entry"
+  WHITESPACE@61..62 "\n"

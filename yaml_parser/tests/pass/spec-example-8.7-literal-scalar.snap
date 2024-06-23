@@ -1,0 +1,10 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..22
+  DOCUMENT@0..17
+    BLOCK@0..17
+      BLOCK_SCALAR@0..17
+        BAR@0..1 "|"
+        BLOCK_SCALAR_TEXT@1..17 "\n literal\n \ttext"
+  WHITESPACE@17..22 "\n\n\n\n\n"

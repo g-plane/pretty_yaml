@@ -1,0 +1,10 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..20
+  DOCUMENT@0..15
+    BLOCK@0..15
+      BLOCK_SCALAR@0..15
+        GREATER_THAN@0..1 ">"
+        BLOCK_SCALAR_TEXT@1..15 "\n folded\n text"
+  WHITESPACE@15..20 "\n\n\n\n\n"

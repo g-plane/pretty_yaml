@@ -1,0 +1,12 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..88
+  DOCUMENT@0..76
+    BLOCK@0..76
+      BLOCK_SCALAR@0..76
+        GREATER_THAN@0..1 ">"
+        BLOCK_SCALAR_TEXT@1..76 "\n\n folded\n line\n\n nex ..."
+  WHITESPACE@76..78 "\n\n"
+  COMMENT@78..87 "# Comment"
+  WHITESPACE@87..88 "\n"

@@ -1,0 +1,53 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..143
+  DOCUMENT@0..142
+    BLOCK@0..142
+      BLOCK_SEQ@0..142
+        BLOCK_SEQ_ENTRY@0..30
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          BLOCK@2..30
+            BLOCK_SCALAR@2..30
+              BAR@2..3 "|"
+              WHITESPACE@3..4 " "
+              COMMENT@4..21 "# Empty header↓"
+              BLOCK_SCALAR_TEXT@21..30 "\n literal"
+        WHITESPACE@30..31 "\n"
+        BLOCK_SEQ_ENTRY@31..71
+          MINUS@31..32 "-"
+          WHITESPACE@32..33 " "
+          BLOCK@33..71
+            BLOCK_SCALAR@33..71
+              GREATER_THAN@33..34 ">"
+              INDENT_INDICATOR@34..35 "1"
+              WHITESPACE@35..36 " "
+              COMMENT@36..62 "# Indentation indicat ..."
+              BLOCK_SCALAR_TEXT@62..71 "\n  folded"
+        WHITESPACE@71..72 "\n"
+        BLOCK_SEQ_ENTRY@72..106
+          MINUS@72..73 "-"
+          WHITESPACE@73..74 " "
+          BLOCK@74..106
+            BLOCK_SCALAR@74..106
+              BAR@74..75 "|"
+              CHOMPING_INDICATOR@75..76
+                PLUS@75..76 "+"
+              WHITESPACE@76..77 " "
+              COMMENT@77..100 "# Chomping indicator↓"
+              BLOCK_SCALAR_TEXT@100..106 "\n keep"
+        WHITESPACE@106..108 "\n\n"
+        BLOCK_SEQ_ENTRY@108..142
+          MINUS@108..109 "-"
+          WHITESPACE@109..110 " "
+          BLOCK@110..142
+            BLOCK_SCALAR@110..142
+              GREATER_THAN@110..111 ">"
+              INDENT_INDICATOR@111..112 "1"
+              CHOMPING_INDICATOR@112..113
+                MINUS@112..113 "-"
+              WHITESPACE@113..114 " "
+              COMMENT@114..134 "# Both indicators↓"
+              BLOCK_SCALAR_TEXT@134..142 "\n  strip"
+  WHITESPACE@142..143 "\n"

@@ -1,0 +1,64 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..152
+  WHITESPACE@0..1 " "
+  COMMENT@1..8 "# Strip"
+  WHITESPACE@8..11 "\n  "
+  COMMENT@11..22 "# Comments:"
+  WHITESPACE@22..23 "\n"
+  DOCUMENT@23..127
+    BLOCK@23..127
+      BLOCK_MAP@23..127
+        BLOCK_MAP_ENTRY@23..41
+          BLOCK_MAP_KEY@23..28
+            FLOW@23..28
+              PLAIN_SCALAR@23..28 "strip"
+          COLON@28..29 ":"
+          WHITESPACE@29..30 " "
+          BLOCK_MAP_VALUE@30..41
+            BLOCK@30..41
+              BLOCK_SCALAR@30..41
+                BAR@30..31 "|"
+                CHOMPING_INDICATOR@31..32
+                  MINUS@31..32 "-"
+                BLOCK_SCALAR_TEXT@32..41 "\n  # text"
+        WHITESPACE@41..46 "\n  \n "
+        COMMENT@46..52 "# Clip"
+        WHITESPACE@52..55 "\n  "
+        COMMENT@55..66 "# comments:"
+        WHITESPACE@66..68 "\n\n"
+        BLOCK_MAP_ENTRY@68..84
+          BLOCK_MAP_KEY@68..72
+            FLOW@68..72
+              PLAIN_SCALAR@68..72 "clip"
+          COLON@72..73 ":"
+          WHITESPACE@73..74 " "
+          BLOCK_MAP_VALUE@74..84
+            BLOCK@74..84
+              BLOCK_SCALAR@74..84
+                BAR@74..75 "|"
+                BLOCK_SCALAR_TEXT@75..84 "\n  # text"
+        WHITESPACE@84..88 "\n \n "
+        COMMENT@88..94 "# Keep"
+        WHITESPACE@94..97 "\n  "
+        COMMENT@97..108 "# comments:"
+        WHITESPACE@108..110 "\n\n"
+        BLOCK_MAP_ENTRY@110..127
+          BLOCK_MAP_KEY@110..114
+            FLOW@110..114
+              PLAIN_SCALAR@110..114 "keep"
+          COLON@114..115 ":"
+          WHITESPACE@115..116 " "
+          BLOCK_MAP_VALUE@116..127
+            BLOCK@116..127
+              BLOCK_SCALAR@116..127
+                BAR@116..117 "|"
+                CHOMPING_INDICATOR@117..118
+                  PLUS@117..118 "+"
+                BLOCK_SCALAR_TEXT@118..127 "\n  # text"
+  WHITESPACE@127..130 "\n\n "
+  COMMENT@130..137 "# Trail"
+  WHITESPACE@137..140 "\n  "
+  COMMENT@140..151 "# comments."
+  WHITESPACE@151..152 "\n"
