@@ -930,7 +930,7 @@ fn tag_directive(input: &mut Input) -> GreenResult {
 fn tag_prefix(input: &mut Input) -> GreenResult {
     (
         one_of(|c| c == '!' || is_tag_char(c)),
-        take_till(0.., is_url_char),
+        take_while(0.., is_url_char),
     )
         .recognize()
         .parse_next(input)
