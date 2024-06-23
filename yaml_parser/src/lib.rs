@@ -943,7 +943,14 @@ fn reserved_directive(input: &mut Input) -> GreenResult {
     (
         take_till(1.., |c: char| c.is_ascii_whitespace()),
         space,
-        take_till(1.., |c: char| c.is_ascii_whitespace()),
+        repeat::<_, _, (), _, _>(
+            0..,
+            alt((
+                take_till(1.., |c: char| c.is_ascii_whitespace()),
+                terminated(space1, peek(none_of('#'))),
+            )),
+        )
+        .recognize(),
     )
         .parse_next(input)
         .map(|(name, space, param)| {
