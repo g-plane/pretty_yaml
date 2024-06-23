@@ -710,7 +710,7 @@ fn block_compact_collection(
         space_before_block_compact_collection.track_indent(),
         alt((block_sequence, block_map)),
     )
-        .map(|(space, collection)| Some((vec![space], collection)))
+        .map(|(space, collection)| Some((vec![space], node(BLOCK, [collection]))))
         .parse_next(input);
     input.state = original_state;
     result
@@ -787,9 +787,12 @@ fn block_map_explicit_key(input: &mut Input) -> GreenResult {
     (
         ascii_char::<'?'>(QUESTION_MARK),
         alt((
+            block_compact_collection,
             (
-                space,
-                cmts_or_ws0,
+                (space, cmts_or_ws0).map(|(space, mut trivias)| {
+                    trivias.insert(0, space);
+                    trivias
+                }),
                 block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
             )
                 .map(Some),
@@ -798,10 +801,9 @@ fn block_map_explicit_key(input: &mut Input) -> GreenResult {
     )
         .parse_next(input)
         .map(|(question_mark, key)| {
-            if let Some((space, mut trivias, key)) = key {
+            if let Some((mut trivias, key)) = key {
                 let mut children = Vec::with_capacity(3);
                 children.push(question_mark);
-                children.push(space);
                 children.append(&mut trivias);
                 children.push(key);
                 node(BLOCK_MAP_KEY, children)

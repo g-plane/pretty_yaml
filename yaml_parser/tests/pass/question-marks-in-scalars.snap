@@ -20,16 +20,17 @@ ROOT@0..128
         BLOCK_SEQ_ENTRY@30..43
           MINUS@30..31 "-"
           WHITESPACE@31..32 " "
-          BLOCK_MAP@32..43
-            BLOCK_MAP_ENTRY@32..43
-              BLOCK_MAP_KEY@32..35
-                FLOW@32..35
-                  PLAIN_SCALAR@32..35 "key"
-              COLON@35..36 ":"
-              WHITESPACE@36..37 " "
-              BLOCK_MAP_VALUE@37..43
-                FLOW@37..43
-                  PLAIN_SCALAR@37..43 "value?"
+          BLOCK@32..43
+            BLOCK_MAP@32..43
+              BLOCK_MAP_ENTRY@32..43
+                BLOCK_MAP_KEY@32..35
+                  FLOW@32..35
+                    PLAIN_SCALAR@32..35 "key"
+                COLON@35..36 ":"
+                WHITESPACE@36..37 " "
+                BLOCK_MAP_VALUE@37..43
+                  FLOW@37..43
+                    PLAIN_SCALAR@37..43 "value?"
         WHITESPACE@43..44 "\n"
         BLOCK_SEQ_ENTRY@44..56
           MINUS@44..45 "-"

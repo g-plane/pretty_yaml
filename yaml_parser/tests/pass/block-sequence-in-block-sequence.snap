@@ -8,18 +8,19 @@ ROOT@0..25
         BLOCK_SEQ_ENTRY@0..19
           MINUS@0..1 "-"
           WHITESPACE@1..2 " "
-          BLOCK_SEQ@2..19
-            BLOCK_SEQ_ENTRY@2..9
-              MINUS@2..3 "-"
-              WHITESPACE@3..4 " "
-              FLOW@4..9
-                PLAIN_SCALAR@4..9 "s1_i1"
-            WHITESPACE@9..12 "\n  "
-            BLOCK_SEQ_ENTRY@12..19
-              MINUS@12..13 "-"
-              WHITESPACE@13..14 " "
-              FLOW@14..19
-                PLAIN_SCALAR@14..19 "s1_i2"
+          BLOCK@2..19
+            BLOCK_SEQ@2..19
+              BLOCK_SEQ_ENTRY@2..9
+                MINUS@2..3 "-"
+                WHITESPACE@3..4 " "
+                FLOW@4..9
+                  PLAIN_SCALAR@4..9 "s1_i1"
+              WHITESPACE@9..12 "\n  "
+              BLOCK_SEQ_ENTRY@12..19
+                MINUS@12..13 "-"
+                WHITESPACE@13..14 " "
+                FLOW@14..19
+                  PLAIN_SCALAR@14..19 "s1_i2"
         WHITESPACE@19..20 "\n"
         BLOCK_SEQ_ENTRY@20..24
           MINUS@20..21 "-"
