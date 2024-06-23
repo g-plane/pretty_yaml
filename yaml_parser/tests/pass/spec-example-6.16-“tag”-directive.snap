@@ -1,0 +1,27 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..51
+  DOCUMENT@0..50
+    DIRECTIVE@0..30
+      PERCENT@0..1 "%"
+      TAG_DIRECTIVE@1..30
+        DIRECTIVE_NAME@1..4 "TAG"
+        WHITESPACE@4..5 " "
+        TAG_HANDLE@5..11
+          TAG_HANDLE_NAMED@5..11 "!yaml!"
+        WHITESPACE@11..12 " "
+        TAG_PREFIX@12..30 "tag:yaml.org,2002:"
+    WHITESPACE@30..31 "\n"
+    DIRECTIVES_END@31..34 "---"
+    WHITESPACE@34..35 "\n"
+    FLOW@35..50
+      PROPERTIES@35..44
+        TAG_PROPERTY@35..44
+          SHORTHAND_TAG@35..44
+            TAG_HANDLE@35..41
+              TAG_HANDLE_NAMED@35..41 "!yaml!"
+            TAG_CHAR@41..44 "str"
+      WHITESPACE@44..45 " "
+      DOUBLE_QUOTED_SCALAR@45..50 "\"foo\""
+  WHITESPACE@50..51 "\n"

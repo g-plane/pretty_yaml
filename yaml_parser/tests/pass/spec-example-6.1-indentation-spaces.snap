@@ -1,0 +1,71 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..301
+  WHITESPACE@0..2 "  "
+  COMMENT@2..35 "# Leading comment lin ..."
+  WHITESPACE@35..39 "\n   "
+  COMMENT@39..73 "# neither content nor ..."
+  WHITESPACE@73..79 "\n    \n"
+  DOCUMENT@79..273
+    BLOCK@79..273
+      BLOCK_MAP@79..273
+        BLOCK_MAP_ENTRY@79..273
+          BLOCK_MAP_KEY@79..91
+            FLOW@79..91
+              PLAIN_SCALAR@79..91 "Not indented"
+          COLON@91..92 ":"
+          WHITESPACE@92..94 "\n "
+          BLOCK_MAP_VALUE@94..273
+            BLOCK@94..273
+              BLOCK_MAP@94..273
+                BLOCK_MAP_ENTRY@94..134
+                  BLOCK_MAP_KEY@94..106
+                    FLOW@94..106
+                      PLAIN_SCALAR@94..106 "By one space"
+                  COLON@106..107 ":"
+                  WHITESPACE@107..108 " "
+                  BLOCK_MAP_VALUE@108..134
+                    BLOCK@108..134
+                      BLOCK_SCALAR@108..134
+                        BAR@108..109 "|"
+                        BLOCK_SCALAR_TEXT@109..134 "\n    By four\n      sp ..."
+                WHITESPACE@134..136 "\n "
+                BLOCK_MAP_ENTRY@136..273
+                  BLOCK_MAP_KEY@136..146
+                    FLOW@136..146
+                      PLAIN_SCALAR@136..146 "Flow style"
+                  COLON@146..147 ":"
+                  WHITESPACE@147..148 " "
+                  BLOCK_MAP_VALUE@148..273
+                    FLOW@148..273
+                      FLOW_SEQ@148..273
+                        L_BRACKET@148..149 "["
+                        WHITESPACE@149..153 "    "
+                        COMMENT@153..169 "# Leading spaces"
+                        WHITESPACE@169..173 "\n   "
+                        FLOW_SEQ_ENTRIES@173..272
+                          FLOW_SEQ_ENTRY@173..179
+                            FLOW@173..179
+                              PLAIN_SCALAR@173..179 "By two"
+                          COMMA@179..180 ","
+                          WHITESPACE@180..188 "        "
+                          COMMENT@188..203 "# in flow style"
+                          WHITESPACE@203..206 "\n  "
+                          FLOW_SEQ_ENTRY@206..217
+                            FLOW@206..217
+                              PLAIN_SCALAR@206..217 "Also by two"
+                          COMMA@217..218 ","
+                          WHITESPACE@218..222 "    "
+                          COMMENT@222..235 "# are neither"
+                          WHITESPACE@235..239 "\n  \t"
+                          FLOW_SEQ_ENTRY@239..251
+                            FLOW@239..251
+                              PLAIN_SCALAR@239..251 "Still by two"
+                          WHITESPACE@251..254 "   "
+                          COMMENT@254..267 "# content nor"
+                          WHITESPACE@267..272 "\n    "
+                        R_BRACKET@272..273 "]"
+  WHITESPACE@273..286 "             "
+  COMMENT@286..300 "# indentation."
+  WHITESPACE@300..301 "\n"

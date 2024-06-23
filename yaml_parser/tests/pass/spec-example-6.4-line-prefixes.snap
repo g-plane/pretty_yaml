@@ -1,0 +1,39 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..70
+  DOCUMENT@0..69
+    BLOCK@0..69
+      BLOCK_MAP@0..69
+        BLOCK_MAP_ENTRY@0..19
+          BLOCK_MAP_KEY@0..5
+            FLOW@0..5
+              PLAIN_SCALAR@0..5 "plain"
+          COLON@5..6 ":"
+          WHITESPACE@6..7 " "
+          BLOCK_MAP_VALUE@7..19
+            FLOW@7..19
+              PLAIN_SCALAR@7..19 "text\n  lines"
+        WHITESPACE@19..20 "\n"
+        BLOCK_MAP_ENTRY@20..43
+          BLOCK_MAP_KEY@20..26
+            FLOW@20..26
+              PLAIN_SCALAR@20..26 "quoted"
+          COLON@26..27 ":"
+          WHITESPACE@27..28 " "
+          BLOCK_MAP_VALUE@28..43
+            FLOW@28..43
+              DOUBLE_QUOTED_SCALAR@28..43 "\"text\n  \tlines\""
+        WHITESPACE@43..44 "\n"
+        BLOCK_MAP_ENTRY@44..69
+          BLOCK_MAP_KEY@44..49
+            FLOW@44..49
+              PLAIN_SCALAR@44..49 "block"
+          COLON@49..50 ":"
+          WHITESPACE@50..51 " "
+          BLOCK_MAP_VALUE@51..69
+            BLOCK@51..69
+              BLOCK_SCALAR@51..69
+                BAR@51..52 "|"
+                BLOCK_SCALAR_TEXT@52..69 "\n  text\n   \tlines"
+  WHITESPACE@69..70 "\n"

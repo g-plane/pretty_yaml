@@ -1,0 +1,75 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..218
+  COMMENT@0..26 "# Outside flow collec ..."
+  WHITESPACE@26..27 "\n"
+  DOCUMENT@27..217
+    BLOCK@27..217
+      BLOCK_SEQ@27..217
+        BLOCK_SEQ_ENTRY@27..37
+          MINUS@27..28 "-"
+          WHITESPACE@28..29 " "
+          FLOW@29..37
+            PLAIN_SCALAR@29..37 "::vector"
+        WHITESPACE@37..38 "\n"
+        BLOCK_SEQ_ENTRY@38..48
+          MINUS@38..39 "-"
+          WHITESPACE@39..40 " "
+          FLOW@40..48
+            DOUBLE_QUOTED_SCALAR@40..48 "\": - ()\""
+        WHITESPACE@48..49 "\n"
+        BLOCK_SEQ_ENTRY@49..68
+          MINUS@49..50 "-"
+          WHITESPACE@50..51 " "
+          FLOW@51..68
+            PLAIN_SCALAR@51..68 "Up, up, and away!"
+        WHITESPACE@68..69 "\n"
+        BLOCK_SEQ_ENTRY@69..75
+          MINUS@69..70 "-"
+          WHITESPACE@70..71 " "
+          FLOW@71..75
+            PLAIN_SCALAR@71..75 "-123"
+        WHITESPACE@75..76 "\n"
+        BLOCK_SEQ_ENTRY@76..104
+          MINUS@76..77 "-"
+          WHITESPACE@77..78 " "
+          FLOW@78..104
+            PLAIN_SCALAR@78..104 "http://example.com/fo ..."
+        WHITESPACE@104..105 "\n"
+        COMMENT@105..130 "# Inside flow collect ..."
+        WHITESPACE@130..131 "\n"
+        BLOCK_SEQ_ENTRY@131..217
+          MINUS@131..132 "-"
+          WHITESPACE@132..133 " "
+          FLOW@133..217
+            FLOW_SEQ@133..217
+              L_BRACKET@133..134 "["
+              WHITESPACE@134..135 " "
+              FLOW_SEQ_ENTRIES@135..216
+                FLOW_SEQ_ENTRY@135..143
+                  FLOW@135..143
+                    PLAIN_SCALAR@135..143 "::vector"
+                COMMA@143..144 ","
+                WHITESPACE@144..147 "\n  "
+                FLOW_SEQ_ENTRY@147..155
+                  FLOW@147..155
+                    DOUBLE_QUOTED_SCALAR@147..155 "\": - ()\""
+                COMMA@155..156 ","
+                WHITESPACE@156..159 "\n  "
+                FLOW_SEQ_ENTRY@159..177
+                  FLOW@159..177
+                    DOUBLE_QUOTED_SCALAR@159..177 "\"Up, up and away!\""
+                COMMA@177..178 ","
+                WHITESPACE@178..181 "\n  "
+                FLOW_SEQ_ENTRY@181..185
+                  FLOW@181..185
+                    PLAIN_SCALAR@181..185 "-123"
+                COMMA@185..186 ","
+                WHITESPACE@186..189 "\n  "
+                FLOW_SEQ_ENTRY@189..215
+                  FLOW@189..215
+                    PLAIN_SCALAR@189..215 "http://example.com/fo ..."
+                WHITESPACE@215..216 " "
+              R_BRACKET@216..217 "]"
+  WHITESPACE@217..218 "\n"

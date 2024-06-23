@@ -1,0 +1,53 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..43
+  DOCUMENT@0..42
+    BLOCK@0..42
+      BLOCK_MAP@0..42
+        BLOCK_MAP_ENTRY@0..28
+          BLOCK_MAP_KEY@0..15
+            FLOW@0..15
+              PROPERTIES@0..9
+                TAG_PROPERTY@0..5
+                  SHORTHAND_TAG@0..5
+                    TAG_HANDLE@0..2
+                      TAG_HANDLE_SECONDARY@0..2 "!!"
+                    TAG_CHAR@2..5 "str"
+                WHITESPACE@5..6 " "
+                ANCHOR_PROPERTY@6..9
+                  AMPERSAND@6..7 "&"
+                  ANCHOR_NAME@7..9 "a1"
+              WHITESPACE@9..10 " "
+              DOUBLE_QUOTED_SCALAR@10..15 "\"foo\""
+          COLON@15..16 ":"
+          WHITESPACE@16..19 "\n  "
+          BLOCK_MAP_VALUE@19..28
+            FLOW@19..28
+              PROPERTIES@19..24
+                TAG_PROPERTY@19..24
+                  SHORTHAND_TAG@19..24
+                    TAG_HANDLE@19..21
+                      TAG_HANDLE_SECONDARY@19..21 "!!"
+                    TAG_CHAR@21..24 "str"
+              WHITESPACE@24..25 " "
+              PLAIN_SCALAR@25..28 "bar"
+        WHITESPACE@28..29 "\n"
+        BLOCK_MAP_ENTRY@29..42
+          BLOCK_MAP_KEY@29..36
+            FLOW@29..36
+              PROPERTIES@29..32
+                ANCHOR_PROPERTY@29..32
+                  AMPERSAND@29..30 "&"
+                  ANCHOR_NAME@30..32 "a2"
+              WHITESPACE@32..33 " "
+              PLAIN_SCALAR@33..36 "baz"
+          WHITESPACE@36..37 " "
+          COLON@37..38 ":"
+          WHITESPACE@38..39 " "
+          BLOCK_MAP_VALUE@39..42
+            FLOW@39..42
+              ALIAS@39..42
+                ASTERISK@39..40 "*"
+                ANCHOR_NAME@40..42 "a1"
+  WHITESPACE@42..43 "\n"

@@ -1,0 +1,10 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..54
+  DOCUMENT@0..53
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    FLOW@4..53
+      DOUBLE_QUOTED_SCALAR@4..53 "\" 1st non-empty\n\n 2nd ..."
+  WHITESPACE@53..54 "\n"

@@ -1,0 +1,46 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..34
+  DOCUMENT@0..33
+    FLOW@0..33
+      FLOW_MAP@0..33
+        L_BRACE@0..1 "{"
+        WHITESPACE@1..4 "\n  "
+        FLOW_MAP_ENTRIES@4..32
+          FLOW_MAP_ENTRY@4..15
+            FLOW_MAP_KEY@4..7
+              FLOW@4..7
+                PLAIN_SCALAR@4..7 "foo"
+            WHITESPACE@7..8 " "
+            COLON@8..9 ":"
+            WHITESPACE@9..10 " "
+            FLOW_MAP_VALUE@10..15
+              FLOW@10..15
+                PROPERTIES@10..15
+                  TAG_PROPERTY@10..15
+                    SHORTHAND_TAG@10..15
+                      TAG_HANDLE@10..12
+                        TAG_HANDLE_SECONDARY@10..12 "!!"
+                      TAG_CHAR@12..15 "str"
+          COMMA@15..16 ","
+          WHITESPACE@16..19 "\n  "
+          FLOW_MAP_ENTRY@19..30
+            FLOW_MAP_KEY@19..24
+              FLOW@19..24
+                PROPERTIES@19..24
+                  TAG_PROPERTY@19..24
+                    SHORTHAND_TAG@19..24
+                      TAG_HANDLE@19..21
+                        TAG_HANDLE_SECONDARY@19..21 "!!"
+                      TAG_CHAR@21..24 "str"
+            WHITESPACE@24..25 " "
+            COLON@25..26 ":"
+            WHITESPACE@26..27 " "
+            FLOW_MAP_VALUE@27..30
+              FLOW@27..30
+                PLAIN_SCALAR@27..30 "bar"
+          COMMA@30..31 ","
+          WHITESPACE@31..32 "\n"
+        R_BRACE@32..33 "}"
+  WHITESPACE@33..34 "\n"

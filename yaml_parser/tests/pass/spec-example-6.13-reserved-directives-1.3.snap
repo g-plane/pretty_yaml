@@ -1,0 +1,21 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..76
+  DOCUMENT@0..75
+    DIRECTIVE@0..13
+      PERCENT@0..1 "%"
+      RESERVED_DIRECTIVE@1..13
+        DIRECTIVE_NAME@1..4 "FOO"
+        WHITESPACE@4..6 "  "
+        DIRECTIVE_PARAM@6..13 "bar baz"
+    WHITESPACE@13..14 " "
+    COMMENT@14..33 "# Should be ignored"
+    WHITESPACE@33..48 "\n              "
+    COMMENT@48..65 "# with a warning."
+    WHITESPACE@65..66 "\n"
+    DIRECTIVES_END@66..69 "---"
+    WHITESPACE@69..70 "\n"
+    FLOW@70..75
+      DOUBLE_QUOTED_SCALAR@70..75 "\"foo\""
+  WHITESPACE@75..76 "\n"

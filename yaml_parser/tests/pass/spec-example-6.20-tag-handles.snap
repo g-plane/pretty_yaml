@@ -1,0 +1,27 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..52
+  DOCUMENT@0..51
+    DIRECTIVE@0..34
+      PERCENT@0..1 "%"
+      TAG_DIRECTIVE@1..34
+        DIRECTIVE_NAME@1..4 "TAG"
+        WHITESPACE@4..5 " "
+        TAG_HANDLE@5..8
+          TAG_HANDLE_NAMED@5..8 "!e!"
+        WHITESPACE@8..9 " "
+        TAG_PREFIX@9..34 "tag:example.com,2000: ..."
+    WHITESPACE@34..35 "\n"
+    DIRECTIVES_END@35..38 "---"
+    WHITESPACE@38..39 "\n"
+    FLOW@39..51
+      PROPERTIES@39..45
+        TAG_PROPERTY@39..45
+          SHORTHAND_TAG@39..45
+            TAG_HANDLE@39..42
+              TAG_HANDLE_NAMED@39..42 "!e!"
+            TAG_CHAR@42..45 "foo"
+      WHITESPACE@45..46 " "
+      DOUBLE_QUOTED_SCALAR@46..51 "\"bar\""
+  WHITESPACE@51..52 "\n"

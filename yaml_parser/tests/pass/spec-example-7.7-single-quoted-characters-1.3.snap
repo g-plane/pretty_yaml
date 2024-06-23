@@ -1,0 +1,10 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..26
+  DOCUMENT@0..25
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    FLOW@4..25
+      SINGLE_QUOTED_SCALAR@4..25 "'here''s to \"quotes\"'"
+  WHITESPACE@25..26 "\n"

@@ -1,0 +1,8 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..63
+  DOCUMENT@0..62
+    FLOW@0..62
+      DOUBLE_QUOTED_SCALAR@0..62 "\"folded \nto a space,\t ..."
+  WHITESPACE@62..63 "\n"

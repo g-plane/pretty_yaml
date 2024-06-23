@@ -1,0 +1,12 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..32
+  DOCUMENT@0..31
+    BLOCK@0..31
+      BLOCK_SCALAR@0..31
+        GREATER_THAN@0..1 ">"
+        CHOMPING_INDICATOR@1..2
+          MINUS@1..2 "-"
+        BLOCK_SCALAR_TEXT@2..31 "\n  trimmed\n  \n \n\n  as ..."
+  WHITESPACE@31..32 "\n"

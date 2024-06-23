@@ -1,0 +1,26 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..45
+  DOCUMENT@0..44
+    BLOCK@0..44
+      BLOCK_MAP@0..44
+        BLOCK_MAP_ENTRY@0..44
+          BLOCK_MAP_KEY@0..28
+            FLOW@0..28
+              PROPERTIES@0..24
+                TAG_PROPERTY@0..24
+                  VERBATIM_TAG@0..24 "!<tag:yaml.org,2002:str>"
+              WHITESPACE@24..25 " "
+              PLAIN_SCALAR@25..28 "foo"
+          WHITESPACE@28..29 " "
+          COLON@29..30 ":"
+          WHITESPACE@30..33 "\n  "
+          BLOCK_MAP_VALUE@33..44
+            FLOW@33..44
+              PROPERTIES@33..40
+                TAG_PROPERTY@33..40
+                  VERBATIM_TAG@33..40 "!<!bar>"
+              WHITESPACE@40..41 " "
+              PLAIN_SCALAR@41..44 "baz"
+  WHITESPACE@44..45 "\n"

@@ -1,0 +1,10 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..32
+  DOCUMENT@0..31
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    FLOW@4..31
+      DOUBLE_QUOTED_SCALAR@4..31 "\"\n  foo \n \n    bar\n\n  ..."
+  WHITESPACE@31..32 "\n"

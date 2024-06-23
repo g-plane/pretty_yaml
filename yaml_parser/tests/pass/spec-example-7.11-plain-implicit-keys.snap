@@ -1,0 +1,35 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..55
+  DOCUMENT@0..54
+    BLOCK@0..54
+      BLOCK_MAP@0..54
+        BLOCK_MAP_ENTRY@0..54
+          BLOCK_MAP_KEY@0..18
+            FLOW@0..18
+              PLAIN_SCALAR@0..18 "implicit block key"
+          WHITESPACE@18..19 " "
+          COLON@19..20 ":"
+          WHITESPACE@20..21 " "
+          BLOCK_MAP_VALUE@21..54
+            FLOW@21..54
+              FLOW_SEQ@21..54
+                L_BRACKET@21..22 "["
+                WHITESPACE@22..25 "\n  "
+                FLOW_SEQ_ENTRIES@25..53
+                  FLOW_SEQ_ENTRY@25..50
+                    FLOW_PAIR@25..50
+                      FLOW_MAP_KEY@25..42
+                        FLOW@25..42
+                          PLAIN_SCALAR@25..42 "implicit flow key"
+                      WHITESPACE@42..43 " "
+                      COLON@43..44 ":"
+                      WHITESPACE@44..45 " "
+                      FLOW_MAP_VALUE@45..50
+                        FLOW@45..50
+                          PLAIN_SCALAR@45..50 "value"
+                  COMMA@50..51 ","
+                  WHITESPACE@51..53 "\n "
+                R_BRACKET@53..54 "]"
+  WHITESPACE@54..55 "\n"

@@ -1,0 +1,61 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..108
+  DOCUMENT@0..107
+    BLOCK@0..107
+      BLOCK_MAP@0..107
+        BLOCK_MAP_ENTRY@0..29
+          BLOCK_MAP_KEY@0..16
+            FLOW@0..16
+              PLAIN_SCALAR@0..16 "First occurrence"
+          COLON@16..17 ":"
+          WHITESPACE@17..18 " "
+          BLOCK_MAP_VALUE@18..29
+            FLOW@18..29
+              PROPERTIES@18..25
+                ANCHOR_PROPERTY@18..25
+                  AMPERSAND@18..19 "&"
+                  ANCHOR_NAME@19..25 "anchor"
+              WHITESPACE@25..26 " "
+              PLAIN_SCALAR@26..29 "Foo"
+        WHITESPACE@29..30 "\n"
+        BLOCK_MAP_ENTRY@30..56
+          BLOCK_MAP_KEY@30..47
+            FLOW@30..47
+              PLAIN_SCALAR@30..47 "Second occurrence"
+          COLON@47..48 ":"
+          WHITESPACE@48..49 " "
+          BLOCK_MAP_VALUE@49..56
+            FLOW@49..56
+              ALIAS@49..56
+                ASTERISK@49..50 "*"
+                ANCHOR_NAME@50..56 "anchor"
+        WHITESPACE@56..57 "\n"
+        BLOCK_MAP_ENTRY@57..85
+          BLOCK_MAP_KEY@57..72
+            FLOW@57..72
+              PLAIN_SCALAR@57..72 "Override anchor"
+          COLON@72..73 ":"
+          WHITESPACE@73..74 " "
+          BLOCK_MAP_VALUE@74..85
+            FLOW@74..85
+              PROPERTIES@74..81
+                ANCHOR_PROPERTY@74..81
+                  AMPERSAND@74..75 "&"
+                  ANCHOR_NAME@75..81 "anchor"
+              WHITESPACE@81..82 " "
+              PLAIN_SCALAR@82..85 "Bar"
+        WHITESPACE@85..86 "\n"
+        BLOCK_MAP_ENTRY@86..107
+          BLOCK_MAP_KEY@86..98
+            FLOW@86..98
+              PLAIN_SCALAR@86..98 "Reuse anchor"
+          COLON@98..99 ":"
+          WHITESPACE@99..100 " "
+          BLOCK_MAP_VALUE@100..107
+            FLOW@100..107
+              ALIAS@100..107
+                ASTERISK@100..101 "*"
+                ANCHOR_NAME@101..107 "anchor"
+  WHITESPACE@107..108 "\n"

@@ -1,0 +1,8 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..46
+  DOCUMENT@0..45
+    FLOW@0..45
+      PLAIN_SCALAR@0..45 "1st non-empty\n\n 2nd n ..."
+  WHITESPACE@45..46 "\n"

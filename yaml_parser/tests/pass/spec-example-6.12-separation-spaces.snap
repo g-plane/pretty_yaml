@@ -1,0 +1,67 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..97
+  DOCUMENT@0..96
+    BLOCK@0..96
+      BLOCK_MAP@0..96
+        BLOCK_MAP_ENTRY@0..96
+          BLOCK_MAP_KEY@0..28
+            FLOW@0..28
+              FLOW_MAP@0..28
+                L_BRACE@0..1 "{"
+                WHITESPACE@1..2 " "
+                FLOW_MAP_ENTRIES@2..27
+                  FLOW_MAP_ENTRY@2..14
+                    FLOW_MAP_KEY@2..7
+                      FLOW@2..7
+                        PLAIN_SCALAR@2..7 "first"
+                    COLON@7..8 ":"
+                    WHITESPACE@8..9 " "
+                    FLOW_MAP_VALUE@9..14
+                      FLOW@9..14
+                        PLAIN_SCALAR@9..14 "Sammy"
+                  COMMA@14..15 ","
+                  WHITESPACE@15..16 " "
+                  FLOW_MAP_ENTRY@16..26
+                    FLOW_MAP_KEY@16..20
+                      FLOW@16..20
+                        PLAIN_SCALAR@16..20 "last"
+                    COLON@20..21 ":"
+                    WHITESPACE@21..22 " "
+                    FLOW_MAP_VALUE@22..26
+                      FLOW@22..26
+                        PLAIN_SCALAR@22..26 "Sosa"
+                  WHITESPACE@26..27 " "
+                R_BRACE@27..28 "}"
+          COLON@28..29 ":"
+          WHITESPACE@29..30 "\n"
+          COMMENT@30..43 "# Statistics:"
+          WHITESPACE@43..46 "\n  "
+          BLOCK_MAP_VALUE@46..96
+            BLOCK@46..96
+              BLOCK_MAP@46..96
+                BLOCK_MAP_ENTRY@46..70
+                  BLOCK_MAP_KEY@46..48
+                    FLOW@46..48
+                      PLAIN_SCALAR@46..48 "hr"
+                  COLON@48..49 ":"
+                  WHITESPACE@49..51 "  "
+                  COMMENT@51..62 "# Home runs"
+                  WHITESPACE@62..68 "\n     "
+                  BLOCK_MAP_VALUE@68..70
+                    FLOW@68..70
+                      PLAIN_SCALAR@68..70 "65"
+                WHITESPACE@70..73 "\n  "
+                BLOCK_MAP_ENTRY@73..96
+                  BLOCK_MAP_KEY@73..76
+                    FLOW@73..76
+                      PLAIN_SCALAR@73..76 "avg"
+                  COLON@76..77 ":"
+                  WHITESPACE@77..78 " "
+                  COMMENT@78..87 "# Average"
+                  WHITESPACE@87..91 "\n   "
+                  BLOCK_MAP_VALUE@91..96
+                    FLOW@91..96
+                      PLAIN_SCALAR@91..96 "0.278"
+  WHITESPACE@96..97 "\n"

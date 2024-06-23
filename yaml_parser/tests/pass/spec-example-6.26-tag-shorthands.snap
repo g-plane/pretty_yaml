@@ -1,0 +1,58 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..80
+  DOCUMENT@0..79
+    DIRECTIVE@0..34
+      PERCENT@0..1 "%"
+      TAG_DIRECTIVE@1..34
+        DIRECTIVE_NAME@1..4 "TAG"
+        WHITESPACE@4..5 " "
+        TAG_HANDLE@5..8
+          TAG_HANDLE_NAMED@5..8 "!e!"
+        WHITESPACE@8..9 " "
+        TAG_PREFIX@9..34 "tag:example.com,2000: ..."
+    WHITESPACE@34..35 "\n"
+    DIRECTIVES_END@35..38 "---"
+    WHITESPACE@38..39 "\n"
+    BLOCK@39..79
+      BLOCK_SEQ@39..79
+        BLOCK_SEQ_ENTRY@39..51
+          MINUS@39..40 "-"
+          WHITESPACE@40..41 " "
+          FLOW@41..51
+            PROPERTIES@41..47
+              TAG_PROPERTY@41..47
+                SHORTHAND_TAG@41..47
+                  TAG_HANDLE@41..42
+                    TAG_HANDLE_PRIMARY@41..42 "!"
+                  TAG_CHAR@42..47 "local"
+            WHITESPACE@47..48 " "
+            PLAIN_SCALAR@48..51 "foo"
+        WHITESPACE@51..52 "\n"
+        BLOCK_SEQ_ENTRY@52..63
+          MINUS@52..53 "-"
+          WHITESPACE@53..54 " "
+          FLOW@54..63
+            PROPERTIES@54..59
+              TAG_PROPERTY@54..59
+                SHORTHAND_TAG@54..59
+                  TAG_HANDLE@54..56
+                    TAG_HANDLE_SECONDARY@54..56 "!!"
+                  TAG_CHAR@56..59 "str"
+            WHITESPACE@59..60 " "
+            PLAIN_SCALAR@60..63 "bar"
+        WHITESPACE@63..64 "\n"
+        BLOCK_SEQ_ENTRY@64..79
+          MINUS@64..65 "-"
+          WHITESPACE@65..66 " "
+          FLOW@66..79
+            PROPERTIES@66..75
+              TAG_PROPERTY@66..75
+                SHORTHAND_TAG@66..75
+                  TAG_HANDLE@66..69
+                    TAG_HANDLE_NAMED@66..69 "!e!"
+                  TAG_CHAR@69..75 "tag%21"
+            WHITESPACE@75..76 " "
+            PLAIN_SCALAR@76..79 "baz"
+  WHITESPACE@79..80 "\n"

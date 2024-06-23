@@ -1,0 +1,34 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..59
+  DOCUMENT@0..58
+    BLOCK@0..58
+      BLOCK_MAP@0..58
+        BLOCK_MAP_ENTRY@0..31
+          BLOCK_MAP_KEY@0..16
+            FLOW@0..16
+              PLAIN_SCALAR@0..16 "First occurrence"
+          COLON@16..17 ":"
+          WHITESPACE@17..18 " "
+          BLOCK_MAP_VALUE@18..31
+            FLOW@18..31
+              PROPERTIES@18..25
+                ANCHOR_PROPERTY@18..25
+                  AMPERSAND@18..19 "&"
+                  ANCHOR_NAME@19..25 "anchor"
+              WHITESPACE@25..26 " "
+              PLAIN_SCALAR@26..31 "Value"
+        WHITESPACE@31..32 "\n"
+        BLOCK_MAP_ENTRY@32..58
+          BLOCK_MAP_KEY@32..49
+            FLOW@32..49
+              PLAIN_SCALAR@32..49 "Second occurrence"
+          COLON@49..50 ":"
+          WHITESPACE@50..51 " "
+          BLOCK_MAP_VALUE@51..58
+            FLOW@51..58
+              ALIAS@51..58
+                ASTERISK@51..52 "*"
+                ANCHOR_NAME@52..58 "anchor"
+  WHITESPACE@58..59 "\n"

@@ -1,0 +1,32 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..55
+  COMMENT@0..35 "# Assuming convention ..."
+  WHITESPACE@35..36 "\n"
+  DOCUMENT@36..54
+    BLOCK@36..54
+      BLOCK_SEQ@36..54
+        BLOCK_SEQ_ENTRY@36..42
+          MINUS@36..37 "-"
+          WHITESPACE@37..38 " "
+          FLOW@38..42
+            DOUBLE_QUOTED_SCALAR@38..42 "\"12\""
+        WHITESPACE@42..43 "\n"
+        BLOCK_SEQ_ENTRY@43..47
+          MINUS@43..44 "-"
+          WHITESPACE@44..45 " "
+          FLOW@45..47
+            PLAIN_SCALAR@45..47 "12"
+        WHITESPACE@47..48 "\n"
+        BLOCK_SEQ_ENTRY@48..54
+          MINUS@48..49 "-"
+          WHITESPACE@49..50 " "
+          FLOW@50..54
+            PROPERTIES@50..51
+              TAG_PROPERTY@50..51
+                NON_SPECIFIC_TAG@50..51
+                  EXCLAMATION_MARK@50..51 "!"
+            WHITESPACE@51..52 " "
+            PLAIN_SCALAR@52..54 "12"
+  WHITESPACE@54..55 "\n"

@@ -1,0 +1,52 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..89
+  DOCUMENT@0..88
+    FLOW@0..88
+      FLOW_SEQ@0..88
+        L_BRACKET@0..1 "["
+        WHITESPACE@1..2 "\n"
+        FLOW_SEQ_ENTRIES@2..87
+          FLOW_SEQ_ENTRY@2..18
+            FLOW@2..18
+              DOUBLE_QUOTED_SCALAR@2..18 "\"double\n quoted\""
+          COMMA@18..19 ","
+          WHITESPACE@19..20 " "
+          FLOW_SEQ_ENTRY@20..46
+            FLOW@20..46
+              SINGLE_QUOTED_SCALAR@20..46 "'single\n           qu ..."
+          COMMA@46..47 ","
+          WHITESPACE@47..48 "\n"
+          FLOW_SEQ_ENTRY@48..59
+            FLOW@48..59
+              PLAIN_SCALAR@48..59 "plain\n text"
+          COMMA@59..60 ","
+          WHITESPACE@60..61 " "
+          FLOW_SEQ_ENTRY@61..71
+            FLOW@61..71
+              FLOW_SEQ@61..71
+                L_BRACKET@61..62 "["
+                WHITESPACE@62..63 " "
+                FLOW_SEQ_ENTRIES@63..70
+                  FLOW_SEQ_ENTRY@63..69
+                    FLOW@63..69
+                      PLAIN_SCALAR@63..69 "nested"
+                  WHITESPACE@69..70 " "
+                R_BRACKET@70..71 "]"
+          COMMA@71..72 ","
+          WHITESPACE@72..73 "\n"
+          FLOW_SEQ_ENTRY@73..85
+            FLOW_PAIR@73..85
+              FLOW_MAP_KEY@73..79
+                FLOW@73..79
+                  PLAIN_SCALAR@73..79 "single"
+              COLON@79..80 ":"
+              WHITESPACE@80..81 " "
+              FLOW_MAP_VALUE@81..85
+                FLOW@81..85
+                  PLAIN_SCALAR@81..85 "pair"
+          COMMA@85..86 ","
+          WHITESPACE@86..87 "\n"
+        R_BRACKET@87..88 "]"
+  WHITESPACE@88..89 "\n"

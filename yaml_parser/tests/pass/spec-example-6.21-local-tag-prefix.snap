@@ -1,0 +1,56 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..101
+  DOCUMENT@0..50
+    DIRECTIVE@0..13
+      PERCENT@0..1 "%"
+      TAG_DIRECTIVE@1..13
+        DIRECTIVE_NAME@1..4 "TAG"
+        WHITESPACE@4..5 " "
+        TAG_HANDLE@5..8
+          TAG_HANDLE_NAMED@5..8 "!m!"
+        WHITESPACE@8..9 " "
+        TAG_PREFIX@9..13 "!my-"
+    WHITESPACE@13..14 "\n"
+    DIRECTIVES_END@14..17 "---"
+    WHITESPACE@17..18 " "
+    COMMENT@18..29 "# Bulb here"
+    WHITESPACE@29..30 "\n"
+    FLOW@30..50
+      PROPERTIES@30..38
+        TAG_PROPERTY@30..38
+          SHORTHAND_TAG@30..38
+            TAG_HANDLE@30..33
+              TAG_HANDLE_NAMED@30..33 "!m!"
+            TAG_CHAR@33..38 "light"
+      WHITESPACE@38..39 " "
+      PLAIN_SCALAR@39..50 "fluorescent"
+  WHITESPACE@50..51 "\n"
+  DOCUMENT_END@51..54 "..."
+  WHITESPACE@54..55 "\n"
+  DOCUMENT@55..100
+    DIRECTIVE@55..68
+      PERCENT@55..56 "%"
+      TAG_DIRECTIVE@56..68
+        DIRECTIVE_NAME@56..59 "TAG"
+        WHITESPACE@59..60 " "
+        TAG_HANDLE@60..63
+          TAG_HANDLE_NAMED@60..63 "!m!"
+        WHITESPACE@63..64 " "
+        TAG_PREFIX@64..68 "!my-"
+    WHITESPACE@68..69 "\n"
+    DIRECTIVES_END@69..72 "---"
+    WHITESPACE@72..73 " "
+    COMMENT@73..85 "# Color here"
+    WHITESPACE@85..86 "\n"
+    FLOW@86..100
+      PROPERTIES@86..94
+        TAG_PROPERTY@86..94
+          SHORTHAND_TAG@86..94
+            TAG_HANDLE@86..89
+              TAG_HANDLE_NAMED@86..89 "!m!"
+            TAG_CHAR@89..94 "light"
+      WHITESPACE@94..95 " "
+      PLAIN_SCALAR@95..100 "green"
+  WHITESPACE@100..101 "\n"

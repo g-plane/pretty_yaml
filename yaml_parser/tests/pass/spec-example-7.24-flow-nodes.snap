@@ -1,0 +1,56 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..50
+  DOCUMENT@0..49
+    BLOCK@0..49
+      BLOCK_SEQ@0..49
+        BLOCK_SEQ_ENTRY@0..11
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          FLOW@2..11
+            PROPERTIES@2..7
+              TAG_PROPERTY@2..7
+                SHORTHAND_TAG@2..7
+                  TAG_HANDLE@2..4
+                    TAG_HANDLE_SECONDARY@2..4 "!!"
+                  TAG_CHAR@4..7 "str"
+            WHITESPACE@7..8 " "
+            DOUBLE_QUOTED_SCALAR@8..11 "\"a\""
+        WHITESPACE@11..12 "\n"
+        BLOCK_SEQ_ENTRY@12..17
+          MINUS@12..13 "-"
+          WHITESPACE@13..14 " "
+          FLOW@14..17
+            SINGLE_QUOTED_SCALAR@14..17 "'b'"
+        WHITESPACE@17..18 "\n"
+        BLOCK_SEQ_ENTRY@18..31
+          MINUS@18..19 "-"
+          WHITESPACE@19..20 " "
+          FLOW@20..31
+            PROPERTIES@20..27
+              ANCHOR_PROPERTY@20..27
+                AMPERSAND@20..21 "&"
+                ANCHOR_NAME@21..27 "anchor"
+            WHITESPACE@27..28 " "
+            DOUBLE_QUOTED_SCALAR@28..31 "\"c\""
+        WHITESPACE@31..32 "\n"
+        BLOCK_SEQ_ENTRY@32..41
+          MINUS@32..33 "-"
+          WHITESPACE@33..34 " "
+          FLOW@34..41
+            ALIAS@34..41
+              ASTERISK@34..35 "*"
+              ANCHOR_NAME@35..41 "anchor"
+        WHITESPACE@41..42 "\n"
+        BLOCK_SEQ_ENTRY@42..49
+          MINUS@42..43 "-"
+          WHITESPACE@43..44 " "
+          BLOCK@44..49
+            PROPERTIES@44..49
+              TAG_PROPERTY@44..49
+                SHORTHAND_TAG@44..49
+                  TAG_HANDLE@44..46
+                    TAG_HANDLE_SECONDARY@44..46 "!!"
+                  TAG_CHAR@46..49 "str"
+  WHITESPACE@49..50 "\n"

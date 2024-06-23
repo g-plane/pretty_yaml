@@ -1,0 +1,46 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..86
+  COMMENT@0..9 "# Private"
+  WHITESPACE@9..10 "\n"
+  DOCUMENT@10..24
+    DIRECTIVES_END@10..13 "---"
+    WHITESPACE@13..14 "\n"
+    FLOW@14..24
+      PROPERTIES@14..18
+        TAG_PROPERTY@14..18
+          SHORTHAND_TAG@14..18
+            TAG_HANDLE@14..15
+              TAG_HANDLE_PRIMARY@14..15 "!"
+            TAG_CHAR@15..18 "foo"
+      WHITESPACE@18..19 " "
+      DOUBLE_QUOTED_SCALAR@19..24 "\"bar\""
+  WHITESPACE@24..25 "\n"
+  DOCUMENT_END@25..28 "..."
+  WHITESPACE@28..29 "\n"
+  COMMENT@29..37 "# Global"
+  WHITESPACE@37..38 "\n"
+  DOCUMENT@38..85
+    DIRECTIVE@38..70
+      PERCENT@38..39 "%"
+      TAG_DIRECTIVE@39..70
+        DIRECTIVE_NAME@39..42 "TAG"
+        WHITESPACE@42..43 " "
+        TAG_HANDLE@43..44
+          TAG_HANDLE_PRIMARY@43..44 "!"
+        WHITESPACE@44..45 " "
+        TAG_PREFIX@45..70 "tag:example.com,2000: ..."
+    WHITESPACE@70..71 "\n"
+    DIRECTIVES_END@71..74 "---"
+    WHITESPACE@74..75 "\n"
+    FLOW@75..85
+      PROPERTIES@75..79
+        TAG_PROPERTY@75..79
+          SHORTHAND_TAG@75..79
+            TAG_HANDLE@75..76
+              TAG_HANDLE_PRIMARY@75..76 "!"
+            TAG_CHAR@76..79 "foo"
+      WHITESPACE@79..80 " "
+      DOUBLE_QUOTED_SCALAR@80..85 "\"bar\""
+  WHITESPACE@85..86 "\n"

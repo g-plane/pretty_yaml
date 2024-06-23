@@ -1,0 +1,30 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..24
+  DOCUMENT@0..23
+    FLOW@0..23
+      FLOW_MAP@0..23
+        L_BRACE@0..1 "{"
+        WHITESPACE@1..4 "\n  "
+        FLOW_MAP_ENTRIES@4..22
+          FLOW_MAP_ENTRY@4..11
+            FLOW_MAP_KEY@4..9
+              QUESTION_MARK@4..5 "?"
+              WHITESPACE@5..6 " "
+              FLOW@6..9
+                PLAIN_SCALAR@6..9 "foo"
+            WHITESPACE@9..10 " "
+            COLON@10..11 ":"
+          COMMA@11..12 ","
+          WHITESPACE@12..15 "\n  "
+          FLOW_MAP_ENTRY@15..20
+            COLON@15..16 ":"
+            WHITESPACE@16..17 " "
+            FLOW_MAP_VALUE@17..20
+              FLOW@17..20
+                PLAIN_SCALAR@17..20 "bar"
+          COMMA@20..21 ","
+          WHITESPACE@21..22 "\n"
+        R_BRACE@22..23 "}"
+  WHITESPACE@23..24 "\n"

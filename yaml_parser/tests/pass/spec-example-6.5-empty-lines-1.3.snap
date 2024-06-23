@@ -1,0 +1,29 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..80
+  DOCUMENT@0..75
+    BLOCK@0..75
+      BLOCK_MAP@0..75
+        BLOCK_MAP_ENTRY@0..41
+          BLOCK_MAP_KEY@0..7
+            FLOW@0..7
+              PLAIN_SCALAR@0..7 "Folding"
+          COLON@7..8 ":"
+          WHITESPACE@8..11 "\n  "
+          BLOCK_MAP_VALUE@11..41
+            FLOW@11..41
+              DOUBLE_QUOTED_SCALAR@11..41 "\"Empty line\n\n  as a l ..."
+        WHITESPACE@41..42 "\n"
+        BLOCK_MAP_ENTRY@42..75
+          BLOCK_MAP_KEY@42..50
+            FLOW@42..50
+              PLAIN_SCALAR@42..50 "Chomping"
+          COLON@50..51 ":"
+          WHITESPACE@51..52 " "
+          BLOCK_MAP_VALUE@52..75
+            BLOCK@52..75
+              BLOCK_SCALAR@52..75
+                BAR@52..53 "|"
+                BLOCK_SCALAR_TEXT@53..75 "\n  Clipped empty lines"
+  WHITESPACE@75..80 "\n \n\n\n"
