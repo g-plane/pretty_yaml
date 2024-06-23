@@ -1,0 +1,80 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..142
+  DOCUMENT@0..141
+    BLOCK@0..141
+      BLOCK_MAP@0..141
+        BLOCK_MAP_ENTRY@0..52
+          BLOCK_MAP_KEY@0..35
+            QUESTION_MARK@0..1 "?"
+            WHITESPACE@1..2 " "
+            BLOCK@2..35
+              BLOCK_SEQ@2..35
+                BLOCK_SEQ_ENTRY@2..18
+                  MINUS@2..3 "-"
+                  WHITESPACE@3..4 " "
+                  FLOW@4..18
+                    PLAIN_SCALAR@4..18 "Detroit Tigers"
+                WHITESPACE@18..21 "\n  "
+                BLOCK_SEQ_ENTRY@21..35
+                  MINUS@21..22 "-"
+                  WHITESPACE@22..23 " "
+                  FLOW@23..35
+                    PLAIN_SCALAR@23..35 "Chicago cubs"
+          WHITESPACE@35..36 "\n"
+          COLON@36..37 ":"
+          WHITESPACE@37..40 "\n  "
+          BLOCK_MAP_VALUE@40..52
+            BLOCK@40..52
+              BLOCK_SEQ@40..52
+                BLOCK_SEQ_ENTRY@40..52
+                  MINUS@40..41 "-"
+                  WHITESPACE@41..42 " "
+                  FLOW@42..52
+                    PLAIN_SCALAR@42..52 "2001-07-23"
+        WHITESPACE@52..54 "\n\n"
+        BLOCK_MAP_ENTRY@54..141
+          BLOCK_MAP_KEY@54..96
+            QUESTION_MARK@54..55 "?"
+            WHITESPACE@55..56 " "
+            FLOW@56..96
+              FLOW_SEQ@56..96
+                L_BRACKET@56..57 "["
+                WHITESPACE@57..58 " "
+                FLOW_SEQ_ENTRIES@58..95
+                  FLOW_SEQ_ENTRY@58..74
+                    FLOW@58..74
+                      PLAIN_SCALAR@58..74 "New York Yankees"
+                  COMMA@74..75 ","
+                  WHITESPACE@75..80 "\n    "
+                  FLOW_SEQ_ENTRY@80..94
+                    FLOW@80..94
+                      PLAIN_SCALAR@80..94 "Atlanta Braves"
+                  WHITESPACE@94..95 " "
+                R_BRACKET@95..96 "]"
+          WHITESPACE@96..97 "\n"
+          COLON@97..98 ":"
+          WHITESPACE@98..99 " "
+          BLOCK_MAP_VALUE@99..141
+            FLOW@99..141
+              FLOW_SEQ@99..141
+                L_BRACKET@99..100 "["
+                WHITESPACE@100..101 " "
+                FLOW_SEQ_ENTRIES@101..140
+                  FLOW_SEQ_ENTRY@101..111
+                    FLOW@101..111
+                      PLAIN_SCALAR@101..111 "2001-07-02"
+                  COMMA@111..112 ","
+                  WHITESPACE@112..113 " "
+                  FLOW_SEQ_ENTRY@113..123
+                    FLOW@113..123
+                      PLAIN_SCALAR@113..123 "2001-08-12"
+                  COMMA@123..124 ","
+                  WHITESPACE@124..129 "\n    "
+                  FLOW_SEQ_ENTRY@129..139
+                    FLOW@129..139
+                      PLAIN_SCALAR@129..139 "2001-08-14"
+                  WHITESPACE@139..140 " "
+                R_BRACKET@140..141 "]"
+  WHITESPACE@141..142 "\n"

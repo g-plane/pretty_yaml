@@ -1,0 +1,40 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..46
+  DOCUMENT@0..45
+    BLOCK@0..45
+      BLOCK_MAP@0..45
+        BLOCK_MAP_ENTRY@0..30
+          BLOCK_MAP_KEY@0..8
+            FLOW@0..8
+              PLAIN_SCALAR@0..8 "anchored"
+          COLON@8..9 ":"
+          WHITESPACE@9..10 " "
+          BLOCK_MAP_VALUE@10..30
+            FLOW@10..30
+              PROPERTIES@10..24
+                TAG_PROPERTY@10..16
+                  SHORTHAND_TAG@10..16
+                    TAG_HANDLE@10..11
+                      TAG_HANDLE_PRIMARY@10..11 "!"
+                    TAG_CHAR@11..16 "local"
+                WHITESPACE@16..17 " "
+                ANCHOR_PROPERTY@17..24
+                  AMPERSAND@17..18 "&"
+                  ANCHOR_NAME@18..24 "anchor"
+              WHITESPACE@24..25 " "
+              PLAIN_SCALAR@25..30 "value"
+        WHITESPACE@30..31 "\n"
+        BLOCK_MAP_ENTRY@31..45
+          BLOCK_MAP_KEY@31..36
+            FLOW@31..36
+              PLAIN_SCALAR@31..36 "alias"
+          COLON@36..37 ":"
+          WHITESPACE@37..38 " "
+          BLOCK_MAP_VALUE@38..45
+            FLOW@38..45
+              ALIAS@38..45
+                ASTERISK@38..39 "*"
+                ANCHOR_NAME@39..45 "anchor"
+  WHITESPACE@45..46 "\n"

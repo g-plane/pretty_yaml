@@ -1,0 +1,78 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..125
+  DOCUMENT@0..59
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    BLOCK@4..59
+      BLOCK_MAP@4..59
+        BLOCK_MAP_ENTRY@4..18
+          BLOCK_MAP_KEY@4..8
+            FLOW@4..8
+              PLAIN_SCALAR@4..8 "time"
+          COLON@8..9 ":"
+          WHITESPACE@9..10 " "
+          BLOCK_MAP_VALUE@10..18
+            FLOW@10..18
+              PLAIN_SCALAR@10..18 "20:03:20"
+        WHITESPACE@18..19 "\n"
+        BLOCK_MAP_ENTRY@19..37
+          BLOCK_MAP_KEY@19..25
+            FLOW@19..25
+              PLAIN_SCALAR@19..25 "player"
+          COLON@25..26 ":"
+          WHITESPACE@26..27 " "
+          BLOCK_MAP_VALUE@27..37
+            FLOW@27..37
+              PLAIN_SCALAR@27..37 "Sammy Sosa"
+        WHITESPACE@37..38 "\n"
+        BLOCK_MAP_ENTRY@38..59
+          BLOCK_MAP_KEY@38..44
+            FLOW@38..44
+              PLAIN_SCALAR@38..44 "action"
+          COLON@44..45 ":"
+          WHITESPACE@45..46 " "
+          BLOCK_MAP_VALUE@46..59
+            FLOW@46..59
+              PLAIN_SCALAR@46..59 "strike (miss)"
+  WHITESPACE@59..60 "\n"
+  DOCUMENT_END@60..63 "..."
+  WHITESPACE@63..64 "\n"
+  DOCUMENT@64..120
+    DIRECTIVES_END@64..67 "---"
+    WHITESPACE@67..68 "\n"
+    BLOCK@68..120
+      BLOCK_MAP@68..120
+        BLOCK_MAP_ENTRY@68..82
+          BLOCK_MAP_KEY@68..72
+            FLOW@68..72
+              PLAIN_SCALAR@68..72 "time"
+          COLON@72..73 ":"
+          WHITESPACE@73..74 " "
+          BLOCK_MAP_VALUE@74..82
+            FLOW@74..82
+              PLAIN_SCALAR@74..82 "20:03:47"
+        WHITESPACE@82..83 "\n"
+        BLOCK_MAP_ENTRY@83..101
+          BLOCK_MAP_KEY@83..89
+            FLOW@83..89
+              PLAIN_SCALAR@83..89 "player"
+          COLON@89..90 ":"
+          WHITESPACE@90..91 " "
+          BLOCK_MAP_VALUE@91..101
+            FLOW@91..101
+              PLAIN_SCALAR@91..101 "Sammy Sosa"
+        WHITESPACE@101..102 "\n"
+        BLOCK_MAP_ENTRY@102..120
+          BLOCK_MAP_KEY@102..108
+            FLOW@102..108
+              PLAIN_SCALAR@102..108 "action"
+          COLON@108..109 ":"
+          WHITESPACE@109..110 " "
+          BLOCK_MAP_VALUE@110..120
+            FLOW@110..120
+              PLAIN_SCALAR@110..120 "grand slam"
+  WHITESPACE@120..121 "\n"
+  DOCUMENT_END@121..124 "..."
+  WHITESPACE@124..125 "\n"

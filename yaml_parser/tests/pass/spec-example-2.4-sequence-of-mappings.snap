@@ -1,0 +1,77 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..94
+  DOCUMENT@0..93
+    BLOCK@0..93
+      BLOCK_SEQ@0..93
+        BLOCK_SEQ_ENTRY@0..47
+          MINUS@0..1 "-"
+          WHITESPACE@1..4 "\n  "
+          BLOCK@4..47
+            BLOCK_MAP@4..47
+              BLOCK_MAP_ENTRY@4..22
+                BLOCK_MAP_KEY@4..8
+                  FLOW@4..8
+                    PLAIN_SCALAR@4..8 "name"
+                COLON@8..9 ":"
+                WHITESPACE@9..10 " "
+                BLOCK_MAP_VALUE@10..22
+                  FLOW@10..22
+                    PLAIN_SCALAR@10..22 "Mark McGwire"
+              WHITESPACE@22..25 "\n  "
+              BLOCK_MAP_ENTRY@25..33
+                BLOCK_MAP_KEY@25..27
+                  FLOW@25..27
+                    PLAIN_SCALAR@25..27 "hr"
+                COLON@27..28 ":"
+                WHITESPACE@28..31 "   "
+                BLOCK_MAP_VALUE@31..33
+                  FLOW@31..33
+                    PLAIN_SCALAR@31..33 "65"
+              WHITESPACE@33..36 "\n  "
+              BLOCK_MAP_ENTRY@36..47
+                BLOCK_MAP_KEY@36..39
+                  FLOW@36..39
+                    PLAIN_SCALAR@36..39 "avg"
+                COLON@39..40 ":"
+                WHITESPACE@40..42 "  "
+                BLOCK_MAP_VALUE@42..47
+                  FLOW@42..47
+                    PLAIN_SCALAR@42..47 "0.278"
+        WHITESPACE@47..48 "\n"
+        BLOCK_SEQ_ENTRY@48..93
+          MINUS@48..49 "-"
+          WHITESPACE@49..52 "\n  "
+          BLOCK@52..93
+            BLOCK_MAP@52..93
+              BLOCK_MAP_ENTRY@52..68
+                BLOCK_MAP_KEY@52..56
+                  FLOW@52..56
+                    PLAIN_SCALAR@52..56 "name"
+                COLON@56..57 ":"
+                WHITESPACE@57..58 " "
+                BLOCK_MAP_VALUE@58..68
+                  FLOW@58..68
+                    PLAIN_SCALAR@58..68 "Sammy Sosa"
+              WHITESPACE@68..71 "\n  "
+              BLOCK_MAP_ENTRY@71..79
+                BLOCK_MAP_KEY@71..73
+                  FLOW@71..73
+                    PLAIN_SCALAR@71..73 "hr"
+                COLON@73..74 ":"
+                WHITESPACE@74..77 "   "
+                BLOCK_MAP_VALUE@77..79
+                  FLOW@77..79
+                    PLAIN_SCALAR@77..79 "63"
+              WHITESPACE@79..82 "\n  "
+              BLOCK_MAP_ENTRY@82..93
+                BLOCK_MAP_KEY@82..85
+                  FLOW@82..85
+                    PLAIN_SCALAR@82..85 "avg"
+                COLON@85..86 ":"
+                WHITESPACE@86..88 "  "
+                BLOCK_MAP_VALUE@88..93
+                  FLOW@88..93
+                    PLAIN_SCALAR@88..93 "0.288"
+  WHITESPACE@93..94 "\n"

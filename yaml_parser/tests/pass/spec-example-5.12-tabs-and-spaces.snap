@@ -1,0 +1,31 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..96
+  COMMENT@0..17 "# Tabs and spaces"
+  WHITESPACE@17..18 "\n"
+  DOCUMENT@18..95
+    BLOCK@18..95
+      BLOCK_MAP@18..95
+        BLOCK_MAP_ENTRY@18..36
+          BLOCK_MAP_KEY@18..24
+            FLOW@18..24
+              PLAIN_SCALAR@18..24 "quoted"
+          COLON@24..25 ":"
+          WHITESPACE@25..26 " "
+          BLOCK_MAP_VALUE@26..36
+            FLOW@26..36
+              DOUBLE_QUOTED_SCALAR@26..36 "\"Quoted \t\""
+        WHITESPACE@36..37 "\n"
+        BLOCK_MAP_ENTRY@37..95
+          BLOCK_MAP_KEY@37..42
+            FLOW@37..42
+              PLAIN_SCALAR@37..42 "block"
+          COLON@42..43 ":"
+          WHITESPACE@43..44 "\t"
+          BLOCK_MAP_VALUE@44..95
+            BLOCK@44..95
+              BLOCK_SCALAR@44..95
+                BAR@44..45 "|"
+                BLOCK_SCALAR_TEXT@45..95 "\n  void main() {\n  \tp ..."
+  WHITESPACE@95..96 "\n"

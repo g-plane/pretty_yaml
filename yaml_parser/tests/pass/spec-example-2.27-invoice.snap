@@ -1,0 +1,274 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..644
+  DOCUMENT@0..643
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 " "
+    BLOCK@4..643
+      PROPERTIES@4..38
+        TAG_PROPERTY@4..38
+          VERBATIM_TAG@4..38 "!<tag:clarkevans.com, ..."
+      WHITESPACE@38..39 "\n"
+      BLOCK_MAP@39..643
+        BLOCK_MAP_ENTRY@39..53
+          BLOCK_MAP_KEY@39..46
+            FLOW@39..46
+              PLAIN_SCALAR@39..46 "invoice"
+          COLON@46..47 ":"
+          WHITESPACE@47..48 " "
+          BLOCK_MAP_VALUE@48..53
+            FLOW@48..53
+              PLAIN_SCALAR@48..53 "34843"
+        WHITESPACE@53..54 "\n"
+        BLOCK_MAP_ENTRY@54..73
+          BLOCK_MAP_KEY@54..58
+            FLOW@54..58
+              PLAIN_SCALAR@54..58 "date"
+          WHITESPACE@58..61 "   "
+          COLON@61..62 ":"
+          WHITESPACE@62..63 " "
+          BLOCK_MAP_VALUE@63..73
+            FLOW@63..73
+              PLAIN_SCALAR@63..73 "2001-01-23"
+        WHITESPACE@73..74 "\n"
+        BLOCK_MAP_ENTRY@74..282
+          BLOCK_MAP_KEY@74..81
+            FLOW@74..81
+              PLAIN_SCALAR@74..81 "bill-to"
+          COLON@81..82 ":"
+          WHITESPACE@82..83 " "
+          BLOCK_MAP_VALUE@83..282
+            BLOCK@83..282
+              PROPERTIES@83..89
+                ANCHOR_PROPERTY@83..89
+                  AMPERSAND@83..84 "&"
+                  ANCHOR_NAME@84..89 "id001"
+              WHITESPACE@89..94 "\n    "
+              BLOCK_MAP@94..282
+                BLOCK_MAP_ENTRY@94..108
+                  BLOCK_MAP_KEY@94..99
+                    FLOW@94..99
+                      PLAIN_SCALAR@94..99 "given"
+                  WHITESPACE@99..101 "  "
+                  COLON@101..102 ":"
+                  WHITESPACE@102..103 " "
+                  BLOCK_MAP_VALUE@103..108
+                    FLOW@103..108
+                      PLAIN_SCALAR@103..108 "Chris"
+                WHITESPACE@108..113 "\n    "
+                BLOCK_MAP_ENTRY@113..128
+                  BLOCK_MAP_KEY@113..119
+                    FLOW@113..119
+                      PLAIN_SCALAR@113..119 "family"
+                  WHITESPACE@119..120 " "
+                  COLON@120..121 ":"
+                  WHITESPACE@121..122 " "
+                  BLOCK_MAP_VALUE@122..128
+                    FLOW@122..128
+                      PLAIN_SCALAR@122..128 "Dumars"
+                WHITESPACE@128..133 "\n    "
+                BLOCK_MAP_ENTRY@133..282
+                  BLOCK_MAP_KEY@133..140
+                    FLOW@133..140
+                      PLAIN_SCALAR@133..140 "address"
+                  COLON@140..141 ":"
+                  WHITESPACE@141..150 "\n        "
+                  BLOCK_MAP_VALUE@150..282
+                    BLOCK@150..282
+                      BLOCK_MAP@150..282
+                        BLOCK_MAP_ENTRY@150..209
+                          BLOCK_MAP_KEY@150..155
+                            FLOW@150..155
+                              PLAIN_SCALAR@150..155 "lines"
+                          COLON@155..156 ":"
+                          WHITESPACE@156..157 " "
+                          BLOCK_MAP_VALUE@157..209
+                            BLOCK@157..209
+                              BLOCK_SCALAR@157..209
+                                BAR@157..158 "|"
+                                BLOCK_SCALAR_TEXT@158..209 "\n            458 Walk ..."
+                        WHITESPACE@209..218 "\n        "
+                        BLOCK_MAP_ENTRY@218..237
+                          BLOCK_MAP_KEY@218..222
+                            FLOW@218..222
+                              PLAIN_SCALAR@218..222 "city"
+                          WHITESPACE@222..226 "    "
+                          COLON@226..227 ":"
+                          WHITESPACE@227..228 " "
+                          BLOCK_MAP_VALUE@228..237
+                            FLOW@228..237
+                              PLAIN_SCALAR@228..237 "Royal Oak"
+                        WHITESPACE@237..246 "\n        "
+                        BLOCK_MAP_ENTRY@246..258
+                          BLOCK_MAP_KEY@246..251
+                            FLOW@246..251
+                              PLAIN_SCALAR@246..251 "state"
+                          WHITESPACE@251..254 "   "
+                          COLON@254..255 ":"
+                          WHITESPACE@255..256 " "
+                          BLOCK_MAP_VALUE@256..258
+                            FLOW@256..258
+                              PLAIN_SCALAR@256..258 "MI"
+                        WHITESPACE@258..267 "\n        "
+                        BLOCK_MAP_ENTRY@267..282
+                          BLOCK_MAP_KEY@267..273
+                            FLOW@267..273
+                              PLAIN_SCALAR@267..273 "postal"
+                          WHITESPACE@273..275 "  "
+                          COLON@275..276 ":"
+                          WHITESPACE@276..277 " "
+                          BLOCK_MAP_VALUE@277..282
+                            FLOW@277..282
+                              PLAIN_SCALAR@277..282 "48046"
+        WHITESPACE@282..283 "\n"
+        BLOCK_MAP_ENTRY@283..298
+          BLOCK_MAP_KEY@283..290
+            FLOW@283..290
+              PLAIN_SCALAR@283..290 "ship-to"
+          COLON@290..291 ":"
+          WHITESPACE@291..292 " "
+          BLOCK_MAP_VALUE@292..298
+            FLOW@292..298
+              ALIAS@292..298
+                ASTERISK@292..293 "*"
+                ANCHOR_NAME@293..298 "id001"
+        WHITESPACE@298..299 "\n"
+        BLOCK_MAP_ENTRY@299..523
+          BLOCK_MAP_KEY@299..306
+            FLOW@299..306
+              PLAIN_SCALAR@299..306 "product"
+          COLON@306..307 ":"
+          WHITESPACE@307..312 "\n    "
+          BLOCK_MAP_VALUE@312..523
+            BLOCK@312..523
+              BLOCK_SEQ@312..523
+                BLOCK_SEQ_ENTRY@312..414
+                  MINUS@312..313 "-"
+                  WHITESPACE@313..314 " "
+                  BLOCK@314..414
+                    BLOCK_MAP@314..414
+                      BLOCK_MAP_ENTRY@314..334
+                        BLOCK_MAP_KEY@314..317
+                          FLOW@314..317
+                            PLAIN_SCALAR@314..317 "sku"
+                        WHITESPACE@317..326 "         "
+                        COLON@326..327 ":"
+                        WHITESPACE@327..328 " "
+                        BLOCK_MAP_VALUE@328..334
+                          FLOW@328..334
+                            PLAIN_SCALAR@328..334 "BL394D"
+                      WHITESPACE@334..341 "\n      "
+                      BLOCK_MAP_ENTRY@341..356
+                        BLOCK_MAP_KEY@341..349
+                          FLOW@341..349
+                            PLAIN_SCALAR@341..349 "quantity"
+                        WHITESPACE@349..353 "    "
+                        COLON@353..354 ":"
+                        WHITESPACE@354..355 " "
+                        BLOCK_MAP_VALUE@355..356
+                          FLOW@355..356
+                            PLAIN_SCALAR@355..356 "4"
+                      WHITESPACE@356..363 "\n      "
+                      BLOCK_MAP_ENTRY@363..387
+                        BLOCK_MAP_KEY@363..374
+                          FLOW@363..374
+                            PLAIN_SCALAR@363..374 "description"
+                        WHITESPACE@374..375 " "
+                        COLON@375..376 ":"
+                        WHITESPACE@376..377 " "
+                        BLOCK_MAP_VALUE@377..387
+                          FLOW@377..387
+                            PLAIN_SCALAR@377..387 "Basketball"
+                      WHITESPACE@387..394 "\n      "
+                      BLOCK_MAP_ENTRY@394..414
+                        BLOCK_MAP_KEY@394..399
+                          FLOW@394..399
+                            PLAIN_SCALAR@394..399 "price"
+                        WHITESPACE@399..406 "       "
+                        COLON@406..407 ":"
+                        WHITESPACE@407..408 " "
+                        BLOCK_MAP_VALUE@408..414
+                          FLOW@408..414
+                            PLAIN_SCALAR@408..414 "450.00"
+                WHITESPACE@414..419 "\n    "
+                BLOCK_SEQ_ENTRY@419..523
+                  MINUS@419..420 "-"
+                  WHITESPACE@420..421 " "
+                  BLOCK@421..523
+                    BLOCK_MAP@421..523
+                      BLOCK_MAP_ENTRY@421..442
+                        BLOCK_MAP_KEY@421..424
+                          FLOW@421..424
+                            PLAIN_SCALAR@421..424 "sku"
+                        WHITESPACE@424..433 "         "
+                        COLON@433..434 ":"
+                        WHITESPACE@434..435 " "
+                        BLOCK_MAP_VALUE@435..442
+                          FLOW@435..442
+                            PLAIN_SCALAR@435..442 "BL4438H"
+                      WHITESPACE@442..449 "\n      "
+                      BLOCK_MAP_ENTRY@449..464
+                        BLOCK_MAP_KEY@449..457
+                          FLOW@449..457
+                            PLAIN_SCALAR@449..457 "quantity"
+                        WHITESPACE@457..461 "    "
+                        COLON@461..462 ":"
+                        WHITESPACE@462..463 " "
+                        BLOCK_MAP_VALUE@463..464
+                          FLOW@463..464
+                            PLAIN_SCALAR@463..464 "1"
+                      WHITESPACE@464..471 "\n      "
+                      BLOCK_MAP_ENTRY@471..495
+                        BLOCK_MAP_KEY@471..482
+                          FLOW@471..482
+                            PLAIN_SCALAR@471..482 "description"
+                        WHITESPACE@482..483 " "
+                        COLON@483..484 ":"
+                        WHITESPACE@484..485 " "
+                        BLOCK_MAP_VALUE@485..495
+                          FLOW@485..495
+                            PLAIN_SCALAR@485..495 "Super Hoop"
+                      WHITESPACE@495..502 "\n      "
+                      BLOCK_MAP_ENTRY@502..523
+                        BLOCK_MAP_KEY@502..507
+                          FLOW@502..507
+                            PLAIN_SCALAR@502..507 "price"
+                        WHITESPACE@507..514 "       "
+                        COLON@514..515 ":"
+                        WHITESPACE@515..516 " "
+                        BLOCK_MAP_VALUE@516..523
+                          FLOW@516..523
+                            PLAIN_SCALAR@516..523 "2392.00"
+        WHITESPACE@523..524 "\n"
+        BLOCK_MAP_ENTRY@524..537
+          BLOCK_MAP_KEY@524..527
+            FLOW@524..527
+              PLAIN_SCALAR@524..527 "tax"
+          WHITESPACE@527..529 "  "
+          COLON@529..530 ":"
+          WHITESPACE@530..531 " "
+          BLOCK_MAP_VALUE@531..537
+            FLOW@531..537
+              PLAIN_SCALAR@531..537 "251.42"
+        WHITESPACE@537..538 "\n"
+        BLOCK_MAP_ENTRY@538..552
+          BLOCK_MAP_KEY@538..543
+            FLOW@538..543
+              PLAIN_SCALAR@538..543 "total"
+          COLON@543..544 ":"
+          WHITESPACE@544..545 " "
+          BLOCK_MAP_VALUE@545..552
+            FLOW@545..552
+              PLAIN_SCALAR@545..552 "4443.52"
+        WHITESPACE@552..553 "\n"
+        BLOCK_MAP_ENTRY@553..643
+          BLOCK_MAP_KEY@553..561
+            FLOW@553..561
+              PLAIN_SCALAR@553..561 "comments"
+          COLON@561..562 ":"
+          WHITESPACE@562..567 "\n    "
+          BLOCK_MAP_VALUE@567..643
+            FLOW@567..643
+              PLAIN_SCALAR@567..643 "Late afternoon is bes ..."
+  WHITESPACE@643..644 "\n"

@@ -1,0 +1,61 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..133
+  DOCUMENT@0..132
+    BLOCK@0..132
+      BLOCK_MAP@0..132
+        BLOCK_MAP_ENTRY@0..68
+          BLOCK_MAP_KEY@0..8
+            FLOW@0..8
+              PLAIN_SCALAR@0..8 "american"
+          COLON@8..9 ":"
+          WHITESPACE@9..12 "\n  "
+          BLOCK_MAP_VALUE@12..68
+            BLOCK@12..68
+              BLOCK_SEQ@12..68
+                BLOCK_SEQ_ENTRY@12..28
+                  MINUS@12..13 "-"
+                  WHITESPACE@13..14 " "
+                  FLOW@14..28
+                    PLAIN_SCALAR@14..28 "Boston Red Sox"
+                WHITESPACE@28..31 "\n  "
+                BLOCK_SEQ_ENTRY@31..47
+                  MINUS@31..32 "-"
+                  WHITESPACE@32..33 " "
+                  FLOW@33..47
+                    PLAIN_SCALAR@33..47 "Detroit Tigers"
+                WHITESPACE@47..50 "\n  "
+                BLOCK_SEQ_ENTRY@50..68
+                  MINUS@50..51 "-"
+                  WHITESPACE@51..52 " "
+                  FLOW@52..68
+                    PLAIN_SCALAR@52..68 "New York Yankees"
+        WHITESPACE@68..69 "\n"
+        BLOCK_MAP_ENTRY@69..132
+          BLOCK_MAP_KEY@69..77
+            FLOW@69..77
+              PLAIN_SCALAR@69..77 "national"
+          COLON@77..78 ":"
+          WHITESPACE@78..81 "\n  "
+          BLOCK_MAP_VALUE@81..132
+            BLOCK@81..132
+              BLOCK_SEQ@81..132
+                BLOCK_SEQ_ENTRY@81..96
+                  MINUS@81..82 "-"
+                  WHITESPACE@82..83 " "
+                  FLOW@83..96
+                    PLAIN_SCALAR@83..96 "New York Mets"
+                WHITESPACE@96..99 "\n  "
+                BLOCK_SEQ_ENTRY@99..113
+                  MINUS@99..100 "-"
+                  WHITESPACE@100..101 " "
+                  FLOW@101..113
+                    PLAIN_SCALAR@101..113 "Chicago Cubs"
+                WHITESPACE@113..116 "\n  "
+                BLOCK_SEQ_ENTRY@116..132
+                  MINUS@116..117 "-"
+                  WHITESPACE@117..118 " "
+                  FLOW@118..132
+                    PLAIN_SCALAR@118..132 "Atlanta Braves"
+  WHITESPACE@132..133 "\n"

@@ -1,0 +1,76 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..84
+  DOCUMENT@0..83
+    BLOCK@0..83
+      BLOCK_SEQ@0..83
+        BLOCK_SEQ_ENTRY@0..27
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          FLOW@2..27
+            FLOW_SEQ@2..27
+              L_BRACKET@2..3 "["
+              FLOW_SEQ_ENTRIES@3..26
+                FLOW_SEQ_ENTRY@3..7
+                  FLOW@3..7
+                    PLAIN_SCALAR@3..7 "name"
+                WHITESPACE@7..15 "        "
+                COMMA@15..16 ","
+                WHITESPACE@16..17 " "
+                FLOW_SEQ_ENTRY@17..19
+                  FLOW@17..19
+                    PLAIN_SCALAR@17..19 "hr"
+                COMMA@19..20 ","
+                WHITESPACE@20..21 " "
+                FLOW_SEQ_ENTRY@21..24
+                  FLOW@21..24
+                    PLAIN_SCALAR@21..24 "avg"
+                WHITESPACE@24..26 "  "
+              R_BRACKET@26..27 "]"
+        WHITESPACE@27..28 "\n"
+        BLOCK_SEQ_ENTRY@28..55
+          MINUS@28..29 "-"
+          WHITESPACE@29..30 " "
+          FLOW@30..55
+            FLOW_SEQ@30..55
+              L_BRACKET@30..31 "["
+              FLOW_SEQ_ENTRIES@31..54
+                FLOW_SEQ_ENTRY@31..43
+                  FLOW@31..43
+                    PLAIN_SCALAR@31..43 "Mark McGwire"
+                COMMA@43..44 ","
+                WHITESPACE@44..45 " "
+                FLOW_SEQ_ENTRY@45..47
+                  FLOW@45..47
+                    PLAIN_SCALAR@45..47 "65"
+                COMMA@47..48 ","
+                WHITESPACE@48..49 " "
+                FLOW_SEQ_ENTRY@49..54
+                  FLOW@49..54
+                    PLAIN_SCALAR@49..54 "0.278"
+              R_BRACKET@54..55 "]"
+        WHITESPACE@55..56 "\n"
+        BLOCK_SEQ_ENTRY@56..83
+          MINUS@56..57 "-"
+          WHITESPACE@57..58 " "
+          FLOW@58..83
+            FLOW_SEQ@58..83
+              L_BRACKET@58..59 "["
+              FLOW_SEQ_ENTRIES@59..82
+                FLOW_SEQ_ENTRY@59..69
+                  FLOW@59..69
+                    PLAIN_SCALAR@59..69 "Sammy Sosa"
+                WHITESPACE@69..71 "  "
+                COMMA@71..72 ","
+                WHITESPACE@72..73 " "
+                FLOW_SEQ_ENTRY@73..75
+                  FLOW@73..75
+                    PLAIN_SCALAR@73..75 "63"
+                COMMA@75..76 ","
+                WHITESPACE@76..77 " "
+                FLOW_SEQ_ENTRY@77..82
+                  FLOW@77..82
+                    PLAIN_SCALAR@77..82 "0.288"
+              R_BRACKET@82..83 "]"
+  WHITESPACE@83..84 "\n"

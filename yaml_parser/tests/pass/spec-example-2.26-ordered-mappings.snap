@@ -1,0 +1,75 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..318
+  COMMENT@0..45 "# The !!omap tag is o ..."
+  WHITESPACE@45..46 "\n"
+  COMMENT@46..90 "# introduced for YAML ..."
+  WHITESPACE@90..91 "\n"
+  COMMENT@91..136 "# part of the standar ..."
+  WHITESPACE@136..137 "\n"
+  COMMENT@137..158 "# enabled by default."
+  WHITESPACE@158..159 "\n"
+  COMMENT@159..192 "# Ordered maps are re ..."
+  WHITESPACE@192..193 "\n"
+  COMMENT@193..223 "# A sequence of mappi ..."
+  WHITESPACE@223..224 "\n"
+  COMMENT@224..253 "# each mapping having ..."
+  WHITESPACE@253..254 "\n"
+  DOCUMENT@254..317
+    DIRECTIVES_END@254..257 "---"
+    WHITESPACE@257..258 " "
+    BLOCK@258..317
+      PROPERTIES@258..264
+        TAG_PROPERTY@258..264
+          SHORTHAND_TAG@258..264
+            TAG_HANDLE@258..260
+              TAG_HANDLE_SECONDARY@258..260 "!!"
+            TAG_CHAR@260..264 "omap"
+      WHITESPACE@264..265 "\n"
+      BLOCK_SEQ@265..317
+        BLOCK_SEQ_ENTRY@265..283
+          MINUS@265..266 "-"
+          WHITESPACE@266..267 " "
+          BLOCK@267..283
+            BLOCK_MAP@267..283
+              BLOCK_MAP_ENTRY@267..283
+                BLOCK_MAP_KEY@267..279
+                  FLOW@267..279
+                    PLAIN_SCALAR@267..279 "Mark McGwire"
+                COLON@279..280 ":"
+                WHITESPACE@280..281 " "
+                BLOCK_MAP_VALUE@281..283
+                  FLOW@281..283
+                    PLAIN_SCALAR@281..283 "65"
+        WHITESPACE@283..284 "\n"
+        BLOCK_SEQ_ENTRY@284..300
+          MINUS@284..285 "-"
+          WHITESPACE@285..286 " "
+          BLOCK@286..300
+            BLOCK_MAP@286..300
+              BLOCK_MAP_ENTRY@286..300
+                BLOCK_MAP_KEY@286..296
+                  FLOW@286..296
+                    PLAIN_SCALAR@286..296 "Sammy Sosa"
+                COLON@296..297 ":"
+                WHITESPACE@297..298 " "
+                BLOCK_MAP_VALUE@298..300
+                  FLOW@298..300
+                    PLAIN_SCALAR@298..300 "63"
+        WHITESPACE@300..301 "\n"
+        BLOCK_SEQ_ENTRY@301..317
+          MINUS@301..302 "-"
+          WHITESPACE@302..303 " "
+          BLOCK@303..317
+            BLOCK_MAP@303..317
+              BLOCK_MAP_ENTRY@303..317
+                BLOCK_MAP_KEY@303..313
+                  FLOW@303..313
+                    PLAIN_SCALAR@303..313 "Ken Griffy"
+                COLON@313..314 ":"
+                WHITESPACE@314..315 " "
+                BLOCK_MAP_VALUE@315..317
+                  FLOW@315..317
+                    PLAIN_SCALAR@315..317 "58"
+  WHITESPACE@317..318 "\n"

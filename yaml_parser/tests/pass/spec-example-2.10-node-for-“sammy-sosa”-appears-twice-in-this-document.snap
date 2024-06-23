@@ -1,0 +1,62 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..127
+  DOCUMENT@0..126
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    BLOCK@4..126
+      BLOCK_MAP@4..126
+        BLOCK_MAP_ENTRY@4..73
+          BLOCK_MAP_KEY@4..6
+            FLOW@4..6
+              PLAIN_SCALAR@4..6 "hr"
+          COLON@6..7 ":"
+          WHITESPACE@7..10 "\n  "
+          BLOCK_MAP_VALUE@10..73
+            BLOCK@10..73
+              BLOCK_SEQ@10..73
+                BLOCK_SEQ_ENTRY@10..24
+                  MINUS@10..11 "-"
+                  WHITESPACE@11..12 " "
+                  FLOW@12..24
+                    PLAIN_SCALAR@12..24 "Mark McGwire"
+                WHITESPACE@24..27 "\n  "
+                COMMENT@27..54 "# Following node labe ..."
+                WHITESPACE@54..57 "\n  "
+                BLOCK_SEQ_ENTRY@57..73
+                  MINUS@57..58 "-"
+                  WHITESPACE@58..59 " "
+                  FLOW@59..73
+                    PROPERTIES@59..62
+                      ANCHOR_PROPERTY@59..62
+                        AMPERSAND@59..60 "&"
+                        ANCHOR_NAME@60..62 "SS"
+                    WHITESPACE@62..63 " "
+                    PLAIN_SCALAR@63..73 "Sammy Sosa"
+        WHITESPACE@73..74 "\n"
+        BLOCK_MAP_ENTRY@74..126
+          BLOCK_MAP_KEY@74..77
+            FLOW@74..77
+              PLAIN_SCALAR@74..77 "rbi"
+          COLON@77..78 ":"
+          WHITESPACE@78..81 "\n  "
+          BLOCK_MAP_VALUE@81..126
+            BLOCK@81..126
+              BLOCK_SEQ@81..126
+                BLOCK_SEQ_ENTRY@81..86
+                  MINUS@81..82 "-"
+                  WHITESPACE@82..83 " "
+                  FLOW@83..86
+                    ALIAS@83..86
+                      ASTERISK@83..84 "*"
+                      ANCHOR_NAME@84..86 "SS"
+                WHITESPACE@86..87 " "
+                COMMENT@87..110 "# Subsequent occurrence"
+                WHITESPACE@110..113 "\n  "
+                BLOCK_SEQ_ENTRY@113..126
+                  MINUS@113..114 "-"
+                  WHITESPACE@114..115 " "
+                  FLOW@115..126
+                    PLAIN_SCALAR@115..126 "Ken Griffey"
+  WHITESPACE@126..127 "\n"

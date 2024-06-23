@@ -1,0 +1,194 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..411
+  DOCUMENT@0..96
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    BLOCK@4..96
+      BLOCK_MAP@4..96
+        BLOCK_MAP_ENTRY@4..32
+          BLOCK_MAP_KEY@4..8
+            FLOW@4..8
+              PLAIN_SCALAR@4..8 "Time"
+          COLON@8..9 ":"
+          WHITESPACE@9..10 " "
+          BLOCK_MAP_VALUE@10..32
+            FLOW@10..32
+              PLAIN_SCALAR@10..32 "2001-11-23 15:01:42 -5"
+        WHITESPACE@32..33 "\n"
+        BLOCK_MAP_ENTRY@33..41
+          BLOCK_MAP_KEY@33..37
+            FLOW@33..37
+              PLAIN_SCALAR@33..37 "User"
+          COLON@37..38 ":"
+          WHITESPACE@38..39 " "
+          BLOCK_MAP_VALUE@39..41
+            FLOW@39..41
+              PLAIN_SCALAR@39..41 "ed"
+        WHITESPACE@41..42 "\n"
+        BLOCK_MAP_ENTRY@42..96
+          BLOCK_MAP_KEY@42..49
+            FLOW@42..49
+              PLAIN_SCALAR@42..49 "Warning"
+          COLON@49..50 ":"
+          WHITESPACE@50..53 "\n  "
+          BLOCK_MAP_VALUE@53..96
+            FLOW@53..96
+              PLAIN_SCALAR@53..96 "This is an error mess ..."
+  WHITESPACE@96..97 "\n"
+  DOCUMENT@97..187
+    DIRECTIVES_END@97..100 "---"
+    WHITESPACE@100..101 "\n"
+    BLOCK@101..187
+      BLOCK_MAP@101..187
+        BLOCK_MAP_ENTRY@101..129
+          BLOCK_MAP_KEY@101..105
+            FLOW@101..105
+              PLAIN_SCALAR@101..105 "Time"
+          COLON@105..106 ":"
+          WHITESPACE@106..107 " "
+          BLOCK_MAP_VALUE@107..129
+            FLOW@107..129
+              PLAIN_SCALAR@107..129 "2001-11-23 15:02:31 -5"
+        WHITESPACE@129..130 "\n"
+        BLOCK_MAP_ENTRY@130..138
+          BLOCK_MAP_KEY@130..134
+            FLOW@130..134
+              PLAIN_SCALAR@130..134 "User"
+          COLON@134..135 ":"
+          WHITESPACE@135..136 " "
+          BLOCK_MAP_VALUE@136..138
+            FLOW@136..138
+              PLAIN_SCALAR@136..138 "ed"
+        WHITESPACE@138..139 "\n"
+        BLOCK_MAP_ENTRY@139..187
+          BLOCK_MAP_KEY@139..146
+            FLOW@139..146
+              PLAIN_SCALAR@139..146 "Warning"
+          COLON@146..147 ":"
+          WHITESPACE@147..150 "\n  "
+          BLOCK_MAP_VALUE@150..187
+            FLOW@150..187
+              PLAIN_SCALAR@150..187 "A slightly different  ..."
+  WHITESPACE@187..188 "\n"
+  DOCUMENT@188..410
+    DIRECTIVES_END@188..191 "---"
+    WHITESPACE@191..192 "\n"
+    BLOCK@192..410
+      BLOCK_MAP@192..410
+        BLOCK_MAP_ENTRY@192..220
+          BLOCK_MAP_KEY@192..196
+            FLOW@192..196
+              PLAIN_SCALAR@192..196 "Date"
+          COLON@196..197 ":"
+          WHITESPACE@197..198 " "
+          BLOCK_MAP_VALUE@198..220
+            FLOW@198..220
+              PLAIN_SCALAR@198..220 "2001-11-23 15:03:17 -5"
+        WHITESPACE@220..221 "\n"
+        BLOCK_MAP_ENTRY@221..229
+          BLOCK_MAP_KEY@221..225
+            FLOW@221..225
+              PLAIN_SCALAR@221..225 "User"
+          COLON@225..226 ":"
+          WHITESPACE@226..227 " "
+          BLOCK_MAP_VALUE@227..229
+            FLOW@227..229
+              PLAIN_SCALAR@227..229 "ed"
+        WHITESPACE@229..230 "\n"
+        BLOCK_MAP_ENTRY@230..261
+          BLOCK_MAP_KEY@230..235
+            FLOW@230..235
+              PLAIN_SCALAR@230..235 "Fatal"
+          COLON@235..236 ":"
+          WHITESPACE@236..239 "\n  "
+          BLOCK_MAP_VALUE@239..261
+            FLOW@239..261
+              PLAIN_SCALAR@239..261 "Unknown variable \"bar\""
+        WHITESPACE@261..262 "\n"
+        BLOCK_MAP_ENTRY@262..410
+          BLOCK_MAP_KEY@262..267
+            FLOW@262..267
+              PLAIN_SCALAR@262..267 "Stack"
+          COLON@267..268 ":"
+          WHITESPACE@268..271 "\n  "
+          BLOCK_MAP_VALUE@271..410
+            BLOCK@271..410
+              BLOCK_SEQ@271..410
+                BLOCK_SEQ_ENTRY@271..345
+                  MINUS@271..272 "-"
+                  WHITESPACE@272..273 " "
+                  BLOCK@273..345
+                    BLOCK_MAP@273..345
+                      BLOCK_MAP_ENTRY@273..290
+                        BLOCK_MAP_KEY@273..277
+                          FLOW@273..277
+                            PLAIN_SCALAR@273..277 "file"
+                        COLON@277..278 ":"
+                        WHITESPACE@278..279 " "
+                        BLOCK_MAP_VALUE@279..290
+                          FLOW@279..290
+                            PLAIN_SCALAR@279..290 "TopClass.py"
+                      WHITESPACE@290..295 "\n    "
+                      BLOCK_MAP_ENTRY@295..303
+                        BLOCK_MAP_KEY@295..299
+                          FLOW@295..299
+                            PLAIN_SCALAR@295..299 "line"
+                        COLON@299..300 ":"
+                        WHITESPACE@300..301 " "
+                        BLOCK_MAP_VALUE@301..303
+                          FLOW@301..303
+                            PLAIN_SCALAR@301..303 "23"
+                      WHITESPACE@303..308 "\n    "
+                      BLOCK_MAP_ENTRY@308..345
+                        BLOCK_MAP_KEY@308..312
+                          FLOW@308..312
+                            PLAIN_SCALAR@308..312 "code"
+                        COLON@312..313 ":"
+                        WHITESPACE@313..314 " "
+                        BLOCK_MAP_VALUE@314..345
+                          BLOCK@314..345
+                            BLOCK_SCALAR@314..345
+                              BAR@314..315 "|"
+                              BLOCK_SCALAR_TEXT@315..345 "\n      x = MoreObject ..."
+                WHITESPACE@345..348 "\n  "
+                BLOCK_SEQ_ENTRY@348..410
+                  MINUS@348..349 "-"
+                  WHITESPACE@349..350 " "
+                  BLOCK@350..410
+                    BLOCK_MAP@350..410
+                      BLOCK_MAP_ENTRY@350..368
+                        BLOCK_MAP_KEY@350..354
+                          FLOW@350..354
+                            PLAIN_SCALAR@350..354 "file"
+                        COLON@354..355 ":"
+                        WHITESPACE@355..356 " "
+                        BLOCK_MAP_VALUE@356..368
+                          FLOW@356..368
+                            PLAIN_SCALAR@356..368 "MoreClass.py"
+                      WHITESPACE@368..373 "\n    "
+                      BLOCK_MAP_ENTRY@373..381
+                        BLOCK_MAP_KEY@373..377
+                          FLOW@373..377
+                            PLAIN_SCALAR@373..377 "line"
+                        COLON@377..378 ":"
+                        WHITESPACE@378..379 " "
+                        BLOCK_MAP_VALUE@379..381
+                          FLOW@379..381
+                            PLAIN_SCALAR@379..381 "58"
+                      WHITESPACE@381..386 "\n    "
+                      BLOCK_MAP_ENTRY@386..410
+                        BLOCK_MAP_KEY@386..390
+                          FLOW@386..390
+                            PLAIN_SCALAR@386..390 "code"
+                        COLON@390..391 ":"
+                        WHITESPACE@391..392 " "
+                        BLOCK_MAP_VALUE@392..410
+                          BLOCK@392..410
+                            BLOCK_SCALAR@392..410
+                              BAR@392..393 "|"
+                              CHOMPING_INDICATOR@393..394
+                                MINUS@393..394 "-"
+                              BLOCK_SCALAR_TEXT@394..410 "\n      foo = bar"
+  WHITESPACE@410..411 "\n"

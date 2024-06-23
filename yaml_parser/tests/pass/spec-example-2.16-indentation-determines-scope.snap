@@ -1,0 +1,41 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..138
+  DOCUMENT@0..137
+    BLOCK@0..137
+      BLOCK_MAP@0..137
+        BLOCK_MAP_ENTRY@0..18
+          BLOCK_MAP_KEY@0..4
+            FLOW@0..4
+              PLAIN_SCALAR@0..4 "name"
+          COLON@4..5 ":"
+          WHITESPACE@5..6 " "
+          BLOCK_MAP_VALUE@6..18
+            FLOW@6..18
+              PLAIN_SCALAR@6..18 "Mark McGwire"
+        WHITESPACE@18..19 "\n"
+        BLOCK_MAP_ENTRY@19..89
+          BLOCK_MAP_KEY@19..33
+            FLOW@19..33
+              PLAIN_SCALAR@19..33 "accomplishment"
+          COLON@33..34 ":"
+          WHITESPACE@34..35 " "
+          BLOCK_MAP_VALUE@35..89
+            BLOCK@35..89
+              BLOCK_SCALAR@35..89
+                GREATER_THAN@35..36 ">"
+                BLOCK_SCALAR_TEXT@36..89 "\n  Mark set a major l ..."
+        WHITESPACE@89..90 "\n"
+        BLOCK_MAP_ENTRY@90..137
+          BLOCK_MAP_KEY@90..95
+            FLOW@90..95
+              PLAIN_SCALAR@90..95 "stats"
+          COLON@95..96 ":"
+          WHITESPACE@96..97 " "
+          BLOCK_MAP_VALUE@97..137
+            BLOCK@97..137
+              BLOCK_SCALAR@97..137
+                BAR@97..98 "|"
+                BLOCK_SCALAR_TEXT@98..137 "\n  65 Home Runs\n  0.2 ..."
+  WHITESPACE@137..138 "\n"

@@ -1,0 +1,75 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..80
+  DOCUMENT@0..79
+    BLOCK@0..79
+      BLOCK_MAP@0..79
+        BLOCK_MAP_ENTRY@0..34
+          BLOCK_MAP_KEY@0..12
+            FLOW@0..12
+              PLAIN_SCALAR@0..12 "Mark McGwire"
+          COLON@12..13 ":"
+          WHITESPACE@13..14 " "
+          BLOCK_MAP_VALUE@14..34
+            FLOW@14..34
+              FLOW_MAP@14..34
+                L_BRACE@14..15 "{"
+                FLOW_MAP_ENTRIES@15..33
+                  FLOW_MAP_ENTRY@15..21
+                    FLOW_MAP_KEY@15..17
+                      FLOW@15..17
+                        PLAIN_SCALAR@15..17 "hr"
+                    COLON@17..18 ":"
+                    WHITESPACE@18..19 " "
+                    FLOW_MAP_VALUE@19..21
+                      FLOW@19..21
+                        PLAIN_SCALAR@19..21 "65"
+                  COMMA@21..22 ","
+                  WHITESPACE@22..23 " "
+                  FLOW_MAP_ENTRY@23..33
+                    FLOW_MAP_KEY@23..26
+                      FLOW@23..26
+                        PLAIN_SCALAR@23..26 "avg"
+                    COLON@26..27 ":"
+                    WHITESPACE@27..28 " "
+                    FLOW_MAP_VALUE@28..33
+                      FLOW@28..33
+                        PLAIN_SCALAR@28..33 "0.278"
+                R_BRACE@33..34 "}"
+        WHITESPACE@34..35 "\n"
+        BLOCK_MAP_ENTRY@35..79
+          BLOCK_MAP_KEY@35..45
+            FLOW@35..45
+              PLAIN_SCALAR@35..45 "Sammy Sosa"
+          COLON@45..46 ":"
+          WHITESPACE@46..47 " "
+          BLOCK_MAP_VALUE@47..79
+            FLOW@47..79
+              FLOW_MAP@47..79
+                L_BRACE@47..48 "{"
+                WHITESPACE@48..53 "\n    "
+                FLOW_MAP_ENTRIES@53..78
+                  FLOW_MAP_ENTRY@53..59
+                    FLOW_MAP_KEY@53..55
+                      FLOW@53..55
+                        PLAIN_SCALAR@53..55 "hr"
+                    COLON@55..56 ":"
+                    WHITESPACE@56..57 " "
+                    FLOW_MAP_VALUE@57..59
+                      FLOW@57..59
+                        PLAIN_SCALAR@57..59 "63"
+                  COMMA@59..60 ","
+                  WHITESPACE@60..65 "\n    "
+                  FLOW_MAP_ENTRY@65..75
+                    FLOW_MAP_KEY@65..68
+                      FLOW@65..68
+                        PLAIN_SCALAR@65..68 "avg"
+                    COLON@68..69 ":"
+                    WHITESPACE@69..70 " "
+                    FLOW_MAP_VALUE@70..75
+                      FLOW@70..75
+                        PLAIN_SCALAR@70..75 "0.288"
+                  WHITESPACE@75..78 "\n  "
+                R_BRACE@78..79 "}"
+  WHITESPACE@79..80 "\n"

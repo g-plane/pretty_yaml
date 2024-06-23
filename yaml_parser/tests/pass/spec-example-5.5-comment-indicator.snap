@@ -1,0 +1,6 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..16
+  COMMENT@0..15 "# Comment only."
+  WHITESPACE@15..16 "\n"

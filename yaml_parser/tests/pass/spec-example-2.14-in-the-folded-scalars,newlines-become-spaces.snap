@@ -1,0 +1,12 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..63
+  DOCUMENT@0..62
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 " "
+    BLOCK@4..62
+      BLOCK_SCALAR@4..62
+        GREATER_THAN@4..5 ">"
+        BLOCK_SCALAR_TEXT@5..62 "\n  Mark McGwire's\n  y ..."
+  WHITESPACE@62..63 "\n"

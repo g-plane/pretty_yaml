@@ -1,0 +1,61 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..62
+  DOCUMENT@0..61
+    BLOCK@0..61
+      BLOCK_MAP@0..61
+        BLOCK_MAP_ENTRY@0..21
+          BLOCK_MAP_KEY@0..8
+            FLOW@0..8
+              PLAIN_SCALAR@0..8 "sequence"
+          COLON@8..9 ":"
+          WHITESPACE@9..10 "\n"
+          BLOCK_MAP_VALUE@10..21
+            BLOCK@10..21
+              BLOCK_SEQ@10..21
+                BLOCK_SEQ_ENTRY@10..15
+                  MINUS@10..11 "-"
+                  WHITESPACE@11..12 " "
+                  FLOW@12..15
+                    PLAIN_SCALAR@12..15 "one"
+                WHITESPACE@15..16 "\n"
+                BLOCK_SEQ_ENTRY@16..21
+                  MINUS@16..17 "-"
+                  WHITESPACE@17..18 " "
+                  FLOW@18..21
+                    PLAIN_SCALAR@18..21 "two"
+        WHITESPACE@21..22 "\n"
+        BLOCK_MAP_ENTRY@22..61
+          BLOCK_MAP_KEY@22..29
+            FLOW@22..29
+              PLAIN_SCALAR@22..29 "mapping"
+          COLON@29..30 ":"
+          WHITESPACE@30..33 "\n  "
+          BLOCK_MAP_VALUE@33..61
+            BLOCK@33..61
+              BLOCK_MAP@33..61
+                BLOCK_MAP_ENTRY@33..47
+                  BLOCK_MAP_KEY@33..38
+                    QUESTION_MARK@33..34 "?"
+                    WHITESPACE@34..35 " "
+                    FLOW@35..38
+                      PLAIN_SCALAR@35..38 "sky"
+                  WHITESPACE@38..41 "\n  "
+                  COLON@41..42 ":"
+                  WHITESPACE@42..43 " "
+                  BLOCK_MAP_VALUE@43..47
+                    FLOW@43..47
+                      PLAIN_SCALAR@43..47 "blue"
+                WHITESPACE@47..50 "\n  "
+                BLOCK_MAP_ENTRY@50..61
+                  BLOCK_MAP_KEY@50..53
+                    FLOW@50..53
+                      PLAIN_SCALAR@50..53 "sea"
+                  WHITESPACE@53..54 " "
+                  COLON@54..55 ":"
+                  WHITESPACE@55..56 " "
+                  BLOCK_MAP_VALUE@56..61
+                    FLOW@56..61
+                      PLAIN_SCALAR@56..61 "green"
+  WHITESPACE@61..62 "\n"

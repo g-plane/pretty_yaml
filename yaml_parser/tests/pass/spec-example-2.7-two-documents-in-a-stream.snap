@@ -1,0 +1,48 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..130
+  COMMENT@0..27 "# Ranking of 1998 hom ..."
+  WHITESPACE@27..28 "\n"
+  DOCUMENT@28..73
+    DIRECTIVES_END@28..31 "---"
+    WHITESPACE@31..32 "\n"
+    BLOCK@32..73
+      BLOCK_SEQ@32..73
+        BLOCK_SEQ_ENTRY@32..46
+          MINUS@32..33 "-"
+          WHITESPACE@33..34 " "
+          FLOW@34..46
+            PLAIN_SCALAR@34..46 "Mark McGwire"
+        WHITESPACE@46..47 "\n"
+        BLOCK_SEQ_ENTRY@47..59
+          MINUS@47..48 "-"
+          WHITESPACE@48..49 " "
+          FLOW@49..59
+            PLAIN_SCALAR@49..59 "Sammy Sosa"
+        WHITESPACE@59..60 "\n"
+        BLOCK_SEQ_ENTRY@60..73
+          MINUS@60..61 "-"
+          WHITESPACE@61..62 " "
+          FLOW@62..73
+            PLAIN_SCALAR@62..73 "Ken Griffey"
+  WHITESPACE@73..75 "\n\n"
+  COMMENT@75..89 "# Team ranking"
+  WHITESPACE@89..90 "\n"
+  DOCUMENT@90..129
+    DIRECTIVES_END@90..93 "---"
+    WHITESPACE@93..94 "\n"
+    BLOCK@94..129
+      BLOCK_SEQ@94..129
+        BLOCK_SEQ_ENTRY@94..108
+          MINUS@94..95 "-"
+          WHITESPACE@95..96 " "
+          FLOW@96..108
+            PLAIN_SCALAR@96..108 "Chicago Cubs"
+        WHITESPACE@108..109 "\n"
+        BLOCK_SEQ_ENTRY@109..129
+          MINUS@109..110 "-"
+          WHITESPACE@110..111 " "
+          FLOW@111..129
+            PLAIN_SCALAR@111..129 "St Louis Cardinals"
+  WHITESPACE@129..130 "\n"

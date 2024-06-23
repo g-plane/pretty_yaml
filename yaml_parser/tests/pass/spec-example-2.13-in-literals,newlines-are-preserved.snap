@@ -1,0 +1,14 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..44
+  COMMENT@0..11 "# ASCII Art"
+  WHITESPACE@11..12 "\n"
+  DOCUMENT@12..43
+    DIRECTIVES_END@12..15 "---"
+    WHITESPACE@15..16 " "
+    BLOCK@16..43
+      BLOCK_SCALAR@16..43
+        BAR@16..17 "|"
+        BLOCK_SCALAR_TEXT@17..43 "\n  \\//||\\/||\n  // ||  ..."
+  WHITESPACE@43..44 "\n"

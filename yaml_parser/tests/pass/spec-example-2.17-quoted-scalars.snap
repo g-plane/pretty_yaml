@@ -1,0 +1,67 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..177
+  DOCUMENT@0..176
+    BLOCK@0..176
+      BLOCK_MAP@0..176
+        BLOCK_MAP_ENTRY@0..31
+          BLOCK_MAP_KEY@0..7
+            FLOW@0..7
+              PLAIN_SCALAR@0..7 "unicode"
+          COLON@7..8 ":"
+          WHITESPACE@8..9 " "
+          BLOCK_MAP_VALUE@9..31
+            FLOW@9..31
+              DOUBLE_QUOTED_SCALAR@9..31 "\"Sosa did fine.\\u263A\""
+        WHITESPACE@31..32 "\n"
+        BLOCK_MAP_ENTRY@32..63
+          BLOCK_MAP_KEY@32..39
+            FLOW@32..39
+              PLAIN_SCALAR@32..39 "control"
+          COLON@39..40 ":"
+          WHITESPACE@40..41 " "
+          BLOCK_MAP_VALUE@41..63
+            FLOW@41..63
+              DOUBLE_QUOTED_SCALAR@41..63 "\"\\b1998\\t1999\\t2000\\n\""
+        WHITESPACE@63..64 "\n"
+        BLOCK_MAP_ENTRY@64..91
+          BLOCK_MAP_KEY@64..71
+            FLOW@64..71
+              PLAIN_SCALAR@64..71 "hex esc"
+          COLON@71..72 ":"
+          WHITESPACE@72..73 " "
+          BLOCK_MAP_VALUE@73..91
+            FLOW@73..91
+              DOUBLE_QUOTED_SCALAR@73..91 "\"\\x0d\\x0a is \\r\\n\""
+        WHITESPACE@91..93 "\n\n"
+        BLOCK_MAP_ENTRY@93..121
+          BLOCK_MAP_KEY@93..99
+            FLOW@93..99
+              PLAIN_SCALAR@93..99 "single"
+          COLON@99..100 ":"
+          WHITESPACE@100..101 " "
+          BLOCK_MAP_VALUE@101..121
+            FLOW@101..121
+              SINGLE_QUOTED_SCALAR@101..121 "'\"Howdy!\" he cried.'"
+        WHITESPACE@121..122 "\n"
+        BLOCK_MAP_ENTRY@122..153
+          BLOCK_MAP_KEY@122..128
+            FLOW@122..128
+              PLAIN_SCALAR@122..128 "quoted"
+          COLON@128..129 ":"
+          WHITESPACE@129..130 " "
+          BLOCK_MAP_VALUE@130..153
+            FLOW@130..153
+              SINGLE_QUOTED_SCALAR@130..153 "' # Not a ''comment''.'"
+        WHITESPACE@153..154 "\n"
+        BLOCK_MAP_ENTRY@154..176
+          BLOCK_MAP_KEY@154..165
+            FLOW@154..165
+              PLAIN_SCALAR@154..165 "tie-fighter"
+          COLON@165..166 ":"
+          WHITESPACE@166..167 " "
+          BLOCK_MAP_VALUE@167..176
+            FLOW@167..176
+              SINGLE_QUOTED_SCALAR@167..176 "'|\\-*-/|'"
+  WHITESPACE@176..177 "\n"

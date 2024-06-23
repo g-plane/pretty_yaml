@@ -1,0 +1,89 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..135
+  DOCUMENT@0..134
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    COMMENT@4..24 "# Products purchased"
+    WHITESPACE@24..25 "\n"
+    BLOCK@25..134
+      BLOCK_SEQ@25..134
+        BLOCK_SEQ_ENTRY@25..61
+          MINUS@25..26 "-"
+          WHITESPACE@26..27 " "
+          BLOCK@27..61
+            BLOCK_MAP@27..61
+              BLOCK_MAP_ENTRY@27..47
+                BLOCK_MAP_KEY@27..31
+                  FLOW@27..31
+                    PLAIN_SCALAR@27..31 "item"
+                WHITESPACE@31..35 "    "
+                COLON@35..36 ":"
+                WHITESPACE@36..37 " "
+                BLOCK_MAP_VALUE@37..47
+                  FLOW@37..47
+                    PLAIN_SCALAR@37..47 "Super Hoop"
+              WHITESPACE@47..50 "\n  "
+              BLOCK_MAP_ENTRY@50..61
+                BLOCK_MAP_KEY@50..58
+                  FLOW@50..58
+                    PLAIN_SCALAR@50..58 "quantity"
+                COLON@58..59 ":"
+                WHITESPACE@59..60 " "
+                BLOCK_MAP_VALUE@60..61
+                  FLOW@60..61
+                    PLAIN_SCALAR@60..61 "1"
+        WHITESPACE@61..62 "\n"
+        BLOCK_SEQ_ENTRY@62..98
+          MINUS@62..63 "-"
+          WHITESPACE@63..64 " "
+          BLOCK@64..98
+            BLOCK_MAP@64..98
+              BLOCK_MAP_ENTRY@64..84
+                BLOCK_MAP_KEY@64..68
+                  FLOW@64..68
+                    PLAIN_SCALAR@64..68 "item"
+                WHITESPACE@68..72 "    "
+                COLON@72..73 ":"
+                WHITESPACE@73..74 " "
+                BLOCK_MAP_VALUE@74..84
+                  FLOW@74..84
+                    PLAIN_SCALAR@74..84 "Basketball"
+              WHITESPACE@84..87 "\n  "
+              BLOCK_MAP_ENTRY@87..98
+                BLOCK_MAP_KEY@87..95
+                  FLOW@87..95
+                    PLAIN_SCALAR@87..95 "quantity"
+                COLON@95..96 ":"
+                WHITESPACE@96..97 " "
+                BLOCK_MAP_VALUE@97..98
+                  FLOW@97..98
+                    PLAIN_SCALAR@97..98 "4"
+        WHITESPACE@98..99 "\n"
+        BLOCK_SEQ_ENTRY@99..134
+          MINUS@99..100 "-"
+          WHITESPACE@100..101 " "
+          BLOCK@101..134
+            BLOCK_MAP@101..134
+              BLOCK_MAP_ENTRY@101..120
+                BLOCK_MAP_KEY@101..105
+                  FLOW@101..105
+                    PLAIN_SCALAR@101..105 "item"
+                WHITESPACE@105..109 "    "
+                COLON@109..110 ":"
+                WHITESPACE@110..111 " "
+                BLOCK_MAP_VALUE@111..120
+                  FLOW@111..120
+                    PLAIN_SCALAR@111..120 "Big Shoes"
+              WHITESPACE@120..123 "\n  "
+              BLOCK_MAP_ENTRY@123..134
+                BLOCK_MAP_KEY@123..131
+                  FLOW@123..131
+                    PLAIN_SCALAR@123..131 "quantity"
+                COLON@131..132 ":"
+                WHITESPACE@132..133 " "
+                BLOCK_MAP_VALUE@133..134
+                  FLOW@133..134
+                    PLAIN_SCALAR@133..134 "1"
+  WHITESPACE@134..135 "\n"

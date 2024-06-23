@@ -1,0 +1,27 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..93
+  DOCUMENT@0..92
+    BLOCK@0..92
+      BLOCK_MAP@0..92
+        BLOCK_MAP_ENTRY@0..49
+          BLOCK_MAP_KEY@0..5
+            FLOW@0..5
+              PLAIN_SCALAR@0..5 "plain"
+          COLON@5..6 ":"
+          WHITESPACE@6..9 "\n  "
+          BLOCK_MAP_VALUE@9..49
+            FLOW@9..49
+              PLAIN_SCALAR@9..49 "This unquoted scalar\n ..."
+        WHITESPACE@49..51 "\n\n"
+        BLOCK_MAP_ENTRY@51..92
+          BLOCK_MAP_KEY@51..57
+            FLOW@51..57
+              PLAIN_SCALAR@51..57 "quoted"
+          COLON@57..58 ":"
+          WHITESPACE@58..59 " "
+          BLOCK_MAP_VALUE@59..92
+            FLOW@59..92
+              DOUBLE_QUOTED_SCALAR@59..92 "\"So does this\n  quote ..."
+  WHITESPACE@92..93 "\n"

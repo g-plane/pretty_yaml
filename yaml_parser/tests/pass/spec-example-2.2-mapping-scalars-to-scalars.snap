@@ -1,0 +1,43 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..80
+  DOCUMENT@0..60
+    BLOCK@0..60
+      BLOCK_MAP@0..60
+        BLOCK_MAP_ENTRY@0..7
+          BLOCK_MAP_KEY@0..2
+            FLOW@0..2
+              PLAIN_SCALAR@0..2 "hr"
+          COLON@2..3 ":"
+          WHITESPACE@3..5 "  "
+          BLOCK_MAP_VALUE@5..7
+            FLOW@5..7
+              PLAIN_SCALAR@5..7 "65"
+        WHITESPACE@7..11 "    "
+        COMMENT@11..22 "# Home runs"
+        WHITESPACE@22..23 "\n"
+        BLOCK_MAP_ENTRY@23..33
+          BLOCK_MAP_KEY@23..26
+            FLOW@23..26
+              PLAIN_SCALAR@23..26 "avg"
+          COLON@26..27 ":"
+          WHITESPACE@27..28 " "
+          BLOCK_MAP_VALUE@28..33
+            FLOW@28..33
+              PLAIN_SCALAR@28..33 "0.278"
+        WHITESPACE@33..34 " "
+        COMMENT@34..51 "# Batting average"
+        WHITESPACE@51..52 "\n"
+        BLOCK_MAP_ENTRY@52..60
+          BLOCK_MAP_KEY@52..55
+            FLOW@52..55
+              PLAIN_SCALAR@52..55 "rbi"
+          COLON@55..56 ":"
+          WHITESPACE@56..57 " "
+          BLOCK_MAP_VALUE@57..60
+            FLOW@57..60
+              PLAIN_SCALAR@57..60 "147"
+  WHITESPACE@60..63 "   "
+  COMMENT@63..79 "# Runs Batted In"
+  WHITESPACE@79..80 "\n"

@@ -1,0 +1,43 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..137
+  COMMENT@0..27 "# Sets are represente ..."
+  WHITESPACE@27..28 "\n"
+  COMMENT@28..55 "# Mapping where each  ..."
+  WHITESPACE@55..56 "\n"
+  COMMENT@56..86 "# associated with a n ..."
+  WHITESPACE@86..87 "\n"
+  DOCUMENT@87..136
+    DIRECTIVES_END@87..90 "---"
+    WHITESPACE@90..91 " "
+    BLOCK@91..136
+      PROPERTIES@91..96
+        TAG_PROPERTY@91..96
+          SHORTHAND_TAG@91..96
+            TAG_HANDLE@91..93
+              TAG_HANDLE_SECONDARY@91..93 "!!"
+            TAG_CHAR@93..96 "set"
+      WHITESPACE@96..97 "\n"
+      BLOCK_MAP@97..136
+        BLOCK_MAP_ENTRY@97..111
+          BLOCK_MAP_KEY@97..111
+            QUESTION_MARK@97..98 "?"
+            WHITESPACE@98..99 " "
+            FLOW@99..111
+              PLAIN_SCALAR@99..111 "Mark McGwire"
+        WHITESPACE@111..112 "\n"
+        BLOCK_MAP_ENTRY@112..124
+          BLOCK_MAP_KEY@112..124
+            QUESTION_MARK@112..113 "?"
+            WHITESPACE@113..114 " "
+            FLOW@114..124
+              PLAIN_SCALAR@114..124 "Sammy Sosa"
+        WHITESPACE@124..125 "\n"
+        BLOCK_MAP_ENTRY@125..136
+          BLOCK_MAP_KEY@125..136
+            QUESTION_MARK@125..126 "?"
+            WHITESPACE@126..127 " "
+            FLOW@127..136
+              PLAIN_SCALAR@127..136 "Ken Griff"
+  WHITESPACE@136..137 "\n"
