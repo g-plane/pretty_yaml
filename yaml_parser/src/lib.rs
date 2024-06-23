@@ -355,7 +355,7 @@ fn plain_scalar_chars(input: &mut Input) -> PResult<()> {
                 space1.void(),
                 peek(not(alt((
                     one_of(move |c: char| c == '#' || safe_in && is_flow_indicator(c)).void(),
-                    (':', space1).void(),
+                    (':', multispace1).void(),
                 )))),
             ),
         )),
