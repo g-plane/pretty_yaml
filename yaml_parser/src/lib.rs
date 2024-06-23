@@ -498,26 +498,32 @@ fn flow_map_entry(input: &mut Input) -> GreenResult {
 }
 
 fn flow_pair(input: &mut Input) -> GreenResult {
-    (
-        opt(flow_map_entry_key.set_state(|state| state.bf_ctx = BlockFlowCtx::FlowKey)),
-        stateless_cmts_or_ws0,
-        ascii_char::<':'>(COLON),
-        opt((stateless_cmts_or_ws0, flow)),
+    trace(
+        "flow_pair",
+        (
+            opt(dispatch! {peek((any, any));
+                ('?', ' ' | '\t' | '\n' | '\r') => flow_map_entry_key,
+                _ => flow_map_entry_key.set_state(|state| state.bf_ctx = BlockFlowCtx::FlowKey),
+            }),
+            stateless_cmts_or_ws0,
+            ascii_char::<':'>(COLON),
+            opt((stateless_cmts_or_ws0, flow)),
+        ),
     )
-        .parse_next(input)
-        .map(|(key, mut trivias_before_colon, colon, value)| {
-            let mut children = Vec::with_capacity(3);
-            if let Some(key) = key {
-                children.push(key);
-            }
-            children.append(&mut trivias_before_colon);
-            children.push(colon);
-            if let Some((mut trivias_after_colon, value)) = value {
-                children.append(&mut trivias_after_colon);
-                children.push(node(FLOW_MAP_VALUE, [value]));
-            }
-            node(FLOW_PAIR, children)
-        })
+    .parse_next(input)
+    .map(|(key, mut trivias_before_colon, colon, value)| {
+        let mut children = Vec::with_capacity(3);
+        if let Some(key) = key {
+            children.push(key);
+        }
+        children.append(&mut trivias_before_colon);
+        children.push(colon);
+        if let Some((mut trivias_after_colon, value)) = value {
+            children.append(&mut trivias_after_colon);
+            children.push(node(FLOW_MAP_VALUE, [value]));
+        }
+        node(FLOW_PAIR, children)
+    })
 }
 
 fn flow_map_entry_key(input: &mut Input) -> GreenResult {
@@ -525,13 +531,12 @@ fn flow_map_entry_key(input: &mut Input) -> GreenResult {
         flow.map(|child| node(FLOW_MAP_KEY, [child])),
         (
             ascii_char::<'?'>(QUESTION_MARK),
-            opt((ws, stateless_cmts_or_ws0, flow)),
+            opt((stateless_cmts_or_ws1, flow)),
         )
             .map(|(question_mark, key)| {
                 let mut children = Vec::with_capacity(3);
                 children.push(question_mark);
-                if let Some((ws, mut trivias, key)) = key {
-                    children.push(ws);
+                if let Some((mut trivias, key)) = key {
                     children.append(&mut trivias);
                     children.push(key);
                 }
