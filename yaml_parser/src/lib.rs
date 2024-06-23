@@ -5,7 +5,9 @@ use rowan::{GreenNode, GreenToken, NodeOrToken};
 use std::mem;
 use winnow::{
     ascii::{digit1, line_ending, multispace1, space1, take_escaped, till_line_ending},
-    combinator::{alt, cut_err, dispatch, eof, fail, not, opt, peek, repeat, terminated, trace},
+    combinator::{
+        alt, cond, cut_err, dispatch, eof, fail, not, opt, peek, repeat, terminated, trace,
+    },
     error::{StrContext, StrContextValue},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
@@ -629,19 +631,24 @@ fn block_scalar(input: &mut Input) -> GreenResult {
                 children.push(comment);
             }
             let indent = indent.unwrap_or_default();
-            repeat::<_, _, (), _, _>(
-                0..,
-                (
-                    multispace1.verify(move |text: &str| {
-                        detect_ws_indent(text).is_some_and(|detected| detected >= indent)
-                    }),
-                    till_line_ending,
-                ),
+            cond(
+                indent > base_indent,
+                repeat::<_, _, (), _, _>(
+                    0..,
+                    (
+                        multispace1.verify(move |text: &str| {
+                            detect_ws_indent(text).is_some_and(|detected| detected >= indent)
+                        }),
+                        till_line_ending,
+                    ),
+                )
+                .recognize(),
             )
-            .recognize()
             .map(move |text| {
                 let mut children = children.clone();
-                children.push(tok(BLOCK_SCALAR_TEXT, text));
+                if let Some(text) = text {
+                    children.push(tok(BLOCK_SCALAR_TEXT, text));
+                }
                 node(BLOCK_SCALAR, children)
             })
         })
