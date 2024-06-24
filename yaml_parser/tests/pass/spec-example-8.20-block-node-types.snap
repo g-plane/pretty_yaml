@@ -1,0 +1,46 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..77
+  DOCUMENT@0..76
+    BLOCK@0..76
+      BLOCK_SEQ@0..76
+        BLOCK_SEQ_ENTRY@0..19
+          MINUS@0..1 "-"
+          WHITESPACE@1..4 "\n  "
+          FLOW@4..19
+            DOUBLE_QUOTED_SCALAR@4..19 "\"flow in block\""
+        WHITESPACE@19..20 "\n"
+        BLOCK_SEQ_ENTRY@20..37
+          MINUS@20..21 "-"
+          WHITESPACE@21..22 " "
+          BLOCK@22..37
+            BLOCK_SCALAR@22..37
+              GREATER_THAN@22..23 ">"
+              BLOCK_SCALAR_TEXT@23..37 "\n Block scalar"
+        WHITESPACE@37..38 "\n"
+        BLOCK_SEQ_ENTRY@38..76
+          MINUS@38..39 "-"
+          WHITESPACE@39..40 " "
+          BLOCK@40..76
+            PROPERTIES@40..45
+              TAG_PROPERTY@40..45
+                SHORTHAND_TAG@40..45
+                  TAG_HANDLE@40..42
+                    TAG_HANDLE_SECONDARY@40..42 "!!"
+                  TAG_CHAR@42..45 "map"
+            WHITESPACE@45..46 " "
+            COMMENT@46..64 "# Block collection"
+            WHITESPACE@64..67 "\n  "
+            BLOCK_MAP@67..76
+              BLOCK_MAP_ENTRY@67..76
+                BLOCK_MAP_KEY@67..70
+                  FLOW@67..70
+                    PLAIN_SCALAR@67..70 "foo"
+                WHITESPACE@70..71 " "
+                COLON@71..72 ":"
+                WHITESPACE@72..73 " "
+                BLOCK_MAP_VALUE@73..76
+                  FLOW@73..76
+                    PLAIN_SCALAR@73..76 "bar"
+  WHITESPACE@76..77 "\n"

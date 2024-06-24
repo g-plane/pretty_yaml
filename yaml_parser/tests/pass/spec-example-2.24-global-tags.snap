@@ -1,0 +1,193 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..298
+  DOCUMENT@0..297
+    DIRECTIVE@0..31
+      PERCENT@0..1 "%"
+      TAG_DIRECTIVE@1..31
+        DIRECTIVE_NAME@1..4 "TAG"
+        WHITESPACE@4..5 " "
+        TAG_HANDLE@5..6
+          TAG_HANDLE_PRIMARY@5..6 "!"
+        WHITESPACE@6..7 " "
+        TAG_PREFIX@7..31 "tag:clarkevans.com,2002:"
+    WHITESPACE@31..32 "\n"
+    DIRECTIVES_END@32..35 "---"
+    WHITESPACE@35..36 " "
+    BLOCK@36..297
+      PROPERTIES@36..42
+        TAG_PROPERTY@36..42
+          SHORTHAND_TAG@36..42
+            TAG_HANDLE@36..37
+              TAG_HANDLE_PRIMARY@36..37 "!"
+            TAG_CHAR@37..42 "shape"
+      WHITESPACE@42..45 "\n  "
+      COMMENT@45..78 "# Use the ! handle fo ..."
+      WHITESPACE@78..81 "\n  "
+      COMMENT@81..113 "# tag:clarkevans.com, ..."
+      WHITESPACE@113..114 "\n"
+      BLOCK_SEQ@114..297
+        BLOCK_SEQ_ENTRY@114..169
+          MINUS@114..115 "-"
+          WHITESPACE@115..116 " "
+          BLOCK@116..169
+            PROPERTIES@116..123
+              TAG_PROPERTY@116..123
+                SHORTHAND_TAG@116..123
+                  TAG_HANDLE@116..117
+                    TAG_HANDLE_PRIMARY@116..117 "!"
+                  TAG_CHAR@117..123 "circle"
+            WHITESPACE@123..126 "\n  "
+            BLOCK_MAP@126..169
+              BLOCK_MAP_ENTRY@126..157
+                BLOCK_MAP_KEY@126..132
+                  FLOW@126..132
+                    PLAIN_SCALAR@126..132 "center"
+                COLON@132..133 ":"
+                WHITESPACE@133..134 " "
+                BLOCK_MAP_VALUE@134..157
+                  FLOW@134..157
+                    PROPERTIES@134..141
+                      ANCHOR_PROPERTY@134..141
+                        AMPERSAND@134..135 "&"
+                        ANCHOR_NAME@135..141 "ORIGIN"
+                    WHITESPACE@141..142 " "
+                    FLOW_MAP@142..157
+                      L_BRACE@142..143 "{"
+                      FLOW_MAP_ENTRIES@143..156
+                        FLOW_MAP_ENTRY@143..148
+                          FLOW_MAP_KEY@143..144
+                            FLOW@143..144
+                              PLAIN_SCALAR@143..144 "x"
+                          COLON@144..145 ":"
+                          WHITESPACE@145..146 " "
+                          FLOW_MAP_VALUE@146..148
+                            FLOW@146..148
+                              PLAIN_SCALAR@146..148 "73"
+                        COMMA@148..149 ","
+                        WHITESPACE@149..150 " "
+                        FLOW_MAP_ENTRY@150..156
+                          FLOW_MAP_KEY@150..151
+                            FLOW@150..151
+                              PLAIN_SCALAR@150..151 "y"
+                          COLON@151..152 ":"
+                          WHITESPACE@152..153 " "
+                          FLOW_MAP_VALUE@153..156
+                            FLOW@153..156
+                              PLAIN_SCALAR@153..156 "129"
+                      R_BRACE@156..157 "}"
+              WHITESPACE@157..160 "\n  "
+              BLOCK_MAP_ENTRY@160..169
+                BLOCK_MAP_KEY@160..166
+                  FLOW@160..166
+                    PLAIN_SCALAR@160..166 "radius"
+                COLON@166..167 ":"
+                WHITESPACE@167..168 " "
+                BLOCK_MAP_VALUE@168..169
+                  FLOW@168..169
+                    PLAIN_SCALAR@168..169 "7"
+        WHITESPACE@169..170 "\n"
+        BLOCK_SEQ_ENTRY@170..222
+          MINUS@170..171 "-"
+          WHITESPACE@171..172 " "
+          BLOCK@172..222
+            PROPERTIES@172..177
+              TAG_PROPERTY@172..177
+                SHORTHAND_TAG@172..177
+                  TAG_HANDLE@172..173
+                    TAG_HANDLE_PRIMARY@172..173 "!"
+                  TAG_CHAR@173..177 "line"
+            WHITESPACE@177..180 "\n  "
+            BLOCK_MAP@180..222
+              BLOCK_MAP_ENTRY@180..194
+                BLOCK_MAP_KEY@180..185
+                  FLOW@180..185
+                    PLAIN_SCALAR@180..185 "start"
+                COLON@185..186 ":"
+                WHITESPACE@186..187 " "
+                BLOCK_MAP_VALUE@187..194
+                  FLOW@187..194
+                    ALIAS@187..194
+                      ASTERISK@187..188 "*"
+                      ANCHOR_NAME@188..194 "ORIGIN"
+              WHITESPACE@194..197 "\n  "
+              BLOCK_MAP_ENTRY@197..222
+                BLOCK_MAP_KEY@197..203
+                  FLOW@197..203
+                    PLAIN_SCALAR@197..203 "finish"
+                COLON@203..204 ":"
+                WHITESPACE@204..205 " "
+                BLOCK_MAP_VALUE@205..222
+                  FLOW@205..222
+                    FLOW_MAP@205..222
+                      L_BRACE@205..206 "{"
+                      WHITESPACE@206..207 " "
+                      FLOW_MAP_ENTRIES@207..221
+                        FLOW_MAP_ENTRY@207..212
+                          FLOW_MAP_KEY@207..208
+                            FLOW@207..208
+                              PLAIN_SCALAR@207..208 "x"
+                          COLON@208..209 ":"
+                          WHITESPACE@209..210 " "
+                          FLOW_MAP_VALUE@210..212
+                            FLOW@210..212
+                              PLAIN_SCALAR@210..212 "89"
+                        COMMA@212..213 ","
+                        WHITESPACE@213..214 " "
+                        FLOW_MAP_ENTRY@214..220
+                          FLOW_MAP_KEY@214..215
+                            FLOW@214..215
+                              PLAIN_SCALAR@214..215 "y"
+                          COLON@215..216 ":"
+                          WHITESPACE@216..217 " "
+                          FLOW_MAP_VALUE@217..220
+                            FLOW@217..220
+                              PLAIN_SCALAR@217..220 "102"
+                        WHITESPACE@220..221 " "
+                      R_BRACE@221..222 "}"
+        WHITESPACE@222..223 "\n"
+        BLOCK_SEQ_ENTRY@223..297
+          MINUS@223..224 "-"
+          WHITESPACE@224..225 " "
+          BLOCK@225..297
+            PROPERTIES@225..231
+              TAG_PROPERTY@225..231
+                SHORTHAND_TAG@225..231
+                  TAG_HANDLE@225..226
+                    TAG_HANDLE_PRIMARY@225..226 "!"
+                  TAG_CHAR@226..231 "label"
+            WHITESPACE@231..234 "\n  "
+            BLOCK_MAP@234..297
+              BLOCK_MAP_ENTRY@234..248
+                BLOCK_MAP_KEY@234..239
+                  FLOW@234..239
+                    PLAIN_SCALAR@234..239 "start"
+                COLON@239..240 ":"
+                WHITESPACE@240..241 " "
+                BLOCK_MAP_VALUE@241..248
+                  FLOW@241..248
+                    ALIAS@241..248
+                      ASTERISK@241..242 "*"
+                      ANCHOR_NAME@242..248 "ORIGIN"
+              WHITESPACE@248..251 "\n  "
+              BLOCK_MAP_ENTRY@251..266
+                BLOCK_MAP_KEY@251..256
+                  FLOW@251..256
+                    PLAIN_SCALAR@251..256 "color"
+                COLON@256..257 ":"
+                WHITESPACE@257..258 " "
+                BLOCK_MAP_VALUE@258..266
+                  FLOW@258..266
+                    PLAIN_SCALAR@258..266 "0xFFEEBB"
+              WHITESPACE@266..269 "\n  "
+              BLOCK_MAP_ENTRY@269..297
+                BLOCK_MAP_KEY@269..273
+                  FLOW@269..273
+                    PLAIN_SCALAR@269..273 "text"
+                COLON@273..274 ":"
+                WHITESPACE@274..275 " "
+                BLOCK_MAP_VALUE@275..297
+                  FLOW@275..297
+                    PLAIN_SCALAR@275..297 "Pretty vector drawing."
+  WHITESPACE@297..298 "\n"

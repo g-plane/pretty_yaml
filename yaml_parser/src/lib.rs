@@ -577,7 +577,7 @@ fn flow_content(input: &mut Input) -> GreenResult {
 fn flow(input: &mut Input) -> GreenResult {
     trace("flow", dispatch! {peek(any);
         '*' => alias.map(|child| node(FLOW, [child])),
-        '&' | '!' => (properties, opt((stateless_cmts_or_ws1, flow_content))).map(|(properties, content)| {
+        '&' | '!' => (properties, opt((stateless_separate, flow_content))).map(|(properties, content)| {
             let mut children = Vec::with_capacity(3);
             children.push(properties);
             if let Some((mut trivias, content)) = content {
@@ -889,7 +889,7 @@ fn block(input: &mut Input) -> GreenResult {
                 opt((
                     properties,
                     terminated(
-                        cmts_or_ws1,
+                        cmts_or_ws1.track_indent(),
                         alt((
                             verify_state(|state| state.last_ws_has_nl),
                             peek(one_of(['|', '>'])).void(),
@@ -1143,6 +1143,19 @@ fn stateless_cmts_or_ws0(input: &mut Input) -> PResult<Vec<GreenElement>> {
 /// Parse one or more comments or whitespaces without updating state.
 fn stateless_cmts_or_ws1(input: &mut Input) -> PResult<Vec<GreenElement>> {
     repeat(1.., stateless_cmt_or_ws).parse_next(input)
+}
+/// Parse "s-separate" rule of YAML spec without updating state.
+fn stateless_separate(input: &mut Input) -> PResult<Vec<GreenElement>> {
+    if matches!(
+        input.state.bf_ctx,
+        BlockFlowCtx::FlowKey | BlockFlowCtx::BlockKey
+    ) {
+        space1
+            .parse_next(input)
+            .map(|text| vec![tok(WHITESPACE, text)])
+    } else {
+        stateless_cmts_or_ws1.parse_next(input)
+    }
 }
 
 /// Parse the given YAML code into CST.

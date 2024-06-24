@@ -1,0 +1,73 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..67
+  DOCUMENT@0..66
+    BLOCK@0..66
+      BLOCK_MAP@0..66
+        BLOCK_MAP_ENTRY@0..41
+          BLOCK_MAP_KEY@0..8
+            FLOW@0..8
+              PLAIN_SCALAR@0..8 "sequence"
+          COLON@8..9 ":"
+          WHITESPACE@9..10 " "
+          BLOCK_MAP_VALUE@10..41
+            BLOCK@10..41
+              PROPERTIES@10..15
+                TAG_PROPERTY@10..15
+                  SHORTHAND_TAG@10..15
+                    TAG_HANDLE@10..12
+                      TAG_HANDLE_SECONDARY@10..12 "!!"
+                    TAG_CHAR@12..15 "seq"
+              WHITESPACE@15..16 "\n"
+              BLOCK_SEQ@16..41
+                BLOCK_SEQ_ENTRY@16..23
+                  MINUS@16..17 "-"
+                  WHITESPACE@17..18 " "
+                  FLOW@18..23
+                    PLAIN_SCALAR@18..23 "entry"
+                WHITESPACE@23..24 "\n"
+                BLOCK_SEQ_ENTRY@24..41
+                  MINUS@24..25 "-"
+                  WHITESPACE@25..26 " "
+                  BLOCK@26..41
+                    PROPERTIES@26..31
+                      TAG_PROPERTY@26..31
+                        SHORTHAND_TAG@26..31
+                          TAG_HANDLE@26..28
+                            TAG_HANDLE_SECONDARY@26..28 "!!"
+                          TAG_CHAR@28..31 "seq"
+                    WHITESPACE@31..33 "\n "
+                    BLOCK_SEQ@33..41
+                      BLOCK_SEQ_ENTRY@33..41
+                        MINUS@33..34 "-"
+                        WHITESPACE@34..35 " "
+                        FLOW@35..41
+                          PLAIN_SCALAR@35..41 "nested"
+        WHITESPACE@41..42 "\n"
+        BLOCK_MAP_ENTRY@42..66
+          BLOCK_MAP_KEY@42..49
+            FLOW@42..49
+              PLAIN_SCALAR@42..49 "mapping"
+          COLON@49..50 ":"
+          WHITESPACE@50..51 " "
+          BLOCK_MAP_VALUE@51..66
+            BLOCK@51..66
+              PROPERTIES@51..56
+                TAG_PROPERTY@51..56
+                  SHORTHAND_TAG@51..56
+                    TAG_HANDLE@51..53
+                      TAG_HANDLE_SECONDARY@51..53 "!!"
+                    TAG_CHAR@53..56 "map"
+              WHITESPACE@56..58 "\n "
+              BLOCK_MAP@58..66
+                BLOCK_MAP_ENTRY@58..66
+                  BLOCK_MAP_KEY@58..61
+                    FLOW@58..61
+                      PLAIN_SCALAR@58..61 "foo"
+                  COLON@61..62 ":"
+                  WHITESPACE@62..63 " "
+                  BLOCK_MAP_VALUE@63..66
+                    FLOW@63..66
+                      PLAIN_SCALAR@63..66 "bar"
+  WHITESPACE@66..67 "\n"
