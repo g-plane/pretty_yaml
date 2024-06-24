@@ -934,7 +934,7 @@ fn block(input: &mut Input) -> GreenResult {
 }
 
 fn directives_end(input: &mut Input) -> GreenResult {
-    "---"
+    terminated("---", peek(multispace1))
         .map(|text| tok(DIRECTIVES_END, text))
         .parse_next(input)
 }
