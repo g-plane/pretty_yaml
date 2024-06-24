@@ -1,0 +1,92 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..62
+  DOCUMENT@0..61
+    BLOCK@0..61
+      BLOCK_MAP@0..61
+        BLOCK_MAP_ENTRY@0..10
+          BLOCK_MAP_KEY@0..7
+            FLOW@0..7
+              PROPERTIES@0..5
+                TAG_PROPERTY@0..5
+                  SHORTHAND_TAG@0..5
+                    TAG_HANDLE@0..2
+                      TAG_HANDLE_SECONDARY@0..2 "!!"
+                    TAG_CHAR@2..5 "str"
+              WHITESPACE@5..6 " "
+              PLAIN_SCALAR@6..7 "a"
+          COLON@7..8 ":"
+          WHITESPACE@8..9 " "
+          BLOCK_MAP_VALUE@9..10
+            FLOW@9..10
+              PLAIN_SCALAR@9..10 "b"
+        WHITESPACE@10..11 "\n"
+        BLOCK_MAP_ENTRY@11..22
+          BLOCK_MAP_KEY@11..12
+            FLOW@11..12
+              PLAIN_SCALAR@11..12 "c"
+          COLON@12..13 ":"
+          WHITESPACE@13..14 " "
+          BLOCK_MAP_VALUE@14..22
+            FLOW@14..22
+              PROPERTIES@14..19
+                TAG_PROPERTY@14..19
+                  SHORTHAND_TAG@14..19
+                    TAG_HANDLE@14..16
+                      TAG_HANDLE_SECONDARY@14..16 "!!"
+                    TAG_CHAR@16..19 "int"
+              WHITESPACE@19..20 " "
+              PLAIN_SCALAR@20..22 "42"
+        WHITESPACE@22..23 "\n"
+        BLOCK_MAP_ENTRY@23..33
+          BLOCK_MAP_KEY@23..24
+            FLOW@23..24
+              PLAIN_SCALAR@23..24 "e"
+          COLON@24..25 ":"
+          WHITESPACE@25..26 " "
+          BLOCK_MAP_VALUE@26..33
+            FLOW@26..33
+              PROPERTIES@26..31
+                TAG_PROPERTY@26..31
+                  SHORTHAND_TAG@26..31
+                    TAG_HANDLE@26..28
+                      TAG_HANDLE_SECONDARY@26..28 "!!"
+                    TAG_CHAR@28..31 "str"
+              WHITESPACE@31..32 " "
+              PLAIN_SCALAR@32..33 "f"
+        WHITESPACE@33..34 "\n"
+        BLOCK_MAP_ENTRY@34..38
+          BLOCK_MAP_KEY@34..35
+            FLOW@34..35
+              PLAIN_SCALAR@34..35 "g"
+          COLON@35..36 ":"
+          WHITESPACE@36..37 " "
+          BLOCK_MAP_VALUE@37..38
+            FLOW@37..38
+              PLAIN_SCALAR@37..38 "h"
+        WHITESPACE@38..39 "\n"
+        BLOCK_MAP_ENTRY@39..61
+          BLOCK_MAP_KEY@39..47
+            FLOW@39..47
+              PROPERTIES@39..44
+                TAG_PROPERTY@39..44
+                  SHORTHAND_TAG@39..44
+                    TAG_HANDLE@39..41
+                      TAG_HANDLE_SECONDARY@39..41 "!!"
+                    TAG_CHAR@41..44 "str"
+              WHITESPACE@44..45 " "
+              PLAIN_SCALAR@45..47 "23"
+          COLON@47..48 ":"
+          WHITESPACE@48..49 " "
+          BLOCK_MAP_VALUE@49..61
+            FLOW@49..61
+              PROPERTIES@49..55
+                TAG_PROPERTY@49..55
+                  SHORTHAND_TAG@49..55
+                    TAG_HANDLE@49..51
+                      TAG_HANDLE_SECONDARY@49..51 "!!"
+                    TAG_CHAR@51..55 "bool"
+              WHITESPACE@55..56 " "
+              PLAIN_SCALAR@56..61 "false"
+  WHITESPACE@61..62 "\n"

@@ -1,0 +1,67 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..52
+  DOCUMENT@0..17
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 " "
+    BLOCK@4..17
+      PROPERTIES@4..9
+        TAG_PROPERTY@4..9
+          SHORTHAND_TAG@4..9
+            TAG_HANDLE@4..6
+              TAG_HANDLE_SECONDARY@4..6 "!!"
+            TAG_CHAR@6..9 "map"
+      WHITESPACE@9..10 "\n"
+      BLOCK_MAP@10..17
+        BLOCK_MAP_ENTRY@10..17
+          BLOCK_MAP_KEY@10..13
+            QUESTION_MARK@10..11 "?"
+            WHITESPACE@11..12 " "
+            FLOW@12..13
+              PLAIN_SCALAR@12..13 "a"
+          WHITESPACE@13..14 "\n"
+          COLON@14..15 ":"
+          WHITESPACE@15..16 " "
+          BLOCK_MAP_VALUE@16..17
+            FLOW@16..17
+              PLAIN_SCALAR@16..17 "b"
+  WHITESPACE@17..18 "\n"
+  DOCUMENT@18..37
+    DIRECTIVES_END@18..21 "---"
+    WHITESPACE@21..22 " "
+    BLOCK@22..37
+      PROPERTIES@22..27
+        TAG_PROPERTY@22..27
+          SHORTHAND_TAG@22..27
+            TAG_HANDLE@22..24
+              TAG_HANDLE_SECONDARY@22..24 "!!"
+            TAG_CHAR@24..27 "seq"
+      WHITESPACE@27..28 "\n"
+      BLOCK_SEQ@28..37
+        BLOCK_SEQ_ENTRY@28..37
+          MINUS@28..29 "-"
+          WHITESPACE@29..30 " "
+          FLOW@30..37
+            PROPERTIES@30..35
+              TAG_PROPERTY@30..35
+                SHORTHAND_TAG@30..35
+                  TAG_HANDLE@30..32
+                    TAG_HANDLE_SECONDARY@30..32 "!!"
+                  TAG_CHAR@32..35 "str"
+            WHITESPACE@35..36 " "
+            PLAIN_SCALAR@36..37 "c"
+  WHITESPACE@37..38 "\n"
+  DOCUMENT@38..51
+    DIRECTIVES_END@38..41 "---"
+    WHITESPACE@41..42 " "
+    FLOW@42..51
+      PROPERTIES@42..47
+        TAG_PROPERTY@42..47
+          SHORTHAND_TAG@42..47
+            TAG_HANDLE@42..44
+              TAG_HANDLE_SECONDARY@42..44 "!!"
+            TAG_CHAR@44..47 "str"
+      WHITESPACE@47..48 "\n"
+      PLAIN_SCALAR@48..51 "d\ne"
+  WHITESPACE@51..52 "\n"

@@ -1,0 +1,15 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..4
+  DOCUMENT@0..3
+    BLOCK@0..3
+      BLOCK_SEQ@0..3
+        BLOCK_SEQ_ENTRY@0..3
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          BLOCK@2..3
+            BLOCK_MAP@2..3
+              BLOCK_MAP_ENTRY@2..3
+                COLON@2..3 ":"
+  WHITESPACE@3..4 "\n"

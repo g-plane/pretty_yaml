@@ -1,0 +1,46 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..33
+  WHITESPACE@0..1 " "
+  DOCUMENT@1..32
+    BLOCK@1..32
+      BLOCK_SEQ@1..32
+        BLOCK_SEQ_ENTRY@1..10
+          MINUS@1..2 "-"
+          WHITESPACE@2..3 " "
+          FLOW@3..10
+            PROPERTIES@3..8
+              TAG_PROPERTY@3..8
+                SHORTHAND_TAG@3..8
+                  TAG_HANDLE@3..5
+                    TAG_HANDLE_SECONDARY@3..5 "!!"
+                  TAG_CHAR@5..8 "str"
+            WHITESPACE@8..9 " "
+            PLAIN_SCALAR@9..10 "a"
+        WHITESPACE@10..12 "\n "
+        BLOCK_SEQ_ENTRY@12..15
+          MINUS@12..13 "-"
+          WHITESPACE@13..14 " "
+          FLOW@14..15
+            PLAIN_SCALAR@14..15 "b"
+        WHITESPACE@15..17 "\n "
+        BLOCK_SEQ_ENTRY@17..27
+          MINUS@17..18 "-"
+          WHITESPACE@18..19 " "
+          FLOW@19..27
+            PROPERTIES@19..24
+              TAG_PROPERTY@19..24
+                SHORTHAND_TAG@19..24
+                  TAG_HANDLE@19..21
+                    TAG_HANDLE_SECONDARY@19..21 "!!"
+                  TAG_CHAR@21..24 "int"
+            WHITESPACE@24..25 " "
+            PLAIN_SCALAR@25..27 "42"
+        WHITESPACE@27..29 "\n "
+        BLOCK_SEQ_ENTRY@29..32
+          MINUS@29..30 "-"
+          WHITESPACE@30..31 " "
+          FLOW@31..32
+            PLAIN_SCALAR@31..32 "d"
+  WHITESPACE@32..33 "\n"

@@ -1,0 +1,16 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..9
+  DOCUMENT@0..4
+    BLOCK@0..4
+      BLOCK_SEQ@0..4
+        BLOCK_SEQ_ENTRY@0..4
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          BLOCK@2..4
+            BLOCK_SCALAR@2..4
+              BAR@2..3 "|"
+              CHOMPING_INDICATOR@3..4
+                PLUS@3..4 "+"
+  WHITESPACE@4..9 "\n\n\n\n\n"

@@ -1,0 +1,8 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..23
+  DOCUMENT@0..22
+    FLOW@0..22
+      DOUBLE_QUOTED_SCALAR@0..22 "\"3 trailing\\\t\n    tab\""
+  WHITESPACE@22..23 "\n"

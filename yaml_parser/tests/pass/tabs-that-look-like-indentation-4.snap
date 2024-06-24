@@ -1,0 +1,18 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..10
+  WHITESPACE@0..3 " \t\n"
+  DOCUMENT@3..9
+    BLOCK@3..9
+      BLOCK_MAP@3..9
+        BLOCK_MAP_ENTRY@3..9
+          BLOCK_MAP_KEY@3..6
+            FLOW@3..6
+              PLAIN_SCALAR@3..6 "foo"
+          COLON@6..7 ":"
+          WHITESPACE@7..8 " "
+          BLOCK_MAP_VALUE@8..9
+            FLOW@8..9
+              PLAIN_SCALAR@8..9 "1"
+  WHITESPACE@9..10 "\n"
