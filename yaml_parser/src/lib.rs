@@ -603,7 +603,7 @@ fn block_scalar(input: &mut Input) -> GreenResult {
         .context(StrContext::Label("block scalar header")),
         opt(space),
         opt(comment),
-        peek(opt(multispace1.verify_map(detect_ws_indent))),
+        peek(opt(linebreaks_or_spaces.verify_map(detect_ws_indent))),
     )
         .flat_map(|(style, indicator, space, comment, mut indent)| {
             let mut children = Vec::with_capacity(3);
@@ -637,7 +637,7 @@ fn block_scalar(input: &mut Input) -> GreenResult {
                 repeat::<_, _, (), _, _>(
                     0..,
                     (
-                        multispace1.verify(move |text: &str| {
+                        linebreaks_or_spaces.verify(move |text: &str| {
                             detect_ws_indent(text).is_some_and(|detected| detected >= indent)
                         }),
                         till_line_ending,
@@ -1100,7 +1100,10 @@ fn space(input: &mut Input) -> GreenResult {
     input.state.last_ws_has_nl = false;
     Ok(tok(WHITESPACE, text))
 }
-
+/// Without tabs.
+fn linebreaks_or_spaces<'s>(input: &mut Input<'s>) -> PResult<&'s str> {
+    take_while(1.., |c| c == ' ' || c == '\n' || c == '\r').parse_next(input)
+}
 fn ws(input: &mut Input) -> GreenResult {
     let text = multispace1.parse_next(input)?;
     if let Some(indent) = detect_ws_indent(text) {
