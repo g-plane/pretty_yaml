@@ -645,7 +645,9 @@ fn block_scalar(input: &mut Input) -> GreenResult {
                         till_line_ending,
                     )
                         .verify(|(ws, line): &(&str, _)| {
-                            !(ws.ends_with(['\n', '\r']) && (*line == "..." || *line == "---"))
+                            !line.is_empty()
+                                && !(ws.ends_with(['\n', '\r'])
+                                    && (*line == "..." || *line == "---"))
                         }),
                 )
                 .recognize(),
