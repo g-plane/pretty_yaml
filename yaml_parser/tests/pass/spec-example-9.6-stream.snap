@@ -1,0 +1,37 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..53
+  DOCUMENT@0..8
+    FLOW@0..8
+      PLAIN_SCALAR@0..8 "Document"
+  WHITESPACE@8..9 "\n"
+  DOCUMENT@9..24
+    DIRECTIVES_END@9..12 "---"
+    WHITESPACE@12..13 "\n"
+    COMMENT@13..20 "# Empty"
+    WHITESPACE@20..21 "\n"
+    DOCUMENT_END@21..24 "..."
+  WHITESPACE@24..25 "\n"
+  DOCUMENT@25..52
+    DIRECTIVE@25..34
+      PERCENT@25..26 "%"
+      YAML_DIRECTIVE@26..34
+        DIRECTIVE_NAME@26..30 "YAML"
+        WHITESPACE@30..31 " "
+        YAML_VERSION@31..34 "1.2"
+    WHITESPACE@34..35 "\n"
+    DIRECTIVES_END@35..38 "---"
+    WHITESPACE@38..39 "\n"
+    BLOCK@39..52
+      BLOCK_MAP@39..52
+        BLOCK_MAP_ENTRY@39..52
+          BLOCK_MAP_KEY@39..48
+            FLOW@39..48
+              PLAIN_SCALAR@39..48 "matches %"
+          COLON@48..49 ":"
+          WHITESPACE@49..50 " "
+          BLOCK_MAP_VALUE@50..52
+            FLOW@50..52
+              PLAIN_SCALAR@50..52 "20"
+  WHITESPACE@52..53 "\n"

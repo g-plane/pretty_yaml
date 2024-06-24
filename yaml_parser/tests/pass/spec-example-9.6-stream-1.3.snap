@@ -1,0 +1,46 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..62
+  DOCUMENT@0..17
+    BLOCK@0..17
+      BLOCK_MAP@0..17
+        BLOCK_MAP_ENTRY@0..17
+          BLOCK_MAP_KEY@0..7
+            FLOW@0..7
+              PLAIN_SCALAR@0..7 "Mapping"
+          COLON@7..8 ":"
+          WHITESPACE@8..9 " "
+          BLOCK_MAP_VALUE@9..17
+            FLOW@9..17
+              PLAIN_SCALAR@9..17 "Document"
+  WHITESPACE@17..18 "\n"
+  DOCUMENT@18..33
+    DIRECTIVES_END@18..21 "---"
+    WHITESPACE@21..22 "\n"
+    COMMENT@22..29 "# Empty"
+    WHITESPACE@29..30 "\n"
+    DOCUMENT_END@30..33 "..."
+  WHITESPACE@33..34 "\n"
+  DOCUMENT@34..61
+    DIRECTIVE@34..43
+      PERCENT@34..35 "%"
+      YAML_DIRECTIVE@35..43
+        DIRECTIVE_NAME@35..39 "YAML"
+        WHITESPACE@39..40 " "
+        YAML_VERSION@40..43 "1.2"
+    WHITESPACE@43..44 "\n"
+    DIRECTIVES_END@44..47 "---"
+    WHITESPACE@47..48 "\n"
+    BLOCK@48..61
+      BLOCK_MAP@48..61
+        BLOCK_MAP_ENTRY@48..61
+          BLOCK_MAP_KEY@48..57
+            FLOW@48..57
+              PLAIN_SCALAR@48..57 "matches %"
+          COLON@57..58 ":"
+          WHITESPACE@58..59 " "
+          BLOCK_MAP_VALUE@59..61
+            FLOW@59..61
+              PLAIN_SCALAR@59..61 "20"
+  WHITESPACE@61..62 "\n"

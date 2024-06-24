@@ -6,7 +6,8 @@ use std::mem;
 use winnow::{
     ascii::{digit1, line_ending, multispace1, space1, take_escaped, till_line_ending},
     combinator::{
-        alt, cond, cut_err, dispatch, eof, fail, not, opt, peek, repeat, terminated, trace,
+        alt, cond, cut_err, dispatch, eof, fail, not, opt, peek, preceded, repeat, terminated,
+        trace,
     },
     error::{StrContext, StrContextValue},
     stream::Stateful,
@@ -1004,13 +1005,7 @@ fn document(input: &mut Input) -> GreenResult {
         (
             repeat(1.., (directive, cmts_or_ws0)),
             directives_end,
-            opt((
-                cmts_or_ws0,
-                block.set_state(|state| {
-                    state.bf_ctx = BlockFlowCtx::BlockIn;
-                    state.document_top = true;
-                }),
-            )),
+            opt((cmts_or_ws0, top_level_block)),
             opt((cmts_or_ws1, document_end)),
         )
             .map(
@@ -1035,10 +1030,7 @@ fn document(input: &mut Input) -> GreenResult {
         document_end.map(|child| node(DOCUMENT, [child])),
         (
             opt((directives_end, cmts_or_ws0)),
-            block.set_state(|state| {
-                state.bf_ctx = BlockFlowCtx::BlockIn;
-                state.document_top = true;
-            }),
+            top_level_block,
             opt((cmts_or_ws1, document_end)),
         )
             .map(|(directives_end, block, document_end)| {
@@ -1063,6 +1055,16 @@ fn document(input: &mut Input) -> GreenResult {
             node(DOCUMENT, children)
         }),
     ))
+    .parse_next(input)
+}
+fn top_level_block(input: &mut Input) -> GreenResult {
+    preceded(
+        not("..."),
+        block.set_state(|state| {
+            state.bf_ctx = BlockFlowCtx::BlockIn;
+            state.document_top = true;
+        }),
+    )
     .parse_next(input)
 }
 
