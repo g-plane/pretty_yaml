@@ -2,7 +2,7 @@
 source: yaml_parser/tests/pass.rs
 ---
 ROOT@0..101
-  DOCUMENT@0..50
+  DOCUMENT@0..54
     DIRECTIVE@0..13
       PERCENT@0..1 "%"
       TAG_DIRECTIVE@1..13
@@ -26,8 +26,8 @@ ROOT@0..101
             TAG_CHAR@33..38 "light"
       WHITESPACE@38..39 " "
       PLAIN_SCALAR@39..50 "fluorescent"
-  WHITESPACE@50..51 "\n"
-  DOCUMENT_END@51..54 "..."
+    WHITESPACE@50..51 "\n"
+    DOCUMENT_END@51..54 "..."
   WHITESPACE@54..55 "\n"
   DOCUMENT@55..100
     DIRECTIVE@55..68

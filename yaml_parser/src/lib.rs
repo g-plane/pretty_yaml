@@ -1011,37 +1011,57 @@ fn document(input: &mut Input) -> GreenResult {
                     state.document_top = true;
                 }),
             )),
+            opt((cmts_or_ws1, document_end)),
         )
-            .map(|(directives, end, block): (Vec<_>, _, _)| {
-                let mut children = Vec::with_capacity(3 + directives.len());
-                directives.into_iter().for_each(|(directive, mut trivias)| {
-                    children.push(directive);
-                    children.append(&mut trivias);
-                });
-                children.push(end);
-                if let Some((mut trivias, block)) = block {
-                    children.append(&mut trivias);
-                    children.push(block);
-                }
-                node(DOCUMENT, children)
-            }),
+            .map(
+                |(directives, directives_end, block, document_end): (Vec<_>, _, _, _)| {
+                    let mut children = Vec::with_capacity(3 + directives.len());
+                    directives.into_iter().for_each(|(directive, mut trivias)| {
+                        children.push(directive);
+                        children.append(&mut trivias);
+                    });
+                    children.push(directives_end);
+                    if let Some((mut trivias, block)) = block {
+                        children.append(&mut trivias);
+                        children.push(block);
+                    }
+                    if let Some((mut trivias, document_end)) = document_end {
+                        children.append(&mut trivias);
+                        children.push(document_end);
+                    }
+                    node(DOCUMENT, children)
+                },
+            ),
+        document_end.map(|child| node(DOCUMENT, [child])),
         (
             opt((directives_end, cmts_or_ws0)),
             block.set_state(|state| {
                 state.bf_ctx = BlockFlowCtx::BlockIn;
                 state.document_top = true;
             }),
+            opt((cmts_or_ws1, document_end)),
         )
-            .map(|(end, block)| {
+            .map(|(directives_end, block, document_end)| {
                 let mut children = Vec::with_capacity(1);
-                if let Some((end, mut trivias)) = end {
+                if let Some((end, mut trivias)) = directives_end {
                     children.push(end);
                     children.append(&mut trivias);
                 }
                 children.push(block);
+                if let Some((mut trivias, document_end)) = document_end {
+                    children.append(&mut trivias);
+                    children.push(document_end);
+                }
                 node(DOCUMENT, children)
             }),
-        directives_end.map(|child| node(DOCUMENT, [child])),
+        (directives_end, opt((cmts_or_ws1, document_end))).map(|(directives_end, document_end)| {
+            let mut children = vec![directives_end];
+            if let Some((mut trivias, document_end)) = document_end {
+                children.append(&mut trivias);
+                children.push(document_end);
+            }
+            node(DOCUMENT, children)
+        }),
     ))
     .parse_next(input)
 }
@@ -1051,7 +1071,7 @@ fn document_end(input: &mut Input) -> GreenResult {
 }
 
 fn root(input: &mut Input) -> PResult<SyntaxNode> {
-    repeat(0.., alt((cmt_or_ws, document_end, document)))
+    repeat(0.., alt((cmt_or_ws, document)))
         .parse_next(input)
         .map(|children: Vec<_>| SyntaxNode::new_root(GreenNode::new(ROOT.into(), children)))
 }

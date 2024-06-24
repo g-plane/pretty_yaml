@@ -2,13 +2,13 @@
 source: yaml_parser/tests/pass.rs
 ---
 ROOT@0..15
-  DOCUMENT@0..6
+  DOCUMENT@0..14
     BLOCK@0..6
       BLOCK_SCALAR@0..6
         BAR@0..1 "|"
         CHOMPING_INDICATOR@1..2
           MINUS@1..2 "-"
         BLOCK_SCALAR_TEXT@2..6 "\n ab"
-  WHITESPACE@6..11 "\n \n \n"
-  DOCUMENT_END@11..14 "..."
+    WHITESPACE@6..11 "\n \n \n"
+    DOCUMENT_END@11..14 "..."
   WHITESPACE@14..15 "\n"

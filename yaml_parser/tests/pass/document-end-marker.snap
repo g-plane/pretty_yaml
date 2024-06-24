@@ -2,5 +2,6 @@
 source: yaml_parser/tests/pass.rs
 ---
 ROOT@0..4
-  DOCUMENT_END@0..3 "..."
+  DOCUMENT@0..3
+    DOCUMENT_END@0..3 "..."
   WHITESPACE@3..4 "\n"

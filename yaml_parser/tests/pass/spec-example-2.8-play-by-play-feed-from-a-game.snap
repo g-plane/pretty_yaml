@@ -2,7 +2,7 @@
 source: yaml_parser/tests/pass.rs
 ---
 ROOT@0..125
-  DOCUMENT@0..59
+  DOCUMENT@0..63
     DIRECTIVES_END@0..3 "---"
     WHITESPACE@3..4 "\n"
     BLOCK@4..59
@@ -36,10 +36,10 @@ ROOT@0..125
           BLOCK_MAP_VALUE@46..59
             FLOW@46..59
               PLAIN_SCALAR@46..59 "strike (miss)"
-  WHITESPACE@59..60 "\n"
-  DOCUMENT_END@60..63 "..."
+    WHITESPACE@59..60 "\n"
+    DOCUMENT_END@60..63 "..."
   WHITESPACE@63..64 "\n"
-  DOCUMENT@64..120
+  DOCUMENT@64..124
     DIRECTIVES_END@64..67 "---"
     WHITESPACE@67..68 "\n"
     BLOCK@68..120
@@ -73,6 +73,6 @@ ROOT@0..125
           BLOCK_MAP_VALUE@110..120
             FLOW@110..120
               PLAIN_SCALAR@110..120 "grand slam"
-  WHITESPACE@120..121 "\n"
-  DOCUMENT_END@121..124 "..."
+    WHITESPACE@120..121 "\n"
+    DOCUMENT_END@121..124 "..."
   WHITESPACE@124..125 "\n"

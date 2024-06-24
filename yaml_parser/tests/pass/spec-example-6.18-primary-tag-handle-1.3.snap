@@ -4,7 +4,7 @@ source: yaml_parser/tests/pass.rs
 ROOT@0..86
   COMMENT@0..9 "# Private"
   WHITESPACE@9..10 "\n"
-  DOCUMENT@10..24
+  DOCUMENT@10..28
     DIRECTIVES_END@10..13 "---"
     WHITESPACE@13..14 "\n"
     FLOW@14..24
@@ -16,8 +16,8 @@ ROOT@0..86
             TAG_CHAR@15..18 "foo"
       WHITESPACE@18..19 " "
       DOUBLE_QUOTED_SCALAR@19..24 "\"bar\""
-  WHITESPACE@24..25 "\n"
-  DOCUMENT_END@25..28 "..."
+    WHITESPACE@24..25 "\n"
+    DOCUMENT_END@25..28 "..."
   WHITESPACE@28..29 "\n"
   COMMENT@29..37 "# Global"
   WHITESPACE@37..38 "\n"
