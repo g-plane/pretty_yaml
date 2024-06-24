@@ -592,7 +592,8 @@ fn flow(input: &mut Input) -> GreenResult {
 }
 
 fn block_scalar(input: &mut Input) -> GreenResult {
-    let base_indent = input.state.indent;
+    let base_indent = input.state.prev_indent.unwrap_or(input.state.indent);
+    let document_top = input.state.document_top;
     (
         (alt((ascii_char::<'|'>(BAR), ascii_char::<'>'>(GREATER_THAN)))),
         opt(alt((
@@ -632,7 +633,7 @@ fn block_scalar(input: &mut Input) -> GreenResult {
             }
             let indent = indent.unwrap_or_default();
             cond(
-                indent > base_indent,
+                indent > base_indent || document_top,
                 repeat::<_, _, (), _, _>(
                     0..,
                     (
@@ -640,7 +641,10 @@ fn block_scalar(input: &mut Input) -> GreenResult {
                             detect_ws_indent(text).is_some_and(|detected| detected >= indent)
                         }),
                         till_line_ending,
-                    ),
+                    )
+                        .verify(|(ws, line): &(&str, _)| {
+                            !(ws.ends_with(['\n', '\r']) && (*line == "..." || *line == "---"))
+                        }),
                 )
                 .recognize(),
             )
@@ -709,7 +713,10 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
                     .map(Some),
                 alt((line_ending, eof)).value(None),
             ))
-            .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockIn),
+            .set_state(|state| {
+                state.bf_ctx = BlockFlowCtx::BlockIn;
+                state.document_top = false;
+            }),
         ),
     )
     .parse_next(input)
@@ -790,7 +797,8 @@ fn block_map_explicit_entry(input: &mut Input) -> GreenResult {
                 opt((cmts_or_ws1.track_indent(), block)
                     .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut)),
             )),
-        ),
+        )
+            .set_state(|state| state.document_top = false),
     )
     .parse_next(input)
     .map(|(key, value)| {
@@ -850,7 +858,8 @@ fn block_map_implicit_entry(input: &mut Input) -> GreenResult {
                 cmts_or_ws1.track_indent(),
                 block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
             )),
-        ),
+        )
+            .set_state(|state| state.document_top = false),
     )
     .parse_next(input)
     .map(|(key, colon, value)| {
@@ -903,8 +912,7 @@ fn block(input: &mut Input) -> GreenResult {
                         _ => block_map,
                     },
                     trace("block_scalar", block_scalar),
-                ))
-                .set_state(|state| state.document_top = false),
+                )),
             )
                 .map(|(properties, block)| {
                     let mut children = Vec::with_capacity(3);

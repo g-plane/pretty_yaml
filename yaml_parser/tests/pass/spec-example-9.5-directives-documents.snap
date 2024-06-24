@@ -1,0 +1,35 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..61
+  DOCUMENT@0..34
+    DIRECTIVE@0..9
+      PERCENT@0..1 "%"
+      YAML_DIRECTIVE@1..9
+        DIRECTIVE_NAME@1..5 "YAML"
+        WHITESPACE@5..6 " "
+        YAML_VERSION@6..9 "1.2"
+    WHITESPACE@9..10 "\n"
+    DIRECTIVES_END@10..13 "---"
+    WHITESPACE@13..14 " "
+    BLOCK@14..30
+      BLOCK_SCALAR@14..30
+        BAR@14..15 "|"
+        BLOCK_SCALAR_TEXT@15..30 "\n%!PS-Adobe-2.0"
+    WHITESPACE@30..31 "\n"
+    DOCUMENT_END@31..34 "..."
+  WHITESPACE@34..35 "\n"
+  DOCUMENT@35..60
+    DIRECTIVE@35..44
+      PERCENT@35..36 "%"
+      YAML_DIRECTIVE@36..44
+        DIRECTIVE_NAME@36..40 "YAML"
+        WHITESPACE@40..41 " "
+        YAML_VERSION@41..44 "1.2"
+    WHITESPACE@44..45 "\n"
+    DIRECTIVES_END@45..48 "---"
+    WHITESPACE@48..49 "\n"
+    COMMENT@49..56 "# Empty"
+    WHITESPACE@56..57 "\n"
+    DOCUMENT_END@57..60 "..."
+  WHITESPACE@60..61 "\n"
