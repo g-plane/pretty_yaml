@@ -64,6 +64,33 @@ where
     }
 }
 
+pub(super) struct StorePrevIndent<'s, O, E, P>
+where
+    E: ParserError<Input<'s>>,
+    P: Parser<Input<'s>, O, E>,
+{
+    parser: P,
+    s: PhantomData<&'s ()>,
+    o: PhantomData<O>,
+    e: PhantomData<E>,
+}
+
+impl<'s, O, E, P> Parser<Input<'s>, O, E> for StorePrevIndent<'s, O, E, P>
+where
+    E: ParserError<Input<'s>>,
+    P: Parser<Input<'s>, O, E>,
+{
+    fn parse_next(&mut self, input: &mut Input<'s>) -> PResult<O, E> {
+        let prev_indent = input.state.prev_indent;
+        input.state.prev_indent = Some(input.state.indent);
+        let result = self.parser.parse_next(input);
+        if result.is_err() {
+            input.state.prev_indent = prev_indent;
+        }
+        result
+    }
+}
+
 pub(super) struct RequireDeeperIndent<'s, O, E, P>
 where
     E: ParserError<Input<'s>>,
@@ -105,6 +132,7 @@ where
 {
     fn track_indent(self) -> TrackIndent<'s, O, E, P>;
     fn verify_indent(self) -> Context<VerifyIndent<'s, O, E, P>, Input<'s>, O, E, StrContext>;
+    fn store_prev_indent(self) -> StorePrevIndent<'s, O, E, P>;
     fn require_deeper_indent(self) -> RequireDeeperIndent<'s, O, E, P>;
 }
 
@@ -130,6 +158,15 @@ where
             e: PhantomData,
         }
         .context(StrContext::Label("indentation"))
+    }
+
+    fn store_prev_indent(self) -> StorePrevIndent<'s, O, E, P> {
+        StorePrevIndent {
+            parser: self,
+            s: PhantomData,
+            o: PhantomData,
+            e: PhantomData,
+        }
     }
 
     fn require_deeper_indent(self) -> RequireDeeperIndent<'s, O, E, P> {

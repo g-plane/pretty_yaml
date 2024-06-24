@@ -1,0 +1,171 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..190
+  DOCUMENT@0..189
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    BLOCK@4..189
+      BLOCK_MAP@4..189
+        BLOCK_MAP_ENTRY@4..32
+          BLOCK_MAP_KEY@4..8
+            FLOW@4..8
+              PLAIN_SCALAR@4..8 "top1"
+          COLON@8..9 ":"
+          WHITESPACE@9..10 " "
+          BLOCK_MAP_VALUE@10..32
+            BLOCK@10..32
+              PROPERTIES@10..16
+                ANCHOR_PROPERTY@10..16
+                  AMPERSAND@10..11 "&"
+                  ANCHOR_NAME@11..16 "node1"
+              WHITESPACE@16..19 "\n  "
+              BLOCK_MAP@19..32
+                BLOCK_MAP_ENTRY@19..32
+                  BLOCK_MAP_KEY@19..27
+                    FLOW@19..27
+                      PROPERTIES@19..22
+                        ANCHOR_PROPERTY@19..22
+                          AMPERSAND@19..20 "&"
+                          ANCHOR_NAME@20..22 "k1"
+                      WHITESPACE@22..23 " "
+                      PLAIN_SCALAR@23..27 "key1"
+                  COLON@27..28 ":"
+                  WHITESPACE@28..29 " "
+                  BLOCK_MAP_VALUE@29..32
+                    FLOW@29..32
+                      PLAIN_SCALAR@29..32 "one"
+        WHITESPACE@32..33 "\n"
+        BLOCK_MAP_ENTRY@33..67
+          BLOCK_MAP_KEY@33..37
+            FLOW@33..37
+              PLAIN_SCALAR@33..37 "top2"
+          COLON@37..38 ":"
+          WHITESPACE@38..39 " "
+          BLOCK_MAP_VALUE@39..67
+            BLOCK@39..67
+              PROPERTIES@39..45
+                ANCHOR_PROPERTY@39..45
+                  AMPERSAND@39..40 "&"
+                  ANCHOR_NAME@40..45 "node2"
+              WHITESPACE@45..46 " "
+              COMMENT@46..55 "# comment"
+              WHITESPACE@55..58 "\n  "
+              BLOCK_MAP@58..67
+                BLOCK_MAP_ENTRY@58..67
+                  BLOCK_MAP_KEY@58..62
+                    FLOW@58..62
+                      PLAIN_SCALAR@58..62 "key2"
+                  COLON@62..63 ":"
+                  WHITESPACE@63..64 " "
+                  BLOCK_MAP_VALUE@64..67
+                    FLOW@64..67
+                      PLAIN_SCALAR@64..67 "two"
+        WHITESPACE@67..68 "\n"
+        BLOCK_MAP_ENTRY@68..91
+          BLOCK_MAP_KEY@68..72
+            FLOW@68..72
+              PLAIN_SCALAR@68..72 "top3"
+          COLON@72..73 ":"
+          WHITESPACE@73..76 "\n  "
+          BLOCK_MAP_VALUE@76..91
+            BLOCK@76..91
+              BLOCK_MAP@76..91
+                BLOCK_MAP_ENTRY@76..91
+                  BLOCK_MAP_KEY@76..84
+                    FLOW@76..84
+                      PROPERTIES@76..79
+                        ANCHOR_PROPERTY@76..79
+                          AMPERSAND@76..77 "&"
+                          ANCHOR_NAME@77..79 "k3"
+                      WHITESPACE@79..80 " "
+                      PLAIN_SCALAR@80..84 "key3"
+                  COLON@84..85 ":"
+                  WHITESPACE@85..86 " "
+                  BLOCK_MAP_VALUE@86..91
+                    FLOW@86..91
+                      PLAIN_SCALAR@86..91 "three"
+        WHITESPACE@91..92 "\n"
+        BLOCK_MAP_ENTRY@92..123
+          BLOCK_MAP_KEY@92..96
+            FLOW@92..96
+              PLAIN_SCALAR@92..96 "top4"
+          COLON@96..97 ":"
+          WHITESPACE@97..100 "\n  "
+          BLOCK_MAP_VALUE@100..123
+            BLOCK@100..123
+              PROPERTIES@100..106
+                ANCHOR_PROPERTY@100..106
+                  AMPERSAND@100..101 "&"
+                  ANCHOR_NAME@101..106 "node4"
+              WHITESPACE@106..109 "\n  "
+              BLOCK_MAP@109..123
+                BLOCK_MAP_ENTRY@109..123
+                  BLOCK_MAP_KEY@109..117
+                    FLOW@109..117
+                      PROPERTIES@109..112
+                        ANCHOR_PROPERTY@109..112
+                          AMPERSAND@109..110 "&"
+                          ANCHOR_NAME@110..112 "k4"
+                      WHITESPACE@112..113 " "
+                      PLAIN_SCALAR@113..117 "key4"
+                  COLON@117..118 ":"
+                  WHITESPACE@118..119 " "
+                  BLOCK_MAP_VALUE@119..123
+                    FLOW@119..123
+                      PLAIN_SCALAR@119..123 "four"
+        WHITESPACE@123..124 "\n"
+        BLOCK_MAP_ENTRY@124..151
+          BLOCK_MAP_KEY@124..128
+            FLOW@124..128
+              PLAIN_SCALAR@124..128 "top5"
+          COLON@128..129 ":"
+          WHITESPACE@129..132 "\n  "
+          BLOCK_MAP_VALUE@132..151
+            BLOCK@132..151
+              PROPERTIES@132..138
+                ANCHOR_PROPERTY@132..138
+                  AMPERSAND@132..133 "&"
+                  ANCHOR_NAME@133..138 "node5"
+              WHITESPACE@138..141 "\n  "
+              BLOCK_MAP@141..151
+                BLOCK_MAP_ENTRY@141..151
+                  BLOCK_MAP_KEY@141..145
+                    FLOW@141..145
+                      PLAIN_SCALAR@141..145 "key5"
+                  COLON@145..146 ":"
+                  WHITESPACE@146..147 " "
+                  BLOCK_MAP_VALUE@147..151
+                    FLOW@147..151
+                      PLAIN_SCALAR@147..151 "five"
+        WHITESPACE@151..152 "\n"
+        BLOCK_MAP_ENTRY@152..169
+          BLOCK_MAP_KEY@152..156
+            FLOW@152..156
+              PLAIN_SCALAR@152..156 "top6"
+          COLON@156..157 ":"
+          WHITESPACE@157..158 " "
+          BLOCK_MAP_VALUE@158..169
+            FLOW@158..169
+              PROPERTIES@158..163
+                ANCHOR_PROPERTY@158..163
+                  AMPERSAND@158..159 "&"
+                  ANCHOR_NAME@159..163 "val6"
+              WHITESPACE@163..166 "\n  "
+              PLAIN_SCALAR@166..169 "six"
+        WHITESPACE@169..170 "\n"
+        BLOCK_MAP_ENTRY@170..189
+          BLOCK_MAP_KEY@170..174
+            FLOW@170..174
+              PLAIN_SCALAR@170..174 "top7"
+          COLON@174..175 ":"
+          WHITESPACE@175..178 "\n  "
+          BLOCK_MAP_VALUE@178..189
+            FLOW@178..189
+              PROPERTIES@178..183
+                ANCHOR_PROPERTY@178..183
+                  AMPERSAND@178..179 "&"
+                  ANCHOR_NAME@179..183 "val7"
+              WHITESPACE@183..184 " "
+              PLAIN_SCALAR@184..189 "seven"
+  WHITESPACE@189..190 "\n"

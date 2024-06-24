@@ -2,7 +2,6 @@ pub use self::error::SyntaxError;
 use self::{indent::ParserExt as _, set_state::ParserExt as _, verify_state::verify_state};
 use either::Either;
 use rowan::{GreenNode, GreenToken, NodeOrToken};
-use std::mem;
 use winnow::{
     ascii::{digit1, line_ending, multispace1, space1, take_escaped, till_line_ending},
     combinator::{
@@ -704,7 +703,7 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
             alt((
                 block_compact_collection,
                 (
-                    cmts_or_ws1.track_indent(),
+                    cmts_or_ws1.store_prev_indent().track_indent(),
                     cut_err(block.require_deeper_indent()),
                 )
                     .map(Some),
@@ -781,7 +780,10 @@ fn block_map_explicit_entry(input: &mut Input) -> GreenResult {
     trace(
         "block_map_explicit_entry",
         (
-            trace("block_map_explicit_key", block_map_explicit_key),
+            trace(
+                "block_map_explicit_key",
+                block_map_explicit_key.store_prev_indent(),
+            ),
             opt((
                 cmts_or_ws0.verify_indent(),
                 ascii_char::<':'>(COLON),
@@ -842,7 +844,7 @@ fn block_map_implicit_entry(input: &mut Input) -> GreenResult {
     trace(
         "block_map_implicit_entry",
         (
-            opt((block_map_implicit_key, opt(space))),
+            opt((block_map_implicit_key.store_prev_indent(), opt(space))),
             ascii_char::<':'>(COLON),
             opt((
                 cmts_or_ws1.track_indent(),
@@ -1005,7 +1007,7 @@ fn document(input: &mut Input) -> GreenResult {
         (
             repeat(1.., (directive, cmts_or_ws0)),
             directives_end,
-            opt((cmts_or_ws0, top_level_block)),
+            opt((cmts_or_ws0, top_level_block.store_prev_indent())),
             opt((cmts_or_ws1, document_end)),
         )
             .map(
@@ -1030,7 +1032,7 @@ fn document(input: &mut Input) -> GreenResult {
         document_end.map(|child| node(DOCUMENT, [child])),
         (
             opt((directives_end, cmts_or_ws0)),
-            top_level_block,
+            top_level_block.store_prev_indent(),
             opt((cmts_or_ws1, document_end)),
         )
             .map(|(directives_end, block, document_end)| {
@@ -1094,7 +1096,7 @@ fn space(input: &mut Input) -> GreenResult {
 fn ws(input: &mut Input) -> GreenResult {
     let text = multispace1.parse_next(input)?;
     if let Some(indent) = detect_ws_indent(text) {
-        input.state.prev_indent = Some(mem::replace(&mut input.state.indent, indent));
+        input.state.indent = indent;
         input.state.last_ws_has_nl = true;
     } else {
         input.state.last_ws_has_nl = false;
