@@ -828,10 +828,7 @@ fn block_map_explicit_key(input: &mut Input) -> GreenResult {
         alt((
             block_compact_collection,
             (
-                (space, cmts_or_ws0).map(|(space, mut trivias)| {
-                    trivias.insert(0, space);
-                    trivias
-                }),
+                cmts_or_ws1.track_indent(),
                 block.set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
             )
                 .map(Some),
