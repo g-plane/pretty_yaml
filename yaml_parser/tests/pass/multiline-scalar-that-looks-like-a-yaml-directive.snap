@@ -2,8 +2,9 @@
 source: yaml_parser/tests/pass.rs
 ---
 ROOT@0..21
-  DOCUMENT@0..21
+  DOCUMENT@0..20
     DIRECTIVES_END@0..3 "---"
     WHITESPACE@3..4 "\n"
-    FLOW@4..21
-      PLAIN_SCALAR@4..21 "scalar\n%YAML 1.2\n"
+    FLOW@4..20
+      PLAIN_SCALAR@4..20 "scalar\n%YAML 1.2"
+  WHITESPACE@20..21 "\n"

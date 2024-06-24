@@ -289,6 +289,7 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
                                 )
                                     .recognize(),
                                 terminated(alt(("---", "...")), multispace1),
+                                eof,
                             )))),
                         )
                             .verify_map(
@@ -370,6 +371,7 @@ fn plain_scalar_chars(input: &mut Input) -> PResult<()> {
                         }),
                     )
                         .void(),
+                    eof.void(),
                 )))),
             ),
         )),
