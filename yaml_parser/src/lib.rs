@@ -808,7 +808,7 @@ fn block_map_explicit_entry(input: &mut Input) -> GreenResult {
                 block_map_explicit_key.store_prev_indent(),
             ),
             opt((
-                cmts_or_ws0.verify_indent(),
+                cmts_or_ws1,
                 ascii_char::<':'>(COLON),
                 opt((cmts_or_ws1.track_indent(), block)
                     .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut)),
