@@ -1,22 +1,22 @@
 ---
 source: yaml_parser/tests/pass.rs
 ---
-ROOT@0..15
-  DOCUMENT@0..14
-    BLOCK@0..14
-      BLOCK_MAP@0..14
-        BLOCK_MAP_ENTRY@0..14
+ROOT@0..13
+  DOCUMENT@0..12
+    BLOCK@0..12
+      BLOCK_MAP@0..12
+        BLOCK_MAP_ENTRY@0..12
           BLOCK_MAP_KEY@0..1
             FLOW@0..1
               PLAIN_SCALAR@0..1 "x"
           COLON@1..2 ":"
           WHITESPACE@2..4 "\n "
-          BLOCK_MAP_VALUE@4..14
-            BLOCK@4..14
-              BLOCK_SEQ@4..14
-                BLOCK_SEQ_ENTRY@4..14
+          BLOCK_MAP_VALUE@4..12
+            BLOCK@4..12
+              BLOCK_SEQ@4..12
+                BLOCK_SEQ_ENTRY@4..12
                   MINUS@4..5 "-"
                   WHITESPACE@5..6 " "
-                  FLOW@6..14
-                    PLAIN_SCALAR@6..14 "x\n    \tx"
-  WHITESPACE@14..15 "\n"
+                  FLOW@6..12
+                    PLAIN_SCALAR@6..12 "x\n  \tx"
+  WHITESPACE@12..13 "\n"
