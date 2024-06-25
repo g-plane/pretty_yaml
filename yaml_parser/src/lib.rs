@@ -201,8 +201,14 @@ fn properties(input: &mut Input) -> GreenResult {
     trace(
         "properties",
         dispatch! {peek(any);
-            '&' => (anchor_property, opt((stateless_cmts_or_ws1, tag_property))),
-            '!' => (cut_err(tag_property), opt((stateless_cmts_or_ws1, anchor_property))),
+            '&' => (
+                anchor_property,
+                opt(terminated((stateless_separate, tag_property), peek(not((space1, one_of(['&', '!'])))))),
+            ),
+            '!' => (
+                cut_err(tag_property),
+                opt(terminated((stateless_separate, anchor_property), peek(not((space1, one_of(['&', '!'])))))),
+            ),
             _ => fail,
         },
     )
