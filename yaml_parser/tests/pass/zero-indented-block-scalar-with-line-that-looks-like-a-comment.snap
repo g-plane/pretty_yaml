@@ -1,0 +1,12 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..31
+  DOCUMENT@0..30
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 " "
+    BLOCK@4..30
+      BLOCK_SCALAR@4..30
+        GREATER_THAN@4..5 ">"
+        BLOCK_SCALAR_TEXT@5..30 "\nline1\n# no comment\nl ..."
+  WHITESPACE@30..31 "\n"

@@ -1,0 +1,136 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..124
+  DOCUMENT@0..123
+    BLOCK@0..123
+      BLOCK_MAP@0..123
+        BLOCK_MAP_ENTRY@0..17
+          BLOCK_MAP_KEY@0..8
+            FLOW@0..8
+              PLAIN_SCALAR@0..8 "complex1"
+          COLON@8..9 ":"
+          WHITESPACE@9..12 "\n  "
+          BLOCK_MAP_VALUE@12..17
+            BLOCK@12..17
+              BLOCK_MAP@12..17
+                BLOCK_MAP_ENTRY@12..17
+                  BLOCK_MAP_KEY@12..17
+                    QUESTION_MARK@12..13 "?"
+                    WHITESPACE@13..14 " "
+                    BLOCK@14..17
+                      BLOCK_SEQ@14..17
+                        BLOCK_SEQ_ENTRY@14..17
+                          MINUS@14..15 "-"
+                          WHITESPACE@15..16 " "
+                          FLOW@16..17
+                            PLAIN_SCALAR@16..17 "a"
+        WHITESPACE@17..18 "\n"
+        BLOCK_MAP_ENTRY@18..41
+          BLOCK_MAP_KEY@18..26
+            FLOW@18..26
+              PLAIN_SCALAR@18..26 "complex2"
+          COLON@26..27 ":"
+          WHITESPACE@27..30 "\n  "
+          BLOCK_MAP_VALUE@30..41
+            BLOCK@30..41
+              BLOCK_MAP@30..41
+                BLOCK_MAP_ENTRY@30..41
+                  BLOCK_MAP_KEY@30..35
+                    QUESTION_MARK@30..31 "?"
+                    WHITESPACE@31..32 " "
+                    BLOCK@32..35
+                      BLOCK_SEQ@32..35
+                        BLOCK_SEQ_ENTRY@32..35
+                          MINUS@32..33 "-"
+                          WHITESPACE@33..34 " "
+                          FLOW@34..35
+                            PLAIN_SCALAR@34..35 "a"
+                  WHITESPACE@35..38 "\n  "
+                  COLON@38..39 ":"
+                  WHITESPACE@39..40 " "
+                  BLOCK_MAP_VALUE@40..41
+                    FLOW@40..41
+                      PLAIN_SCALAR@40..41 "b"
+        WHITESPACE@41..42 "\n"
+        BLOCK_MAP_ENTRY@42..71
+          BLOCK_MAP_KEY@42..50
+            FLOW@42..50
+              PLAIN_SCALAR@42..50 "complex3"
+          COLON@50..51 ":"
+          WHITESPACE@51..54 "\n  "
+          BLOCK_MAP_VALUE@54..71
+            BLOCK@54..71
+              BLOCK_MAP@54..71
+                BLOCK_MAP_ENTRY@54..71
+                  BLOCK_MAP_KEY@54..59
+                    QUESTION_MARK@54..55 "?"
+                    WHITESPACE@55..56 " "
+                    BLOCK@56..59
+                      BLOCK_SEQ@56..59
+                        BLOCK_SEQ_ENTRY@56..59
+                          MINUS@56..57 "-"
+                          WHITESPACE@57..58 " "
+                          FLOW@58..59
+                            PLAIN_SCALAR@58..59 "a"
+                  WHITESPACE@59..62 "\n  "
+                  COLON@62..63 ":"
+                  WHITESPACE@63..64 " "
+                  BLOCK_MAP_VALUE@64..71
+                    BLOCK@64..71
+                      BLOCK_SCALAR@64..71
+                        GREATER_THAN@64..65 ">"
+                        BLOCK_SCALAR_TEXT@65..71 "\n    b"
+        WHITESPACE@71..72 "\n"
+        BLOCK_MAP_ENTRY@72..97
+          BLOCK_MAP_KEY@72..80
+            FLOW@72..80
+              PLAIN_SCALAR@72..80 "complex4"
+          COLON@80..81 ":"
+          WHITESPACE@81..84 "\n  "
+          BLOCK_MAP_VALUE@84..97
+            BLOCK@84..97
+              BLOCK_MAP@84..97
+                BLOCK_MAP_ENTRY@84..97
+                  BLOCK_MAP_KEY@84..93
+                    QUESTION_MARK@84..85 "?"
+                    WHITESPACE@85..86 " "
+                    BLOCK@86..93
+                      BLOCK_SCALAR@86..93
+                        GREATER_THAN@86..87 ">"
+                        BLOCK_SCALAR_TEXT@87..93 "\n    a"
+                  WHITESPACE@93..96 "\n  "
+                  COLON@96..97 ":"
+        WHITESPACE@97..98 "\n"
+        BLOCK_MAP_ENTRY@98..123
+          BLOCK_MAP_KEY@98..106
+            FLOW@98..106
+              PLAIN_SCALAR@98..106 "complex5"
+          COLON@106..107 ":"
+          WHITESPACE@107..110 "\n  "
+          BLOCK_MAP_VALUE@110..123
+            BLOCK@110..123
+              BLOCK_MAP@110..123
+                BLOCK_MAP_ENTRY@110..123
+                  BLOCK_MAP_KEY@110..115
+                    QUESTION_MARK@110..111 "?"
+                    WHITESPACE@111..112 " "
+                    BLOCK@112..115
+                      BLOCK_SEQ@112..115
+                        BLOCK_SEQ_ENTRY@112..115
+                          MINUS@112..113 "-"
+                          WHITESPACE@113..114 " "
+                          FLOW@114..115
+                            PLAIN_SCALAR@114..115 "a"
+                  WHITESPACE@115..118 "\n  "
+                  COLON@118..119 ":"
+                  WHITESPACE@119..120 " "
+                  BLOCK_MAP_VALUE@120..123
+                    BLOCK@120..123
+                      BLOCK_SEQ@120..123
+                        BLOCK_SEQ_ENTRY@120..123
+                          MINUS@120..121 "-"
+                          WHITESPACE@121..122 " "
+                          FLOW@122..123
+                            PLAIN_SCALAR@122..123 "b"
+  WHITESPACE@123..124 "\n"

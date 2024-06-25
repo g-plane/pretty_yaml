@@ -1,0 +1,118 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..158
+  DOCUMENT@0..157
+    BLOCK@0..157
+      BLOCK_MAP@0..157
+        BLOCK_MAP_ENTRY@0..20
+          BLOCK_MAP_KEY@0..1
+            FLOW@0..1
+              PLAIN_SCALAR@0..1 "a"
+          COLON@1..2 ":"
+          WHITESPACE@2..3 " "
+          BLOCK_MAP_VALUE@3..20
+            FLOW@3..20
+              DOUBLE_QUOTED_SCALAR@3..20 "\"double\n  quotes\""
+        WHITESPACE@20..21 " "
+        COMMENT@21..27 "# lala"
+        WHITESPACE@27..28 "\n"
+        BLOCK_MAP_ENTRY@28..43
+          BLOCK_MAP_KEY@28..29
+            FLOW@28..29
+              PLAIN_SCALAR@28..29 "b"
+          COLON@29..30 ":"
+          WHITESPACE@30..31 " "
+          BLOCK_MAP_VALUE@31..43
+            FLOW@31..43
+              PLAIN_SCALAR@31..43 "plain\n value"
+        WHITESPACE@43..45 "  "
+        COMMENT@45..51 "# lala"
+        WHITESPACE@51..52 "\n"
+        BLOCK_MAP_ENTRY@52..66
+          BLOCK_MAP_KEY@52..53
+            FLOW@52..53
+              PLAIN_SCALAR@52..53 "c"
+          WHITESPACE@53..55 "  "
+          COLON@55..56 ":"
+          WHITESPACE@56..57 " "
+          COMMENT@57..62 "#lala"
+          WHITESPACE@62..65 "\n  "
+          BLOCK_MAP_VALUE@65..66
+            FLOW@65..66
+              PLAIN_SCALAR@65..66 "d"
+        WHITESPACE@66..67 "\n"
+        BLOCK_MAP_ENTRY@67..108
+          BLOCK_MAP_KEY@67..83
+            QUESTION_MARK@67..68 "?"
+            WHITESPACE@68..69 " "
+            COMMENT@69..75 "# lala"
+            WHITESPACE@75..77 "\n "
+            BLOCK@77..83
+              BLOCK_SEQ@77..83
+                BLOCK_SEQ_ENTRY@77..83
+                  MINUS@77..78 "-"
+                  WHITESPACE@78..79 " "
+                  FLOW@79..83
+                    PLAIN_SCALAR@79..83 "seq1"
+          WHITESPACE@83..84 "\n"
+          COLON@84..85 ":"
+          WHITESPACE@85..86 " "
+          COMMENT@86..92 "# lala"
+          WHITESPACE@92..94 "\n "
+          BLOCK_MAP_VALUE@94..108
+            BLOCK@94..108
+              BLOCK_SEQ@94..108
+                BLOCK_SEQ_ENTRY@94..108
+                  MINUS@94..95 "-"
+                  WHITESPACE@95..96 " "
+                  COMMENT@96..101 "#lala"
+                  WHITESPACE@101..104 "\n  "
+                  FLOW@104..108
+                    PLAIN_SCALAR@104..108 "seq2"
+        WHITESPACE@108..109 "\n"
+        BLOCK_MAP_ENTRY@109..133
+          BLOCK_MAP_KEY@109..110
+            FLOW@109..110
+              PLAIN_SCALAR@109..110 "e"
+          COLON@110..111 ":"
+          WHITESPACE@111..113 "\n "
+          BLOCK_MAP_VALUE@113..133
+            BLOCK@113..133
+              PROPERTIES@113..118
+                ANCHOR_PROPERTY@113..118
+                  AMPERSAND@113..114 "&"
+                  ANCHOR_NAME@114..118 "node"
+              WHITESPACE@118..119 " "
+              COMMENT@119..125 "# lala"
+              WHITESPACE@125..127 "\n "
+              BLOCK_SEQ@127..133
+                BLOCK_SEQ_ENTRY@127..133
+                  MINUS@127..128 "-"
+                  WHITESPACE@128..129 " "
+                  BLOCK@129..133
+                    BLOCK_MAP@129..133
+                      BLOCK_MAP_ENTRY@129..133
+                        BLOCK_MAP_KEY@129..130
+                          FLOW@129..130
+                            PLAIN_SCALAR@129..130 "x"
+                        COLON@130..131 ":"
+                        WHITESPACE@131..132 " "
+                        BLOCK_MAP_VALUE@132..133
+                          FLOW@132..133
+                            PLAIN_SCALAR@132..133 "y"
+        WHITESPACE@133..134 "\n"
+        BLOCK_MAP_ENTRY@134..157
+          BLOCK_MAP_KEY@134..139
+            FLOW@134..139
+              PLAIN_SCALAR@134..139 "block"
+          COLON@139..140 ":"
+          WHITESPACE@140..141 " "
+          BLOCK_MAP_VALUE@141..157
+            BLOCK@141..157
+              BLOCK_SCALAR@141..157
+                GREATER_THAN@141..142 ">"
+                WHITESPACE@142..143 " "
+                COMMENT@143..149 "# lala"
+                BLOCK_SCALAR_TEXT@149..157 "\n  abcde"
+  WHITESPACE@157..158 "\n"

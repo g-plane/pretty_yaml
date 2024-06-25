@@ -1,0 +1,205 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..219
+  DOCUMENT@0..21
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    FLOW@4..21
+      PROPERTIES@4..13
+        ANCHOR_PROPERTY@4..7
+          AMPERSAND@4..5 "&"
+          ANCHOR_NAME@5..7 "a1"
+        WHITESPACE@7..8 "\n"
+        TAG_PROPERTY@8..13
+          SHORTHAND_TAG@8..13
+            TAG_HANDLE@8..10
+              TAG_HANDLE_SECONDARY@8..10 "!!"
+            TAG_CHAR@10..13 "str"
+      WHITESPACE@13..14 "\n"
+      PLAIN_SCALAR@14..21 "scalar1"
+  WHITESPACE@21..22 "\n"
+  DOCUMENT@22..43
+    DIRECTIVES_END@22..25 "---"
+    WHITESPACE@25..26 "\n"
+    FLOW@26..43
+      PROPERTIES@26..35
+        TAG_PROPERTY@26..31
+          SHORTHAND_TAG@26..31
+            TAG_HANDLE@26..28
+              TAG_HANDLE_SECONDARY@26..28 "!!"
+            TAG_CHAR@28..31 "str"
+        WHITESPACE@31..32 "\n"
+        ANCHOR_PROPERTY@32..35
+          AMPERSAND@32..33 "&"
+          ANCHOR_NAME@33..35 "a2"
+      WHITESPACE@35..36 "\n"
+      PLAIN_SCALAR@36..43 "scalar2"
+  WHITESPACE@43..44 "\n"
+  DOCUMENT@44..65
+    DIRECTIVES_END@44..47 "---"
+    WHITESPACE@47..48 "\n"
+    FLOW@48..65
+      PROPERTIES@48..57
+        ANCHOR_PROPERTY@48..51
+          AMPERSAND@48..49 "&"
+          ANCHOR_NAME@49..51 "a3"
+        WHITESPACE@51..52 "\n"
+        TAG_PROPERTY@52..57
+          SHORTHAND_TAG@52..57
+            TAG_HANDLE@52..54
+              TAG_HANDLE_SECONDARY@52..54 "!!"
+            TAG_CHAR@54..57 "str"
+      WHITESPACE@57..58 " "
+      PLAIN_SCALAR@58..65 "scalar3"
+  WHITESPACE@65..66 "\n"
+  DOCUMENT@66..102
+    DIRECTIVES_END@66..69 "---"
+    WHITESPACE@69..70 "\n"
+    BLOCK@70..102
+      PROPERTIES@70..79
+        ANCHOR_PROPERTY@70..73
+          AMPERSAND@70..71 "&"
+          ANCHOR_NAME@71..73 "a4"
+        WHITESPACE@73..74 " "
+        TAG_PROPERTY@74..79
+          SHORTHAND_TAG@74..79
+            TAG_HANDLE@74..76
+              TAG_HANDLE_SECONDARY@74..76 "!!"
+            TAG_CHAR@76..79 "map"
+      WHITESPACE@79..80 "\n"
+      BLOCK_MAP@80..102
+        BLOCK_MAP_ENTRY@80..102
+          BLOCK_MAP_KEY@80..94
+            FLOW@80..94
+              PROPERTIES@80..89
+                ANCHOR_PROPERTY@80..83
+                  AMPERSAND@80..81 "&"
+                  ANCHOR_NAME@81..83 "a5"
+                WHITESPACE@83..84 " "
+                TAG_PROPERTY@84..89
+                  SHORTHAND_TAG@84..89
+                    TAG_HANDLE@84..86
+                      TAG_HANDLE_SECONDARY@84..86 "!!"
+                    TAG_CHAR@86..89 "str"
+              WHITESPACE@89..90 " "
+              PLAIN_SCALAR@90..94 "key5"
+          COLON@94..95 ":"
+          WHITESPACE@95..96 " "
+          BLOCK_MAP_VALUE@96..102
+            FLOW@96..102
+              PLAIN_SCALAR@96..102 "value4"
+  WHITESPACE@102..103 "\n"
+  DOCUMENT@103..127
+    DIRECTIVES_END@103..106 "---"
+    WHITESPACE@106..107 "\n"
+    BLOCK@107..127
+      BLOCK_MAP@107..127
+        BLOCK_MAP_ENTRY@107..112
+          BLOCK_MAP_KEY@107..109
+            FLOW@107..109
+              PLAIN_SCALAR@107..109 "a6"
+          COLON@109..110 ":"
+          WHITESPACE@110..111 " "
+          BLOCK_MAP_VALUE@111..112
+            FLOW@111..112
+              PLAIN_SCALAR@111..112 "1"
+        WHITESPACE@112..113 "\n"
+        BLOCK_MAP_ENTRY@113..127
+          BLOCK_MAP_KEY@113..124
+            FLOW@113..124
+              PROPERTIES@113..121
+                ANCHOR_PROPERTY@113..121
+                  AMPERSAND@113..114 "&"
+                  ANCHOR_NAME@114..121 "anchor6"
+              WHITESPACE@121..122 " "
+              PLAIN_SCALAR@122..124 "b6"
+          COLON@124..125 ":"
+          WHITESPACE@125..126 " "
+          BLOCK_MAP_VALUE@126..127
+            FLOW@126..127
+              PLAIN_SCALAR@126..127 "2"
+  WHITESPACE@127..128 "\n"
+  DOCUMENT@128..160
+    DIRECTIVES_END@128..131 "---"
+    WHITESPACE@131..132 "\n"
+    BLOCK@132..160
+      PROPERTIES@132..137
+        TAG_PROPERTY@132..137
+          SHORTHAND_TAG@132..137
+            TAG_HANDLE@132..134
+              TAG_HANDLE_SECONDARY@132..134 "!!"
+            TAG_CHAR@134..137 "map"
+      WHITESPACE@137..138 "\n"
+      BLOCK_MAP@138..160
+        BLOCK_MAP_ENTRY@138..160
+          BLOCK_MAP_KEY@138..152
+            FLOW@138..152
+              PROPERTIES@138..147
+                ANCHOR_PROPERTY@138..141
+                  AMPERSAND@138..139 "&"
+                  ANCHOR_NAME@139..141 "a8"
+                WHITESPACE@141..142 " "
+                TAG_PROPERTY@142..147
+                  SHORTHAND_TAG@142..147
+                    TAG_HANDLE@142..144
+                      TAG_HANDLE_SECONDARY@142..144 "!!"
+                    TAG_CHAR@144..147 "str"
+              WHITESPACE@147..148 " "
+              PLAIN_SCALAR@148..152 "key8"
+          COLON@152..153 ":"
+          WHITESPACE@153..154 " "
+          BLOCK_MAP_VALUE@154..160
+            FLOW@154..160
+              PLAIN_SCALAR@154..160 "value7"
+  WHITESPACE@160..161 "\n"
+  DOCUMENT@161..195
+    DIRECTIVES_END@161..164 "---"
+    WHITESPACE@164..165 "\n"
+    BLOCK@165..195
+      PROPERTIES@165..170
+        TAG_PROPERTY@165..170
+          SHORTHAND_TAG@165..170
+            TAG_HANDLE@165..167
+              TAG_HANDLE_SECONDARY@165..167 "!!"
+            TAG_CHAR@167..170 "map"
+      WHITESPACE@170..171 "\n"
+      BLOCK_MAP@171..195
+        BLOCK_MAP_ENTRY@171..195
+          BLOCK_MAP_KEY@171..187
+            FLOW@171..187
+              PROPERTIES@171..181
+                TAG_PROPERTY@171..176
+                  SHORTHAND_TAG@171..176
+                    TAG_HANDLE@171..173
+                      TAG_HANDLE_SECONDARY@171..173 "!!"
+                    TAG_CHAR@173..176 "str"
+                WHITESPACE@176..177 " "
+                ANCHOR_PROPERTY@177..181
+                  AMPERSAND@177..178 "&"
+                  ANCHOR_NAME@178..181 "a10"
+              WHITESPACE@181..182 " "
+              PLAIN_SCALAR@182..187 "key10"
+          COLON@187..188 ":"
+          WHITESPACE@188..189 " "
+          BLOCK_MAP_VALUE@189..195
+            FLOW@189..195
+              PLAIN_SCALAR@189..195 "value9"
+  WHITESPACE@195..196 "\n"
+  DOCUMENT@196..218
+    DIRECTIVES_END@196..199 "---"
+    WHITESPACE@199..200 "\n"
+    FLOW@200..218
+      PROPERTIES@200..210
+        TAG_PROPERTY@200..205
+          SHORTHAND_TAG@200..205
+            TAG_HANDLE@200..202
+              TAG_HANDLE_SECONDARY@200..202 "!!"
+            TAG_CHAR@202..205 "str"
+        WHITESPACE@205..206 " "
+        ANCHOR_PROPERTY@206..210
+          AMPERSAND@206..207 "&"
+          ANCHOR_NAME@207..210 "a11"
+      WHITESPACE@210..211 "\n"
+      PLAIN_SCALAR@211..218 "value11"
+  WHITESPACE@218..219 "\n"

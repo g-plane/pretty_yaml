@@ -1,0 +1,144 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..193
+  DOCUMENT@0..192
+    BLOCK@0..192
+      BLOCK_MAP@0..192
+        BLOCK_MAP_ENTRY@0..36
+          BLOCK_MAP_KEY@0..6
+            FLOW@0..6
+              DOUBLE_QUOTED_SCALAR@0..6 "\"top1\""
+          WHITESPACE@6..7 " "
+          COLON@7..8 ":"
+          WHITESPACE@8..12 " \n  "
+          BLOCK_MAP_VALUE@12..36
+            BLOCK@12..36
+              BLOCK_MAP@12..36
+                BLOCK_MAP_ENTRY@12..36
+                  BLOCK_MAP_KEY@12..18
+                    FLOW@12..18
+                      DOUBLE_QUOTED_SCALAR@12..18 "\"key1\""
+                  WHITESPACE@18..19 " "
+                  COLON@19..20 ":"
+                  WHITESPACE@20..21 " "
+                  BLOCK_MAP_VALUE@21..36
+                    FLOW@21..36
+                      PROPERTIES@21..28
+                        ANCHOR_PROPERTY@21..28
+                          AMPERSAND@21..22 "&"
+                          ANCHOR_NAME@22..28 "alias1"
+                      WHITESPACE@28..29 " "
+                      PLAIN_SCALAR@29..36 "scalar1"
+        WHITESPACE@36..37 "\n"
+        BLOCK_MAP_ENTRY@37..73
+          BLOCK_MAP_KEY@37..43
+            FLOW@37..43
+              SINGLE_QUOTED_SCALAR@37..43 "'top2'"
+          WHITESPACE@43..44 " "
+          COLON@44..45 ":"
+          WHITESPACE@45..49 " \n  "
+          BLOCK_MAP_VALUE@49..73
+            BLOCK@49..73
+              BLOCK_MAP@49..73
+                BLOCK_MAP_ENTRY@49..73
+                  BLOCK_MAP_KEY@49..55
+                    FLOW@49..55
+                      SINGLE_QUOTED_SCALAR@49..55 "'key2'"
+                  WHITESPACE@55..56 " "
+                  COLON@56..57 ":"
+                  WHITESPACE@57..58 " "
+                  BLOCK_MAP_VALUE@58..73
+                    FLOW@58..73
+                      PROPERTIES@58..65
+                        ANCHOR_PROPERTY@58..65
+                          AMPERSAND@58..59 "&"
+                          ANCHOR_NAME@59..65 "alias2"
+                      WHITESPACE@65..66 " "
+                      PLAIN_SCALAR@66..73 "scalar2"
+        WHITESPACE@73..74 "\n"
+        BLOCK_MAP_ENTRY@74..107
+          BLOCK_MAP_KEY@74..78
+            FLOW@74..78
+              PLAIN_SCALAR@74..78 "top3"
+          COLON@78..79 ":"
+          WHITESPACE@79..80 " "
+          BLOCK_MAP_VALUE@80..107
+            BLOCK@80..107
+              PROPERTIES@80..86
+                ANCHOR_PROPERTY@80..86
+                  AMPERSAND@80..81 "&"
+                  ANCHOR_NAME@81..86 "node3"
+              WHITESPACE@86..90 " \n  "
+              BLOCK_MAP@90..107
+                BLOCK_MAP_ENTRY@90..107
+                  BLOCK_MAP_KEY@90..97
+                    FLOW@90..97
+                      ALIAS@90..97
+                        ASTERISK@90..91 "*"
+                        ANCHOR_NAME@91..97 "alias1"
+                  WHITESPACE@97..98 " "
+                  COLON@98..99 ":"
+                  WHITESPACE@99..100 " "
+                  BLOCK_MAP_VALUE@100..107
+                    FLOW@100..107
+                      PLAIN_SCALAR@100..107 "scalar3"
+        WHITESPACE@107..108 "\n"
+        BLOCK_MAP_ENTRY@108..134
+          BLOCK_MAP_KEY@108..112
+            FLOW@108..112
+              PLAIN_SCALAR@108..112 "top4"
+          COLON@112..113 ":"
+          WHITESPACE@113..117 " \n  "
+          BLOCK_MAP_VALUE@117..134
+            BLOCK@117..134
+              BLOCK_MAP@117..134
+                BLOCK_MAP_ENTRY@117..134
+                  BLOCK_MAP_KEY@117..124
+                    FLOW@117..124
+                      ALIAS@117..124
+                        ASTERISK@117..118 "*"
+                        ANCHOR_NAME@118..124 "alias2"
+                  WHITESPACE@124..125 " "
+                  COLON@125..126 ":"
+                  WHITESPACE@126..127 " "
+                  BLOCK_MAP_VALUE@127..134
+                    FLOW@127..134
+                      PLAIN_SCALAR@127..134 "scalar4"
+        WHITESPACE@134..135 "\n"
+        BLOCK_MAP_ENTRY@135..157
+          BLOCK_MAP_KEY@135..139
+            FLOW@135..139
+              PLAIN_SCALAR@135..139 "top5"
+          WHITESPACE@139..142 "   "
+          COLON@142..143 ":"
+          WHITESPACE@143..150 "    \n  "
+          BLOCK_MAP_VALUE@150..157
+            FLOW@150..157
+              PLAIN_SCALAR@150..157 "scalar5"
+        WHITESPACE@157..158 "\n"
+        BLOCK_MAP_ENTRY@158..192
+          BLOCK_MAP_KEY@158..162
+            FLOW@158..162
+              PLAIN_SCALAR@158..162 "top6"
+          COLON@162..163 ":"
+          WHITESPACE@163..167 " \n  "
+          BLOCK_MAP_VALUE@167..192
+            BLOCK@167..192
+              BLOCK_MAP@167..192
+                BLOCK_MAP_ENTRY@167..192
+                  BLOCK_MAP_KEY@167..182
+                    FLOW@167..182
+                      PROPERTIES@167..175
+                        ANCHOR_PROPERTY@167..175
+                          AMPERSAND@167..168 "&"
+                          ANCHOR_NAME@168..175 "anchor6"
+                      WHITESPACE@175..176 " "
+                      SINGLE_QUOTED_SCALAR@176..182 "'key6'"
+                  WHITESPACE@182..183 " "
+                  COLON@183..184 ":"
+                  WHITESPACE@184..185 " "
+                  BLOCK_MAP_VALUE@185..192
+                    FLOW@185..192
+                      PLAIN_SCALAR@185..192 "scalar6"
+  WHITESPACE@192..193 "\n"

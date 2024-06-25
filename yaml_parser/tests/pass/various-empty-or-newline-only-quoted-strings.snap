@@ -1,0 +1,89 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..86
+  DOCUMENT@0..85
+    DIRECTIVES_END@0..3 "---"
+    WHITESPACE@3..4 "\n"
+    BLOCK@4..85
+      BLOCK_MAP@4..85
+        BLOCK_MAP_ENTRY@4..12
+          BLOCK_MAP_KEY@4..5
+            FLOW@4..5
+              PLAIN_SCALAR@4..5 "a"
+          COLON@5..6 ":"
+          WHITESPACE@6..7 " "
+          BLOCK_MAP_VALUE@7..12
+            FLOW@7..12
+              SINGLE_QUOTED_SCALAR@7..12 "'\n  '"
+        WHITESPACE@12..13 "\n"
+        BLOCK_MAP_ENTRY@13..23
+          BLOCK_MAP_KEY@13..14
+            FLOW@13..14
+              PLAIN_SCALAR@13..14 "b"
+          COLON@14..15 ":"
+          WHITESPACE@15..16 " "
+          BLOCK_MAP_VALUE@16..23
+            FLOW@16..23
+              SINGLE_QUOTED_SCALAR@16..23 "'  \n  '"
+        WHITESPACE@23..24 "\n"
+        BLOCK_MAP_ENTRY@24..32
+          BLOCK_MAP_KEY@24..25
+            FLOW@24..25
+              PLAIN_SCALAR@24..25 "c"
+          COLON@25..26 ":"
+          WHITESPACE@26..27 " "
+          BLOCK_MAP_VALUE@27..32
+            FLOW@27..32
+              DOUBLE_QUOTED_SCALAR@27..32 "\"\n  \""
+        WHITESPACE@32..33 "\n"
+        BLOCK_MAP_ENTRY@33..43
+          BLOCK_MAP_KEY@33..34
+            FLOW@33..34
+              PLAIN_SCALAR@33..34 "d"
+          COLON@34..35 ":"
+          WHITESPACE@35..36 " "
+          BLOCK_MAP_VALUE@36..43
+            FLOW@36..43
+              DOUBLE_QUOTED_SCALAR@36..43 "\"  \n  \""
+        WHITESPACE@43..44 "\n"
+        BLOCK_MAP_ENTRY@44..53
+          BLOCK_MAP_KEY@44..45
+            FLOW@44..45
+              PLAIN_SCALAR@44..45 "e"
+          COLON@45..46 ":"
+          WHITESPACE@46..47 " "
+          BLOCK_MAP_VALUE@47..53
+            FLOW@47..53
+              SINGLE_QUOTED_SCALAR@47..53 "'\n\n  '"
+        WHITESPACE@53..54 "\n"
+        BLOCK_MAP_ENTRY@54..63
+          BLOCK_MAP_KEY@54..55
+            FLOW@54..55
+              PLAIN_SCALAR@54..55 "f"
+          COLON@55..56 ":"
+          WHITESPACE@56..57 " "
+          BLOCK_MAP_VALUE@57..63
+            FLOW@57..63
+              DOUBLE_QUOTED_SCALAR@57..63 "\"\n\n  \""
+        WHITESPACE@63..64 "\n"
+        BLOCK_MAP_ENTRY@64..74
+          BLOCK_MAP_KEY@64..65
+            FLOW@64..65
+              PLAIN_SCALAR@64..65 "g"
+          COLON@65..66 ":"
+          WHITESPACE@66..67 " "
+          BLOCK_MAP_VALUE@67..74
+            FLOW@67..74
+              SINGLE_QUOTED_SCALAR@67..74 "'\n\n\n  '"
+        WHITESPACE@74..75 "\n"
+        BLOCK_MAP_ENTRY@75..85
+          BLOCK_MAP_KEY@75..76
+            FLOW@75..76
+              PLAIN_SCALAR@75..76 "h"
+          COLON@76..77 ":"
+          WHITESPACE@77..78 " "
+          BLOCK_MAP_VALUE@78..85
+            FLOW@78..85
+              DOUBLE_QUOTED_SCALAR@78..85 "\"\n\n\n  \""
+  WHITESPACE@85..86 "\n"
