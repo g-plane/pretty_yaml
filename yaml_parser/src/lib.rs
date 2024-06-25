@@ -725,10 +725,10 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
                 block_compact_collection,
                 (
                     cmts_or_ws1.store_prev_indent().track_indent(),
-                    cut_err(block.require_deeper_indent()),
+                    block.require_deeper_indent(),
                 )
                     .map(Some),
-                alt((line_ending, eof)).value(None),
+                peek((opt(space1), opt(comment), alt((line_ending, eof)))).value(None),
             ))
             .set_state(|state| {
                 state.bf_ctx = BlockFlowCtx::BlockIn;

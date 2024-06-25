@@ -1,0 +1,58 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..92
+  DOCUMENT@0..73
+    BLOCK@0..73
+      BLOCK_SEQ@0..73
+        BLOCK_SEQ_ENTRY@0..1
+          MINUS@0..1 "-"
+        WHITESPACE@1..2 " "
+        COMMENT@2..9 "# Empty"
+        WHITESPACE@9..10 "\n"
+        BLOCK_SEQ_ENTRY@10..25
+          MINUS@10..11 "-"
+          WHITESPACE@11..12 " "
+          BLOCK@12..25
+            BLOCK_SCALAR@12..25
+              BAR@12..13 "|"
+              BLOCK_SCALAR_TEXT@13..25 "\n block node"
+        WHITESPACE@25..26 "\n"
+        BLOCK_SEQ_ENTRY@26..51
+          MINUS@26..27 "-"
+          WHITESPACE@27..28 " "
+          BLOCK@28..51
+            BLOCK_SEQ@28..51
+              BLOCK_SEQ_ENTRY@28..33
+                MINUS@28..29 "-"
+                WHITESPACE@29..30 " "
+                FLOW@30..33
+                  PLAIN_SCALAR@30..33 "one"
+              WHITESPACE@33..34 " "
+              COMMENT@34..43 "# Compact"
+              WHITESPACE@43..46 "\n  "
+              BLOCK_SEQ_ENTRY@46..51
+                MINUS@46..47 "-"
+                WHITESPACE@47..48 " "
+                FLOW@48..51
+                  PLAIN_SCALAR@48..51 "two"
+        WHITESPACE@51..52 " "
+        COMMENT@52..62 "# sequence"
+        WHITESPACE@62..63 "\n"
+        BLOCK_SEQ_ENTRY@63..73
+          MINUS@63..64 "-"
+          WHITESPACE@64..65 " "
+          BLOCK@65..73
+            BLOCK_MAP@65..73
+              BLOCK_MAP_ENTRY@65..73
+                BLOCK_MAP_KEY@65..68
+                  FLOW@65..68
+                    PLAIN_SCALAR@65..68 "one"
+                COLON@68..69 ":"
+                WHITESPACE@69..70 " "
+                BLOCK_MAP_VALUE@70..73
+                  FLOW@70..73
+                    PLAIN_SCALAR@70..73 "two"
+  WHITESPACE@73..74 " "
+  COMMENT@74..91 "# Compact mapping"
+  WHITESPACE@91..92 "\n"
