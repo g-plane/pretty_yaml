@@ -1,0 +1,21 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..74
+  DOCUMENT@0..17
+    FLOW@0..13
+      PLAIN_SCALAR@0..13 "Bare\ndocument"
+    WHITESPACE@13..14 "\n"
+    DOCUMENT_END@14..17 "..."
+  WHITESPACE@17..18 "\n"
+  COMMENT@18..31 "# No document"
+  WHITESPACE@31..32 "\n"
+  DOCUMENT@32..35
+    DOCUMENT_END@32..35 "..."
+  WHITESPACE@35..36 "\n"
+  DOCUMENT@36..73
+    BLOCK@36..73
+      BLOCK_SCALAR@36..73
+        BAR@36..37 "|"
+        BLOCK_SCALAR_TEXT@37..73 "\n%!PS-Adobe-2.0 # Not ..."
+  WHITESPACE@73..74 "\n"

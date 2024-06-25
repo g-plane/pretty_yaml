@@ -4,5 +4,5 @@ source: yaml_parser/tests/pass.rs
 ROOT@0..15
   DOCUMENT@0..14
     FLOW@0..14
-      PLAIN_SCALAR@0..14 "a\nb  \n  c\nd\n\ne"
+      PLAIN_SCALAR@0..14 "---word1\nword2"
   WHITESPACE@14..15 "\n"

@@ -270,6 +270,7 @@ fn single_qouted_scalar(input: &mut Input) -> GreenResult {
 fn plain_scalar(input: &mut Input) -> GreenResult {
     let indent = input.state.indent;
     let last_ws_has_nl = input.state.last_ws_has_nl;
+    let document_top = input.state.document_top;
     if matches!(
         input.state.bf_ctx,
         BlockFlowCtx::FlowIn | BlockFlowCtx::FlowOut
@@ -311,7 +312,7 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
                                                 if last_ws_has_nl {
                                                     detected >= indent
                                                 } else {
-                                                    detected > indent
+                                                    detected > indent || document_top
                                                 }
                                             } else {
                                                 true
