@@ -285,8 +285,11 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
                         (
                             multispace1,
                             peek(opt(alt((
-                                one_of(move |c: char| c == '#' || safe_in && is_flow_indicator(c))
-                                    .recognize(),
+                                one_of(move |c: char| {
+                                    matches!(c, '\n' | '\r' | '#')
+                                        || safe_in && is_flow_indicator(c)
+                                })
+                                .recognize(),
                                 (
                                     ':',
                                     one_of(move |c: char| {
@@ -369,7 +372,10 @@ fn plain_scalar_chars(input: &mut Input) -> PResult<()> {
             terminated(
                 space1.void(),
                 peek(not(alt((
-                    one_of(move |c| c == '#' || safe_in && is_flow_indicator(c)).void(),
+                    one_of(move |c| {
+                        matches!(c, '\n' | '\r' | '#') || safe_in && is_flow_indicator(c)
+                    })
+                    .void(),
                     (
                         ':',
                         one_of(move |c: char| {
