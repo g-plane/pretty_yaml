@@ -807,9 +807,12 @@ fn block_map_explicit_entry(input: &mut Input) -> GreenResult {
             opt((
                 cmts_or_ws1,
                 ascii_char::<':'>(COLON),
-                opt((cmts_or_ws1.track_indent(), block)
-                    .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut)),
-            )),
+                alt((
+                    block_compact_collection,
+                    opt((cmts_or_ws1.track_indent(), block)),
+                )),
+            ))
+            .set_state(|state| state.bf_ctx = BlockFlowCtx::BlockOut),
         )
             .set_state(|state| state.document_top = false),
     )

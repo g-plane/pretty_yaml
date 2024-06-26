@@ -1,0 +1,46 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..94
+  DOCUMENT@0..79
+    BLOCK@0..79
+      BLOCK_MAP@0..79
+        BLOCK_MAP_ENTRY@0..14
+          BLOCK_MAP_KEY@0..14
+            QUESTION_MARK@0..1 "?"
+            WHITESPACE@1..2 " "
+            FLOW@2..14
+              PLAIN_SCALAR@2..14 "explicit key"
+        WHITESPACE@14..15 " "
+        COMMENT@15..28 "# Empty value"
+        WHITESPACE@28..29 "\n"
+        BLOCK_MAP_ENTRY@29..79
+          BLOCK_MAP_KEY@29..44
+            QUESTION_MARK@29..30 "?"
+            WHITESPACE@30..31 " "
+            BLOCK@31..44
+              BLOCK_SCALAR@31..44
+                BAR@31..32 "|"
+                BLOCK_SCALAR_TEXT@32..44 "\n  block key"
+          WHITESPACE@44..45 "\n"
+          COLON@45..46 ":"
+          WHITESPACE@46..47 " "
+          BLOCK_MAP_VALUE@47..79
+            BLOCK@47..79
+              BLOCK_SEQ@47..79
+                BLOCK_SEQ_ENTRY@47..52
+                  MINUS@47..48 "-"
+                  WHITESPACE@48..49 " "
+                  FLOW@49..52
+                    PLAIN_SCALAR@49..52 "one"
+                WHITESPACE@52..53 " "
+                COMMENT@53..71 "# Explicit compact"
+                WHITESPACE@71..74 "\n  "
+                BLOCK_SEQ_ENTRY@74..79
+                  MINUS@74..75 "-"
+                  WHITESPACE@75..76 " "
+                  FLOW@76..79
+                    PLAIN_SCALAR@76..79 "two"
+  WHITESPACE@79..80 " "
+  COMMENT@80..93 "# block value"
+  WHITESPACE@93..94 "\n"
