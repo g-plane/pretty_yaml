@@ -26,7 +26,9 @@ mod verify_state;
 /// Syntax kind enum for nodes and tokens.
 pub enum SyntaxKind {
     // SyntaxToken
-    L_BRACE = 0,
+    WHITESPACE = 0,
+    COMMENT,
+    L_BRACE,
     R_BRACE,
     L_BRACKET,
     R_BRACKET,
@@ -92,8 +94,6 @@ pub enum SyntaxKind {
     DIRECTIVE,
     DOCUMENT,
 
-    COMMENT,
-    WHITESPACE,
     ROOT,
 }
 use SyntaxKind::*;
