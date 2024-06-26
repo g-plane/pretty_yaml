@@ -1,0 +1,7 @@
+---
+source: yaml_parser/tests/fail.rs
+---
+parse error at line 1, column 1
+  |
+1 | %YAML 1.2 foo
+  | ^

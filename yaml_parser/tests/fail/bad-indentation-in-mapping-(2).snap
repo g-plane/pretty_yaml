@@ -1,0 +1,8 @@
+---
+source: yaml_parser/tests/fail.rs
+---
+parse error at line 3, column 4
+  |
+3 |    key2: "bad indentation"
+  |    ^
+expected `...`

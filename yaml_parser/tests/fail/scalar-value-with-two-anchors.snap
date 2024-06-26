@@ -1,0 +1,8 @@
+---
+source: yaml_parser/tests/fail.rs
+---
+parse error at line 4, column 3
+  |
+4 |   &v2 val2
+  |   ^
+expected `...`

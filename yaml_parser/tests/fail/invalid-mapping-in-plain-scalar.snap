@@ -1,0 +1,8 @@
+---
+source: yaml_parser/tests/fail.rs
+---
+parse error at line 3, column 5
+  |
+3 |   no: key
+  |     ^
+expected `...`

@@ -1,0 +1,8 @@
+---
+source: yaml_parser/tests/fail.rs
+---
+parse error at line 1, column 7
+  |
+1 | --- |10
+  |       ^
+invalid block scalar header
