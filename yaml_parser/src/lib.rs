@@ -28,6 +28,7 @@ use winnow::{
     PResult, Parser,
 };
 
+pub mod ast;
 mod error;
 mod indent;
 mod set_state;
