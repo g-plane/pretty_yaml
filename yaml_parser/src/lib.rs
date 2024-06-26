@@ -776,7 +776,7 @@ fn block_map(input: &mut Input) -> GreenResult {
                 0..,
                 (
                     terminated(
-                        cmts_or_ws1,
+                        terminated(cmts_or_ws1, verify_state(|state| state.last_ws_has_nl)),
                         verify_state(move |state| state.indent == indent),
                     ),
                     alt((block_map_implicit_entry, block_map_explicit_entry)),
