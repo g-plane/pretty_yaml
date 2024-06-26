@@ -1,3 +1,17 @@
+//! Semi-tolerant YAML concrete syntax tree parser.
+//!
+//! ## Usage
+//!
+//! ```
+//! match yaml_parser::parse(&code) {
+//!     Ok(tree) => println!("{tree:#?}"),
+//!     Err(err) => eprintln!("{err}"),
+//! };
+//! ```
+//!
+//! It produces rowan tree if succeeded.
+//! For consuming the tree, see [rowan's docs](https://docs.rs/rowan).
+
 pub use self::error::SyntaxError;
 use self::{indent::ParserExt as _, set_state::ParserExt as _, verify_state::verify_state};
 use either::Either;
