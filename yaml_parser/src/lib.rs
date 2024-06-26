@@ -723,11 +723,7 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
                 .context(StrContext::Expected(StrContextValue::CharLiteral('-'))),
             alt((
                 block_compact_collection,
-                (
-                    cmts_or_ws1.store_prev_indent().track_indent(),
-                    block.require_deeper_indent(),
-                )
-                    .map(Some),
+                (cmts_or_ws1.store_prev_indent().track_indent(), block).map(Some),
                 peek((opt(space1), opt(comment), alt((line_ending, eof)))).value(None),
             ))
             .set_state(|state| {
@@ -920,7 +916,13 @@ fn block(input: &mut Input) -> GreenResult {
                     ),
                 )),
                 alt((
-                    block_sequence,
+                    dispatch! {bf_ctx;
+                        BlockFlowCtx::BlockIn => block_sequence.require_deeper_indent(),
+                        _ => preceded(
+                            verify_state(|state| state.prev_indent.is_some_and(|prev_indent| state.indent >= prev_indent)),
+                            block_sequence,
+                        ),
+                    },
                     dispatch! {bf_ctx;
                         BlockFlowCtx::BlockOut => block_map.require_deeper_indent(),
                         _ => block_map,

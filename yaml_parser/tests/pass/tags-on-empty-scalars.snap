@@ -1,0 +1,80 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..51
+  DOCUMENT@0..50
+    BLOCK@0..50
+      BLOCK_SEQ@0..50
+        BLOCK_SEQ_ENTRY@0..7
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          BLOCK@2..7
+            PROPERTIES@2..7
+              TAG_PROPERTY@2..7
+                SHORTHAND_TAG@2..7
+                  TAG_HANDLE@2..4
+                    TAG_HANDLE_SECONDARY@2..4 "!!"
+                  TAG_CHAR@4..7 "str"
+        WHITESPACE@7..8 "\n"
+        BLOCK_SEQ_ENTRY@8..33
+          MINUS@8..9 "-"
+          WHITESPACE@9..12 "\n  "
+          BLOCK@12..33
+            BLOCK_MAP@12..33
+              BLOCK_MAP_ENTRY@12..22
+                BLOCK_MAP_KEY@12..18
+                  FLOW@12..18
+                    PROPERTIES@12..18
+                      TAG_PROPERTY@12..18
+                        SHORTHAND_TAG@12..18
+                          TAG_HANDLE@12..14
+                            TAG_HANDLE_SECONDARY@12..14 "!!"
+                          TAG_CHAR@14..18 "null"
+                WHITESPACE@18..19 " "
+                COLON@19..20 ":"
+                WHITESPACE@20..21 " "
+                BLOCK_MAP_VALUE@21..22
+                  FLOW@21..22
+                    PLAIN_SCALAR@21..22 "a"
+              WHITESPACE@22..25 "\n  "
+              BLOCK_MAP_ENTRY@25..33
+                BLOCK_MAP_KEY@25..26
+                  FLOW@25..26
+                    PLAIN_SCALAR@25..26 "b"
+                COLON@26..27 ":"
+                WHITESPACE@27..28 " "
+                BLOCK_MAP_VALUE@28..33
+                  BLOCK@28..33
+                    PROPERTIES@28..33
+                      TAG_PROPERTY@28..33
+                        SHORTHAND_TAG@28..33
+                          TAG_HANDLE@28..30
+                            TAG_HANDLE_SECONDARY@28..30 "!!"
+                          TAG_CHAR@30..33 "str"
+        WHITESPACE@33..34 "\n"
+        BLOCK_SEQ_ENTRY@34..50
+          MINUS@34..35 "-"
+          WHITESPACE@35..36 " "
+          BLOCK@36..50
+            BLOCK_MAP@36..50
+              BLOCK_MAP_ENTRY@36..50
+                BLOCK_MAP_KEY@36..41
+                  FLOW@36..41
+                    PROPERTIES@36..41
+                      TAG_PROPERTY@36..41
+                        SHORTHAND_TAG@36..41
+                          TAG_HANDLE@36..38
+                            TAG_HANDLE_SECONDARY@36..38 "!!"
+                          TAG_CHAR@38..41 "str"
+                WHITESPACE@41..42 " "
+                COLON@42..43 ":"
+                WHITESPACE@43..44 " "
+                BLOCK_MAP_VALUE@44..50
+                  BLOCK@44..50
+                    PROPERTIES@44..50
+                      TAG_PROPERTY@44..50
+                        SHORTHAND_TAG@44..50
+                          TAG_HANDLE@44..46
+                            TAG_HANDLE_SECONDARY@44..46 "!!"
+                          TAG_CHAR@46..50 "null"
+  WHITESPACE@50..51 "\n"

@@ -1,0 +1,115 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..65
+  DOCUMENT@0..64
+    BLOCK@0..64
+      BLOCK_SEQ@0..64
+        BLOCK_SEQ_ENTRY@0..4
+          MINUS@0..1 "-"
+          WHITESPACE@1..2 " "
+          BLOCK@2..4
+            PROPERTIES@2..4
+              ANCHOR_PROPERTY@2..4
+                AMPERSAND@2..3 "&"
+                ANCHOR_NAME@3..4 "a"
+        WHITESPACE@4..5 "\n"
+        BLOCK_SEQ_ENTRY@5..8
+          MINUS@5..6 "-"
+          WHITESPACE@6..7 " "
+          FLOW@7..8
+            PLAIN_SCALAR@7..8 "a"
+        WHITESPACE@8..9 "\n"
+        BLOCK_SEQ_ENTRY@9..27
+          MINUS@9..10 "-"
+          WHITESPACE@10..13 "\n  "
+          BLOCK@13..27
+            BLOCK_MAP@13..27
+              BLOCK_MAP_ENTRY@13..19
+                BLOCK_MAP_KEY@13..15
+                  FLOW@13..15
+                    PROPERTIES@13..15
+                      ANCHOR_PROPERTY@13..15
+                        AMPERSAND@13..14 "&"
+                        ANCHOR_NAME@14..15 "a"
+                WHITESPACE@15..16 " "
+                COLON@16..17 ":"
+                WHITESPACE@17..18 " "
+                BLOCK_MAP_VALUE@18..19
+                  FLOW@18..19
+                    PLAIN_SCALAR@18..19 "a"
+              WHITESPACE@19..22 "\n  "
+              BLOCK_MAP_ENTRY@22..27
+                BLOCK_MAP_KEY@22..23
+                  FLOW@22..23
+                    PLAIN_SCALAR@22..23 "b"
+                COLON@23..24 ":"
+                WHITESPACE@24..25 " "
+                BLOCK_MAP_VALUE@25..27
+                  BLOCK@25..27
+                    PROPERTIES@25..27
+                      ANCHOR_PROPERTY@25..27
+                        AMPERSAND@25..26 "&"
+                        ANCHOR_NAME@26..27 "b"
+        WHITESPACE@27..28 "\n"
+        BLOCK_SEQ_ENTRY@28..39
+          MINUS@28..29 "-"
+          WHITESPACE@29..32 "\n  "
+          BLOCK@32..39
+            BLOCK_MAP@32..39
+              BLOCK_MAP_ENTRY@32..39
+                BLOCK_MAP_KEY@32..34
+                  FLOW@32..34
+                    PROPERTIES@32..34
+                      ANCHOR_PROPERTY@32..34
+                        AMPERSAND@32..33 "&"
+                        ANCHOR_NAME@33..34 "c"
+                WHITESPACE@34..35 " "
+                COLON@35..36 ":"
+                WHITESPACE@36..37 " "
+                BLOCK_MAP_VALUE@37..39
+                  BLOCK@37..39
+                    PROPERTIES@37..39
+                      ANCHOR_PROPERTY@37..39
+                        AMPERSAND@37..38 "&"
+                        ANCHOR_NAME@38..39 "a"
+        WHITESPACE@39..40 "\n"
+        BLOCK_SEQ_ENTRY@40..48
+          MINUS@40..41 "-"
+          WHITESPACE@41..44 "\n  "
+          BLOCK@44..48
+            BLOCK_MAP@44..48
+              BLOCK_MAP_ENTRY@44..48
+                BLOCK_MAP_KEY@44..48
+                  QUESTION_MARK@44..45 "?"
+                  WHITESPACE@45..46 " "
+                  BLOCK@46..48
+                    PROPERTIES@46..48
+                      ANCHOR_PROPERTY@46..48
+                        AMPERSAND@46..47 "&"
+                        ANCHOR_NAME@47..48 "d"
+        WHITESPACE@48..49 "\n"
+        BLOCK_SEQ_ENTRY@49..64
+          MINUS@49..50 "-"
+          WHITESPACE@50..53 "\n  "
+          BLOCK@53..64
+            BLOCK_MAP@53..64
+              BLOCK_MAP_ENTRY@53..64
+                BLOCK_MAP_KEY@53..57
+                  QUESTION_MARK@53..54 "?"
+                  WHITESPACE@54..55 " "
+                  BLOCK@55..57
+                    PROPERTIES@55..57
+                      ANCHOR_PROPERTY@55..57
+                        AMPERSAND@55..56 "&"
+                        ANCHOR_NAME@56..57 "e"
+                WHITESPACE@57..60 "\n  "
+                COLON@60..61 ":"
+                WHITESPACE@61..62 " "
+                BLOCK_MAP_VALUE@62..64
+                  BLOCK@62..64
+                    PROPERTIES@62..64
+                      ANCHOR_PROPERTY@62..64
+                        AMPERSAND@62..63 "&"
+                        ANCHOR_NAME@63..64 "a"
+  WHITESPACE@64..65 "\n"
