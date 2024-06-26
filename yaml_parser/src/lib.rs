@@ -5,8 +5,8 @@ use rowan::{GreenNode, GreenToken, NodeOrToken};
 use winnow::{
     ascii::{digit1, line_ending, multispace1, space1, take_escaped, till_line_ending},
     combinator::{
-        alt, cond, cut_err, dispatch, eof, fail, not, opt, peek, preceded, repeat, terminated,
-        trace,
+        alt, cond, cut_err, dispatch, eof, fail, not, opt, peek, preceded, repeat, repeat_till,
+        terminated, trace,
     },
     error::{StrContext, StrContextValue},
     stream::Stateful,
@@ -1030,6 +1030,7 @@ fn directive(input: &mut Input) -> GreenResult {
 }
 
 fn document(input: &mut Input) -> GreenResult {
+    let prev_document_finished = input.state.prev_document_finished;
     alt((
         (
             repeat(1.., (directive, cmts_or_ws0)),
@@ -1058,7 +1059,11 @@ fn document(input: &mut Input) -> GreenResult {
             ),
         document_end.map(|child| node(DOCUMENT, [child])),
         (
-            opt((directives_end, cmts_or_ws0)),
+            cut_err(
+                opt((directives_end, cmts_or_ws0))
+                    .verify(move |end| end.is_some() || prev_document_finished)
+                    .context(StrContext::Expected(StrContextValue::StringLiteral("..."))),
+            ),
             top_level_block.store_prev_indent(),
             opt((cmts_or_ws1, document_end)),
         )
@@ -1087,24 +1092,38 @@ fn document(input: &mut Input) -> GreenResult {
     .parse_next(input)
 }
 fn top_level_block(input: &mut Input) -> GreenResult {
-    preceded(
+    let result = preceded(
         not("..."),
         block.set_state(|state| {
             state.bf_ctx = BlockFlowCtx::BlockIn;
             state.document_top = true;
         }),
     )
-    .parse_next(input)
+    .parse_next(input);
+    if result.is_ok() {
+        input.state.prev_document_finished = false;
+    }
+    result
 }
 
 fn document_end(input: &mut Input) -> GreenResult {
-    "...".map(|text| tok(DOCUMENT_END, text)).parse_next(input)
+    match "...".parse_next(input) {
+        Ok(text) => {
+            input.state.prev_document_finished = true;
+            Ok(tok(DOCUMENT_END, text))
+        }
+        Err(err) => Err(err),
+    }
 }
 
 fn root(input: &mut Input) -> PResult<SyntaxNode> {
-    repeat(0.., alt((cmt_or_ws, document)))
+    // `eof` parser is required because winnow will still try to parse the input even if it's empty,
+    // but the validation of `directives_end` will fail since there's no input.
+    repeat_till(0.., alt((cmt_or_ws, document)), eof)
         .parse_next(input)
-        .map(|children: Vec<_>| SyntaxNode::new_root(GreenNode::new(ROOT.into(), children)))
+        .map(|(children, _): (Vec<_>, _)| {
+            SyntaxNode::new_root(GreenNode::new(ROOT.into(), children))
+        })
 }
 
 fn comment(input: &mut Input) -> GreenResult {
@@ -1201,6 +1220,7 @@ pub fn parse(code: &str) -> Result<SyntaxNode, SyntaxError> {
             last_ws_has_nl: false,
             bf_ctx: BlockFlowCtx::BlockIn,
             document_top: true,
+            prev_document_finished: true,
         },
     };
     root.parse(input).map_err(SyntaxError::from)
@@ -1258,6 +1278,7 @@ struct State {
     last_ws_has_nl: bool,
     bf_ctx: BlockFlowCtx,
     document_top: bool,
+    prev_document_finished: bool,
 }
 
 #[derive(Clone, Debug)]
