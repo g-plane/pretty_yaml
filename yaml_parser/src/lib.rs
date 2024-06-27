@@ -424,44 +424,43 @@ fn flow_sequence(input: &mut Input) -> GreenResult {
         ascii_char::<'['>(L_BRACKET),
         stateless_cmts_or_ws0,
         flow_sequence_entries.set_state(flow_collection_state),
+        stateless_cmts_or_ws0,
         ascii_char::<']'>(R_BRACKET),
     )
         .context(StrContext::Expected(StrContextValue::CharLiteral(']')))
         .parse_next(input)
-        .map(|(l_bracket, mut leading_trivias, entries, r_bracket)| {
-            let mut children = Vec::with_capacity(3);
-            children.push(l_bracket);
-            children.append(&mut leading_trivias);
-            children.push(entries);
-            children.push(r_bracket);
-            node(FLOW_SEQ, children)
-        })
+        .map(
+            |(l_bracket, mut leading_trivias, entries, mut trailing_trivias, r_bracket)| {
+                let mut children = Vec::with_capacity(3);
+                children.push(l_bracket);
+                children.append(&mut leading_trivias);
+                children.push(entries);
+                children.append(&mut trailing_trivias);
+                children.push(r_bracket);
+                node(FLOW_SEQ, children)
+            },
+        )
 }
 
 fn flow_sequence_entries(input: &mut Input) -> GreenResult {
     repeat(
         0..,
-        alt((
-            (
-                flow_sequence_entry,
-                stateless_cmts_or_ws0,
-                alt((ascii_char::<','>(COMMA).map(Some), peek(']').value(None))),
-            )
-                .map(Either::Left),
-            stateless_cmts_or_ws1.map(Either::Right),
-        )),
+        (
+            stateless_cmts_or_ws0,
+            flow_sequence_entry,
+            alt((
+                (stateless_cmts_or_ws0, ascii_char::<','>(COMMA)).map(Some),
+                peek((stateless_cmts_or_ws0, ']')).value(None),
+            )),
+        ),
     )
-    .fold(Vec::new, |mut children, either| {
-        match either {
-            Either::Left((entry, mut trailing_trivias, comma)) => {
-                children.reserve(3);
-                children.push(entry);
-                children.append(&mut trailing_trivias);
-                if let Some(comma) = comma {
-                    children.push(comma);
-                }
-            }
-            Either::Right(mut trivias) => children.append(&mut trivias),
+    .fold(Vec::new, |mut children, (mut trivias, entry, comma)| {
+        children.reserve(3);
+        children.append(&mut trivias);
+        children.push(entry);
+        if let Some((mut trivias, comma)) = comma {
+            children.append(&mut trivias);
+            children.push(comma);
         }
         children
     })

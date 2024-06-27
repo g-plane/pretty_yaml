@@ -42,7 +42,7 @@ ROOT@0..142
               FLOW_SEQ@56..96
                 L_BRACKET@56..57 "["
                 WHITESPACE@57..58 " "
-                FLOW_SEQ_ENTRIES@58..95
+                FLOW_SEQ_ENTRIES@58..94
                   FLOW_SEQ_ENTRY@58..74
                     FLOW@58..74
                       PLAIN_SCALAR@58..74 "New York Yankees"
@@ -51,7 +51,7 @@ ROOT@0..142
                   FLOW_SEQ_ENTRY@80..94
                     FLOW@80..94
                       PLAIN_SCALAR@80..94 "Atlanta Braves"
-                  WHITESPACE@94..95 " "
+                WHITESPACE@94..95 " "
                 R_BRACKET@95..96 "]"
           WHITESPACE@96..97 "\n"
           COLON@97..98 ":"
@@ -61,7 +61,7 @@ ROOT@0..142
               FLOW_SEQ@99..141
                 L_BRACKET@99..100 "["
                 WHITESPACE@100..101 " "
-                FLOW_SEQ_ENTRIES@101..140
+                FLOW_SEQ_ENTRIES@101..139
                   FLOW_SEQ_ENTRY@101..111
                     FLOW@101..111
                       PLAIN_SCALAR@101..111 "2001-07-02"
@@ -75,6 +75,6 @@ ROOT@0..142
                   FLOW_SEQ_ENTRY@129..139
                     FLOW@129..139
                       PLAIN_SCALAR@129..139 "2001-08-14"
-                  WHITESPACE@139..140 " "
+                WHITESPACE@139..140 " "
                 R_BRACKET@140..141 "]"
   WHITESPACE@141..142 "\n"

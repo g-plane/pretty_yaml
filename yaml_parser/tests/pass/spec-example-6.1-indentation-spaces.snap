@@ -44,7 +44,7 @@ ROOT@0..301
                         WHITESPACE@149..153 "    "
                         COMMENT@153..169 "# Leading spaces"
                         WHITESPACE@169..173 "\n   "
-                        FLOW_SEQ_ENTRIES@173..272
+                        FLOW_SEQ_ENTRIES@173..251
                           FLOW_SEQ_ENTRY@173..179
                             FLOW@173..179
                               PLAIN_SCALAR@173..179 "By two"
@@ -62,9 +62,9 @@ ROOT@0..301
                           FLOW_SEQ_ENTRY@239..251
                             FLOW@239..251
                               PLAIN_SCALAR@239..251 "Still by two"
-                          WHITESPACE@251..254 "   "
-                          COMMENT@254..267 "# content nor"
-                          WHITESPACE@267..272 "\n    "
+                        WHITESPACE@251..254 "   "
+                        COMMENT@254..267 "# content nor"
+                        WHITESPACE@267..272 "\n    "
                         R_BRACKET@272..273 "]"
   WHITESPACE@273..286 "             "
   COMMENT@286..300 "# indentation."

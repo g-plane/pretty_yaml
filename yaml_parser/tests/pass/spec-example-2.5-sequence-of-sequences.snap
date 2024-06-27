@@ -11,7 +11,7 @@ ROOT@0..84
           FLOW@2..27
             FLOW_SEQ@2..27
               L_BRACKET@2..3 "["
-              FLOW_SEQ_ENTRIES@3..26
+              FLOW_SEQ_ENTRIES@3..24
                 FLOW_SEQ_ENTRY@3..7
                   FLOW@3..7
                     PLAIN_SCALAR@3..7 "name"
@@ -26,7 +26,7 @@ ROOT@0..84
                 FLOW_SEQ_ENTRY@21..24
                   FLOW@21..24
                     PLAIN_SCALAR@21..24 "avg"
-                WHITESPACE@24..26 "  "
+              WHITESPACE@24..26 "  "
               R_BRACKET@26..27 "]"
         WHITESPACE@27..28 "\n"
         BLOCK_SEQ_ENTRY@28..55

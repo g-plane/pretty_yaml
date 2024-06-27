@@ -46,7 +46,7 @@ ROOT@0..218
             FLOW_SEQ@133..217
               L_BRACKET@133..134 "["
               WHITESPACE@134..135 " "
-              FLOW_SEQ_ENTRIES@135..216
+              FLOW_SEQ_ENTRIES@135..215
                 FLOW_SEQ_ENTRY@135..143
                   FLOW@135..143
                     PLAIN_SCALAR@135..143 "::vector"
@@ -70,6 +70,6 @@ ROOT@0..218
                 FLOW_SEQ_ENTRY@189..215
                   FLOW@189..215
                     PLAIN_SCALAR@189..215 "http://example.com/fo ..."
-                WHITESPACE@215..216 " "
+              WHITESPACE@215..216 " "
               R_BRACKET@216..217 "]"
   WHITESPACE@217..218 "\n"

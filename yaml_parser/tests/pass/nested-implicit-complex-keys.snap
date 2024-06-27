@@ -9,7 +9,7 @@ ROOT@0..37
       FLOW_SEQ@4..36
         L_BRACKET@4..5 "["
         WHITESPACE@5..8 "\n  "
-        FLOW_SEQ_ENTRIES@8..35
+        FLOW_SEQ_ENTRIES@8..34
           FLOW_SEQ_ENTRY@8..34
             FLOW_PAIR@8..34
               FLOW_MAP_KEY@8..30
@@ -67,6 +67,6 @@ ROOT@0..37
               FLOW_MAP_VALUE@32..34
                 FLOW@32..34
                   PLAIN_SCALAR@32..34 "23"
-          WHITESPACE@34..35 "\n"
+        WHITESPACE@34..35 "\n"
         R_BRACKET@35..36 "]"
   WHITESPACE@36..37 "\n"

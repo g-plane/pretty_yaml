@@ -23,7 +23,7 @@ ROOT@0..43
               FLOW_SEQ@18..35
                 L_BRACKET@18..19 "["
                 WHITESPACE@19..20 " "
-                FLOW_SEQ_ENTRIES@20..34
+                FLOW_SEQ_ENTRIES@20..33
                   FLOW_SEQ_ENTRY@20..27
                     FLOW@20..27
                       PROPERTIES@20..25
@@ -42,7 +42,7 @@ ROOT@0..43
                   FLOW_SEQ_ENTRY@32..33
                     FLOW@32..33
                       PLAIN_SCALAR@32..33 "c"
-                  WHITESPACE@33..34 " "
+                WHITESPACE@33..34 " "
                 R_BRACKET@34..35 "]"
           COLON@35..36 ":"
           WHITESPACE@36..37 " "

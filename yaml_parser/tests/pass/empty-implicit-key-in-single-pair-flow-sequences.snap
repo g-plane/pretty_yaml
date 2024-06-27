@@ -12,7 +12,7 @@ ROOT@0..42
             FLOW_SEQ@2..17
               L_BRACKET@2..3 "["
               WHITESPACE@3..4 " "
-              FLOW_SEQ_ENTRIES@4..16
+              FLOW_SEQ_ENTRIES@4..15
                 FLOW_SEQ_ENTRY@4..15
                   FLOW_PAIR@4..15
                     COLON@4..5 ":"
@@ -20,7 +20,7 @@ ROOT@0..42
                     FLOW_MAP_VALUE@6..15
                       FLOW@6..15
                         PLAIN_SCALAR@6..15 "empty key"
-                WHITESPACE@15..16 " "
+              WHITESPACE@15..16 " "
               R_BRACKET@16..17 "]"
         WHITESPACE@17..18 "\n"
         BLOCK_SEQ_ENTRY@18..41

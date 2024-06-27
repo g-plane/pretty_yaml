@@ -7,7 +7,7 @@ ROOT@0..89
       FLOW_SEQ@0..88
         L_BRACKET@0..1 "["
         WHITESPACE@1..2 "\n"
-        FLOW_SEQ_ENTRIES@2..87
+        FLOW_SEQ_ENTRIES@2..86
           FLOW_SEQ_ENTRY@2..18
             FLOW@2..18
               DOUBLE_QUOTED_SCALAR@2..18 "\"double\n quoted\""
@@ -28,11 +28,11 @@ ROOT@0..89
               FLOW_SEQ@61..71
                 L_BRACKET@61..62 "["
                 WHITESPACE@62..63 " "
-                FLOW_SEQ_ENTRIES@63..70
+                FLOW_SEQ_ENTRIES@63..69
                   FLOW_SEQ_ENTRY@63..69
                     FLOW@63..69
                       PLAIN_SCALAR@63..69 "nested"
-                  WHITESPACE@69..70 " "
+                WHITESPACE@69..70 " "
                 R_BRACKET@70..71 "]"
           COMMA@71..72 ","
           WHITESPACE@72..73 "\n"
@@ -47,6 +47,6 @@ ROOT@0..89
                 FLOW@81..85
                   PLAIN_SCALAR@81..85 "pair"
           COMMA@85..86 ","
-          WHITESPACE@86..87 "\n"
+        WHITESPACE@86..87 "\n"
         R_BRACKET@87..88 "]"
   WHITESPACE@88..89 "\n"

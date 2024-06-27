@@ -7,7 +7,7 @@ ROOT@0..21
       FLOW_SEQ@0..20
         L_BRACKET@0..1 "["
         WHITESPACE@1..2 "\n"
-        FLOW_SEQ_ENTRIES@2..19
+        FLOW_SEQ_ENTRIES@2..18
           FLOW_SEQ_ENTRY@2..18
             FLOW_PAIR@2..18
               FLOW_MAP_KEY@2..12
@@ -21,6 +21,6 @@ ROOT@0..21
               FLOW_MAP_VALUE@15..18
                 FLOW@15..18
                   PLAIN_SCALAR@15..18 "baz"
-          WHITESPACE@18..19 "\n"
+        WHITESPACE@18..19 "\n"
         R_BRACKET@19..20 "]"
   WHITESPACE@20..21 "\n"

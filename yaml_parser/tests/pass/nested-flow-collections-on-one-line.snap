@@ -20,7 +20,7 @@ ROOT@0..34
               FLOW@9..31
                 FLOW_SEQ@9..31
                   L_BRACKET@9..10 "["
-                  FLOW_SEQ_ENTRIES@10..30
+                  FLOW_SEQ_ENTRIES@10..29
                     FLOW_SEQ_ENTRY@10..11
                       FLOW@10..11
                         PLAIN_SCALAR@10..11 "b"
@@ -59,7 +59,7 @@ ROOT@0..34
                                     R_BRACKET@26..27 "]"
                             WHITESPACE@27..28 " "
                           R_BRACE@28..29 "}"
-                    WHITESPACE@29..30 " "
+                  WHITESPACE@29..30 " "
                   R_BRACKET@30..31 "]"
           WHITESPACE@31..32 " "
         R_BRACE@32..33 "}"
