@@ -10,6 +10,7 @@ exclude = ["/tests"]
 
 [dependencies]
 itertools = "0.12"
+rowan = "0.15"
 serde = { version = "1.0", optional = true }
 tiny_pretty = "0.1"
 yaml_parser = { version = "0.0", path = "../yaml_parser" }

@@ -171,6 +171,7 @@ version = "0.0.0"
 dependencies = [
  "insta",
  "itertools",
+ "rowan",
  "serde",
  "similar-asserts",
  "tiny_pretty",
