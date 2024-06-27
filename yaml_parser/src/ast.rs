@@ -34,23 +34,6 @@ pub trait AstNode {
     }
 }
 
-/// Like `AstNode`, but wraps tokens rather than interior nodes.
-pub trait AstToken {
-    fn can_cast(token: SyntaxKind) -> bool
-    where
-        Self: Sized;
-
-    fn cast(syntax: SyntaxToken) -> Option<Self>
-    where
-        Self: Sized;
-
-    fn syntax(&self) -> &SyntaxToken;
-
-    fn text(&self) -> &str {
-        self.syntax().text()
-    }
-}
-
 /// An iterator over `SyntaxNode` children of a particular AST type.
 #[derive(Debug, Clone)]
 pub struct AstChildren<N> {
@@ -82,14 +65,7 @@ fn children<N: AstNode>(parent: &SyntaxNode) -> AstChildren<N> {
     AstChildren::new(parent)
 }
 
-fn token<T: AstToken>(parent: &SyntaxNode) -> Option<T> {
-    parent
-        .children_with_tokens()
-        .filter_map(|it| it.into_token())
-        .find_map(T::cast)
-}
-
-fn token_with_kind(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
+fn token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
     parent
         .children_with_tokens()
         .filter_map(|it| it.into_token())
@@ -99,388 +75,16 @@ fn token_with_kind(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken>
 // -------------------------------------------------------------------------
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct IndentIndicator {
-    syntax: SyntaxToken,
-}
-impl AstToken for IndentIndicator {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::INDENT_INDICATOR
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(IndentIndicator { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct GreaterThan {
-    syntax: SyntaxToken,
-}
-impl AstToken for GreaterThan {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::GREATER_THAN
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(GreaterThan { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct VerbatimTag {
-    syntax: SyntaxToken,
-}
-impl AstToken for VerbatimTag {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::VERBATIM_TAG
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(VerbatimTag { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ShorthandTag {
-    syntax: SyntaxToken,
-}
-impl AstToken for ShorthandTag {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::SHORTHAND_TAG
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(ShorthandTag { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TagChar {
-    syntax: SyntaxToken,
-}
-impl AstToken for TagChar {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::TAG_CHAR
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(TagChar { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TagHandleNamed {
-    syntax: SyntaxToken,
-}
-impl AstToken for TagHandleNamed {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::TAG_HANDLE_NAMED
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(TagHandleNamed { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TagHandleSecondary {
-    syntax: SyntaxToken,
-}
-impl AstToken for TagHandleSecondary {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::TAG_HANDLE_SECONDARY
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(TagHandleSecondary { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TagHandlePrimary {
-    syntax: SyntaxToken,
-}
-impl AstToken for TagHandlePrimary {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::TAG_HANDLE_PRIMARY
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(TagHandlePrimary { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TagPrefix {
-    syntax: SyntaxToken,
-}
-impl AstToken for TagPrefix {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::TAG_PREFIX
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(TagPrefix { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct AnchorName {
-    syntax: SyntaxToken,
-}
-impl AstToken for AnchorName {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::ANCHOR_NAME
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(AnchorName { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct DoubleQuotedScalar {
-    syntax: SyntaxToken,
-}
-impl AstToken for DoubleQuotedScalar {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::DOUBLE_QUOTED_SCALAR
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(DoubleQuotedScalar { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct SingleQuotedScalar {
-    syntax: SyntaxToken,
-}
-impl AstToken for SingleQuotedScalar {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::SINGLE_QUOTED_SCALAR
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(SingleQuotedScalar { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct PlainScalar {
-    syntax: SyntaxToken,
-}
-impl AstToken for PlainScalar {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::PLAIN_SCALAR
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(PlainScalar { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct BlockScalarText {
-    syntax: SyntaxToken,
-}
-impl AstToken for BlockScalarText {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::BLOCK_SCALAR_TEXT
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(BlockScalarText { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct DirectivesEnd {
-    syntax: SyntaxToken,
-}
-impl AstToken for DirectivesEnd {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::DIRECTIVES_END
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(DirectivesEnd { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct DirectiveName {
-    syntax: SyntaxToken,
-}
-impl AstToken for DirectiveName {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::DIRECTIVE_NAME
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(DirectiveName { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct YamlVersion {
-    syntax: SyntaxToken,
-}
-impl AstToken for YamlVersion {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::YAML_VERSION
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(YamlVersion { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct DirectiveParam {
-    syntax: SyntaxToken,
-}
-impl AstToken for DirectiveParam {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::DIRECTIVE_PARAM
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(DirectiveParam { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct DocumentEnd {
-    syntax: SyntaxToken,
-}
-impl AstToken for DocumentEnd {
-    fn can_cast(token: SyntaxKind) -> bool {
-        token == SyntaxKind::DOCUMENT_END
-    }
-    fn cast(syntax: SyntaxToken) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(DocumentEnd { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxToken {
-        &self.syntax
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Properties {
     syntax: SyntaxNode,
+}
+impl Properties {
+    pub fn anchor_property(&self) -> Option<AnchorProperty> {
+        child(&self.syntax)
+    }
+    pub fn tag_property(&self) -> Option<TagProperty> {
+        child(&self.syntax)
+    }
 }
 impl AstNode for Properties {
     fn can_cast(kind: SyntaxKind) -> bool {
@@ -502,6 +106,17 @@ impl AstNode for Properties {
 pub struct TagProperty {
     syntax: SyntaxNode,
 }
+impl TagProperty {
+    pub fn verbatim_tag(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::VERBATIM_TAG)
+    }
+    pub fn shorthand_tag(&self) -> Option<ShorthandTag> {
+        child(&self.syntax)
+    }
+    pub fn non_specific_tag(&self) -> Option<NonSpecificTag> {
+        child(&self.syntax)
+    }
+}
 impl AstNode for TagProperty {
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::TAG_PROPERTY
@@ -522,6 +137,17 @@ impl AstNode for TagProperty {
 pub struct TagHandle {
     syntax: SyntaxNode,
 }
+impl TagHandle {
+    pub fn primary(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::TAG_HANDLE_PRIMARY)
+    }
+    pub fn secondary(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::TAG_HANDLE_SECONDARY)
+    }
+    pub fn named(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::TAG_HANDLE_NAMED)
+    }
+}
 impl AstNode for TagHandle {
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::TAG_HANDLE
@@ -539,8 +165,41 @@ impl AstNode for TagHandle {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ShorthandTag {
+    syntax: SyntaxNode,
+}
+impl ShorthandTag {
+    pub fn tag_handle(&self) -> Option<TagHandle> {
+        child(&self.syntax)
+    }
+    pub fn tag_char(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::TAG_CHAR)
+    }
+}
+impl AstNode for ShorthandTag {
+    fn can_cast(kind: SyntaxKind) -> bool {
+        kind == SyntaxKind::SHORTHAND_TAG
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(ShorthandTag { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NonSpecificTag {
     syntax: SyntaxNode,
+}
+impl NonSpecificTag {
+    pub fn exclamation_mark(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::EXCLAMATION_MARK)
+    }
 }
 impl AstNode for NonSpecificTag {
     fn can_cast(kind: SyntaxKind) -> bool {
@@ -564,10 +223,10 @@ pub struct AnchorProperty {
 }
 impl AnchorProperty {
     pub fn ampersand(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::AMPERSAND)
+        token(&self.syntax, SyntaxKind::AMPERSAND)
     }
-    pub fn anchor_name(&self) -> Option<AnchorName> {
-        token(&self.syntax)
+    pub fn anchor_name(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::ANCHOR_NAME)
     }
 }
 impl AstNode for AnchorProperty {
@@ -592,10 +251,10 @@ pub struct Alias {
 }
 impl Alias {
     pub fn asterisk(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::ASTERISK)
+        token(&self.syntax, SyntaxKind::ASTERISK)
     }
-    pub fn anchor_name(&self) -> Option<AnchorName> {
-        token(&self.syntax)
+    pub fn anchor_name(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::ANCHOR_NAME)
     }
 }
 impl AstNode for Alias {
@@ -620,13 +279,13 @@ pub struct FlowSeq {
 }
 impl FlowSeq {
     pub fn l_bracket(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::L_BRACKET)
+        token(&self.syntax, SyntaxKind::L_BRACKET)
     }
     pub fn entries(&self) -> Option<FlowSeqEntries> {
         child(&self.syntax)
     }
     pub fn r_bracket(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::R_BRACKET)
+        token(&self.syntax, SyntaxKind::R_BRACKET)
     }
 }
 impl AstNode for FlowSeq {
@@ -704,13 +363,13 @@ pub struct FlowMap {
 }
 impl FlowMap {
     pub fn l_brace(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::L_BRACE)
+        token(&self.syntax, SyntaxKind::L_BRACE)
     }
     pub fn entries(&self) -> Option<FlowMapEntries> {
         child(&self.syntax)
     }
     pub fn r_brace(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::R_BRACE)
+        token(&self.syntax, SyntaxKind::R_BRACE)
     }
 }
 impl AstNode for FlowMap {
@@ -763,7 +422,7 @@ impl FlowMapEntry {
         child(&self.syntax)
     }
     pub fn colon(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::COLON)
+        token(&self.syntax, SyntaxKind::COLON)
     }
     pub fn value(&self) -> Option<FlowMapValue> {
         child(&self.syntax)
@@ -791,7 +450,7 @@ pub struct FlowMapKey {
 }
 impl FlowMapKey {
     pub fn question_mark(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::QUESTION_MARK)
+        token(&self.syntax, SyntaxKind::QUESTION_MARK)
     }
     pub fn flow(&self) -> Option<Flow> {
         child(&self.syntax)
@@ -847,7 +506,7 @@ impl FlowPair {
         child(&self.syntax)
     }
     pub fn colon(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::COLON)
+        token(&self.syntax, SyntaxKind::COLON)
     }
     pub fn value(&self) -> Option<FlowMapValue> {
         child(&self.syntax)
@@ -877,14 +536,14 @@ impl Flow {
     pub fn properties(&self) -> Option<Properties> {
         child(&self.syntax)
     }
-    pub fn double_qouted_scalar(&self) -> Option<DoubleQuotedScalar> {
-        token(&self.syntax)
+    pub fn double_qouted_scalar(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::DOUBLE_QUOTED_SCALAR)
     }
-    pub fn single_quoted_scalar(&self) -> Option<SingleQuotedScalar> {
-        token(&self.syntax)
+    pub fn single_quoted_scalar(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::SINGLE_QUOTED_SCALAR)
     }
-    pub fn plain_scalar(&self) -> Option<PlainScalar> {
-        token(&self.syntax)
+    pub fn plain_scalar(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::PLAIN_SCALAR)
     }
     pub fn flow_seq(&self) -> Option<FlowSeq> {
         child(&self.syntax)
@@ -915,10 +574,10 @@ pub struct ChompingIndicator {
 }
 impl ChompingIndicator {
     pub fn plus(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::PLUS)
+        token(&self.syntax, SyntaxKind::PLUS)
     }
     pub fn minus(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::MINUS)
+        token(&self.syntax, SyntaxKind::MINUS)
     }
 }
 impl AstNode for ChompingIndicator {
@@ -943,19 +602,19 @@ pub struct BlockScalar {
 }
 impl BlockScalar {
     pub fn bar(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::BAR)
+        token(&self.syntax, SyntaxKind::BAR)
     }
     pub fn greater_than(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::GREATER_THAN)
+        token(&self.syntax, SyntaxKind::GREATER_THAN)
     }
-    pub fn indent_indicator(&self) -> Option<IndentIndicator> {
-        token(&self.syntax)
+    pub fn indent_indicator(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::INDENT_INDICATOR)
     }
     pub fn chomping_indicator(&self) -> Option<ChompingIndicator> {
         child(&self.syntax)
     }
-    pub fn text(&self) -> Option<BlockScalarText> {
-        token(&self.syntax)
+    pub fn text(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::BLOCK_SCALAR_TEXT)
     }
 }
 impl AstNode for BlockScalar {
@@ -1005,7 +664,7 @@ pub struct BlockSeqEntry {
 }
 impl BlockSeqEntry {
     pub fn minus(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::MINUS)
+        token(&self.syntax, SyntaxKind::MINUS)
     }
     pub fn block(&self) -> Option<Block> {
         child(&self.syntax)
@@ -1064,7 +723,7 @@ impl BlockMapEntry {
         child(&self.syntax)
     }
     pub fn colon(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::COLON)
+        token(&self.syntax, SyntaxKind::COLON)
     }
     pub fn value(&self) -> Option<BlockMapValue> {
         child(&self.syntax)
@@ -1092,7 +751,7 @@ pub struct BlockMapKey {
 }
 impl BlockMapKey {
     pub fn question_mark(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::QUESTION_MARK)
+        token(&self.syntax, SyntaxKind::QUESTION_MARK)
     }
     pub fn block(&self) -> Option<Block> {
         child(&self.syntax)
@@ -1184,11 +843,11 @@ pub struct YamlDirective {
     syntax: SyntaxNode,
 }
 impl YamlDirective {
-    pub fn directive_name(&self) -> Option<DirectiveName> {
-        token(&self.syntax)
+    pub fn directive_name(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::DIRECTIVE_NAME)
     }
-    pub fn yaml_version(&self) -> Option<YamlVersion> {
-        token(&self.syntax)
+    pub fn yaml_version(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::YAML_VERSION)
     }
 }
 impl AstNode for YamlDirective {
@@ -1212,14 +871,14 @@ pub struct TagDirective {
     syntax: SyntaxNode,
 }
 impl TagDirective {
-    pub fn directive_name(&self) -> Option<DirectiveName> {
-        token(&self.syntax)
+    pub fn directive_name(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::DIRECTIVE_NAME)
     }
     pub fn tag_handle(&self) -> Option<TagHandle> {
         child(&self.syntax)
     }
-    pub fn tag_prefix(&self) -> Option<TagPrefix> {
-        token(&self.syntax)
+    pub fn tag_prefix(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::TAG_PREFIX)
     }
 }
 impl AstNode for TagDirective {
@@ -1243,11 +902,11 @@ pub struct ReservedDirective {
     syntax: SyntaxNode,
 }
 impl ReservedDirective {
-    pub fn directive_name(&self) -> Option<DirectiveName> {
-        token(&self.syntax)
+    pub fn directive_name(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::DIRECTIVE_NAME)
     }
-    pub fn directive_param(&self) -> Option<DirectiveParam> {
-        token(&self.syntax)
+    pub fn directive_param(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::DIRECTIVE_PARAM)
     }
 }
 impl AstNode for ReservedDirective {
@@ -1272,7 +931,7 @@ pub struct Directive {
 }
 impl Directive {
     pub fn percent(&self) -> Option<SyntaxToken> {
-        token_with_kind(&self.syntax, SyntaxKind::PERCENT)
+        token(&self.syntax, SyntaxKind::PERCENT)
     }
     pub fn yaml_directive(&self) -> Option<YamlDirective> {
         child(&self.syntax)
@@ -1308,8 +967,8 @@ impl Document {
     pub fn directives(&self) -> AstChildren<Directive> {
         children(&self.syntax)
     }
-    pub fn directives_end(&self) -> Option<DirectivesEnd> {
-        token(&self.syntax)
+    pub fn directives_end(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::DIRECTIVES_END)
     }
     pub fn block(&self) -> Option<Block> {
         child(&self.syntax)
@@ -1317,8 +976,8 @@ impl Document {
     pub fn flow(&self) -> Option<Flow> {
         child(&self.syntax)
     }
-    pub fn document_end(&self) -> Option<DocumentEnd> {
-        token(&self.syntax)
+    pub fn document_end(&self) -> Option<SyntaxToken> {
+        token(&self.syntax, SyntaxKind::DOCUMENT_END)
     }
 }
 impl AstNode for Document {
