@@ -75,6 +75,7 @@ fn token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
 // -------------------------------------------------------------------------
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `&anchor` and/or `!!tag`.
 pub struct Properties {
     syntax: SyntaxNode,
 }
@@ -103,6 +104,7 @@ impl AstNode for Properties {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `!<...>`, `!!xxx`, or `!`.
 pub struct TagProperty {
     syntax: SyntaxNode,
 }
@@ -134,6 +136,7 @@ impl AstNode for TagProperty {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `!xxx`, `!!`, or `!`.
 pub struct TagHandle {
     syntax: SyntaxNode,
 }
@@ -165,6 +168,7 @@ impl AstNode for TagHandle {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `!!xxx`.
 pub struct ShorthandTag {
     syntax: SyntaxNode,
 }
@@ -193,6 +197,7 @@ impl AstNode for ShorthandTag {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `!`.
 pub struct NonSpecificTag {
     syntax: SyntaxNode,
 }
@@ -218,6 +223,7 @@ impl AstNode for NonSpecificTag {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `&anchor`.
 pub struct AnchorProperty {
     syntax: SyntaxNode,
 }
@@ -246,6 +252,7 @@ impl AstNode for AnchorProperty {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `*anchor`.
 pub struct Alias {
     syntax: SyntaxNode,
 }
@@ -274,6 +281,7 @@ impl AstNode for Alias {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `[1, 2]`.
 pub struct FlowSeq {
     syntax: SyntaxNode,
 }
@@ -305,6 +313,7 @@ impl AstNode for FlowSeq {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `1, 2` in `[1, 2]` (without brackets).
 pub struct FlowSeqEntries {
     syntax: SyntaxNode,
 }
@@ -330,6 +339,7 @@ impl AstNode for FlowSeqEntries {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for each item in `[1, 2]` (without comma).
 pub struct FlowSeqEntry {
     syntax: SyntaxNode,
 }
@@ -358,6 +368,7 @@ impl AstNode for FlowSeqEntry {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `{a: 1, b: 2}`.
 pub struct FlowMap {
     syntax: SyntaxNode,
 }
@@ -389,6 +400,7 @@ impl AstNode for FlowMap {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `a: 1, b: 2` in `{a: 1, b: 2}` (without braces).
 pub struct FlowMapEntries {
     syntax: SyntaxNode,
 }
@@ -414,6 +426,7 @@ impl AstNode for FlowMapEntries {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for each item (like `a: 1`) in `{a: 1, b: 2}` (without comma).
 pub struct FlowMapEntry {
     syntax: SyntaxNode,
 }
@@ -445,6 +458,7 @@ impl AstNode for FlowMapEntry {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `a` or `b` in `{a: 1, b: 2}`.
 pub struct FlowMapKey {
     syntax: SyntaxNode,
 }
@@ -473,6 +487,7 @@ impl AstNode for FlowMapKey {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `1` or `2` in `{a: 1, b: 2}`.
 pub struct FlowMapValue {
     syntax: SyntaxNode,
 }
@@ -498,6 +513,7 @@ impl AstNode for FlowMapValue {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `a: 1` in `[a: 1]`.
 pub struct FlowPair {
     syntax: SyntaxNode,
 }
@@ -529,6 +545,7 @@ impl AstNode for FlowPair {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `""`, `''`, `plain`, `[]` or `{}`.
 pub struct Flow {
     syntax: SyntaxNode,
 }
@@ -569,6 +586,13 @@ impl AstNode for Flow {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `+` or `-` in block scalar.
+/// ```yaml
+/// |+
+///   ...
+/// >-
+///   ...
+/// ```
 pub struct ChompingIndicator {
     syntax: SyntaxNode,
 }
@@ -597,6 +621,13 @@ impl AstNode for ChompingIndicator {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for multi-line text that starts with `|` or `>`.
+/// ```yaml
+/// |+
+///   ...
+/// >-
+///   ...
+/// ```
 pub struct BlockScalar {
     syntax: SyntaxNode,
 }
@@ -634,6 +665,11 @@ impl AstNode for BlockScalar {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for sequence that contains one or more `- item`.
+/// ```yaml
+/// - item1
+/// - item2
+/// ```
 pub struct BlockSeq {
     syntax: SyntaxNode,
 }
@@ -659,6 +695,7 @@ impl AstNode for BlockSeq {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for each item like `- item1` in block sequence.
 pub struct BlockSeqEntry {
     syntax: SyntaxNode,
 }
@@ -690,6 +727,11 @@ impl AstNode for BlockSeqEntry {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for key-value pairs object.
+/// ```yaml
+/// key1: value1
+/// key2: value2
+/// ```
 pub struct BlockMap {
     syntax: SyntaxNode,
 }
@@ -715,6 +757,7 @@ impl AstNode for BlockMap {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for each key-value pair like `key1: value1` in block map.
 pub struct BlockMapEntry {
     syntax: SyntaxNode,
 }
@@ -746,6 +789,7 @@ impl AstNode for BlockMapEntry {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `key1` in `key1: value1`.
 pub struct BlockMapKey {
     syntax: SyntaxNode,
 }
@@ -777,6 +821,7 @@ impl AstNode for BlockMapKey {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `value1` in `key1: value1`.
 pub struct BlockMapValue {
     syntax: SyntaxNode,
 }
@@ -805,6 +850,7 @@ impl AstNode for BlockMapValue {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for block scalar, block sequence or block map.
 pub struct Block {
     syntax: SyntaxNode,
 }
@@ -839,6 +885,7 @@ impl AstNode for Block {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `%YAML 1.2`.
 pub struct YamlDirective {
     syntax: SyntaxNode,
 }
@@ -867,6 +914,7 @@ impl AstNode for YamlDirective {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `%TAG ! tag:yaml.org,2002:`.
 pub struct TagDirective {
     syntax: SyntaxNode,
 }
@@ -898,6 +946,7 @@ impl AstNode for TagDirective {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `%unknown ...`.
 pub struct ReservedDirective {
     syntax: SyntaxNode,
 }
@@ -926,6 +975,7 @@ impl AstNode for ReservedDirective {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for `%YAML 1.2`, `%TAG ! tag:yaml.org,2002:`, or `%unknown ...`.
 pub struct Directive {
     syntax: SyntaxNode,
 }
@@ -960,6 +1010,7 @@ impl AstNode for Directive {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Syntax for a whole document which can contain directives, block/flow.
 pub struct Document {
     syntax: SyntaxNode,
 }
@@ -997,6 +1048,7 @@ impl AstNode for Document {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+/// Root contains zero or more documents.
 pub struct Root {
     syntax: SyntaxNode,
 }

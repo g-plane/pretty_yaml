@@ -3,7 +3,8 @@
 //! ## Usage
 //!
 //! ```
-//! match yaml_parser::parse(&code) {
+//! let code = "";
+//! match yaml_parser::parse(code) {
 //!     Ok(tree) => println!("{tree:#?}"),
 //!     Err(err) => eprintln!("{err}"),
 //! };
@@ -11,6 +12,17 @@
 //!
 //! It produces rowan tree if succeeded.
 //! For consuming the tree, see [rowan's docs](https://docs.rs/rowan).
+//!
+//! To build AST from CST:
+//!
+//! ```
+//! use yaml_parser::{ast::{AstNode, Root}, parse};
+//!
+//! let code = "";
+//! let tree = parse(code).unwrap();
+//! let ast = Root::cast(tree);
+//! assert!(matches!(ast, Some(Root { .. })));
+//! ```
 
 pub use self::error::SyntaxError;
 use self::{indent::ParserExt as _, set_state::ParserExt as _, verify_state::verify_state};

@@ -17,6 +17,13 @@ match yaml_parser::parse(&code) {
 It produces rowan tree if succeeded.
 For consuming the tree, see [rowan's docs](https://docs.rs/rowan).
 
+If you need to build AST from CST, use `ast` module:
+
+```rust
+let root = yaml_parser::ast::Root::cast(tree).unwrap();
+dbg!(root);
+```
+
 ## Tests
 
 Tests come from [official test suite](https://github.com/yaml/yaml-test-suite).
