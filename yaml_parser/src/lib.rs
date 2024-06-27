@@ -26,7 +26,6 @@
 
 pub use self::error::SyntaxError;
 use self::{indent::ParserExt as _, set_state::ParserExt as _, verify_state::verify_state};
-use either::Either;
 use rowan::{GreenNode, GreenToken, NodeOrToken};
 use winnow::{
     ascii::{digit1, line_ending, multispace1, space1, take_escaped, till_line_ending},
@@ -637,8 +636,15 @@ fn block_scalar(input: &mut Input) -> GreenResult {
     (
         (alt((ascii_char::<'|'>(BAR), ascii_char::<'>'>(GREATER_THAN)))),
         opt(alt((
-            (indent_indicator, opt(chomping_indicator)).map(Either::Left),
-            (chomping_indicator, opt(indent_indicator)).map(Either::Right),
+            (indent_indicator, opt(chomping_indicator)).map(
+                |((indent_token, indent_value), chomping)| {
+                    (indent_token, chomping, Some(indent_value))
+                },
+            ),
+            (chomping_indicator, opt(indent_indicator)).map(|(chomping, indent)| {
+                let (indent_token, indent_value) = indent.unzip();
+                (chomping, indent_token, indent_value)
+            }),
         )))
         .context(StrContext::Label("block scalar header")),
         opt(space),
@@ -648,22 +654,14 @@ fn block_scalar(input: &mut Input) -> GreenResult {
         .flat_map(|(style, indicator, space, comment, mut indent)| {
             let mut children = Vec::with_capacity(3);
             children.push(style);
-            match indicator {
-                Some(Either::Left(((indent_token, indent_value), chomping_token))) => {
-                    children.push(indent_token);
+            if let Some(indicator) = indicator {
+                children.push(indicator.0);
+                if let Some(token) = indicator.1 {
+                    children.push(token);
+                }
+                if let Some(indent_value) = indicator.2 {
                     indent = Some(base_indent + indent_value);
-                    if let Some(chomping) = chomping_token {
-                        children.push(chomping);
-                    }
                 }
-                Some(Either::Right((chomping_token, indent_indicator))) => {
-                    children.push(chomping_token);
-                    if let Some((indent_token, indent_value)) = indent_indicator {
-                        children.push(indent_token);
-                        indent = Some(base_indent + indent_value);
-                    }
-                }
-                None => {}
             }
             if let Some(space) = space {
                 children.push(space);

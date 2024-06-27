@@ -470,7 +470,6 @@ dependencies = [
 name = "yaml_parser"
 version = "0.0.0"
 dependencies = [
- "either",
  "insta",
  "rowan",
  "winnow",
