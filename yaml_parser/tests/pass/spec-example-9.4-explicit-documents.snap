@@ -9,7 +9,7 @@ ROOT@0..43
       FLOW_MAP@4..22
         L_BRACE@4..5 "{"
         WHITESPACE@5..6 " "
-        FLOW_MAP_ENTRIES@6..21
+        FLOW_MAP_ENTRIES@6..20
           FLOW_MAP_ENTRY@6..20
             FLOW_MAP_KEY@6..15
               FLOW@6..15
@@ -20,7 +20,7 @@ ROOT@0..43
             FLOW_MAP_VALUE@18..20
               FLOW@18..20
                 PLAIN_SCALAR@18..20 "20"
-          WHITESPACE@20..21 " "
+        WHITESPACE@20..21 " "
         R_BRACE@21..22 "}"
     WHITESPACE@22..23 "\n"
     DOCUMENT_END@23..26 "..."

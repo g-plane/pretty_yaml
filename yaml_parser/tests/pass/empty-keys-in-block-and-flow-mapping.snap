@@ -31,7 +31,7 @@ ROOT@0..120
       FLOW_MAP@31..59
         L_BRACE@31..32 "{"
         WHITESPACE@32..34 "\n "
-        FLOW_MAP_ENTRIES@34..58
+        FLOW_MAP_ENTRIES@34..57
           FLOW_MAP_ENTRY@34..44
             FLOW_MAP_KEY@34..37
               FLOW@34..37
@@ -49,7 +49,7 @@ ROOT@0..120
             FLOW_MAP_VALUE@48..57
               FLOW@48..57
                 PLAIN_SCALAR@48..57 "empty key"
-          WHITESPACE@57..58 "\n"
+        WHITESPACE@57..58 "\n"
         R_BRACE@58..59 "}"
   WHITESPACE@59..60 "\n"
   DOCUMENT@60..87
@@ -71,9 +71,9 @@ ROOT@0..120
       FLOW_MAP@114..119
         L_BRACE@114..115 "{"
         WHITESPACE@115..116 " "
-        FLOW_MAP_ENTRIES@116..118
+        FLOW_MAP_ENTRIES@116..117
           FLOW_MAP_ENTRY@116..117
             COLON@116..117 ":"
-          WHITESPACE@117..118 " "
+        WHITESPACE@117..118 " "
         R_BRACE@118..119 "}"
   WHITESPACE@119..120 "\n"

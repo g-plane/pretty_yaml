@@ -62,7 +62,7 @@ ROOT@0..128
           FLOW@80..94
             FLOW_MAP@80..94
               L_BRACE@80..81 "{"
-              FLOW_MAP_ENTRIES@81..93
+              FLOW_MAP_ENTRIES@81..92
                 FLOW_MAP_ENTRY@81..92
                   FLOW_MAP_KEY@81..84
                     FLOW@81..84
@@ -72,7 +72,7 @@ ROOT@0..128
                   FLOW_MAP_VALUE@86..92
                     FLOW@86..92
                       PLAIN_SCALAR@86..92 "value?"
-                WHITESPACE@92..93 " "
+              WHITESPACE@92..93 " "
               R_BRACE@93..94 "}"
         WHITESPACE@94..95 "\n"
         BLOCK_SEQ_ENTRY@95..110
@@ -99,7 +99,7 @@ ROOT@0..128
           FLOW@113..127
             FLOW_MAP@113..127
               L_BRACE@113..114 "{"
-              FLOW_MAP_ENTRIES@114..126
+              FLOW_MAP_ENTRIES@114..125
                 FLOW_MAP_ENTRY@114..125
                   FLOW_MAP_KEY@114..118
                     FLOW@114..118
@@ -109,6 +109,6 @@ ROOT@0..128
                   FLOW_MAP_VALUE@120..125
                     FLOW@120..125
                       PLAIN_SCALAR@120..125 "value"
-                WHITESPACE@125..126 " "
+              WHITESPACE@125..126 " "
               R_BRACE@126..127 "}"
   WHITESPACE@127..128 "\n"

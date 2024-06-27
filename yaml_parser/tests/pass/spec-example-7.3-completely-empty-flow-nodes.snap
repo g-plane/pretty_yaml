@@ -7,7 +7,7 @@ ROOT@0..24
       FLOW_MAP@0..23
         L_BRACE@0..1 "{"
         WHITESPACE@1..4 "\n  "
-        FLOW_MAP_ENTRIES@4..22
+        FLOW_MAP_ENTRIES@4..21
           FLOW_MAP_ENTRY@4..11
             FLOW_MAP_KEY@4..9
               QUESTION_MARK@4..5 "?"
@@ -25,6 +25,6 @@ ROOT@0..24
               FLOW@17..20
                 PLAIN_SCALAR@17..20 "bar"
           COMMA@20..21 ","
-          WHITESPACE@21..22 "\n"
+        WHITESPACE@21..22 "\n"
         R_BRACE@22..23 "}"
   WHITESPACE@23..24 "\n"

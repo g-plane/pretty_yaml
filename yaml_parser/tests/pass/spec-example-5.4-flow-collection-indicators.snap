@@ -40,7 +40,7 @@ ROOT@0..59
               FLOW_MAP@33..58
                 L_BRACE@33..34 "{"
                 WHITESPACE@34..35 " "
-                FLOW_MAP_ENTRIES@35..57
+                FLOW_MAP_ENTRIES@35..56
                   FLOW_MAP_ENTRY@35..44
                     FLOW_MAP_KEY@35..38
                       FLOW@35..38
@@ -61,6 +61,6 @@ ROOT@0..59
                     FLOW_MAP_VALUE@51..56
                       FLOW@51..56
                         PLAIN_SCALAR@51..56 "green"
-                  WHITESPACE@56..57 " "
+                WHITESPACE@56..57 " "
                 R_BRACE@57..58 "}"
   WHITESPACE@58..59 "\n"

@@ -123,7 +123,7 @@ ROOT@0..298
                     FLOW_MAP@205..222
                       L_BRACE@205..206 "{"
                       WHITESPACE@206..207 " "
-                      FLOW_MAP_ENTRIES@207..221
+                      FLOW_MAP_ENTRIES@207..220
                         FLOW_MAP_ENTRY@207..212
                           FLOW_MAP_KEY@207..208
                             FLOW@207..208
@@ -144,7 +144,7 @@ ROOT@0..298
                           FLOW_MAP_VALUE@217..220
                             FLOW@217..220
                               PLAIN_SCALAR@217..220 "102"
-                        WHITESPACE@220..221 " "
+                      WHITESPACE@220..221 " "
                       R_BRACE@221..222 "}"
         WHITESPACE@222..223 "\n"
         BLOCK_SEQ_ENTRY@223..297

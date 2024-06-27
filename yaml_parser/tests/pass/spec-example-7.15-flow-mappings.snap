@@ -12,7 +12,7 @@ ROOT@0..60
             FLOW_MAP@2..31
               L_BRACE@2..3 "{"
               WHITESPACE@3..4 " "
-              FLOW_MAP_ENTRIES@4..30
+              FLOW_MAP_ENTRIES@4..29
                 FLOW_MAP_ENTRY@4..13
                   FLOW_MAP_KEY@4..7
                     FLOW@4..7
@@ -37,7 +37,7 @@ ROOT@0..60
                       PLAIN_SCALAR@23..27 "four"
                 WHITESPACE@27..28 " "
                 COMMA@28..29 ","
-                WHITESPACE@29..30 " "
+              WHITESPACE@29..30 " "
               R_BRACE@30..31 "}"
         WHITESPACE@31..32 "\n"
         BLOCK_SEQ_ENTRY@32..59

@@ -7,7 +7,7 @@ ROOT@0..59
       FLOW_MAP@0..58
         L_BRACE@0..1 "{"
         WHITESPACE@1..2 "\n"
-        FLOW_MAP_ENTRIES@2..57
+        FLOW_MAP_ENTRIES@2..56
           FLOW_MAP_ENTRY@2..23
             FLOW_MAP_KEY@2..10
               FLOW@2..10
@@ -32,6 +32,6 @@ ROOT@0..59
                 PLAIN_SCALAR@41..54 "omitted value"
             COLON@54..55 ":"
           COMMA@55..56 ","
-          WHITESPACE@56..57 "\n"
+        WHITESPACE@56..57 "\n"
         R_BRACE@57..58 "}"
   WHITESPACE@58..59 "\n"

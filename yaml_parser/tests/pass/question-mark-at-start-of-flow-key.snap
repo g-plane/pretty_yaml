@@ -7,7 +7,7 @@ ROOT@0..23
       FLOW_MAP@0..22
         L_BRACE@0..1 "{"
         WHITESPACE@1..2 " "
-        FLOW_MAP_ENTRIES@2..21
+        FLOW_MAP_ENTRIES@2..20
           FLOW_MAP_ENTRY@2..11
             FLOW_MAP_KEY@2..6
               FLOW@2..6
@@ -28,6 +28,6 @@ ROOT@0..23
             FLOW_MAP_VALUE@18..20
               FLOW@18..20
                 PLAIN_SCALAR@18..20 "42"
-          WHITESPACE@20..21 "\n"
+        WHITESPACE@20..21 "\n"
         R_BRACE@21..22 "}"
   WHITESPACE@22..23 "\n"

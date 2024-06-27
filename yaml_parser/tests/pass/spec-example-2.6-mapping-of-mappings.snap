@@ -49,7 +49,7 @@ ROOT@0..80
               FLOW_MAP@47..79
                 L_BRACE@47..48 "{"
                 WHITESPACE@48..53 "\n    "
-                FLOW_MAP_ENTRIES@53..78
+                FLOW_MAP_ENTRIES@53..75
                   FLOW_MAP_ENTRY@53..59
                     FLOW_MAP_KEY@53..55
                       FLOW@53..55
@@ -70,6 +70,6 @@ ROOT@0..80
                     FLOW_MAP_VALUE@70..75
                       FLOW@70..75
                         PLAIN_SCALAR@70..75 "0.288"
-                  WHITESPACE@75..78 "\n  "
+                WHITESPACE@75..78 "\n  "
                 R_BRACE@78..79 "}"
   WHITESPACE@79..80 "\n"

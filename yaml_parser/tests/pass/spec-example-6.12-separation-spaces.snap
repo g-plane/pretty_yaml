@@ -11,7 +11,7 @@ ROOT@0..97
               FLOW_MAP@0..28
                 L_BRACE@0..1 "{"
                 WHITESPACE@1..2 " "
-                FLOW_MAP_ENTRIES@2..27
+                FLOW_MAP_ENTRIES@2..26
                   FLOW_MAP_ENTRY@2..14
                     FLOW_MAP_KEY@2..7
                       FLOW@2..7
@@ -32,7 +32,7 @@ ROOT@0..97
                     FLOW_MAP_VALUE@22..26
                       FLOW@22..26
                         PLAIN_SCALAR@22..26 "Sosa"
-                  WHITESPACE@26..27 " "
+                WHITESPACE@26..27 " "
                 R_BRACE@27..28 "}"
           COLON@28..29 ":"
           WHITESPACE@29..30 "\n"

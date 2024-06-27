@@ -47,7 +47,7 @@ ROOT@0..57
               FLOW_MAP@29..40
                 L_BRACE@29..30 "{"
                 WHITESPACE@30..31 " "
-                FLOW_MAP_ENTRIES@31..39
+                FLOW_MAP_ENTRIES@31..38
                   FLOW_MAP_ENTRY@31..38
                     FLOW_MAP_KEY@31..35
                       FLOW@31..35
@@ -62,7 +62,7 @@ ROOT@0..57
                     FLOW_MAP_VALUE@37..38
                       FLOW@37..38
                         PLAIN_SCALAR@37..38 "f"
-                  WHITESPACE@38..39 " "
+                WHITESPACE@38..39 " "
                 R_BRACE@39..40 "}"
           COMMA@40..41 ","
           WHITESPACE@41..43 "\n "
@@ -76,7 +76,7 @@ ROOT@0..57
               FLOW_MAP@46..54
                 L_BRACE@46..47 "{"
                 WHITESPACE@47..48 " "
-                FLOW_MAP_ENTRIES@48..53
+                FLOW_MAP_ENTRIES@48..52
                   FLOW_MAP_ENTRY@48..52
                     FLOW_MAP_KEY@48..49
                       FLOW@48..49
@@ -86,7 +86,7 @@ ROOT@0..57
                     FLOW_MAP_VALUE@51..52
                       FLOW@51..52
                         PLAIN_SCALAR@51..52 "h"
-                  WHITESPACE@52..53 " "
+                WHITESPACE@52..53 " "
                 R_BRACE@53..54 "}"
         WHITESPACE@54..55 "\n"
         R_BRACKET@55..56 "]"
