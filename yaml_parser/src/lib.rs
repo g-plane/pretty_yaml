@@ -33,7 +33,7 @@ use winnow::{
         alt, cond, cut_err, dispatch, eof, fail, not, opt, peek, preceded, repeat, repeat_till,
         terminated, trace,
     },
-    error::{StrContext, StrContextValue},
+    error::{ContextError, StrContext, StrContextValue},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
     PResult, Parser,
@@ -442,29 +442,9 @@ fn flow_sequence(input: &mut Input) -> GreenResult {
 }
 
 fn flow_sequence_entries(input: &mut Input) -> GreenResult {
-    repeat(
-        0..,
-        (
-            stateless_cmts_or_ws0,
-            flow_sequence_entry,
-            alt((
-                (stateless_cmts_or_ws0, ascii_char::<','>(COMMA)).map(Some),
-                peek((stateless_cmts_or_ws0, ']')).value(None),
-            )),
-        ),
-    )
-    .fold(Vec::new, |mut children, (mut trivias, entry, comma)| {
-        children.reserve(3);
-        children.append(&mut trivias);
-        children.push(entry);
-        if let Some((mut trivias, comma)) = comma {
-            children.append(&mut trivias);
-            children.push(comma);
-        }
-        children
-    })
-    .parse_next(input)
-    .map(|children| node(FLOW_SEQ_ENTRIES, children))
+    flow_collection_entries::<']', _>(flow_sequence_entry)
+        .parse_next(input)
+        .map(|children| node(FLOW_SEQ_ENTRIES, children))
 }
 
 fn flow_sequence_entry(input: &mut Input) -> GreenResult {
@@ -500,29 +480,9 @@ fn flow_map(input: &mut Input) -> GreenResult {
 }
 
 fn flow_map_entries(input: &mut Input) -> GreenResult {
-    repeat(
-        0..,
-        (
-            stateless_cmts_or_ws0,
-            flow_map_entry,
-            alt((
-                (stateless_cmts_or_ws0, ascii_char::<','>(COMMA)).map(Some),
-                peek((stateless_cmts_or_ws0, '}')).value(None),
-            )),
-        ),
-    )
-    .fold(Vec::new, |mut children, (mut trivias, entry, comma)| {
-        children.reserve(3);
-        children.append(&mut trivias);
-        children.push(entry);
-        if let Some((mut trivias, comma)) = comma {
-            children.append(&mut trivias);
-            children.push(comma);
-        }
-        children
-    })
-    .parse_next(input)
-    .map(|children| node(FLOW_MAP_ENTRIES, children))
+    flow_collection_entries::<'}', _>(flow_map_entry)
+        .parse_next(input)
+        .map(|children| node(FLOW_MAP_ENTRIES, children))
 }
 
 fn flow_map_entry(input: &mut Input) -> GreenResult {
@@ -597,6 +557,35 @@ fn flow_map_entry_key(input: &mut Input) -> GreenResult {
             }),
     ))
     .parse_next(input)
+}
+
+fn flow_collection_entries<'s, const END: char, Entry>(
+    entry: Entry,
+) -> impl Parser<Input<'s>, Vec<GreenElement>, ContextError>
+where
+    Entry: Parser<Input<'s>, GreenElement, ContextError>,
+{
+    repeat(
+        0..,
+        (
+            stateless_cmts_or_ws0,
+            entry,
+            alt((
+                (stateless_cmts_or_ws0, ascii_char::<','>(COMMA)).map(Some),
+                peek((stateless_cmts_or_ws0, END)).value(None),
+            )),
+        ),
+    )
+    .fold(Vec::new, |mut children, (mut trivias, entry, comma)| {
+        children.reserve(3);
+        children.append(&mut trivias);
+        children.push(entry);
+        if let Some((mut trivias, comma)) = comma {
+            children.append(&mut trivias);
+            children.push(comma);
+        }
+        children
+    })
 }
 
 fn flow_content(input: &mut Input) -> GreenResult {
