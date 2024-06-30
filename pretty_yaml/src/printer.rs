@@ -577,24 +577,53 @@ where
 
     let mut has_line_break = false;
     if let Some(question_mark) = question_mark {
-        docs.push(Doc::text("?"));
-        let mut trivia_docs = format_trivias_after_punc(
-            &question_mark,
-            key.syntax().last_token(),
-            &mut has_line_break,
-            ctx,
-        );
-        docs.append(&mut trivia_docs);
+        match &content {
+            Some(content) if matches!(content.syntax().kind(), SyntaxKind::FLOW) => {
+                docs.push(Doc::flat_or_break(
+                    Doc::nil(),
+                    Doc::text("?").append(Doc::hard_line()),
+                ));
+            }
+            _ => docs.push(Doc::text("?")),
+        }
+        if let Some(token) = question_mark
+            .next_token()
+            .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
+        {
+            if token.text().contains(['\n', '\r']) {
+                docs.push(Doc::hard_line());
+                has_line_break = true;
+            }
+            let last_ws_index = key
+                .syntax()
+                .last_token()
+                .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
+                .map(|token| token.index());
+            if let Some(index) = last_ws_index {
+                let (mut trivia_docs, has_comment) = format_trivias(
+                    token
+                        .siblings_with_tokens(Direction::Next)
+                        .filter(|token| token.index() != index),
+                    ctx,
+                );
+                docs.append(&mut trivia_docs);
+                if has_comment {
+                    docs.push(Doc::hard_line());
+                    has_line_break = true;
+                }
+            }
+        }
     }
 
     if let Some(content) = content {
         docs.push(content.doc(ctx));
     }
 
+    let doc = Doc::list(docs).group();
     if has_line_break {
-        Doc::list(docs).nest(ctx.indent_width)
+        doc.nest(ctx.indent_width)
     } else {
-        Doc::list(docs)
+        doc
     }
 }
 
@@ -610,6 +639,7 @@ where
 {
     let mut docs = Vec::with_capacity(4);
 
+    let mut trivia_before_colon_docs = vec![];
     if let Some(key) = key {
         docs.push(key.doc(ctx));
         if let Some(token) = key
@@ -618,17 +648,17 @@ where
             .and_then(SyntaxElement::into_token)
             .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
         {
-            if token.text().contains(['\n', '\r']) {
-                docs.push(Doc::hard_line());
-            }
-            let mut trivia_docs = format_trivias_after_token(&token, ctx).0;
-            docs.append(&mut trivia_docs);
+            trivia_before_colon_docs = format_trivias_after_token(&token, ctx).0;
         }
     }
 
     if let Some(colon) = colon {
         let mut has_line_break = false;
         docs.push(Doc::text(":"));
+        if !trivia_before_colon_docs.is_empty() {
+            docs.push(Doc::space());
+            docs.append(&mut trivia_before_colon_docs);
+        }
         if let Some(value) = value {
             let trivia_docs = format_trivias_after_punc(
                 &colon,
