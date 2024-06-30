@@ -275,6 +275,8 @@ impl DocGen for Flow {
             docs.push(flow_seq.doc(ctx));
         } else if let Some(flow_map) = self.flow_map() {
             docs.push(flow_map.doc(ctx));
+        } else if let Some(alias) = self.alias() {
+            docs.push(alias.doc(ctx));
         }
         Doc::list(docs)
     }

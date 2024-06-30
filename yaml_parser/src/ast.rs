@@ -568,6 +568,9 @@ impl Flow {
     pub fn flow_map(&self) -> Option<FlowMap> {
         child(&self.syntax)
     }
+    pub fn alias(&self) -> Option<Alias> {
+        child(&self.syntax)
+    }
 }
 impl AstNode for Flow {
     fn can_cast(kind: SyntaxKind) -> bool {
