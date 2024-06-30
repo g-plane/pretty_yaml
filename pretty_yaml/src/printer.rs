@@ -133,15 +133,15 @@ impl DocGen for BlockSeqEntry {
         let mut docs = Vec::with_capacity(3);
 
         if let Some(token) = self.minus() {
-            let mut has_line_break = false;
-            docs.push(Doc::text("-"));
-            let trivia_docs = format_trivias_after_punc(
-                &token,
-                self.syntax().last_token(),
-                &mut has_line_break,
-                ctx,
-            );
-            docs.push(Doc::list(trivia_docs).group());
+            docs.push(Doc::text("- "));
+            if let Some(token) = token
+                .next_sibling_or_token()
+                .and_then(SyntaxElement::into_token)
+                .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
+            {
+                let trivia_docs = format_trivias_after_token(&token, ctx).0;
+                docs.push(Doc::list(trivia_docs));
+            }
         }
 
         if let Some(block) = self.block() {
