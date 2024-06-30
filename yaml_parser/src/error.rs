@@ -1,5 +1,5 @@
 use crate::Input;
-use std::fmt;
+use std::{error::Error, fmt};
 use winnow::error::{ContextError, ParseError};
 
 #[derive(Clone, Debug)]
@@ -33,3 +33,5 @@ impl<'s> From<ParseError<Input<'s>, ContextError>> for SyntaxError<'s> {
         SyntaxError(err)
     }
 }
+
+impl Error for SyntaxError<'_> {}
