@@ -4,34 +4,49 @@ use winnow::error::{ContextError, ParseError};
 
 #[derive(Clone, Debug)]
 /// Error type for syntax errors.
-pub struct SyntaxError<'s>(ParseError<Input<'s>, ContextError>);
+pub struct SyntaxError {
+    input: String,
+    offset: usize,
+    message: String,
+    code_frame: String,
+}
 
-impl SyntaxError<'_> {
+impl SyntaxError {
+    /// The input at the initial location when parsing started.
+    pub fn input(&self) -> &str {
+        &self.input
+    }
+
     #[inline]
     /// The location where parsing failed.
     ///
     /// **Note:** This is an offset, not an index, and may point to the end of input on eof errors.
     pub fn offset(&self) -> usize {
-        self.0.offset()
+        self.offset
     }
 
     #[inline]
     /// Message describing something is invalid or expected something else.
-    pub fn message(&self) -> String {
-        self.0.inner().to_string()
+    pub fn message(&self) -> &str {
+        &self.message
     }
 }
 
-impl fmt::Display for SyntaxError<'_> {
+impl fmt::Display for SyntaxError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        self.0.fmt(f)
+        write!(f, "{}", self.code_frame)
     }
 }
 
-impl<'s> From<ParseError<Input<'s>, ContextError>> for SyntaxError<'s> {
+impl<'s> From<ParseError<Input<'s>, ContextError>> for SyntaxError {
     fn from(err: ParseError<Input<'s>, ContextError>) -> Self {
-        SyntaxError(err)
+        Self {
+            input: err.input().to_string(),
+            offset: err.offset(),
+            message: err.inner().to_string(),
+            code_frame: err.to_string(),
+        }
     }
 }
 
-impl Error for SyntaxError<'_> {}
+impl Error for SyntaxError {}
