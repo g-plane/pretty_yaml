@@ -1,15 +1,18 @@
 use crate::{ctx::Ctx, printer::DocGen};
 use tiny_pretty::print;
-use yaml_parser::ast::{AstNode, Root};
+use yaml_parser::{
+    ast::{AstNode, Root},
+    SyntaxError,
+};
 
 mod ctx;
 mod printer;
 
 /// Format the given source input.
-pub fn format_text(input: &str) -> String {
-    let syntax = yaml_parser::parse(input).unwrap();
-    let root = Root::cast(syntax).unwrap();
-    print_tree(&root)
+pub fn format_text(input: &str) -> Result<String, SyntaxError> {
+    let syntax = yaml_parser::parse(input)?;
+    let root = Root::cast(syntax).expect("expected root node");
+    Ok(print_tree(&root))
 }
 
 /// Print the given concrete syntax tree.
