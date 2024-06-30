@@ -620,8 +620,6 @@ where
         {
             if token.text().contains(['\n', '\r']) {
                 docs.push(Doc::hard_line());
-            } else {
-                docs.push(Doc::space());
             }
             let mut trivia_docs = format_trivias_after_token(&token, ctx).0;
             docs.append(&mut trivia_docs);
