@@ -104,6 +104,21 @@ impl DocGen for BlockScalar {
                         SyntaxKind::COMMENT => Doc::space().append(format_comment(&token, ctx)),
                         SyntaxKind::BLOCK_SCALAR_TEXT => {
                             let text = token.text();
+                            if self
+                                .syntax()
+                                .children_with_tokens()
+                                .any(|element| element.kind() == SyntaxKind::INDENT_INDICATOR)
+                            {
+                                return Doc::list(
+                                    itertools::intersperse(
+                                        token.text().split('\n').map(|s| {
+                                            Doc::text(s.strip_suffix('\r').unwrap_or(s).to_owned())
+                                        }),
+                                        Doc::empty_line(),
+                                    )
+                                    .collect(),
+                                );
+                            }
                             let space_len = text.find(|c: char| !c.is_ascii_whitespace()).map(
                                 |first_contentful| {
                                     let first_linebreak = text[..first_contentful].rfind('\n');
