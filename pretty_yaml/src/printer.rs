@@ -115,21 +115,27 @@ impl DocGen for BlockScalar {
                                 },
                             );
                             if let Some(space_len) = space_len {
-                                Doc::list(
-                                    itertools::intersperse(
-                                        text.split('\n').map(|s| {
-                                            let s = s.strip_suffix('\r').unwrap_or(s);
-                                            if s.is_empty() {
-                                                Doc::text("")
-                                            } else {
-                                                Doc::text(s[space_len..].to_owned())
-                                            }
-                                        }),
-                                        Doc::hard_line(),
-                                    )
-                                    .collect(),
-                                )
-                                .nest(ctx.indent_width)
+                                let mut lines = text.split('\n').map(|s| {
+                                    let s = s.strip_suffix('\r').unwrap_or(s);
+                                    if s.is_empty() {
+                                        String::new()
+                                    } else {
+                                        s[space_len..].to_owned()
+                                    }
+                                });
+                                let mut docs = vec![];
+                                if let Some(line) = lines.next() {
+                                    docs.push(Doc::text(line));
+                                }
+                                for line in lines {
+                                    if line.is_empty() {
+                                        docs.push(Doc::empty_line());
+                                    } else {
+                                        docs.push(Doc::hard_line());
+                                        docs.push(Doc::text(line));
+                                    }
+                                }
+                                Doc::list(docs).nest(ctx.indent_width)
                             } else {
                                 Doc::nil()
                             }
