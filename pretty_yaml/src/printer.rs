@@ -100,8 +100,8 @@ impl DocGen for BlockScalar {
                 .children_with_tokens()
                 .map(|element| match element {
                     SyntaxElement::Token(token) => match token.kind() {
-                        SyntaxKind::WHITESPACE => Doc::space(),
-                        SyntaxKind::COMMENT => format_comment(&token, ctx),
+                        SyntaxKind::WHITESPACE => Doc::nil(),
+                        SyntaxKind::COMMENT => Doc::space().append(format_comment(&token, ctx)),
                         SyntaxKind::BLOCK_SCALAR_TEXT => {
                             let text = token.text();
                             let space_len = text.find(|c: char| !c.is_ascii_whitespace()).map(
