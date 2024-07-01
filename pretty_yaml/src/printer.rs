@@ -102,15 +102,38 @@ impl DocGen for BlockScalar {
                     SyntaxElement::Token(token) => match token.kind() {
                         SyntaxKind::WHITESPACE => Doc::space(),
                         SyntaxKind::COMMENT => format_comment(&token, ctx),
-                        SyntaxKind::BLOCK_SCALAR_TEXT => Doc::list(
-                            itertools::intersperse(
-                                token.text().split('\n').map(|s| {
-                                    Doc::text(s.strip_suffix('\r').unwrap_or(s).to_owned())
-                                }),
-                                Doc::empty_line(),
-                            )
-                            .collect(),
-                        ),
+                        SyntaxKind::BLOCK_SCALAR_TEXT => {
+                            let text = token.text();
+                            let space_len = text.find(|c: char| !c.is_ascii_whitespace()).map(
+                                |first_contentful| {
+                                    let first_linebreak = text[..first_contentful].rfind('\n');
+                                    if let Some(first_linbreak) = first_linebreak {
+                                        (first_contentful - first_linbreak).saturating_sub(1)
+                                    } else {
+                                        first_contentful
+                                    }
+                                },
+                            );
+                            if let Some(space_len) = space_len {
+                                Doc::list(
+                                    itertools::intersperse(
+                                        text.split('\n').map(|s| {
+                                            let s = s.strip_suffix('\r').unwrap_or(s);
+                                            if s.is_empty() {
+                                                Doc::text("")
+                                            } else {
+                                                Doc::text(s[space_len..].to_owned())
+                                            }
+                                        }),
+                                        Doc::hard_line(),
+                                    )
+                                    .collect(),
+                                )
+                                .nest(ctx.indent_width)
+                            } else {
+                                Doc::nil()
+                            }
+                        }
                         _ => Doc::text(token.to_string()),
                     },
                     SyntaxElement::Node(node) => Doc::text(node.to_string()),
@@ -248,8 +271,8 @@ impl DocGen for Flow {
                 text.get(1..text.len() - 1)
                     .expect("expected double quoted scalar")
                     .split('\n')
-                    .map(|s| Doc::text(s.strip_suffix('\r').unwrap_or(s).to_owned())),
-                Doc::empty_line(),
+                    .map(|s| Doc::text(s.strip_suffix('\r').unwrap_or(s).trim().to_owned())),
+                Doc::hard_line(),
             ));
             docs.push(Doc::text("\""));
         } else if let Some(single_quoted) = self.single_quoted_scalar() {
@@ -259,8 +282,8 @@ impl DocGen for Flow {
                 text.get(1..text.len() - 1)
                     .expect("expected single quoted scalar")
                     .split('\n')
-                    .map(|s| Doc::text(s.strip_suffix('\r').unwrap_or(s).to_owned())),
-                Doc::empty_line(),
+                    .map(|s| Doc::text(s.strip_suffix('\r').unwrap_or(s).trim().to_owned())),
+                Doc::hard_line(),
             ));
             docs.push(Doc::text("'"));
         } else if let Some(plain) = self.plain_scalar() {
