@@ -1,0 +1,7 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+!!str # comment 1
+# comment 2
+|
+  123
