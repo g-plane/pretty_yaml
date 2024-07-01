@@ -85,6 +85,10 @@ pub struct LanguageOptions {
     #[cfg_attr(feature = "config_serde", serde(alias = "formatComments"))]
     /// See [`formatComments`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#formatcomments) on GitHub
     pub format_comments: bool,
+
+    #[cfg_attr(feature = "config_serde", serde(alias = "indentBlockSequenceInMap"))]
+    /// See [`indentBlockSequenceInMap`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#indentblocksequenceinmap) on GitHub
+    pub indent_block_sequence_in_map: bool,
 }
 
 impl Default for LanguageOptions {
@@ -93,6 +97,7 @@ impl Default for LanguageOptions {
             quotes: Quotes::default(),
             trailing_comma: true,
             format_comments: false,
+            indent_block_sequence_in_map: true,
         }
     }
 }

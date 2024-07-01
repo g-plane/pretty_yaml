@@ -693,7 +693,17 @@ where
                 ctx,
             );
             let doc = Doc::list(trivia_docs).append(value.doc(ctx)).group();
-            if has_line_break {
+            if !ctx.options.indent_block_sequence_in_map
+                && value
+                    .syntax()
+                    .children()
+                    .find(|child| child.kind() == SyntaxKind::BLOCK)
+                    .iter()
+                    .flat_map(|block| block.children())
+                    .any(|child| child.kind() == SyntaxKind::BLOCK_SEQ)
+            {
+                docs.push(doc);
+            } else if has_line_break {
                 docs.push(doc.nest(ctx.indent_width));
             } else {
                 docs.push(doc);
