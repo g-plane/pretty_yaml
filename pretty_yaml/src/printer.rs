@@ -735,6 +735,7 @@ where
     let mut docs = Vec::with_capacity(4);
 
     let mut trivia_before_colon_docs = vec![];
+    let mut has_comments_before_colon = false;
     if let Some(key) = key {
         docs.push(key.doc(ctx));
         if let Some(token) = key
@@ -743,7 +744,8 @@ where
             .and_then(SyntaxElement::into_token)
             .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
         {
-            trivia_before_colon_docs = format_trivias_after_token(&token, ctx).0;
+            (trivia_before_colon_docs, has_comments_before_colon) =
+                format_trivias_after_token(&token, ctx);
         }
     }
 
@@ -752,19 +754,41 @@ where
         docs.push(Doc::text(":"));
         if !trivia_before_colon_docs.is_empty() {
             docs.push(Doc::space());
-            docs.append(&mut trivia_before_colon_docs);
+            docs.push(Doc::list(trivia_before_colon_docs).nest(ctx.indent_width));
         }
         if let Some(value) = value {
-            let trivia_docs = format_trivias_after_punc(
-                &colon,
-                value
+            let mut value_docs = vec![];
+            if let Some(token) = colon
+                .next_token()
+                .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
+            {
+                if token.text().contains(['\n', '\r']) {
+                    value_docs.push(Doc::hard_line());
+                    has_line_break = true;
+                } else if !has_comments_before_colon {
+                    value_docs.push(Doc::space());
+                }
+                let last_ws_index = value
                     .syntax()
                     .prev_sibling_or_token()
-                    .and_then(SyntaxElement::into_token),
-                &mut has_line_break,
-                ctx,
-            );
-            let doc = Doc::list(trivia_docs).append(value.doc(ctx)).group();
+                    .and_then(SyntaxElement::into_token)
+                    .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
+                    .map(|token| token.index());
+                if let Some(index) = last_ws_index {
+                    let (mut trivia_docs, has_comment) = format_trivias(
+                        token
+                            .siblings_with_tokens(Direction::Next)
+                            .filter(|token| token.index() != index),
+                        ctx,
+                    );
+                    value_docs.append(&mut trivia_docs);
+                    if has_comment {
+                        value_docs.push(Doc::hard_line());
+                        has_line_break = true;
+                    }
+                }
+            }
+            let doc = Doc::list(value_docs).append(value.doc(ctx));
             if !ctx.options.indent_block_sequence_in_map
                 && value
                     .syntax()
@@ -882,45 +906,6 @@ where
 
 fn format_trivias_after_token(token: &SyntaxToken, ctx: &Ctx) -> (Vec<Doc<'static>>, bool) {
     format_trivias(token.siblings_with_tokens(Direction::Next), ctx)
-}
-
-fn format_trivias_after_punc(
-    token: &SyntaxToken,
-    last_token: Option<SyntaxToken>,
-    has_line_break: &mut bool,
-    ctx: &Ctx,
-) -> Vec<Doc<'static>> {
-    let mut docs = vec![];
-    if let Some(token) = token
-        .next_token()
-        .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
-    {
-        if token.text().contains(['\n', '\r']) {
-            docs.push(Doc::hard_line());
-            *has_line_break = true;
-        } else {
-            docs.push(Doc::space());
-        }
-        let last_ws_index = last_token
-            .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
-            .map(|token| token.index());
-        if let Some(index) = last_ws_index {
-            let (mut trivia_docs, has_comment) = format_trivias(
-                token
-                    .siblings_with_tokens(Direction::Next)
-                    .filter(|token| token.index() != index),
-                ctx,
-            );
-            docs.append(&mut trivia_docs);
-            if has_comment {
-                docs.push(Doc::hard_line());
-                *has_line_break = true;
-            }
-        }
-    } else {
-        docs.push(Doc::space());
-    }
-    docs
 }
 
 fn format_trivias(it: impl Iterator<Item = SyntaxElement>, ctx: &Ctx) -> (Vec<Doc<'static>>, bool) {
