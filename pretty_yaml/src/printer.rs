@@ -1,4 +1,4 @@
-use crate::ctx::Ctx;
+use crate::{config::Quotes, ctx::Ctx};
 use rowan::Direction;
 use tiny_pretty::Doc;
 use yaml_parser::{ast::*, SyntaxElement, SyntaxKind, SyntaxToken};
@@ -266,26 +266,48 @@ impl DocGen for Flow {
         }
         if let Some(double_quoted) = self.double_qouted_scalar() {
             let text = double_quoted.text();
-            docs.push(Doc::text("\""));
+            let (quotes_option, quote) = if text.contains('\\') {
+                (None, "\"")
+            } else {
+                (
+                    Some(&ctx.options.quotes),
+                    match ctx.options.quotes {
+                        Quotes::PreferDouble => "\"",
+                        Quotes::PreferSingle => "'",
+                    },
+                )
+            };
+            docs.push(Doc::text(quote));
             docs.extend(itertools::intersperse(
                 text.get(1..text.len() - 1)
                     .expect("expected double quoted scalar")
                     .split('\n')
-                    .map(|s| Doc::text(s.strip_suffix('\r').unwrap_or(s).trim().to_owned())),
+                    .map(|s| Doc::text(format_quoted_scalar(s, quotes_option))),
                 Doc::hard_line(),
             ));
-            docs.push(Doc::text("\""));
+            docs.push(Doc::text(quote));
         } else if let Some(single_quoted) = self.single_quoted_scalar() {
             let text = single_quoted.text();
-            docs.push(Doc::text("'"));
+            let (quotes_option, quote) = if text.contains('\\') {
+                (None, "'")
+            } else {
+                (
+                    Some(&ctx.options.quotes),
+                    match ctx.options.quotes {
+                        Quotes::PreferDouble => "\"",
+                        Quotes::PreferSingle => "'",
+                    },
+                )
+            };
+            docs.push(Doc::text(quote));
             docs.extend(itertools::intersperse(
                 text.get(1..text.len() - 1)
                     .expect("expected single quoted scalar")
                     .split('\n')
-                    .map(|s| Doc::text(s.strip_suffix('\r').unwrap_or(s).trim().to_owned())),
+                    .map(|s| Doc::text(format_quoted_scalar(s, quotes_option))),
                 Doc::hard_line(),
             ));
-            docs.push(Doc::text("'"));
+            docs.push(Doc::text(quote));
         } else if let Some(plain) = self.plain_scalar() {
             docs.extend(itertools::intersperse(
                 plain
@@ -916,5 +938,14 @@ fn format_comment(token: &SyntaxToken, ctx: &Ctx) -> Doc<'static> {
         }
     } else {
         Doc::text(token.to_string())
+    }
+}
+
+fn format_quoted_scalar(s: &str, quotes_option: Option<&Quotes>) -> String {
+    let s = s.trim();
+    match quotes_option {
+        Some(Quotes::PreferDouble) => s.replace("''", "'"),
+        Some(Quotes::PreferSingle) => s.replace('\'', "''"),
+        None => s.to_owned(),
     }
 }
