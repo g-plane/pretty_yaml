@@ -30,25 +30,45 @@ impl DocGen for AnchorProperty {
 impl DocGen for Block {
     fn doc(&self, ctx: &Ctx) -> Doc<'static> {
         let mut docs = Vec::with_capacity(1);
+        let mut trivia_after_props_docs = vec![];
         let has_properties = if let Some(properties) = self.properties() {
             docs.push(properties.doc(ctx));
+            if let Some(token) = properties
+                .syntax()
+                .next_sibling_or_token()
+                .and_then(SyntaxElement::into_token)
+                .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
+            {
+                trivia_after_props_docs = format_trivias_after_token(&token, ctx).0;
+            }
             true
         } else {
             false
         };
         if let Some(block_map) = self.block_map() {
             if has_properties {
-                docs.push(Doc::hard_line());
+                if !trivia_after_props_docs.is_empty() {
+                    docs.append(&mut trivia_after_props_docs);
+                } else {
+                    docs.push(Doc::hard_line());
+                }
             }
             docs.push(block_map.doc(ctx));
         } else if let Some(block_seq) = self.block_seq() {
             if has_properties {
-                docs.push(Doc::hard_line());
+                if !trivia_after_props_docs.is_empty() {
+                    docs.append(&mut trivia_after_props_docs);
+                } else {
+                    docs.push(Doc::hard_line());
+                }
             }
             docs.push(block_seq.doc(ctx));
         } else if let Some(block_scalar) = self.block_scalar() {
             if has_properties {
                 docs.push(Doc::space());
+                if !trivia_after_props_docs.is_empty() {
+                    docs.append(&mut trivia_after_props_docs);
+                }
             }
             docs.push(block_scalar.doc(ctx));
         }
@@ -284,6 +304,15 @@ impl DocGen for Flow {
         if let Some(properties) = self.properties() {
             docs.push(properties.doc(ctx));
             docs.push(Doc::space());
+            if let Some(token) = properties
+                .syntax()
+                .next_sibling_or_token()
+                .and_then(SyntaxElement::into_token)
+                .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
+            {
+                let mut trivia_docs = format_trivias_after_token(&token, ctx).0;
+                docs.append(&mut trivia_docs);
+            }
         }
         if let Some(double_quoted) = self.double_qouted_scalar() {
             let text = double_quoted.text();
