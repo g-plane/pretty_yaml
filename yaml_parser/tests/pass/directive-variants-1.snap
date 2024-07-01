@@ -1,0 +1,12 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..13
+  DOCUMENT@0..12
+    DIRECTIVE@0..8
+      PERCENT@0..1 "%"
+      RESERVED_DIRECTIVE@1..8
+        DIRECTIVE_NAME@1..8 "YAML1.1"
+    WHITESPACE@8..9 "\n"
+    DIRECTIVES_END@9..12 "---"
+  WHITESPACE@12..13 "\n"

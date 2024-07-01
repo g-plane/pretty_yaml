@@ -1008,26 +1008,26 @@ fn tag_prefix(input: &mut Input) -> GreenResult {
 fn reserved_directive(input: &mut Input) -> GreenResult {
     (
         take_till(1.., |c: char| c.is_ascii_whitespace()),
-        space,
-        repeat::<_, _, (), _, _>(
-            0..,
-            alt((
-                take_till(1.., |c: char| c.is_ascii_whitespace()),
-                terminated(space1, peek(none_of('#'))),
-            )),
-        )
-        .recognize(),
+        opt((
+            space,
+            repeat::<_, _, (), _, _>(
+                0..,
+                alt((
+                    take_till(1.., |c: char| c.is_ascii_whitespace()),
+                    terminated(space1, peek(none_of('#'))),
+                )),
+            )
+            .recognize(),
+        )),
     )
         .parse_next(input)
-        .map(|(name, space, param)| {
-            node(
-                RESERVED_DIRECTIVE,
-                [
-                    tok(DIRECTIVE_NAME, name),
-                    space,
-                    tok(DIRECTIVE_PARAM, param),
-                ],
-            )
+        .map(|(name, param)| {
+            let mut children = vec![tok(DIRECTIVE_NAME, name)];
+            if let Some((space, param)) = param {
+                children.push(space);
+                children.push(tok(DIRECTIVE_PARAM, param));
+            }
+            node(RESERVED_DIRECTIVE, children)
         })
 }
 
