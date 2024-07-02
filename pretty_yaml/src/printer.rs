@@ -695,10 +695,16 @@ where
     let mut has_line_break = false;
     if let Some(question_mark) = question_mark {
         match &content {
-            Some(content) if matches!(content.syntax().kind(), SyntaxKind::FLOW) => {
+            Some(content)
+                if matches!(content.syntax().kind(), SyntaxKind::FLOW)
+                    && !key
+                        .syntax()
+                        .parent()
+                        .is_some_and(|parent| parent.kind() == SyntaxKind::FLOW_PAIR) =>
+            {
                 docs.push(Doc::flat_or_break(Doc::nil(), Doc::text("? ")));
             }
-            _ => docs.push(Doc::text("?")),
+            _ => docs.push(Doc::text("? ")),
         }
         if let Some(token) = question_mark
             .next_token()
