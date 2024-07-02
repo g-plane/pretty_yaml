@@ -48,6 +48,7 @@ impl DocGen for Block {
         if let Some(block_map) = self.block_map() {
             if has_properties {
                 if !trivia_after_props_docs.is_empty() {
+                    docs.push(Doc::space());
                     docs.append(&mut trivia_after_props_docs);
                 } else {
                     docs.push(Doc::hard_line());
@@ -57,6 +58,7 @@ impl DocGen for Block {
         } else if let Some(block_seq) = self.block_seq() {
             if has_properties {
                 if !trivia_after_props_docs.is_empty() {
+                    docs.push(Doc::space());
                     docs.append(&mut trivia_after_props_docs);
                 } else {
                     docs.push(Doc::hard_line());
