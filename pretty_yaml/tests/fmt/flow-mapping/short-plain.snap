@@ -1,0 +1,4 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+{ 1, 2, 3 }

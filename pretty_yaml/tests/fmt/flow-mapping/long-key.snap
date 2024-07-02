@@ -1,0 +1,8 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+{
+  longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglong1,
+  longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglong2,
+  longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglong3,
+}

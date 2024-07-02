@@ -1,0 +1,4 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+{ &123 foo, *123 : 456 }
