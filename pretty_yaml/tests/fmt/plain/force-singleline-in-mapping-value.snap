@@ -1,0 +1,13 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+no-whitesapce: longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong
+
+whitespace: longlonglonglonglonglonglonglonglonglonglong longlonglonglonglonglonglonglonglonglonglong
+
+literal-newline: longlonglonglonglonglonglonglonglonglonglong
+  longlonglonglonglonglonglonglonglonglonglong
+
+newline: longlonglonglonglonglonglonglonglonglonglong
+
+  longlonglonglonglonglonglonglonglonglonglong
