@@ -1,0 +1,15 @@
+# pretty-yaml-ignore
+---
+aaaaa:
+           bbbbb
+...
+aaaaa:
+           bbbbb
+
+# dprint-ignore
+---
+aaaaa:
+           bbbbb
+...
+aaaaa:
+           bbbbb

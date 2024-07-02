@@ -1,0 +1,11 @@
+abc:  !!str #   hello
+   123
+# pretty-yaml-ignore
+def:  !!str #   hello
+   456
+
+abc:  !!str #   hello
+   123
+# dprint-ignore
+def:  !!str #   hello
+   456

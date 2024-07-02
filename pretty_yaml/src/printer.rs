@@ -131,15 +131,7 @@ impl DocGen for BlockScalar {
                                 .children_with_tokens()
                                 .any(|element| element.kind() == SyntaxKind::INDENT_INDICATOR)
                             {
-                                return Doc::list(
-                                    itertools::intersperse(
-                                        token.text().split('\n').map(|s| {
-                                            Doc::text(s.strip_suffix('\r').unwrap_or(s).to_owned())
-                                        }),
-                                        Doc::empty_line(),
-                                    )
-                                    .collect(),
-                                );
+                                return Doc::list(reflow(token.text()).collect());
                             }
                             let space_len = text.find(|c: char| !c.is_ascii_whitespace()).map(
                                 |first_contentful| {
@@ -235,24 +227,30 @@ impl DocGen for Document {
         let mut children = self.syntax().children_with_tokens().peekable();
         while let Some(element) = children.next() {
             match element {
-                SyntaxElement::Node(node) => match node.kind() {
-                    SyntaxKind::BLOCK => {
-                        if let Some(block) = Block::cast(node) {
-                            docs.push(block.doc(ctx));
+                SyntaxElement::Node(node) => {
+                    if should_ignore(&node, ctx) {
+                        docs.extend(reflow(&node.to_string()));
+                    } else {
+                        match node.kind() {
+                            SyntaxKind::BLOCK => {
+                                if let Some(block) = Block::cast(node) {
+                                    docs.push(block.doc(ctx));
+                                }
+                            }
+                            SyntaxKind::FLOW => {
+                                if let Some(flow) = Flow::cast(node) {
+                                    docs.push(flow.doc(ctx));
+                                }
+                            }
+                            SyntaxKind::DIRECTIVE => {
+                                if let Some(directive) = Directive::cast(node) {
+                                    docs.push(directive.doc(ctx));
+                                }
+                            }
+                            _ => {}
                         }
                     }
-                    SyntaxKind::FLOW => {
-                        if let Some(flow) = Flow::cast(node) {
-                            docs.push(flow.doc(ctx));
-                        }
-                    }
-                    SyntaxKind::DIRECTIVE => {
-                        if let Some(directive) = Directive::cast(node) {
-                            docs.push(directive.doc(ctx));
-                        }
-                    }
-                    _ => {}
-                },
+                }
                 SyntaxElement::Token(token) => match token.kind() {
                     SyntaxKind::COMMENT => {
                         docs.push(format_comment(&token, ctx));
@@ -924,7 +922,9 @@ where
         let kind = element.kind();
         match element {
             SyntaxElement::Node(node) => {
-                if let Some(item) = Item::cast(node) {
+                if should_ignore(&node, ctx) {
+                    docs.extend(reflow(&node.to_string()));
+                } else if let Some(item) = Item::cast(node) {
                     docs.push(item.doc(ctx));
                 }
             }
@@ -1103,4 +1103,34 @@ fn intersperse_lines(docs: &mut Vec<Doc<'static>>, mut lines: impl Iterator<Item
             docs.push(Doc::text(line));
         }
     }
+}
+
+fn reflow(text: &str) -> impl Iterator<Item = Doc<'static>> + '_ {
+    itertools::intersperse(
+        text.lines().map(|s| Doc::text(s.to_owned())),
+        Doc::empty_line(),
+    )
+}
+
+fn should_ignore(node: &SyntaxNode, ctx: &Ctx) -> bool {
+    // for the case that comment comes in the middle of a list of nodes
+    node.prev_sibling_or_token()
+        .and_then(|element| element.prev_sibling_or_token())
+        .or_else(|| {
+            // for the case that comment comes at the start or the end of a list of nodes
+            node.parent()
+                .and_then(|parent| parent.prev_sibling_or_token())
+                .and_then(|parent| parent.prev_sibling_or_token())
+        })
+        .as_ref()
+        .and_then(|element| match element {
+            SyntaxElement::Token(token) if token.kind() == SyntaxKind::COMMENT => {
+                token.text().strip_prefix('#').and_then(|s| {
+                    s.trim_start()
+                        .strip_prefix(&ctx.options.ignore_comment_directive)
+                })
+            }
+            _ => None,
+        })
+        .is_some_and(|rest| rest.is_empty() || rest.starts_with(|c: char| c.is_ascii_whitespace()))
 }

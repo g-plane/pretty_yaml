@@ -1,0 +1,10 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+abc: 123 # hello
+# pretty-yaml-ignore
+def:     456 # hello
+
+abc: 123 # hello
+# dprint-ignore
+def: 456 # hello

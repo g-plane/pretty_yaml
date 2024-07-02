@@ -1,0 +1,18 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+# pretty-yaml-ignore
+---
+aaaaa:
+           bbbbb
+...
+aaaaa:
+  bbbbb
+
+# dprint-ignore
+---
+aaaaa:
+  bbbbb
+...
+aaaaa:
+  bbbbb
