@@ -935,7 +935,7 @@ fn format_trivias(it: impl Iterator<Item = SyntaxElement>, ctx: &Ctx) -> (Vec<Do
                     {
                         docs.push(Doc::space());
                     } else {
-                        docs.push(Doc::line_or_nil());
+                        docs.push(Doc::line_or_space());
                     }
                 }
                 1 => {
