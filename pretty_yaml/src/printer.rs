@@ -199,7 +199,7 @@ impl DocGen for BlockSeqEntry {
         let mut docs = Vec::with_capacity(3);
 
         if let Some(token) = self.minus() {
-            docs.push(Doc::text("- "));
+            docs.push(Doc::text("-"));
             if let Some(token) = token
                 .next_sibling_or_token()
                 .and_then(SyntaxElement::into_token)
@@ -211,8 +211,10 @@ impl DocGen for BlockSeqEntry {
         }
 
         if let Some(block) = self.block() {
+            docs.push(Doc::space());
             docs.push(block.doc(ctx));
         } else if let Some(flow) = self.flow() {
+            docs.push(Doc::space());
             docs.push(flow.doc(ctx));
         }
 
