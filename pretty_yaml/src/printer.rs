@@ -836,7 +836,15 @@ where
                     .any(|child| child.kind() == SyntaxKind::BLOCK_SEQ)
             {
                 docs.push(doc);
-            } else if has_line_break {
+            } else if has_line_break
+                || value
+                    .syntax()
+                    .children()
+                    .find(|child| child.kind() == SyntaxKind::BLOCK)
+                    .iter()
+                    .flat_map(|block| block.children())
+                    .any(|child| child.kind() == SyntaxKind::BLOCK_MAP)
+            {
                 docs.push(doc.nest(ctx.indent_width));
             } else {
                 docs.push(doc);
