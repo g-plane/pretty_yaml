@@ -747,6 +747,17 @@ where
             (trivia_before_colon_docs, has_comments_before_colon) =
                 format_trivias_after_token(&token, ctx);
         }
+
+        if key
+            .syntax()
+            .children()
+            .find(|node| node.kind() == SyntaxKind::FLOW)
+            .iter()
+            .flat_map(|flow| flow.children())
+            .any(|child| child.kind() == SyntaxKind::ALIAS)
+        {
+            docs.push(Doc::space());
+        }
     }
 
     if let Some(colon) = colon {
