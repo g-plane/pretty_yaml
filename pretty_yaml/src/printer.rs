@@ -381,7 +381,11 @@ impl DocGen for FlowMap {
     fn doc(&self, ctx: &Ctx) -> Doc<'static> {
         if self
             .entries()
-            .is_some_and(|entries| entries.entries().count() == 0)
+            .is_some_and(|entries| entries.syntax().children_with_tokens().count() == 0)
+            && self
+                .syntax()
+                .children_with_tokens()
+                .all(|element| element.kind() != SyntaxKind::COMMENT)
         {
             return Doc::text("{}");
         }
@@ -470,6 +474,17 @@ impl DocGen for FlowPair {
 
 impl DocGen for FlowSeq {
     fn doc(&self, ctx: &Ctx) -> Doc<'static> {
+        if self
+            .entries()
+            .is_some_and(|entries| entries.syntax().children_with_tokens().count() == 0)
+            && self
+                .syntax()
+                .children_with_tokens()
+                .all(|element| element.kind() != SyntaxKind::COMMENT)
+        {
+            return Doc::text("[]");
+        }
+
         let mut docs = vec![Doc::text("[")];
         if let Some(token) = self
             .l_bracket()
