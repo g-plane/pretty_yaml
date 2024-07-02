@@ -152,7 +152,7 @@ impl DocGen for BlockScalar {
                                 },
                             );
                             if let Some(space_len) = space_len {
-                                let mut lines = text.split('\n').map(|s| {
+                                let lines = text.split('\n').map(|s| {
                                     let s = s.strip_suffix('\r').unwrap_or(s);
                                     if s.is_empty() {
                                         String::new()
@@ -161,17 +161,7 @@ impl DocGen for BlockScalar {
                                     }
                                 });
                                 let mut docs = vec![];
-                                if let Some(line) = lines.next() {
-                                    docs.push(Doc::text(line));
-                                }
-                                for line in lines {
-                                    if line.is_empty() {
-                                        docs.push(Doc::empty_line());
-                                    } else {
-                                        docs.push(Doc::hard_line());
-                                        docs.push(Doc::text(line));
-                                    }
-                                }
+                                intersperse_lines(&mut docs, lines);
                                 Doc::list(docs).nest(ctx.indent_width)
                             } else {
                                 Doc::nil()
@@ -320,53 +310,39 @@ impl DocGen for Flow {
         }
         if let Some(double_quoted) = self.double_qouted_scalar() {
             let text = double_quoted.text();
-            let (quotes_option, quote) = if text.contains('\\') {
+            let is_double_preferred = matches!(ctx.options.quotes, Quotes::PreferDouble);
+            let (quotes_option, quote) = if is_double_preferred || text.contains(['\\', '\'']) {
                 (None, "\"")
             } else {
-                (
-                    Some(&ctx.options.quotes),
-                    match ctx.options.quotes {
-                        Quotes::PreferDouble => "\"",
-                        Quotes::PreferSingle => "'",
-                    },
-                )
+                (Some(&ctx.options.quotes), "'")
             };
             docs.push(Doc::text(quote));
-            docs.extend(itertools::intersperse(
-                text.get(1..text.len() - 1)
-                    .expect("expected double quoted scalar")
-                    .split('\n')
-                    .map(|s| Doc::text(format_quoted_scalar(s, quotes_option))),
-                Doc::hard_line(),
-            ));
+            let lines = text
+                .get(1..text.len() - 1)
+                .expect("expected double quoted scalar")
+                .split('\n')
+                .map(|s| format_quoted_scalar(s, quotes_option));
+            intersperse_lines(&mut docs, lines);
             docs.push(Doc::text(quote));
         } else if let Some(single_quoted) = self.single_quoted_scalar() {
             let text = single_quoted.text();
-            let (quotes_option, quote) = if text.contains('\\') {
+            let is_single_preferred = matches!(ctx.options.quotes, Quotes::PreferSingle);
+            let (quotes_option, quote) = if is_single_preferred || text.contains(['\\', '"']) {
                 (None, "'")
             } else {
-                (
-                    Some(&ctx.options.quotes),
-                    match ctx.options.quotes {
-                        Quotes::PreferDouble => "\"",
-                        Quotes::PreferSingle => "'",
-                    },
-                )
+                (Some(&ctx.options.quotes), "\"")
             };
             docs.push(Doc::text(quote));
-            docs.extend(itertools::intersperse(
-                text.get(1..text.len() - 1)
-                    .expect("expected single quoted scalar")
-                    .split('\n')
-                    .map(|s| Doc::text(format_quoted_scalar(s, quotes_option))),
-                Doc::hard_line(),
-            ));
+            let lines = text
+                .get(1..text.len() - 1)
+                .expect("expected single quoted scalar")
+                .split('\n')
+                .map(|s| format_quoted_scalar(s, quotes_option));
+            intersperse_lines(&mut docs, lines);
             docs.push(Doc::text(quote));
         } else if let Some(plain) = self.plain_scalar() {
-            docs.extend(itertools::intersperse(
-                plain.text().lines().map(|s| Doc::text(s.trim().to_owned())),
-                Doc::hard_line(),
-            ));
+            let lines = plain.text().lines().map(|s| s.trim().to_owned());
+            intersperse_lines(&mut docs, lines);
         } else if let Some(flow_seq) = self.flow_seq() {
             docs.push(flow_seq.doc(ctx));
         } else if let Some(flow_map) = self.flow_map() {
@@ -859,6 +835,19 @@ where
                     .iter()
                     .flat_map(|block| block.children())
                     .any(|child| child.kind() == SyntaxKind::BLOCK_MAP)
+                || value
+                    .syntax()
+                    .children()
+                    .find(|child| child.kind() == SyntaxKind::FLOW)
+                    .iter()
+                    .flat_map(|block| block.children_with_tokens())
+                    .any(|element| {
+                        if let SyntaxElement::Token(token) = element {
+                            token.text().contains(['\n', '\r'])
+                        } else {
+                            false
+                        }
+                    })
             {
                 docs.push(doc.nest(ctx.indent_width));
             } else {
@@ -1042,5 +1031,19 @@ fn format_quoted_scalar(s: &str, quotes_option: Option<&Quotes>) -> String {
         Some(Quotes::PreferDouble) => s.replace("''", "'"),
         Some(Quotes::PreferSingle) => s.replace('\'', "''"),
         None => s.to_owned(),
+    }
+}
+
+fn intersperse_lines(docs: &mut Vec<Doc<'static>>, mut lines: impl Iterator<Item = String>) {
+    if let Some(line) = lines.next() {
+        docs.push(Doc::text(line));
+    }
+    for line in lines {
+        if line.is_empty() {
+            docs.push(Doc::empty_line());
+        } else {
+            docs.push(Doc::hard_line());
+            docs.push(Doc::text(line));
+        }
     }
 }
