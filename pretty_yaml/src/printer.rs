@@ -379,6 +379,13 @@ impl DocGen for Flow {
 
 impl DocGen for FlowMap {
     fn doc(&self, ctx: &Ctx) -> Doc<'static> {
+        if self
+            .entries()
+            .is_some_and(|entries| entries.entries().count() == 0)
+        {
+            return Doc::text("{}");
+        }
+
         let mut docs = vec![Doc::text("{")];
         if let Some(token) = self
             .l_brace()
@@ -388,7 +395,7 @@ impl DocGen for FlowMap {
             if token.text().contains(['\n', '\r']) {
                 docs.push(Doc::hard_line());
             } else {
-                docs.push(Doc::space());
+                docs.push(Doc::line_or_space());
             }
             let mut trivia_docs = format_trivias_after_token(&token, ctx).0;
             docs.append(&mut trivia_docs);
@@ -674,15 +681,13 @@ where
     if let Some(question_mark) = question_mark {
         match &content {
             Some(content) if matches!(content.syntax().kind(), SyntaxKind::FLOW) => {
-                docs.push(Doc::flat_or_break(
-                    Doc::nil(),
-                    Doc::text("?").append(Doc::hard_line()),
-                ));
+                docs.push(Doc::flat_or_break(Doc::nil(), Doc::text("? ")));
             }
             _ => docs.push(Doc::text("?")),
         }
         if let Some(token) = question_mark
             .next_token()
+            .and_then(|token| token.next_token())
             .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
         {
             if token.text().contains(['\n', '\r']) {
