@@ -513,32 +513,55 @@ fn flow_map_entry(input: &mut Input) -> GreenResult {
 fn flow_pair(input: &mut Input) -> GreenResult {
     trace(
         "flow_pair",
-        (
-            opt((
+        alt((
+            (
                 dispatch! {peek((any, any));
                     ('?', ' ' | '\t' | '\n' | '\r') => flow_map_entry_key,
-                    _ => flow_map_entry_key.set_state(|state| state.bf_ctx = BlockFlowCtx::FlowKey),
+                    _ => fail,
                 },
-                stateless_cmts_or_ws0,
-            )),
-            ascii_char::<':'>(COLON),
-            opt((stateless_cmts_or_ws0, flow)),
-        ),
+                opt((
+                    stateless_cmts_or_ws0,
+                    ascii_char::<':'>(COLON),
+                    opt((stateless_cmts_or_ws0, flow)),
+                )),
+            )
+                .map(|(key, value)| {
+                    let mut children = Vec::with_capacity(3);
+                    children.push(key);
+                    if let Some((mut trivias, colon, value)) = value {
+                        children.append(&mut trivias);
+                        children.push(colon);
+                        if let Some((mut trivias_after_colon, value)) = value {
+                            children.append(&mut trivias_after_colon);
+                            children.push(node(FLOW_MAP_VALUE, [value]));
+                        }
+                    }
+                    node(FLOW_PAIR, children)
+                }),
+            (
+                opt((
+                    flow_map_entry_key.set_state(|state| state.bf_ctx = BlockFlowCtx::FlowKey),
+                    stateless_cmts_or_ws0,
+                )),
+                ascii_char::<':'>(COLON),
+                opt((stateless_cmts_or_ws0, flow)),
+            )
+                .map(|(key, colon, value)| {
+                    let mut children = Vec::with_capacity(3);
+                    if let Some((key, mut trivias)) = key {
+                        children.push(key);
+                        children.append(&mut trivias);
+                    }
+                    children.push(colon);
+                    if let Some((mut trivias_after_colon, value)) = value {
+                        children.append(&mut trivias_after_colon);
+                        children.push(node(FLOW_MAP_VALUE, [value]));
+                    }
+                    node(FLOW_PAIR, children)
+                }),
+        )),
     )
     .parse_next(input)
-    .map(|(key, colon, value)| {
-        let mut children = Vec::with_capacity(3);
-        if let Some((key, mut trivias)) = key {
-            children.push(key);
-            children.append(&mut trivias);
-        }
-        children.push(colon);
-        if let Some((mut trivias_after_colon, value)) = value {
-            children.append(&mut trivias_after_colon);
-            children.push(node(FLOW_MAP_VALUE, [value]));
-        }
-        node(FLOW_PAIR, children)
-    })
 }
 
 fn flow_map_entry_key(input: &mut Input) -> GreenResult {

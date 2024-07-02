@@ -1,0 +1,18 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..6
+  DOCUMENT@0..5
+    FLOW@0..5
+      FLOW_SEQ@0..5
+        L_BRACKET@0..1 "["
+        FLOW_SEQ_ENTRIES@1..4
+          FLOW_SEQ_ENTRY@1..4
+            FLOW_PAIR@1..4
+              FLOW_MAP_KEY@1..4
+                QUESTION_MARK@1..2 "?"
+                WHITESPACE@2..3 " "
+                FLOW@3..4
+                  PLAIN_SCALAR@3..4 "a"
+        R_BRACKET@4..5 "]"
+  WHITESPACE@5..6 "\n"
