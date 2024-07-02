@@ -1,0 +1,13 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+# 8876
+
+foo:
+  <<: &anchor
+    K1: "One"
+  K2: "Two"
+
+bar:
+  <<: *anchor
+  K3: "Three"
