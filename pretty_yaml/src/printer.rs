@@ -1,7 +1,7 @@
 use crate::{config::Quotes, ctx::Ctx};
 use rowan::Direction;
 use tiny_pretty::Doc;
-use yaml_parser::{ast::*, SyntaxElement, SyntaxKind, SyntaxToken};
+use yaml_parser::{ast::*, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken};
 
 pub(super) trait DocGen {
     fn doc(&self, ctx: &Ctx) -> Doc<'static>;
@@ -672,17 +672,8 @@ where
 
     let mut has_line_break = false;
     if let Some(question_mark) = question_mark {
-        match &content {
-            Some(content)
-                if matches!(content.syntax().kind(), SyntaxKind::FLOW)
-                    && !key
-                        .syntax()
-                        .parent()
-                        .is_some_and(|parent| parent.kind() == SyntaxKind::FLOW_PAIR) =>
-            {
-                docs.push(Doc::flat_or_break(Doc::nil(), Doc::text("? ")));
-            }
-            _ => docs.push(Doc::text("? ")),
+        if !can_omit_question_mark(key.syntax()) {
+            docs.push(Doc::text("? "));
         }
         if let Some(token) = question_mark
             .next_token()
@@ -750,8 +741,13 @@ where
     let mut docs = Vec::with_capacity(4);
 
     let mut trivia_before_colon_docs = vec![];
-    let mut has_comments_before_colon = false;
+    let mut has_question_mark = false;
     if let Some(key) = key {
+        has_question_mark = key
+            .syntax()
+            .children_with_tokens()
+            .any(|node| node.kind() == SyntaxKind::QUESTION_MARK)
+            && !can_omit_question_mark(key.syntax());
         docs.push(key.doc(ctx));
         if let Some(token) = key
             .syntax()
@@ -759,8 +755,7 @@ where
             .and_then(SyntaxElement::into_token)
             .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
         {
-            (trivia_before_colon_docs, has_comments_before_colon) =
-                format_trivias_after_token(&token, ctx);
+            trivia_before_colon_docs = format_trivias_after_token(&token, ctx).0;
         }
 
         if key
@@ -776,12 +771,24 @@ where
     }
 
     if let Some(colon) = colon {
-        let mut has_line_break = false;
-        docs.push(Doc::text(":"));
-        if !trivia_before_colon_docs.is_empty() {
-            docs.push(Doc::space());
-            docs.push(Doc::list(trivia_before_colon_docs).nest(ctx.indent_width));
+        if has_question_mark {
+            if trivia_before_colon_docs.is_empty() {
+                docs.push(Doc::hard_line());
+            } else {
+                docs.push(Doc::space());
+                docs.push(Doc::list(trivia_before_colon_docs));
+            }
+            docs.push(Doc::text(":"));
+        } else {
+            docs.push(Doc::text(":"));
+            if !trivia_before_colon_docs.is_empty() {
+                docs.push(Doc::space());
+                docs.push(Doc::list(trivia_before_colon_docs).nest(ctx.indent_width));
+            }
         }
+
+        let mut has_line_break = false;
+
         if let Some(value) = value {
             let mut value_docs = vec![];
             if let Some(token) = colon
@@ -791,7 +798,7 @@ where
                 if token.text().contains(['\n', '\r']) {
                     value_docs.push(Doc::hard_line());
                     has_line_break = true;
-                } else if !has_comments_before_colon {
+                } else {
                     value_docs.push(Doc::space());
                 }
                 let last_ws_index = value
@@ -1033,6 +1040,55 @@ fn format_quoted_scalar(s: &str, quotes_option: Option<&Quotes>) -> String {
         Some(Quotes::PreferSingle) => s.replace('\'', "''"),
         None => s.to_owned(),
     }
+}
+
+fn can_omit_question_mark(key: &SyntaxNode) -> bool {
+    let parent = key.parent();
+    // question mark can be omitted in flow map
+    (parent
+        .as_ref()
+        .is_some_and(|parent| parent.kind() == SyntaxKind::FLOW_MAP_ENTRY)
+        // or, if there's map value, it can be omitted;
+        // otherwise, this can lead invalid or incorrect syntax
+        || parent
+            .iter()
+            .flat_map(|parent| parent.children())
+            .any(|child| {
+                matches!(
+                    child.kind(),
+                    SyntaxKind::FLOW_MAP_VALUE | SyntaxKind::BLOCK_MAP_VALUE
+                )
+            }))
+        // when there're comments, there must be line breaks, so don't omit
+        && !key
+            .children_with_tokens()
+            .any(|element| element.kind() == SyntaxKind::COMMENT)
+        // also check comments after key but before colon
+        && key
+            .siblings_with_tokens(Direction::Next)
+            .skip(1)
+            .take_while(|element| {
+                matches!(element.kind(), SyntaxKind::WHITESPACE | SyntaxKind::COMMENT)
+            })
+            .all(|element| element.kind() != SyntaxKind::COMMENT)
+        // when there're flow scalar with line breaks, don't omit
+        && key
+            .children()
+            .find(|child| child.kind() == SyntaxKind::FLOW)
+            .iter()
+            .flat_map(|flow| flow.children_with_tokens())
+            .any(|element| {
+                if let SyntaxElement::Token(token) = element {
+                    matches!(
+                        token.kind(),
+                        SyntaxKind::DOUBLE_QUOTED_SCALAR
+                            | SyntaxKind::SINGLE_QUOTED_SCALAR
+                            | SyntaxKind::PLAIN_SCALAR
+                    ) && !token.text().contains(['\n', '\r'])
+                } else {
+                    element.kind() == SyntaxKind::ALIAS
+                }
+            })
 }
 
 fn intersperse_lines(docs: &mut Vec<Doc<'static>>, mut lines: impl Iterator<Item = String>) {

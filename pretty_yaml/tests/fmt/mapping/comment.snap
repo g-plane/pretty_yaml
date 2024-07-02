@@ -1,5 +1,5 @@
 ---
 source: pretty_yaml/tests/fmt.rs
 ---
-key: # comment
-  longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong
+? key # comment
+: longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong

@@ -5,8 +5,8 @@ a: # a.trailingComment
   123
 # implicitMappingValue
 
-b: # explicitMappingKey
-  c
+? b # explicitMappingKey
+: c
 # explicitMappingValue
 
 d:

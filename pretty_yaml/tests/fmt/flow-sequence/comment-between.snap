@@ -2,6 +2,6 @@
 source: pretty_yaml/tests/fmt.rs
 ---
 [
-  ? 123: # comment
-    456,
+  ? 123 # comment
+  : 456,
 ]
