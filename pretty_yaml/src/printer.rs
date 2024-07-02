@@ -362,11 +362,8 @@ impl DocGen for Flow {
             docs.push(Doc::text(quote));
         } else if let Some(plain) = self.plain_scalar() {
             docs.extend(itertools::intersperse(
-                plain
-                    .text()
-                    .split('\n')
-                    .map(|s| Doc::text(s.strip_suffix('\r').unwrap_or(s).to_owned())),
-                Doc::empty_line(),
+                plain.text().lines().map(|s| Doc::text(s.trim().to_owned())),
+                Doc::hard_line(),
             ));
         } else if let Some(flow_seq) = self.flow_seq() {
             docs.push(flow_seq.doc(ctx));
@@ -738,12 +735,23 @@ where
         }
     }
 
-    if let Some(content) = content {
+    if let Some(content) = &content {
         docs.push(content.doc(ctx));
     }
 
     let doc = Doc::list(docs).group();
-    if has_line_break {
+    if has_line_break
+        || content
+            .iter()
+            .flat_map(|content| content.syntax().children_with_tokens())
+            .any(|element| {
+                if let SyntaxElement::Token(token) = element {
+                    token.text().contains(['\n', '\r'])
+                } else {
+                    false
+                }
+            })
+    {
         doc.nest(ctx.indent_width)
     } else {
         doc
