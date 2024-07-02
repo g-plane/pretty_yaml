@@ -1,0 +1,5 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+"a": 123
+"b": 123

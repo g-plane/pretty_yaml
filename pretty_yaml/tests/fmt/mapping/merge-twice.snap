@@ -1,0 +1,13 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+.anchors:
+  - &anchor1
+    key: value
+  - &anchor2
+    another: prop
+
+foo:
+  bar: baz
+  <<: *anchor1
+  <<: *anchor2

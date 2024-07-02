@@ -1,0 +1,12 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+[
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+]: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+[
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+]: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
