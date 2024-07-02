@@ -195,16 +195,17 @@ impl DocGen for BlockSeqEntry {
                 .and_then(SyntaxElement::into_token)
                 .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
             {
-                let trivia_docs = format_trivias_after_token(&token, ctx).0;
-                docs.push(Doc::list(trivia_docs));
+                let mut trivia_docs = format_trivias_after_token(&token, ctx).0;
+                docs.push(Doc::space());
+                docs.append(&mut trivia_docs);
+            } else if self.block().is_some() || self.flow().is_some() {
+                docs.push(Doc::space());
             }
         }
 
         if let Some(block) = self.block() {
-            docs.push(Doc::space());
             docs.push(block.doc(ctx));
         } else if let Some(flow) = self.flow() {
-            docs.push(Doc::space());
             docs.push(flow.doc(ctx));
         }
 
