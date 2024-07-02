@@ -1,0 +1,5 @@
+[enabled]
+trailingComma = true
+
+[disabled]
+trailingComma = false
