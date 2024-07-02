@@ -514,22 +514,24 @@ fn flow_pair(input: &mut Input) -> GreenResult {
     trace(
         "flow_pair",
         (
-            opt(dispatch! {peek((any, any));
-                ('?', ' ' | '\t' | '\n' | '\r') => flow_map_entry_key,
-                _ => flow_map_entry_key.set_state(|state| state.bf_ctx = BlockFlowCtx::FlowKey),
-            }),
-            stateless_cmts_or_ws0,
+            opt((
+                dispatch! {peek((any, any));
+                    ('?', ' ' | '\t' | '\n' | '\r') => flow_map_entry_key,
+                    _ => flow_map_entry_key.set_state(|state| state.bf_ctx = BlockFlowCtx::FlowKey),
+                },
+                stateless_cmts_or_ws0,
+            )),
             ascii_char::<':'>(COLON),
             opt((stateless_cmts_or_ws0, flow)),
         ),
     )
     .parse_next(input)
-    .map(|(key, mut trivias_before_colon, colon, value)| {
+    .map(|(key, colon, value)| {
         let mut children = Vec::with_capacity(3);
-        if let Some(key) = key {
+        if let Some((key, mut trivias)) = key {
             children.push(key);
+            children.append(&mut trivias);
         }
-        children.append(&mut trivias_before_colon);
         children.push(colon);
         if let Some((mut trivias_after_colon, value)) = value {
             children.append(&mut trivias_after_colon);
