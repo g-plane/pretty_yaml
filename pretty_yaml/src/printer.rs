@@ -548,13 +548,7 @@ impl DocGen for Properties {
                 .children_with_tokens()
                 .map(|element| match element {
                     SyntaxElement::Token(token) => match token.kind() {
-                        SyntaxKind::WHITESPACE => {
-                            if token.text().contains(['\n', '\r']) {
-                                Doc::hard_line()
-                            } else {
-                                Doc::line_or_space()
-                            }
-                        }
+                        SyntaxKind::WHITESPACE => Doc::line_or_space(),
                         SyntaxKind::COMMENT => format_comment(&token, ctx),
                         _ => Doc::text(token.to_string()),
                     },
