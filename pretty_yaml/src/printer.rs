@@ -308,6 +308,9 @@ impl DocGen for Flow {
         }
         if let Some(double_quoted) = self.double_qouted_scalar() {
             let text = double_quoted.text();
+            let text = text
+                .get(1..text.len() - 1)
+                .expect("expected double quoted scalar");
             let is_double_preferred = matches!(ctx.options.quotes, Quotes::PreferDouble);
             let (quotes_option, quote) = if is_double_preferred || text.contains(['\\', '\'']) {
                 (None, "\"")
@@ -315,15 +318,13 @@ impl DocGen for Flow {
                 (Some(&ctx.options.quotes), "'")
             };
             docs.push(Doc::text(quote));
-            let lines = text
-                .get(1..text.len() - 1)
-                .expect("expected double quoted scalar")
-                .split('\n')
-                .map(|s| format_quoted_scalar(s, quotes_option));
-            intersperse_lines(&mut docs, lines);
+            format_quoted_scalar(text, quotes_option, &mut docs);
             docs.push(Doc::text(quote));
         } else if let Some(single_quoted) = self.single_quoted_scalar() {
             let text = single_quoted.text();
+            let text = text
+                .get(1..text.len() - 1)
+                .expect("expected single quoted scalar");
             let is_single_preferred = matches!(ctx.options.quotes, Quotes::PreferSingle);
             let (quotes_option, quote) = if is_single_preferred || text.contains(['\\', '"']) {
                 (None, "'")
@@ -331,12 +332,7 @@ impl DocGen for Flow {
                 (Some(&ctx.options.quotes), "\"")
             };
             docs.push(Doc::text(quote));
-            let lines = text
-                .get(1..text.len() - 1)
-                .expect("expected single quoted scalar")
-                .split('\n')
-                .map(|s| format_quoted_scalar(s, quotes_option));
-            intersperse_lines(&mut docs, lines);
+            format_quoted_scalar(text, quotes_option, &mut docs);
             docs.push(Doc::text(quote));
         } else if let Some(plain) = self.plain_scalar() {
             let lines = plain.text().lines().map(|s| s.trim().to_owned());
@@ -1087,8 +1083,17 @@ fn format_comment(token: &SyntaxToken, ctx: &Ctx) -> Doc<'static> {
     }
 }
 
-fn format_quoted_scalar(s: &str, quotes_option: Option<&Quotes>) -> String {
-    let s = s.trim();
+fn format_quoted_scalar(text: &str, quotes_option: Option<&Quotes>, docs: &mut Vec<Doc<'static>>) {
+    if text.contains(['\n', '\r']) {
+        let lines = text
+            .split('\n')
+            .map(|s| format_quoted_scalar_line(s.trim(), quotes_option));
+        intersperse_lines(docs, lines);
+    } else {
+        docs.push(Doc::text(format_quoted_scalar_line(text, quotes_option)));
+    }
+}
+fn format_quoted_scalar_line(s: &str, quotes_option: Option<&Quotes>) -> String {
     match quotes_option {
         Some(Quotes::PreferDouble) => s.replace("''", "'"),
         Some(Quotes::PreferSingle) => s.replace('\'', "''"),
