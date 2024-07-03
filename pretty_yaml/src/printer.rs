@@ -144,9 +144,8 @@ impl DocGen for BlockScalar {
                                 },
                             );
                             if let Some(space_len) = space_len {
-                                let lines = text.split('\n').map(|s| {
-                                    let s = s.strip_suffix('\r').unwrap_or(s);
-                                    if s.is_empty() {
+                                let lines = text.lines().map(|s| {
+                                    if s.trim().is_empty() {
                                         String::new()
                                     } else {
                                         s[space_len..].to_owned()
