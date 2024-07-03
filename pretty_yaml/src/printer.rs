@@ -1053,18 +1053,16 @@ fn format_trivias(
 }
 
 fn format_comment(token: &SyntaxToken, ctx: &Ctx) -> Doc<'static> {
+    let text = token.text().trim_end();
     if ctx.options.format_comments {
-        let content = token
-            .text()
-            .strip_prefix('#')
-            .expect("comment must start with '#'");
+        let content = text.strip_prefix('#').expect("comment must start with '#'");
         if content.is_empty() || content.starts_with([' ', '\t']) {
-            Doc::text(token.to_string())
+            Doc::text(text.to_string())
         } else {
             Doc::text(format!("# {content}"))
         }
     } else {
-        Doc::text(token.to_string())
+        Doc::text(text.to_string())
     }
 }
 
