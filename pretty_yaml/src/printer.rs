@@ -812,20 +812,16 @@ where
                 if value.syntax().kind() == SyntaxKind::FLOW_MAP_VALUE {
                     value_docs.push(Doc::space());
                 } else if token.text().contains(['\n', '\r'])
-                    || value.syntax().kind() == SyntaxKind::BLOCK_MAP_VALUE
-                        && value
-                            .syntax()
-                            .children()
-                            .find(|child| child.kind() == SyntaxKind::BLOCK)
-                            // for the case that there's no properties
-                            // so the block map/seq comes as first child
-                            .and_then(|block| block.first_child())
-                            .is_some_and(|child| {
-                                matches!(
-                                    child.kind(),
-                                    SyntaxKind::BLOCK_MAP | SyntaxKind::BLOCK_SEQ
-                                )
-                            })
+                    || value
+                        .syntax()
+                        .children()
+                        .find(|child| child.kind() == SyntaxKind::BLOCK)
+                        // for the case that there's no properties
+                        // so the block map/seq comes as first child
+                        .and_then(|block| block.first_child())
+                        .is_some_and(|child| {
+                            matches!(child.kind(), SyntaxKind::BLOCK_MAP | SyntaxKind::BLOCK_SEQ)
+                        })
                 {
                     value_docs.push(Doc::hard_line());
                     has_line_break = true;
