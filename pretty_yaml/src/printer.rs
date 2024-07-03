@@ -295,7 +295,18 @@ impl DocGen for Flow {
         let mut docs = Vec::with_capacity(1);
         if let Some(properties) = self.properties() {
             docs.push(properties.doc(ctx));
-            docs.push(Doc::space());
+            if self.syntax().children_with_tokens().any(|element| {
+                matches!(
+                    element.kind(),
+                    SyntaxKind::DOUBLE_QUOTED_SCALAR
+                        | SyntaxKind::SINGLE_QUOTED_SCALAR
+                        | SyntaxKind::PLAIN_SCALAR
+                        | SyntaxKind::FLOW_SEQ
+                        | SyntaxKind::FLOW_MAP
+                )
+            }) {
+                docs.push(Doc::space());
+            }
             if let Some(token) = properties
                 .syntax()
                 .next_sibling_or_token()
@@ -760,15 +771,20 @@ where
             trivia_before_colon_docs = format_trivias_after_token(&token, ctx);
         }
 
-        if key
+        if let Some(flow) = key
             .syntax()
             .children()
             .find(|node| node.kind() == SyntaxKind::FLOW)
-            .iter()
-            .flat_map(|flow| flow.children())
-            .any(|child| child.kind() == SyntaxKind::ALIAS)
         {
-            docs.push(Doc::space());
+            if flow
+                .children()
+                .any(|child| child.kind() == SyntaxKind::ALIAS)
+                || flow
+                    .last_child_or_token()
+                    .is_some_and(|last| last.kind() == SyntaxKind::PROPERTIES)
+            {
+                docs.push(Doc::space());
+            }
         }
     }
 
