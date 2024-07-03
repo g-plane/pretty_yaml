@@ -707,7 +707,12 @@ where
     }
 
     if let Some(content) = &content {
-        docs.push(content.doc(ctx));
+        let doc = content.doc(ctx);
+        if content.syntax().kind() == SyntaxKind::BLOCK {
+            docs.push(doc.nest(2));
+        } else {
+            docs.push(doc);
+        }
     }
 
     let doc = Doc::list(docs).group();
@@ -799,7 +804,20 @@ where
             {
                 if value.syntax().kind() == SyntaxKind::FLOW_MAP_VALUE {
                     value_docs.push(Doc::space());
-                } else if token.text().contains(['\n', '\r']) {
+                } else if token.text().contains(['\n', '\r'])
+                    || value.syntax().kind() == SyntaxKind::BLOCK_MAP_VALUE
+                        && value
+                            .syntax()
+                            .children()
+                            .find(|child| child.kind() == SyntaxKind::BLOCK)
+                            .and_then(|block| block.first_child())
+                            .is_some_and(|child| {
+                                matches!(
+                                    child.kind(),
+                                    SyntaxKind::BLOCK_MAP | SyntaxKind::BLOCK_SEQ
+                                )
+                            })
+                {
                     value_docs.push(Doc::hard_line());
                     has_line_break = true;
                 } else {
