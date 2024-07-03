@@ -1,0 +1,9 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+- {}
+- { k: v }
+- { k: v }
+- {
+    k: v,
+  }
