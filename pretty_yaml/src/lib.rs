@@ -1,4 +1,7 @@
-use crate::{config::FormatOptions, ctx::Ctx, printer::DocGen};
+use crate::{
+    config::FormatOptions,
+    printer::{Ctx, DocGen},
+};
 use tiny_pretty::{print, IndentKind, PrintOptions};
 use yaml_parser::{
     ast::{AstNode, Root},
@@ -6,7 +9,6 @@ use yaml_parser::{
 };
 
 pub mod config;
-mod ctx;
 mod printer;
 
 /// Format the given source input.

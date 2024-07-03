@@ -1,7 +1,12 @@
-use crate::{config::Quotes, ctx::Ctx};
+use crate::config::{LanguageOptions, Quotes};
 use rowan::Direction;
 use tiny_pretty::Doc;
 use yaml_parser::{ast::*, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken};
+
+pub(super) struct Ctx<'a> {
+    pub indent_width: usize,
+    pub options: &'a LanguageOptions,
+}
 
 pub(super) trait DocGen {
     fn doc(&self, ctx: &Ctx) -> Doc<'static>;
