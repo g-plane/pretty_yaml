@@ -794,7 +794,9 @@ where
                 .next_token()
                 .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
             {
-                if token.text().contains(['\n', '\r']) {
+                if value.syntax().kind() == SyntaxKind::FLOW_MAP_VALUE {
+                    value_docs.push(Doc::space());
+                } else if token.text().contains(['\n', '\r']) {
                     value_docs.push(Doc::hard_line());
                     has_line_break = true;
                 } else {
