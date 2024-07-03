@@ -1084,13 +1084,26 @@ fn format_comment(token: &SyntaxToken, ctx: &Ctx) -> Doc<'static> {
 }
 
 fn format_quoted_scalar(text: &str, quotes_option: Option<&Quotes>, docs: &mut Vec<Doc<'static>>) {
-    if text.contains(['\n', '\r']) {
-        let lines = text
-            .split('\n')
-            .map(|s| format_quoted_scalar_line(s.trim(), quotes_option));
-        intersperse_lines(docs, lines);
-    } else {
-        docs.push(Doc::text(format_quoted_scalar_line(text, quotes_option)));
+    if text.is_empty() {
+        return;
+    }
+    let lines = text.split('\n').collect::<Vec<_>>();
+    let last_index = lines.len() - 1;
+    for (i, mut line) in lines.into_iter().enumerate() {
+        if i > 0 {
+            line = line.trim_start();
+        }
+        if i < last_index {
+            line = line.trim_end();
+        }
+        if i == 0 {
+            docs.push(Doc::text(format_quoted_scalar_line(line, quotes_option)));
+        } else if line.is_empty() {
+            docs.push(Doc::empty_line());
+        } else {
+            docs.push(Doc::hard_line());
+            docs.push(Doc::text(format_quoted_scalar_line(line, quotes_option)));
+        }
     }
 }
 fn format_quoted_scalar_line(s: &str, quotes_option: Option<&Quotes>) -> String {
