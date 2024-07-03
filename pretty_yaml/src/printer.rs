@@ -677,7 +677,7 @@ where
         }
         if let Some(token) = question_mark
             .next_token()
-            .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
+            .filter(|token| token.kind() == SyntaxKind::WHITESPACE && content.is_some())
         {
             if token.text().contains(['\n', '\r']) {
                 docs.push(Doc::hard_line());
