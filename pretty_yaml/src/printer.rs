@@ -779,6 +779,7 @@ where
             if flow
                 .children()
                 .any(|child| child.kind() == SyntaxKind::ALIAS)
+                // when there's only properties, we must add a space
                 || flow
                     .last_child_or_token()
                     .is_some_and(|last| last.kind() == SyntaxKind::PROPERTIES)
@@ -822,6 +823,8 @@ where
                             .syntax()
                             .children()
                             .find(|child| child.kind() == SyntaxKind::BLOCK)
+                            // for the case that there's no properties
+                            // so the block map/seq comes as first child
                             .and_then(|block| block.first_child())
                             .is_some_and(|child| {
                                 matches!(
