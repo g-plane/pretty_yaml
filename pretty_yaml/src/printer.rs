@@ -669,20 +669,22 @@ where
     let mut docs = Vec::with_capacity(1);
 
     let mut has_line_break = false;
+    let is_question_mark_omitted = question_mark.is_none() || can_omit_question_mark(key.syntax());
     if let Some(question_mark) = question_mark {
-        if !can_omit_question_mark(key.syntax()) {
+        if !is_question_mark_omitted {
             docs.push(Doc::text("?"));
-            if content.is_some() {
-                docs.push(Doc::space());
-            }
         }
         if let Some(token) = question_mark
             .next_token()
             .filter(|token| token.kind() == SyntaxKind::WHITESPACE && content.is_some())
         {
-            if token.text().contains(['\n', '\r']) {
-                docs.push(Doc::hard_line());
-                has_line_break = true;
+            if !is_question_mark_omitted {
+                if token.text().contains(['\n', '\r']) {
+                    docs.push(Doc::hard_line());
+                    has_line_break = true;
+                } else {
+                    docs.push(Doc::space());
+                }
             }
             let last_ws_index = content
                 .as_ref()
@@ -709,7 +711,7 @@ where
 
     if let Some(content) = &content {
         let doc = content.doc(ctx);
-        if content.syntax().kind() == SyntaxKind::BLOCK {
+        if content.syntax().kind() == SyntaxKind::BLOCK && !has_line_break {
             docs.push(doc.nest(2));
         } else {
             docs.push(doc);
