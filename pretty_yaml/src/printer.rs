@@ -148,7 +148,7 @@ impl DocGen for BlockScalar {
                                     if s.trim().is_empty() {
                                         String::new()
                                     } else {
-                                        s[space_len..].to_owned()
+                                        s[space_len..].trim_end().to_owned()
                                     }
                                 });
                                 let mut docs = vec![];
