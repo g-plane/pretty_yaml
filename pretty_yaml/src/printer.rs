@@ -478,6 +478,12 @@ impl DocGen for FlowSeq {
             return Doc::text("[]");
         }
 
+        let bracket_space = if ctx.options.bracket_spacing {
+            Doc::line_or_space()
+        } else {
+            Doc::line_or_nil()
+        };
+
         let mut docs = vec![Doc::text("[")];
         if let Some(token) = self
             .l_bracket()
@@ -487,12 +493,12 @@ impl DocGen for FlowSeq {
             if token.text().contains(['\n', '\r']) {
                 docs.push(Doc::hard_line());
             } else {
-                docs.push(Doc::line_or_nil());
+                docs.push(bracket_space.clone());
             }
             let mut trivia_docs = format_trivias_after_token(&token, ctx);
             docs.append(&mut trivia_docs);
         } else {
-            docs.push(Doc::line_or_nil());
+            docs.push(bracket_space.clone());
         }
 
         let mut has_trailing_comment = false;
@@ -521,7 +527,7 @@ impl DocGen for FlowSeq {
             .append(if has_trailing_comment {
                 Doc::hard_line()
             } else {
-                Doc::line_or_nil()
+                bracket_space
             })
             .append(Doc::text("]"))
             .group()

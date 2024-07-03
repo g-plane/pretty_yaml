@@ -1,0 +1,5 @@
+[enabled]
+bracketSpacing = true
+
+[disabled]
+bracketSpacing = false

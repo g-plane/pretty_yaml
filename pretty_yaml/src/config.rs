@@ -94,6 +94,10 @@ pub struct LanguageOptions {
     /// See [`braceSpacing`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#bracespacing) on GitHub
     pub brace_spacing: bool,
 
+    #[cfg_attr(feature = "config_serde", serde(alias = "bracketSpacing"))]
+    /// See [`bracketSpacing`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#bracketspacing) on GitHub
+    pub bracket_spacing: bool,
+
     #[cfg_attr(feature = "config_serde", serde(alias = "ignoreCommentDirective"))]
     /// See [`ignoreCommentDirective`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#ignorecommentdirective) on GitHub
     pub ignore_comment_directive: String,
@@ -107,6 +111,7 @@ impl Default for LanguageOptions {
             format_comments: false,
             indent_block_sequence_in_map: true,
             brace_spacing: true,
+            bracket_spacing: false,
             ignore_comment_directive: "pretty-yaml-ignore".into(),
         }
     }
