@@ -768,6 +768,7 @@ where
         }
     }
 
+    let has_trivias_before_colon = !trivia_before_colon_docs.is_empty();
     if let Some(colon) = colon {
         if has_question_mark {
             if trivia_before_colon_docs.is_empty() {
@@ -820,6 +821,8 @@ where
                         has_line_break = true;
                     }
                 }
+            } else if !has_trivias_before_colon {
+                docs.push(Doc::space());
             }
             let doc = Doc::list(value_docs).append(value.doc(ctx));
             if value
