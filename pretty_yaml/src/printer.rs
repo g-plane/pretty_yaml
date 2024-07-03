@@ -670,7 +670,10 @@ where
     let mut has_line_break = false;
     if let Some(question_mark) = question_mark {
         if !can_omit_question_mark(key.syntax()) {
-            docs.push(Doc::text("? "));
+            docs.push(Doc::text("?"));
+            if content.is_some() {
+                docs.push(Doc::space());
+            }
         }
         if let Some(token) = question_mark
             .next_token()
