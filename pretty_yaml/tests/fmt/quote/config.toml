@@ -1,0 +1,5 @@
+[prefer-double]
+quotes = "preferDouble"
+
+[prefer-single]
+quotes = "preferSingle"

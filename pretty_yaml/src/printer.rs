@@ -328,7 +328,7 @@ impl DocGen for Flow {
                 .get(1..text.len() - 1)
                 .expect("expected double quoted scalar");
             let is_double_preferred = matches!(ctx.options.quotes, Quotes::PreferDouble);
-            let (quotes_option, quote) = if is_double_preferred || text.contains(['\\', '\'']) {
+            let (quotes_option, quote) = if is_double_preferred || text.contains('\\') {
                 (None, "\"")
             } else {
                 (Some(&ctx.options.quotes), "'")
