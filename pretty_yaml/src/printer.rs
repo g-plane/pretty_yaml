@@ -675,16 +675,15 @@ where
         }
         if let Some(token) = question_mark
             .next_token()
-            .and_then(|token| token.next_token())
             .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
         {
             if token.text().contains(['\n', '\r']) {
                 docs.push(Doc::hard_line());
                 has_line_break = true;
             }
-            let last_ws_index = key
-                .syntax()
-                .last_token()
+            let last_ws_index = content
+                .as_ref()
+                .and_then(|content| content.syntax().prev_sibling_or_token())
                 .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
                 .map(|token| token.index());
             if let Some(index) = last_ws_index {
