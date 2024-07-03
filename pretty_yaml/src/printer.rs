@@ -39,7 +39,7 @@ impl DocGen for Block {
                 .and_then(SyntaxElement::into_token)
                 .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
             {
-                trivia_after_props_docs = format_trivias_after_token(&token, ctx).0;
+                trivia_after_props_docs = format_trivias_after_token(&token, ctx);
             }
             true
         } else {
@@ -186,7 +186,7 @@ impl DocGen for BlockSeqEntry {
                 .and_then(SyntaxElement::into_token)
                 .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
             {
-                let mut trivia_docs = format_trivias_after_token(&token, ctx).0;
+                let mut trivia_docs = format_trivias_after_token(&token, ctx);
                 docs.push(Doc::space());
                 docs.append(&mut trivia_docs);
             } else if self.block().is_some() || self.flow().is_some() {
@@ -302,7 +302,7 @@ impl DocGen for Flow {
                 .and_then(SyntaxElement::into_token)
                 .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
             {
-                let mut trivia_docs = format_trivias_after_token(&token, ctx).0;
+                let mut trivia_docs = format_trivias_after_token(&token, ctx);
                 docs.append(&mut trivia_docs);
             }
         }
@@ -376,7 +376,7 @@ impl DocGen for FlowMap {
             } else {
                 docs.push(Doc::line_or_space());
             }
-            let mut trivia_docs = format_trivias_after_token(&token, ctx).0;
+            let mut trivia_docs = format_trivias_after_token(&token, ctx);
             docs.append(&mut trivia_docs);
         } else {
             docs.push(Doc::line_or_space());
@@ -391,15 +391,15 @@ impl DocGen for FlowMap {
                 .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
                 .map(|token| token.index());
             if let Some(index) = last_ws_index {
-                let (mut trivia_docs, has_comment) = format_trivias(
+                let mut trivia_docs = format_trivias(
                     entries
                         .syntax()
                         .siblings_with_tokens(Direction::Next)
                         .filter(|element| element.index() != index),
+                    &mut has_trailing_comment,
                     ctx,
                 );
                 docs.append(&mut trivia_docs);
-                has_trailing_comment = has_comment;
             }
         }
 
@@ -471,7 +471,7 @@ impl DocGen for FlowSeq {
             } else {
                 docs.push(Doc::line_or_nil());
             }
-            let mut trivia_docs = format_trivias_after_token(&token, ctx).0;
+            let mut trivia_docs = format_trivias_after_token(&token, ctx);
             docs.append(&mut trivia_docs);
         } else {
             docs.push(Doc::line_or_nil());
@@ -486,15 +486,15 @@ impl DocGen for FlowSeq {
                 .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
                 .map(|token| token.index());
             if let Some(index) = last_ws_index {
-                let (mut trivia_docs, has_comment) = format_trivias(
+                let mut trivia_docs = format_trivias(
                     entries
                         .syntax()
                         .siblings_with_tokens(Direction::Next)
                         .filter(|element| element.index() != index),
+                    &mut has_trailing_comment,
                     ctx,
                 );
                 docs.append(&mut trivia_docs);
-                has_trailing_comment = has_comment;
             }
         }
 
@@ -686,10 +686,12 @@ where
                 .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
                 .map(|token| token.index());
             if let Some(index) = last_ws_index {
-                let (mut trivia_docs, has_comment) = format_trivias(
+                let mut has_comment = false;
+                let mut trivia_docs = format_trivias(
                     token
                         .siblings_with_tokens(Direction::Next)
                         .filter(|token| token.index() != index),
+                    &mut has_comment,
                     ctx,
                 );
                 docs.append(&mut trivia_docs);
@@ -751,7 +753,7 @@ where
             .and_then(SyntaxElement::into_token)
             .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
         {
-            trivia_before_colon_docs = format_trivias_after_token(&token, ctx).0;
+            trivia_before_colon_docs = format_trivias_after_token(&token, ctx);
         }
 
         if key
@@ -804,10 +806,12 @@ where
                     .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
                     .map(|token| token.index());
                 if let Some(index) = last_ws_index {
-                    let (mut trivia_docs, has_comment) = format_trivias(
+                    let mut has_comment = false;
+                    let mut trivia_docs = format_trivias(
                         token
                             .siblings_with_tokens(Direction::Next)
                             .filter(|token| token.index() != index),
+                        &mut has_comment,
                         ctx,
                     );
                     value_docs.append(&mut trivia_docs);
@@ -889,16 +893,36 @@ where
             docs.push(Doc::flat_or_break(Doc::nil(), Doc::text(",")));
         }
 
-        let mut trivia_docs =
-            format_trivias(entry.syntax().siblings_with_tokens(Direction::Next), ctx).0;
-        docs.append(&mut trivia_docs);
-        if let Some(comma) = commas.next() {
-            trivia_docs = format_trivias_after_token(&comma, ctx).0;
-        }
-        if !trivia_docs.is_empty() {
+        let comma = commas.next();
+        let mut has_comment_before_comma = false;
+        let last_ws_index = comma
+            .as_ref()
+            .and_then(|comma| comma.prev_token())
+            .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
+            .map(|token| token.index());
+        if let Some(index) = last_ws_index {
+            let mut trivia_docs = format_trivias(
+                entry
+                    .syntax()
+                    .siblings_with_tokens(Direction::Next)
+                    .filter(|token| token.index() != index),
+                &mut has_comment_before_comma,
+                ctx,
+            );
             docs.append(&mut trivia_docs);
-        } else if trivia_docs.is_empty() && entries.peek().is_some() {
-            docs.push(Doc::line_or_space());
+        }
+
+        if let Some(comma) = &comma {
+            let mut trivia_docs = format_trivias(
+                comma.siblings_with_tokens(Direction::Next),
+                &mut has_comment_before_comma,
+                ctx,
+            );
+            if !trivia_docs.is_empty() {
+                docs.append(&mut trivia_docs);
+            } else if trivia_docs.is_empty() && entries.peek().is_some() {
+                docs.push(Doc::line_or_space());
+            }
         }
     }
     Doc::list(docs)
@@ -959,13 +983,21 @@ where
     docs
 }
 
-fn format_trivias_after_token(token: &SyntaxToken, ctx: &Ctx) -> (Vec<Doc<'static>>, bool) {
-    format_trivias(token.siblings_with_tokens(Direction::Next), ctx)
+fn format_trivias_after_token(token: &SyntaxToken, ctx: &Ctx) -> Vec<Doc<'static>> {
+    let mut _has_comment = false;
+    format_trivias(
+        token.siblings_with_tokens(Direction::Next),
+        &mut _has_comment,
+        ctx,
+    )
 }
 
-fn format_trivias(it: impl Iterator<Item = SyntaxElement>, ctx: &Ctx) -> (Vec<Doc<'static>>, bool) {
+fn format_trivias(
+    it: impl Iterator<Item = SyntaxElement>,
+    has_comment: &mut bool,
+    ctx: &Ctx,
+) -> Vec<Doc<'static>> {
     let mut docs = vec![];
-    let mut has_comment = false;
     let mut trivias = it
         .skip(1)
         .map_while(|element| match element {
@@ -982,7 +1014,7 @@ fn format_trivias(it: impl Iterator<Item = SyntaxElement>, ctx: &Ctx) -> (Vec<Do
         match token.kind() {
             SyntaxKind::WHITESPACE => match token.text().chars().filter(|c| *c == '\n').count() {
                 0 => {
-                    if has_comment {
+                    if *has_comment {
                         docs.push(Doc::hard_line());
                     } else if trivias
                         .peek()
@@ -994,7 +1026,7 @@ fn format_trivias(it: impl Iterator<Item = SyntaxElement>, ctx: &Ctx) -> (Vec<Do
                     }
                 }
                 1 => {
-                    if has_comment {
+                    if *has_comment {
                         docs.push(Doc::hard_line());
                     } else {
                         docs.push(Doc::line_or_space());
@@ -1007,12 +1039,12 @@ fn format_trivias(it: impl Iterator<Item = SyntaxElement>, ctx: &Ctx) -> (Vec<Do
             },
             SyntaxKind::COMMENT => {
                 docs.push(format_comment(&token, ctx));
-                has_comment = true;
+                *has_comment = true;
             }
             _ => {}
         }
     }
-    (docs, has_comment)
+    docs
 }
 
 fn format_comment(token: &SyntaxToken, ctx: &Ctx) -> Doc<'static> {
