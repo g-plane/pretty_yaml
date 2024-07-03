@@ -1,0 +1,10 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+indented:
+  - a
+  - b
+
+not-indented:
+  - a
+  - b

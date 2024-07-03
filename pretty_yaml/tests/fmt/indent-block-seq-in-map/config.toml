@@ -1,0 +1,5 @@
+[enabled]
+indentBlockSequenceInMap = true
+
+[disabled]
+indentBlockSequenceInMap = false
