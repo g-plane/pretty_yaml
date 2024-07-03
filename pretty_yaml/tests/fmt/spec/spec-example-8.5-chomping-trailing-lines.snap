@@ -1,0 +1,22 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+# Strip
+# Comments:
+strip: |-
+  # text
+
+# Clip
+# comments:
+
+clip: |
+  # text
+
+# Keep
+# comments:
+
+keep: |+
+  # text
+
+# Trail
+# comments.

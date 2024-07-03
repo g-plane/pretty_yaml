@@ -1,0 +1,12 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+---
+a: >2
+   more indented
+  regular
+b: >2
+
+
+   more indented
+  regular

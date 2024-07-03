@@ -1,0 +1,5 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+%YAMLL 1.1
+---

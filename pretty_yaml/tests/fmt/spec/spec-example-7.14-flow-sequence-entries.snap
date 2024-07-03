@@ -1,0 +1,13 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+[
+  "double
+  quoted",
+  "single
+  quoted",
+  plain
+  text,
+  [nested],
+  single: pair,
+]

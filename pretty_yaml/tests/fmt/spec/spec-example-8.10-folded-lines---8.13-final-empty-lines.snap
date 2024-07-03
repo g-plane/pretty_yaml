@@ -1,0 +1,19 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+>
+
+  folded
+  line
+
+  next
+  line
+    * bullet
+
+    * list
+    * lines
+
+  last
+  line
+
+# Comment

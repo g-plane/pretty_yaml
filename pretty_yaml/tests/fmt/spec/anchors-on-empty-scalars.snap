@@ -1,0 +1,11 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+- &a
+- a
+- &a : a
+  b: &b
+- &c : &a
+- ? &d
+- ? &e
+  : &a

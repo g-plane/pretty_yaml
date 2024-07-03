@@ -1,0 +1,4 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+{ &a [a, &b b]: *b, *a : [c, *b, d] }

@@ -1,0 +1,8 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+{
+  unquoted: "separate",
+  http://foo.com,
+  omitted value:,
+}

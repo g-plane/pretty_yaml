@@ -1,0 +1,9 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+? explicit key # Empty value
+? |
+    block key
+:
+  - one # Explicit compact
+  - two # block value

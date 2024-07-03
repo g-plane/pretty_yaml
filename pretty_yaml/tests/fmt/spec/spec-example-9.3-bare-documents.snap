@@ -1,0 +1,10 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+Bare
+document
+...
+# No document
+...
+|
+  %!PS-Adobe-2.0 # Not the first line

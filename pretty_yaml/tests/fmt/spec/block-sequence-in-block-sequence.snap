@@ -1,0 +1,6 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+- - s1_i1
+  - s1_i2
+- s2

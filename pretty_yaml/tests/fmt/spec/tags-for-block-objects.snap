@@ -1,0 +1,7 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+foo: !!seq
+  - !!str a
+  - !!map
+    key: !!str value

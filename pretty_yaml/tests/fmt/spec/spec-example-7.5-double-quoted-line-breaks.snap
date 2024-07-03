@@ -1,0 +1,8 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+"folded
+to a space,
+
+to a line feed, or 	\
+\ 	non-content"

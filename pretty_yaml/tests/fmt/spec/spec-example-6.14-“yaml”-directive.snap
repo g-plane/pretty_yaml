@@ -1,0 +1,7 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+%YAML 1.3 # Attempt parsing
+# with a warning
+---
+"foo"

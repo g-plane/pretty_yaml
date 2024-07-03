@@ -1,0 +1,9 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+&flowseq [
+  a: b,
+  &c c: d,
+  { &e e: f },
+  &g { g: h },
+]

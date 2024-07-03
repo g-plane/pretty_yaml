@@ -1,0 +1,5 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+"3 leading
+tab"

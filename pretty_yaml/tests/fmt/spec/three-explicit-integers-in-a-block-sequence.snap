@@ -1,0 +1,7 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+---
+- !!int 1
+- !!int -2
+- !!int 33

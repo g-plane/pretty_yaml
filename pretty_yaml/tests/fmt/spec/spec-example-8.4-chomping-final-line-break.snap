@@ -1,0 +1,9 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+strip: |-
+  text
+clip: |
+  text
+keep: |+
+  text

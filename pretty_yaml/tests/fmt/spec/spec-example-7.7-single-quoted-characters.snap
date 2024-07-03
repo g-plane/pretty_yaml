@@ -1,0 +1,4 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+'here''s to "quotes"'

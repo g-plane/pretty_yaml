@@ -1,0 +1,11 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+---
+"
+foo
+
+bar
+
+baz
+"

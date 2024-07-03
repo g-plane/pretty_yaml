@@ -1,0 +1,11 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+# Private
+---
+!foo "bar"
+...
+# Global
+%TAG ! tag:example.com,2000:app/
+---
+!foo "bar"

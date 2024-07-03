@@ -1,0 +1,9 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+- # Empty
+- |
+    block node
+- - one # Compact
+  - two # sequence
+- one: two # Compact mapping

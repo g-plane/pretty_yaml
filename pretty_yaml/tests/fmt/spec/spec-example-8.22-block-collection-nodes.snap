@@ -1,0 +1,9 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+sequence: !!seq
+  - entry
+  - !!seq
+    - nested
+mapping: !!map
+  foo: bar

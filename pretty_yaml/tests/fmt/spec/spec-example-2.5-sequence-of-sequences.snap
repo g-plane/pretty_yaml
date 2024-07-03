@@ -1,0 +1,6 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+- [name, hr, avg]
+- [Mark McGwire, 65, 0.278]
+- [Sammy Sosa, 63, 0.288]

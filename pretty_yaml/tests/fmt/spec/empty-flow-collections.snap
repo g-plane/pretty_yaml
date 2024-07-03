@@ -1,0 +1,9 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+---
+nested sequences:
+  - - - []
+  - - - {}
+key1: []
+key2: {}

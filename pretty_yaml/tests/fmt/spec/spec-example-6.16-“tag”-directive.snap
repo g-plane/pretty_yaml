@@ -1,0 +1,6 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+%TAG !yaml! tag:yaml.org,2002:
+---
+!yaml!str "foo"

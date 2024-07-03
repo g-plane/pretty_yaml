@@ -1,0 +1,10 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+---
+- { single line, a: b }
+- {
+    multi
+      line,
+    a: b,
+  }

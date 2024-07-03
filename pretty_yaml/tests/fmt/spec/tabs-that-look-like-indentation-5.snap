@@ -1,0 +1,6 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+foo: 1
+
+bar: 2

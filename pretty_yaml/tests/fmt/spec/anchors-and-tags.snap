@@ -1,0 +1,7 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+- &a !!str a
+- !!int 2
+- !!int &c 4
+- &d d

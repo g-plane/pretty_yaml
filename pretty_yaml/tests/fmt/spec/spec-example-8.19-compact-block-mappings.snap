@@ -1,0 +1,7 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+- sun: yellow
+- ? earth: blue
+  :
+    moon: white

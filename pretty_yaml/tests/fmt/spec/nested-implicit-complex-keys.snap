@@ -1,0 +1,7 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+---
+[
+  [a, [[[b, c]]: d, e]]: 23,
+]

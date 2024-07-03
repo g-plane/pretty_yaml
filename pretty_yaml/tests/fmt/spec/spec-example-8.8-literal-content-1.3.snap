@@ -1,0 +1,13 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+---
+|
+
+
+  literal
+
+
+  text
+
+# Comment

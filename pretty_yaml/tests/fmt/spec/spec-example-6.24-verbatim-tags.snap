@@ -1,0 +1,5 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+!<tag:yaml.org,2002:str> foo:
+  !<!bar> baz

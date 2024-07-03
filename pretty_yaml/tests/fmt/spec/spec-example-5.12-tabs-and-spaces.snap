@@ -1,0 +1,9 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+# Tabs and spaces
+quoted: "Quoted 	"
+block: |
+  void main() {
+  	printf("Hello, world!\n");
+  }
