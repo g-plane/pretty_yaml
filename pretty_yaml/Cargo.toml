@@ -1,6 +1,6 @@
 [package]
 name = "pretty_yaml"
-version = "0.0.0"
+version = "0.1.0"
 edition = "2021"
 authors = ["Pig Fang <g-plane@hotmail.com>"]
 description = "Semi-tolerant and configurable YAML formatter."
@@ -15,7 +15,7 @@ itertools = "0.12"
 rowan = "0.15"
 serde = { version = "1.0", features = ["derive"], optional = true }
 tiny_pretty = "0.1"
-yaml_parser = { version = "0.0", path = "../yaml_parser" }
+yaml_parser = { version = "0.1", path = "../yaml_parser" }
 
 [dev-dependencies]
 insta = { version = "1.38", features = ["glob"] }
