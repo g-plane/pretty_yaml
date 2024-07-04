@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://plugins.dprint.dev/g-plane/pretty_yaml/v0.0.0/schema.json",
+  "title": "Config",
+  "description": "Configuration for dprint-plugin-yaml.",
+  "type": "object",
+  "properties": {
+    "printWidth": {
+      "description": "The line width limitation that Pretty YAML should *(but not must)* avoid exceeding. Pretty YAML will try its best to keep line width less than this value, but it may exceed for some cases, for example, a very very long single word.",
+      "type": "integer",
+      "default": 80,
+      "minimum": 0
+    },
+    "useTabs": {
+      "description": "Specify use space or tab for indentation.",
+      "type": "boolean",
+      "default": false
+    },
+    "indentWidth": {
+      "description": "Size of indentation. When enabled `useTabs`, this option may be disregarded, since only one tab will be inserted when indented once.",
+      "type": "integer",
+      "default": 2,
+      "minimum": 0
+    },
+    "lineBreak": {
+      "description": "Specify whether use `\\n` (LF) or `\\r\\n` (CRLF) for line break.",
+      "type": "string",
+      "enum": ["lf", "crlf"],
+      "default": "lf"
+    },
+    "quotes": {
+      "description": "Control the quotes.",
+      "type": "string",
+      "oneOf": [
+        {
+          "const": "preferDouble",
+          "description": "Use double quotes as possible. However if there're escaped characters in strings, quotes will be kept as-is. (Recommended)"
+        },
+        {
+          "const": "preferSingle",
+          "description": "Use single quotes as possible. However if there're `\\` char or `\"` char in strings, quotes will be kept as-is."
+        }
+      ],
+      "default": "preferDouble"
+    },
+    "trailingComma": {
+      "description": "Control whether trailing comma should be inserted or not.",
+      "type": "boolean",
+      "default": true
+    },
+    "formatComments": {
+      "description": "Control whether whitespace should be inserted at the beginning of comments or not.",
+      "type": "boolean",
+      "default": false
+    },
+    "indentBlockSequenceInMap": {
+      "description": "Control whether block sequence should be indented or not in a block map.",
+      "type": "boolean",
+      "default": true
+    },
+    "braceSpacing": {
+      "description": "Control whether whitespace should be inserted between braces or not.",
+      "type": "boolean",
+      "default": true
+    },
+    "bracketSpacing": {
+      "description": "Control whether whitespace should be inserted between brackets or not.",
+      "type": "boolean",
+      "default": false
+    },
+    "ignoreCommentDirective": {
+      "description": "Text directive for ignoring formatting specific content.",
+      "type": "string",
+      "default": "pretty-yaml-ignore"
+    }
+  }
+}

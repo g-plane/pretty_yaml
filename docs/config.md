@@ -160,4 +160,4 @@ Default option is `false`.
 
 Text directive for ignoring formatting specific content.
 
-Default is `"pertty-yaml-ignore"`.
+Default is `"pretty-yaml-ignore"`.
