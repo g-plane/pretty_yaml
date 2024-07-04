@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use crate::{
     config::FormatOptions,
     printer::{Ctx, DocGen},
