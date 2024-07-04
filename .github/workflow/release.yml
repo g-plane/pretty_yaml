@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup target add wasm32-unknown-unknown
+      - run: |
+          cargo build --release -p dprint_plugin_yaml --target wasm32-unknown-unknown
+          cp target/wasm32-unknown-unknown/release/dprint_plugin_yaml.wasm dprint_plugin/deployment/plugin.wasm
+      - name: Publish dprint plugin
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dprint_plugin/deployment/plugin.wasm
+            dprint_plugin/deployment/schema.json
+      - name: Publish crates
+        run: cargo publish -p pretty_yaml
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
