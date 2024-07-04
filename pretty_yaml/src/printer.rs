@@ -455,7 +455,7 @@ impl DocGen for FlowMapValue {
     fn doc(&self, ctx: &Ctx) -> Doc<'static> {
         self.flow()
             .map(|flow| flow.doc(ctx))
-            .unwrap_or_else(|| Doc::nil())
+            .unwrap_or_else(Doc::nil)
     }
 }
 
