@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["pretty_yaml", "yaml_parser"]
+members = ["dprint_plugin", "pretty_yaml", "yaml_parser"]
 
 [profile.release]
 lto = true
