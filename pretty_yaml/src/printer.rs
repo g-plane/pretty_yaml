@@ -193,9 +193,14 @@ impl DocGen for BlockSeqEntry {
             {
                 let mut trivia_docs = format_trivias_after_token(&token, ctx);
                 docs.push(Doc::space());
+                docs.push(Doc::text(
+                    " ".repeat(ctx.indent_width.checked_sub(2).unwrap_or_default()),
+                ));
                 docs.append(&mut trivia_docs);
             } else if self.block().is_some() || self.flow().is_some() {
-                docs.push(Doc::space());
+                docs.push(Doc::text(
+                    " ".repeat(ctx.indent_width.checked_sub(1).unwrap_or(1)),
+                ));
             }
         }
 
