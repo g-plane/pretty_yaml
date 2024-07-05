@@ -12,7 +12,7 @@ source: pretty_yaml/tests/fmt.rs
 # before-after.comment
 
 - none:
-# none.comment
+  # none.comment
 - before(2 line)
 
 # before.comment

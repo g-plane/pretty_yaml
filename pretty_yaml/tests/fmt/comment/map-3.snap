@@ -13,5 +13,5 @@ foo1:
 foo2:
   - foo2
 
-# first line
-# next line
+  # first line
+  # next line

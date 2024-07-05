@@ -3,7 +3,7 @@ source: pretty_yaml/tests/fmt.rs
 ---
 parent:
   one: 1
-# two: 2
+  # two: 2
 
 a:
   b:

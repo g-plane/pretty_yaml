@@ -11,7 +11,7 @@ a: # a.trailingComment
 
 d:
   - 123
-# sequence
+  # sequence
 
 e:
   - 123

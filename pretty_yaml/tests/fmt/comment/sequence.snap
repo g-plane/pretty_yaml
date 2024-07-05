@@ -11,6 +11,6 @@ source: pretty_yaml/tests/fmt.rs
 
 - - a
 
-# - b
+  # - b
 
-# - c
+  # - c

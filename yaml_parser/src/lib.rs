@@ -738,16 +738,21 @@ fn block_sequence(input: &mut Input) -> GreenResult {
         (
             block_sequence_entry,
             repeat(0.., (cmts_or_ws1.verify_indent(), block_sequence_entry)),
+            block_collection_trailing_trivias(input.state.indent),
         ),
     )
     .parse_next(input)
-    .map(|(first, rest): (_, Vec<_>)| {
+    .map(|(first, rest, trailing_trivias): (_, Vec<_>, _)| {
         let mut children = Vec::with_capacity(1 + rest.len());
         children.push(first);
         for (mut trivias, entry) in rest {
             children.append(&mut trivias);
             children.push(entry);
         }
+        trailing_trivias.into_iter().for_each(|(ws, comment)| {
+            children.push(ws);
+            children.push(comment);
+        });
         node(BLOCK_SEQ, children)
     })
 }
@@ -819,16 +824,21 @@ fn block_map(input: &mut Input) -> GreenResult {
                     alt((block_map_implicit_entry, block_map_explicit_entry)),
                 ),
             ),
+            block_collection_trailing_trivias(indent),
         ),
     )
     .parse_next(input)
-    .map(|(first, rest): (_, Vec<_>)| {
+    .map(|(first, rest, trailing_trivias): (_, Vec<_>, _)| {
         let mut children = Vec::with_capacity(1 + rest.len());
         children.push(first);
         for (mut trivias, entry) in rest {
             children.append(&mut trivias);
             children.push(entry);
         }
+        trailing_trivias.into_iter().for_each(|(ws, comment)| {
+            children.push(ws);
+            children.push(comment);
+        });
         node(BLOCK_MAP, children)
     })
 }
@@ -936,6 +946,17 @@ fn block_map_implicit_key(input: &mut Input) -> GreenResult {
     )
     .parse_next(input)
     .map(|child| node(BLOCK_MAP_KEY, [child]))
+}
+
+fn block_collection_trailing_trivias<'s>(
+    indent: usize,
+) -> impl Parser<Input<'s>, Vec<(GreenElement, GreenElement)>, ContextError> {
+    // 1. We don't use `verify_indent` or `state.prev_indent` because they were changed after
+    //    the last entry. Comments and whitespaces will be parsed after each entry but they're
+    //    discarded because there're no entries any more, but state is still changed.
+    // 2. Top-level comments shouldn't be included in block collection.
+    let verify = verify_state(move |state| state.indent == indent && !state.document_top);
+    repeat(0.., (terminated(ws, verify), comment))
 }
 
 fn block(input: &mut Input) -> GreenResult {
