@@ -238,30 +238,24 @@ impl DocGen for Document {
         let mut children = self.syntax().children_with_tokens().peekable();
         while let Some(element) = children.next() {
             match element {
-                SyntaxElement::Node(node) => {
-                    if should_ignore(&node, ctx) {
-                        reflow(&node.to_string(), &mut docs);
-                    } else {
-                        match node.kind() {
-                            SyntaxKind::BLOCK => {
-                                if let Some(block) = Block::cast(node) {
-                                    docs.push(block.doc(ctx));
-                                }
-                            }
-                            SyntaxKind::FLOW => {
-                                if let Some(flow) = Flow::cast(node) {
-                                    docs.push(flow.doc(ctx));
-                                }
-                            }
-                            SyntaxKind::DIRECTIVE => {
-                                if let Some(directive) = Directive::cast(node) {
-                                    docs.push(directive.doc(ctx));
-                                }
-                            }
-                            _ => {}
+                SyntaxElement::Node(node) => match node.kind() {
+                    SyntaxKind::BLOCK => {
+                        if let Some(block) = Block::cast(node) {
+                            docs.push(block.doc(ctx));
                         }
                     }
-                }
+                    SyntaxKind::FLOW => {
+                        if let Some(flow) = Flow::cast(node) {
+                            docs.push(flow.doc(ctx));
+                        }
+                    }
+                    SyntaxKind::DIRECTIVE => {
+                        if let Some(directive) = Directive::cast(node) {
+                            docs.push(directive.doc(ctx));
+                        }
+                    }
+                    _ => {}
+                },
                 SyntaxElement::Token(token) => match token.kind() {
                     SyntaxKind::COMMENT => {
                         docs.push(format_comment(&token, ctx));
