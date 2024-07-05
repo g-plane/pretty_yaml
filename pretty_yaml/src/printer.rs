@@ -136,7 +136,9 @@ impl DocGen for BlockScalar {
                                 .children_with_tokens()
                                 .any(|element| element.kind() == SyntaxKind::INDENT_INDICATOR)
                             {
-                                return Doc::list(reflow(token.text()).collect());
+                                let mut docs = Vec::with_capacity(2);
+                                reflow(token.text(), &mut docs);
+                                return Doc::list(docs);
                             }
                             let space_len = text.find(|c: char| !c.is_ascii_whitespace()).map(
                                 |first_contentful| {
@@ -238,7 +240,7 @@ impl DocGen for Document {
             match element {
                 SyntaxElement::Node(node) => {
                     if should_ignore(&node, ctx) {
-                        docs.extend(reflow(&node.to_string()));
+                        reflow(&node.to_string(), &mut docs);
                     } else {
                         match node.kind() {
                             SyntaxKind::BLOCK => {
@@ -1000,7 +1002,7 @@ where
         match element {
             SyntaxElement::Node(node) => {
                 if should_ignore(&node, ctx) {
-                    docs.extend(reflow(&node.to_string()));
+                    reflow(&node.to_string(), &mut docs);
                 } else if let Some(item) = Item::cast(node) {
                     docs.push(item.doc(ctx));
                 }
@@ -1210,11 +1212,15 @@ fn intersperse_lines(docs: &mut Vec<Doc<'static>>, mut lines: impl Iterator<Item
     }
 }
 
-fn reflow(text: &str) -> impl Iterator<Item = Doc<'static>> + '_ {
-    itertools::intersperse(
-        text.lines().map(|s| Doc::text(s.to_owned())),
-        Doc::empty_line(),
-    )
+fn reflow(text: &str, docs: &mut Vec<Doc<'static>>) {
+    let mut lines = text.lines();
+    if let Some(line) = lines.next() {
+        docs.push(Doc::text(line.to_owned()));
+    }
+    for line in lines {
+        docs.push(Doc::empty_line());
+        docs.push(Doc::text(line.to_owned()));
+    }
 }
 
 fn should_ignore(node: &SyntaxNode, ctx: &Ctx) -> bool {
