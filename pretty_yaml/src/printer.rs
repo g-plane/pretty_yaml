@@ -184,25 +184,28 @@ impl DocGen for BlockSeq {
 
 impl DocGen for BlockSeqEntry {
     fn doc(&self, ctx: &Ctx) -> Doc<'static> {
+        use crate::config::DashSpacing;
+
         let mut docs = Vec::with_capacity(3);
 
         if let Some(token) = self.minus() {
             docs.push(Doc::text("-"));
+            let spacing = match ctx.options.dash_spacing {
+                DashSpacing::OneSpace => Doc::space(),
+                DashSpacing::Indent => {
+                    Doc::text(" ".repeat(ctx.indent_width.checked_sub(1).unwrap_or(1)))
+                }
+            };
             if let Some(token) = token
                 .next_sibling_or_token()
                 .and_then(SyntaxElement::into_token)
                 .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
             {
                 let mut trivia_docs = format_trivias_after_token(&token, ctx);
-                docs.push(Doc::space());
-                docs.push(Doc::text(
-                    " ".repeat(ctx.indent_width.checked_sub(2).unwrap_or_default()),
-                ));
+                docs.push(spacing);
                 docs.append(&mut trivia_docs);
             } else if self.block().is_some() || self.flow().is_some() {
-                docs.push(Doc::text(
-                    " ".repeat(ctx.indent_width.checked_sub(1).unwrap_or(1)),
-                ));
+                docs.push(spacing);
             }
         }
 
@@ -212,7 +215,10 @@ impl DocGen for BlockSeqEntry {
             docs.push(flow.doc(ctx));
         }
 
-        Doc::list(docs).nest(ctx.indent_width)
+        Doc::list(docs).nest(match ctx.options.dash_spacing {
+            DashSpacing::OneSpace => 2,
+            DashSpacing::Indent => ctx.indent_width,
+        })
     }
 }
 

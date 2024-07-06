@@ -78,6 +78,22 @@ pub(crate) fn resolve_config(
             ),
             brace_spacing: get_value(&mut config, "braceSpacing", true, &mut diagnostics),
             bracket_spacing: get_value(&mut config, "bracketSpacing", false, &mut diagnostics),
+            dash_spacing: match &*get_value(
+                &mut config,
+                "dashSpacing",
+                "oneSpace".to_string(),
+                &mut diagnostics,
+            ) {
+                "oneSpace" => DashSpacing::OneSpace,
+                "indent" => DashSpacing::Indent,
+                _ => {
+                    diagnostics.push(ConfigurationDiagnostic {
+                        property_name: "dashSpacing".into(),
+                        message: "invalid value for config `dashSpacing`".into(),
+                    });
+                    Default::default()
+                }
+            },
             ignore_comment_directive: get_value(
                 &mut config,
                 "ignoreCommentDirective",

@@ -98,6 +98,10 @@ pub struct LanguageOptions {
     /// See [`bracketSpacing`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#bracketspacing) on GitHub
     pub bracket_spacing: bool,
 
+    #[cfg_attr(feature = "config_serde", serde(alias = "dashSpacing"))]
+    /// See [`dashSpacing`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#dashspacing) on GitHub
+    pub dash_spacing: DashSpacing,
+
     #[cfg_attr(feature = "config_serde", serde(alias = "ignoreCommentDirective"))]
     /// See [`ignoreCommentDirective`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#ignorecommentdirective) on GitHub
     pub ignore_comment_directive: String,
@@ -112,6 +116,7 @@ impl Default for LanguageOptions {
             indent_block_sequence_in_map: true,
             brace_spacing: true,
             bracket_spacing: false,
+            dash_spacing: DashSpacing::default(),
             ignore_comment_directive: "pretty-yaml-ignore".into(),
         }
     }
@@ -129,4 +134,14 @@ pub enum Quotes {
     #[cfg_attr(feature = "config_serde", serde(alias = "preferSingle"))]
     /// Make string to single quoted unless it contains double quotes inside.
     PreferSingle,
+}
+
+#[derive(Clone, Debug, Default)]
+#[cfg_attr(feature = "config_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "config_serde", serde(rename_all = "kebab-case"))]
+pub enum DashSpacing {
+    #[default]
+    #[cfg_attr(feature = "config_serde", serde(alias = "oneSpace"))]
+    OneSpace,
+    Indent,
 }

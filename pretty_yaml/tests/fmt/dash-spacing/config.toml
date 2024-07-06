@@ -1,0 +1,7 @@
+[one-space]
+indentWidth = 4
+dashSpacing = "oneSpace"
+
+[indent]
+indentWidth = 4
+dashSpacing = "indent"

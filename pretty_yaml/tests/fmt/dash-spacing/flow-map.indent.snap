@@ -1,0 +1,6 @@
+---
+source: pretty_yaml/tests/fmt.rs
+---
+outer:
+    -   key1: value1
+        key2: value2

@@ -68,6 +68,20 @@
       "type": "boolean",
       "default": false
     },
+    "dashSpacing": {
+      "description": "Control the whitespace behavior of block compact map in block sequence value. This option is only effective when `indentWidth` is greater than 2.",
+      "type": "string",
+      "oneOf": [
+        {
+          "const": "oneSpace",
+          "description": "Insert only one space after `-`."
+        },
+        {
+          "const": "indent",
+          "description": "Insert spaces to align indentation, respecting `indentWidth` option."
+        }
+      ]
+    },
     "ignoreCommentDirective": {
       "description": "Text directive for ignoring formatting specific content.",
       "type": "string",
