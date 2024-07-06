@@ -9,8 +9,7 @@ c: #lala
   d
 ? # lala
   - seq1
-:
-  # lala
+: # lala
   - #lala
     seq2
 e:

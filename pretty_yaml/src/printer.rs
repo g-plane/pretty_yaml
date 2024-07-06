@@ -835,25 +835,6 @@ where
                 .next_token()
                 .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
             {
-                if value.syntax().kind() == SyntaxKind::FLOW_MAP_VALUE {
-                    value_docs.push(Doc::space());
-                } else if token.text().contains(['\n', '\r'])
-                    || value
-                        .syntax()
-                        .children()
-                        .find(|child| child.kind() == SyntaxKind::BLOCK)
-                        // for the case that there's no properties
-                        // so the block map/seq comes as first child
-                        .and_then(|block| block.first_child())
-                        .is_some_and(|child| {
-                            matches!(child.kind(), SyntaxKind::BLOCK_MAP | SyntaxKind::BLOCK_SEQ)
-                        })
-                {
-                    value_docs.push(Doc::hard_line());
-                    has_line_break = true;
-                } else {
-                    value_docs.push(Doc::space());
-                }
                 let last_ws_index = value
                     .syntax()
                     .prev_sibling_or_token()
@@ -863,7 +844,7 @@ where
                 if let Some(index) = last_ws_index {
                     let mut has_comment = false;
                     let mut trivia_docs = format_trivias(
-                        token
+                        colon
                             .siblings_with_tokens(Direction::Next)
                             .filter(|token| token.index() != index),
                         &mut has_comment,
@@ -874,6 +855,25 @@ where
                         value_docs.push(Doc::hard_line());
                         has_line_break = true;
                     }
+                }
+                if has_line_break {
+                } else if value.syntax().kind() == SyntaxKind::FLOW_MAP_VALUE {
+                    value_docs.push(Doc::space());
+                } else if token.text().contains(['\n', '\r'])
+                    || value
+                        .syntax()
+                        .children()
+                        .find(|child| child.kind() == SyntaxKind::BLOCK)
+                        // for the case that there's no properties
+                        // so the block seq comes as first child
+                        .and_then(|block| block.first_child())
+                        .is_some_and(|child| child.kind() == SyntaxKind::BLOCK_SEQ)
+                        && !has_question_mark
+                {
+                    value_docs.push(Doc::hard_line());
+                    has_line_break = true;
+                } else {
+                    value_docs.push(Doc::space());
                 }
             } else if !has_trivias_before_colon {
                 docs.push(Doc::space());
