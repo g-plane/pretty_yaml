@@ -94,6 +94,12 @@ pub(crate) fn resolve_config(
                     Default::default()
                 }
             },
+            trim_trailing_whitespaces: get_value(
+                &mut config,
+                "trimTrailingWhitespaces",
+                true,
+                &mut diagnostics,
+            ),
             ignore_comment_directive: get_value(
                 &mut config,
                 "ignoreCommentDirective",

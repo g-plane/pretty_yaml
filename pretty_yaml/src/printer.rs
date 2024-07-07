@@ -154,8 +154,10 @@ impl DocGen for BlockScalar {
                                 let lines = text.lines().map(|s| {
                                     if s.trim().is_empty() {
                                         String::new()
-                                    } else {
+                                    } else if ctx.options.trim_trailing_whitespaces {
                                         s[space_len..].trim_end().to_owned()
+                                    } else {
+                                        s[space_len..].to_owned()
                                     }
                                 });
                                 let mut docs = vec![];
@@ -341,7 +343,7 @@ impl DocGen for Flow {
                 (Some(&ctx.options.quotes), "'")
             };
             docs.push(Doc::text(quote));
-            format_quoted_scalar(text, quotes_option, &mut docs);
+            format_quoted_scalar(text, quotes_option, &mut docs, ctx);
             docs.push(Doc::text(quote));
         } else if let Some(single_quoted) = self.single_quoted_scalar() {
             let text = single_quoted.text();
@@ -355,7 +357,7 @@ impl DocGen for Flow {
                 (Some(&ctx.options.quotes), "\"")
             };
             docs.push(Doc::text(quote));
-            format_quoted_scalar(text, quotes_option, &mut docs);
+            format_quoted_scalar(text, quotes_option, &mut docs, ctx);
             docs.push(Doc::text(quote));
         } else if let Some(plain) = self.plain_scalar() {
             let lines = plain.text().lines().map(|s| s.trim().to_owned());
@@ -1118,7 +1120,12 @@ fn format_comment(token: &SyntaxToken, ctx: &Ctx) -> Doc<'static> {
     }
 }
 
-fn format_quoted_scalar(text: &str, quotes_option: Option<&Quotes>, docs: &mut Vec<Doc<'static>>) {
+fn format_quoted_scalar(
+    text: &str,
+    quotes_option: Option<&Quotes>,
+    docs: &mut Vec<Doc<'static>>,
+    ctx: &Ctx,
+) {
     if text.is_empty() {
         return;
     }
@@ -1128,7 +1135,7 @@ fn format_quoted_scalar(text: &str, quotes_option: Option<&Quotes>, docs: &mut V
         if i > 0 {
             line = line.trim_start();
         }
-        if i < last_index {
+        if i < last_index && ctx.options.trim_trailing_whitespaces {
             line = line.trim_end();
         }
         if i == 0 {

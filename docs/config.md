@@ -186,6 +186,12 @@ outer:
         key2: value2
 ```
 
+## `trimTrailingWhitespaces`
+
+Control whether trailing whitespaces should be trimmed or not.
+
+Default option is `true`.
+
 ## `ignoreCommentDirective`
 
 Text directive for ignoring formatting specific content.

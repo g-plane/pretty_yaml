@@ -35,11 +35,13 @@ fn run_format_test(path: &Path, input: &str, options: &FormatOptions) -> String 
     let output = format_text(&input, &options)
         .map_err(|err| format!("failed to format '{}': {:?}", path.display(), err))
         .unwrap();
-    assert!(
-        !output.contains(" \n"),
-        "'{}' has trailing whitespace",
-        path.display()
-    );
+    if options.language.trim_trailing_whitespaces {
+        assert!(
+            !output.contains(" \n"),
+            "'{}' has trailing whitespaces",
+            path.display()
+        );
+    }
     let regression_format = format_text(&output, &options)
         .map_err(|err| {
             format!(
