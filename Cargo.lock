@@ -75,7 +75,7 @@ dependencies = [
 
 [[package]]
 name = "dprint_plugin_yaml"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "dprint-core",
@@ -186,7 +186,7 @@ dependencies = [
 
 [[package]]
 name = "pretty_yaml"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "insta",
  "rowan",
