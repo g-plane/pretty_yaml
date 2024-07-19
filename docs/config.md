@@ -192,6 +192,26 @@ Control whether trailing whitespaces should be trimmed or not.
 
 Default option is `true`.
 
+## `trimTrailingZero`
+
+Control whether trailing zeros should be removed or not.
+
+Default option is `false`.
+
+### Example for `false`
+
+```yaml
+- 1.20
+- 1.0
+```
+
+### Example for `true`
+
+```yaml
+- 1.2
+- 1
+```
+
 ## `ignoreCommentDirective`
 
 Text directive for ignoring formatting specific content.

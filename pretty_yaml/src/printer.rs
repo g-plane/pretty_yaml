@@ -1,5 +1,6 @@
 use crate::config::{LanguageOptions, Quotes};
 use rowan::Direction;
+use std::ops::Range;
 use tiny_pretty::Doc;
 use yaml_parser::{ast::*, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -360,8 +361,33 @@ impl DocGen for Flow {
             format_quoted_scalar(text, quotes_option, &mut docs, ctx);
             docs.push(Doc::text(quote));
         } else if let Some(plain) = self.plain_scalar() {
-            let lines = plain.text().lines().map(|s| s.trim().to_owned());
-            intersperse_lines(&mut docs, lines);
+            let token_text = plain.text();
+            'a: {
+                if ctx.options.trim_trailing_zero {
+                    let ranges = parse_float(token_text);
+                    if let Some((range_int, range_fraction, fraction)) = ranges.and_then(|ranges| {
+                        token_text
+                            .get(ranges.1.clone())
+                            .filter(|fraction| fraction.ends_with('0'))
+                            .map(|fraction| (ranges.0, ranges.1, fraction))
+                    }) {
+                        let mut token_text = token_text.to_owned();
+                        let trimmed_fraction = fraction.trim_end_matches('0');
+                        if trimmed_fraction == "." {
+                            if token_text.get(range_int.clone()).is_some_and(str::is_empty) {
+                                token_text.replace_range(range_int, "0");
+                            }
+                            token_text.replace_range(range_fraction, "");
+                        } else {
+                            token_text.replace_range(range_fraction, trimmed_fraction);
+                        }
+                        docs.push(Doc::text(token_text));
+                        break 'a;
+                    }
+                }
+                let lines = token_text.lines().map(|s| s.trim().to_owned());
+                intersperse_lines(&mut docs, lines);
+            }
         } else if let Some(flow_seq) = self.flow_seq() {
             docs.push(flow_seq.doc(ctx));
         } else if let Some(flow_map) = self.flow_map() {
@@ -1203,6 +1229,27 @@ fn can_omit_question_mark(key: &SyntaxNode) -> bool {
                     element.kind() == SyntaxKind::ALIAS
                 }
             })
+}
+
+fn parse_float(literal: &str) -> Option<(Range<usize>, Range<usize>)> {
+    let mut s = literal.strip_prefix(['+', '-']).unwrap_or(literal);
+    let int_start = literal.len() - s.len();
+    s = s.trim_start_matches(|c: char| c.is_ascii_digit());
+    let int_end = literal.len() - s.len();
+
+    let fraction_start = literal.len() - s.len();
+    let mut fraction_end = literal.len();
+    s = s.strip_prefix('.')?;
+    s = s.trim_start_matches(|c: char| c.is_ascii_digit());
+
+    if let Some(mut rest) = s.strip_prefix(['e', 'E']) {
+        fraction_end = literal.len() - s.len();
+        rest = rest.strip_prefix(['+', '-']).unwrap_or(rest);
+        if !rest.chars().all(|c| c.is_ascii_digit()) {
+            return None;
+        }
+    }
+    Some((int_start..int_end, fraction_start..fraction_end))
 }
 
 fn intersperse_lines(docs: &mut Vec<Doc<'static>>, mut lines: impl Iterator<Item = String>) {

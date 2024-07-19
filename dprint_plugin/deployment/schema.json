@@ -87,6 +87,11 @@
       "type": "boolean",
       "default": true
     },
+    "trimTrailingZero": {
+      "description": "Control whether trailing zeros should be removed or not.",
+      "type": "boolean",
+      "default": false
+    },
     "ignoreCommentDirective": {
       "description": "Text directive for ignoring formatting specific content.",
       "type": "string",

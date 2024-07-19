@@ -100,6 +100,7 @@ pub(crate) fn resolve_config(
                 true,
                 &mut diagnostics,
             ),
+            trim_trailing_zero: get_value(&mut config, "trimTrailingZero", false, &mut diagnostics),
             ignore_comment_directive: get_value(
                 &mut config,
                 "ignoreCommentDirective",

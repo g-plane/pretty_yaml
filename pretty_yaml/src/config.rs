@@ -106,6 +106,10 @@ pub struct LanguageOptions {
     /// See [`trimTrailingWhitespaces`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#trimtrailingwhitespaces) on GitHub
     pub trim_trailing_whitespaces: bool,
 
+    #[cfg_attr(feature = "config_serde", serde(alias = "trimTrailingZero"))]
+    /// See [`trimTrailingZero`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#trimtrailingzero) on GitHub
+    pub trim_trailing_zero: bool,
+
     #[cfg_attr(feature = "config_serde", serde(alias = "ignoreCommentDirective"))]
     /// See [`ignoreCommentDirective`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#ignorecommentdirective) on GitHub
     pub ignore_comment_directive: String,
@@ -122,6 +126,7 @@ impl Default for LanguageOptions {
             bracket_spacing: false,
             dash_spacing: DashSpacing::default(),
             trim_trailing_whitespaces: true,
+            trim_trailing_zero: false,
             ignore_comment_directive: "pretty-yaml-ignore".into(),
         }
     }
