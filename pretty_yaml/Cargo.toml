@@ -6,7 +6,6 @@ authors = ["Pig Fang <g-plane@hotmail.com>"]
 description = "Semi-tolerant and configurable YAML formatter."
 repository = "https://github.com/g-plane/pretty_yaml"
 license = "MIT"
-categories = ["parser-implementations", "text-processing"]
 keywords = ["yaml", "formatter"]
 exclude = ["/tests"]
 
