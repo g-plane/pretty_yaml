@@ -181,7 +181,7 @@ fn tag_property(input: &mut Input) -> GreenResult {
 
 fn verbatim_tag(input: &mut Input) -> GreenResult {
     ("!<", cut_err((take_while(1.., is_url_char), '>')))
-        .recognize()
+        .take()
         .context(StrContext::Label("verbatim tag"))
         .parse_next(input)
         .map(|text| tok(VERBATIM_TAG, text))
@@ -199,7 +199,7 @@ fn shorthand_tag(input: &mut Input) -> GreenResult {
 fn tag_handle(input: &mut Input) -> GreenResult {
     alt((
         ('!', take_while(1.., is_word_char), '!')
-            .recognize()
+            .take()
             .map(|text| tok(TAG_HANDLE_NAMED, text)),
         "!!".map(|text| tok(TAG_HANDLE_SECONDARY, text)),
         "!".map(|text| tok(TAG_HANDLE_PRIMARY, text)),
@@ -269,7 +269,7 @@ fn double_qouted_scalar(input: &mut Input) -> GreenResult {
             '"',
             cut_err((take_escaped(none_of(['\\', '"']), '\\', any), '"')),
         )
-            .recognize()
+            .take()
             .context(StrContext::Expected(StrContextValue::CharLiteral('"'))),
     )
     .parse_next(input)
@@ -286,7 +286,7 @@ fn single_qouted_scalar(input: &mut Input) -> GreenResult {
                 '\'',
             )),
         )
-            .recognize()
+            .take()
             .context(StrContext::Expected(StrContextValue::CharLiteral('\''))),
     )
     .parse_next(input)
@@ -316,14 +316,14 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
                                     matches!(c, '\n' | '\r' | '#')
                                         || safe_in && is_flow_indicator(c)
                                 })
-                                .recognize(),
+                                .take(),
                                 (
                                     ':',
                                     one_of(move |c: char| {
                                         c.is_ascii_whitespace() || safe_in && is_flow_indicator(c)
                                     }),
                                 )
-                                    .recognize(),
+                                    .take(),
                                 terminated(alt(("---", "...")), multispace1),
                                 eof,
                             )))),
@@ -352,12 +352,12 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
                     ),
                 ),
             )
-                .recognize(),
+                .take(),
         )
         .parse_next(input)
         .map(|text| tok(PLAIN_SCALAR, text))
     } else {
-        trace("plain_scalar", plain_scalar_one_line.recognize())
+        trace("plain_scalar", plain_scalar_one_line.take())
             .parse_next(input)
             .map(|text| tok(PLAIN_SCALAR, text))
     }
@@ -700,7 +700,7 @@ fn block_scalar(input: &mut Input) -> GreenResult {
                                     && (*line == "..." || *line == "---"))
                         }),
                 )
-                .recognize(),
+                .take(),
             )
             .map(move |text| {
                 let mut children = children.clone();
@@ -714,7 +714,7 @@ fn block_scalar(input: &mut Input) -> GreenResult {
 }
 fn indent_indicator(input: &mut Input) -> PResult<(GreenElement, usize)> {
     one_of(|c: char| c.is_ascii_digit())
-        .recognize()
+        .take()
         .try_map(|text: &str| {
             text.parse()
                 .map(|value| (tok(INDENT_INDICATOR, text), value))
@@ -802,7 +802,7 @@ fn block_compact_collection(
     result
 }
 fn space_before_block_compact_collection(input: &mut Input) -> GreenResult {
-    let (space, text) = space.with_recognized().parse_next(input)?;
+    let (space, text) = space.with_taken().parse_next(input)?;
     input.state.prev_indent = Some(input.state.indent);
     input.state.indent += text.len() + 1;
     Ok(space)
@@ -1015,7 +1015,7 @@ fn directives_end(input: &mut Input) -> GreenResult {
 }
 
 fn yaml_directive(input: &mut Input) -> GreenResult {
-    ("YAML", space, (digit1, '.', digit1).recognize())
+    ("YAML", space, (digit1, '.', digit1).take())
         .parse_next(input)
         .map(|(name, space, version)| {
             node(
@@ -1046,7 +1046,7 @@ fn tag_prefix(input: &mut Input) -> GreenResult {
         one_of(|c| c == '!' || is_tag_char(c)),
         take_while(0.., is_url_char),
     )
-        .recognize()
+        .take()
         .parse_next(input)
         .map(|text| tok(TAG_PREFIX, text))
 }
@@ -1063,7 +1063,7 @@ fn reserved_directive(input: &mut Input) -> GreenResult {
                     terminated(space1, peek(none_of('#'))),
                 )),
             )
-            .recognize(),
+            .take(),
         )),
     )
         .parse_next(input)
@@ -1186,7 +1186,7 @@ fn root(input: &mut Input) -> PResult<SyntaxNode> {
 
 fn comment(input: &mut Input) -> GreenResult {
     ('#', till_line_ending)
-        .recognize()
+        .take()
         .parse_next(input)
         .map(|text| tok(COMMENT, text))
 }
