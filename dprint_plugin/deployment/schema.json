@@ -44,7 +44,7 @@
         },
         {
           "const": "forceDouble",
-          "description": "Use double quotes as possible. However if there're escaped characters in strings, quotes will be kept as-is. (Recommended)"
+          "description": "Use double quotes as possible. However if there're escaped characters in strings, quotes will be kept as-is."
         },
         {
           "const": "forceSingle",
