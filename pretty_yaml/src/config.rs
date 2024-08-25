@@ -1,4 +1,7 @@
 //! Types about configuration.
+//!
+//! For detailed documentation of configuration,
+//! please read [configuration documentation](https://pretty-yaml.netlify.app/).
 
 #[cfg(feature = "config_serde")]
 use serde::{Deserialize, Serialize};
@@ -7,8 +10,6 @@ use serde::{Deserialize, Serialize};
 #[cfg_attr(feature = "config_serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "config_serde", serde(default))]
 /// The whole configuration of Pretty YAML.
-///
-/// For detail, please refer to [Configuration](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md) on GitHub.
 pub struct FormatOptions {
     #[cfg_attr(feature = "config_serde", serde(flatten))]
     pub layout: LayoutOptions,
@@ -22,18 +23,15 @@ pub struct FormatOptions {
 /// Configuration related to layout, such as indentation or print width.
 pub struct LayoutOptions {
     #[cfg_attr(feature = "config_serde", serde(alias = "printWidth"))]
-    /// See [`printWidth`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#printwidth) on GitHub
     pub print_width: usize,
 
     #[cfg_attr(feature = "config_serde", serde(alias = "indentWidth"))]
-    /// See [`indentWidth`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#indentwidth) on GitHub
     pub indent_width: usize,
 
     #[cfg_attr(
         feature = "config_serde",
         serde(alias = "lineBreak", alias = "linebreak")
     )]
-    /// See [`lineBreak`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#linebreak) on GitHub
     pub line_break: LineBreak,
 }
 
@@ -70,43 +68,33 @@ impl From<LineBreak> for tiny_pretty::LineBreak {
 #[cfg_attr(feature = "config_serde", serde(default))]
 /// Configuration related to syntax.
 pub struct LanguageOptions {
-    /// See [`quotes`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#quotes) on GitHub
     pub quotes: Quotes,
 
     #[cfg_attr(feature = "config_serde", serde(alias = "trailingComma"))]
-    /// See [`trailingComma`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#trailingcomma) on GitHub
     pub trailing_comma: bool,
 
     #[cfg_attr(feature = "config_serde", serde(alias = "formatComments"))]
-    /// See [`formatComments`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#formatcomments) on GitHub
     pub format_comments: bool,
 
     #[cfg_attr(feature = "config_serde", serde(alias = "indentBlockSequenceInMap"))]
-    /// See [`indentBlockSequenceInMap`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#indentblocksequenceinmap) on GitHub
     pub indent_block_sequence_in_map: bool,
 
     #[cfg_attr(feature = "config_serde", serde(alias = "braceSpacing"))]
-    /// See [`braceSpacing`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#bracespacing) on GitHub
     pub brace_spacing: bool,
 
     #[cfg_attr(feature = "config_serde", serde(alias = "bracketSpacing"))]
-    /// See [`bracketSpacing`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#bracketspacing) on GitHub
     pub bracket_spacing: bool,
 
     #[cfg_attr(feature = "config_serde", serde(alias = "dashSpacing"))]
-    /// See [`dashSpacing`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#dashspacing) on GitHub
     pub dash_spacing: DashSpacing,
 
     #[cfg_attr(feature = "config_serde", serde(alias = "trimTrailingWhitespaces"))]
-    /// See [`trimTrailingWhitespaces`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#trimtrailingwhitespaces) on GitHub
     pub trim_trailing_whitespaces: bool,
 
     #[cfg_attr(feature = "config_serde", serde(alias = "trimTrailingZero"))]
-    /// See [`trimTrailingZero`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#trimtrailingzero) on GitHub
     pub trim_trailing_zero: bool,
 
     #[cfg_attr(feature = "config_serde", serde(alias = "ignoreCommentDirective"))]
-    /// See [`ignoreCommentDirective`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#ignorecommentdirective) on GitHub
     pub ignore_comment_directive: String,
 }
 

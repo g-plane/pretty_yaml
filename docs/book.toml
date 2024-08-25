@@ -1,0 +1,8 @@
+[book]
+title = "Pretty YAML Documentation"
+authors = ["Pig Fang"]
+language = "en"
+
+[output.html]
+git-repository-url = "https://github.com/g-plane/pretty_yaml"
+edit-url-template = "https://github.com/g-plane/pretty_yaml/edit/main/docs/{path}"

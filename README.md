@@ -34,7 +34,7 @@ You can also read [dprint CLI documentation](https://dprint.dev/cli/) for using 
 
 ## Configuration
 
-Please refer to [Configuration](./docs/config.md).
+Please refer to [Configuration](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md).
 
 ## Using in Rust
 

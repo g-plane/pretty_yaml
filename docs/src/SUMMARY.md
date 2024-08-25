@@ -1,0 +1,16 @@
+# Summary
+
+- [Configuration](./config/README.md)
+  - [printWidth](./config/print-width.md)
+  - [indentWidth](./config/indent-width.md)
+  - [lineBreak](./config/line-break.md)
+  - [quotes](./config/quotes.md)
+  - [trailingComma](./config/trailing-comma.md)
+  - [formatComments](./config/format-comments.md)
+  - [indentBlockSequenceInMap](./config/indent-block-sequence-in-map.md)
+  - [braceSpacing](./config/brace-spacing.md)
+  - [bracketSpacing](./config/bracket-spacing.md)
+  - [dashSpacing](./config/dash-spacing.md)
+  - [trimTrailingWhitespaces](./config/trim-trailing-whitespaces.md)
+  - [trimTrailingZero](./config/trim-trailing-zero.md)
+  - [ignoreCommentDirective](./config/ignore-comment-directive.md)

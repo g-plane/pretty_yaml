@@ -12,7 +12,7 @@ assert_eq!("- a\n- b\n", &format_text("-  a\n-     b", &options).unwrap());
 ```
 
 For detailed documentation of configuration,
-please refer to [Configuration](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md) on GitHub.
+please refer to [Configuration](https://pretty-yaml.netlify.app/).
 
 If there're syntax errors in source code, it will return `Err`:
 
