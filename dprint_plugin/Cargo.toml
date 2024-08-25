@@ -1,6 +1,6 @@
 [package]
 name = "dprint_plugin_yaml"
-version = "0.4.0"
+version = "0.5.0"
 edition = "2021"
 authors = ["Pig Fang <g-plane@hotmail.com>"]
 description = "pretty_yaml as dprint plugin."
