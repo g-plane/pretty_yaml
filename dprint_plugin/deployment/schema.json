@@ -4,6 +4,13 @@
   "title": "Config",
   "description": "Configuration for dprint-plugin-yaml.",
   "type": "object",
+  "definitions": {
+    "preferSingleLine": {
+      "description": "Control whether items should be placed on single line as possible, even they're originally on multiple lines.",
+      "type": "boolean",
+      "default": false
+    }
+  },
   "properties": {
     "printWidth": {
       "description": "The line width limitation that Pretty YAML should *(but not must)* avoid exceeding. Pretty YAML will try its best to keep line width less than this value, but it may exceed for some cases, for example, a very very long single word.",
@@ -76,6 +83,15 @@
           "description": "Insert spaces to align indentation, respecting `indentWidth` option."
         }
       ]
+    },
+    "preferSingleLine": {
+      "$ref": "#/definitions/preferSingleLine"
+    },
+    "flowSequence.preferSingleLine": {
+      "$ref": "#/definitions/preferSingleLine"
+    },
+    "flowMap.preferSingleLine": {
+      "$ref": "#/definitions/preferSingleLine"
     },
     "trimTrailingWhitespaces": {
       "description": "Control whether trailing whitespaces should be trimmed or not.",

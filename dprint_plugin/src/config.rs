@@ -1,6 +1,6 @@
 use dprint_core::configuration::{
-    get_unknown_property_diagnostics, get_value, ConfigKeyMap, ConfigurationDiagnostic,
-    GlobalConfiguration, NewLineKind, ResolveConfigurationResult,
+    get_nullable_value, get_unknown_property_diagnostics, get_value, ConfigKeyMap,
+    ConfigurationDiagnostic, GlobalConfiguration, NewLineKind, ResolveConfigurationResult,
 };
 use pretty_yaml::config::*;
 
@@ -88,6 +88,17 @@ pub(crate) fn resolve_config(
                     Default::default()
                 }
             },
+            prefer_single_line: get_value(&mut config, "preferSingleLine", false, &mut diagnostics),
+            flow_sequence_prefer_single_line: get_nullable_value(
+                &mut config,
+                "flowSequence.preferSingleLine",
+                &mut diagnostics,
+            ),
+            flow_map_prefer_single_line: get_nullable_value(
+                &mut config,
+                "flowMap.preferSingleLine",
+                &mut diagnostics,
+            ),
             trim_trailing_whitespaces: get_value(
                 &mut config,
                 "trimTrailingWhitespaces",

@@ -11,6 +11,7 @@
   - [braceSpacing](./config/brace-spacing.md)
   - [bracketSpacing](./config/bracket-spacing.md)
   - [dashSpacing](./config/dash-spacing.md)
+  - [preferSingleLine](./config/prefer-single-line.md)
   - [trimTrailingWhitespaces](./config/trim-trailing-whitespaces.md)
   - [trimTrailingZero](./config/trim-trailing-zero.md)
   - [ignoreCommentDirective](./config/ignore-comment-directive.md)

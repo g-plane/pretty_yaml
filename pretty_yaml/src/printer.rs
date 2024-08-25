@@ -412,59 +412,12 @@ impl DocGen for FlowMap {
             return Doc::text("{}");
         }
 
-        let brace_space = if ctx.options.brace_spacing {
-            Doc::line_or_space()
-        } else {
-            Doc::line_or_nil()
-        };
-
-        let mut docs = vec![Doc::text("{")];
-        if let Some(token) = self
-            .l_brace()
-            .and_then(|token| token.next_token())
-            .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
-        {
-            if token.text().contains(['\n', '\r']) {
-                docs.push(Doc::hard_line());
-            } else {
-                docs.push(brace_space.clone());
-            }
-            let mut trivia_docs = format_trivias_after_token(&token, ctx);
-            docs.append(&mut trivia_docs);
-        } else {
-            docs.push(brace_space.clone());
-        }
-
-        let mut has_trailing_comment = false;
         if let Some(entries) = self.entries() {
-            docs.push(entries.doc(ctx));
-            let last_ws_index = self
-                .r_brace()
-                .and_then(|token| token.prev_token())
-                .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
-                .map(|token| token.index());
-            if let Some(index) = last_ws_index {
-                let mut trivia_docs = format_trivias(
-                    entries
-                        .syntax()
-                        .siblings_with_tokens(Direction::Next)
-                        .filter(|element| element.index() != index),
-                    &mut has_trailing_comment,
-                    ctx,
-                );
-                docs.append(&mut trivia_docs);
-            }
+            FlowCollectionFormatter::flow_map(self.l_brace(), self.r_brace(), ctx)
+                .format(entries.doc(ctx))
+        } else {
+            Doc::nil()
         }
-
-        Doc::list(docs)
-            .nest(ctx.indent_width)
-            .append(if has_trailing_comment {
-                Doc::hard_line()
-            } else {
-                brace_space
-            })
-            .append(Doc::text("}"))
-            .group()
     }
 }
 
@@ -513,59 +466,12 @@ impl DocGen for FlowSeq {
             return Doc::text("[]");
         }
 
-        let bracket_space = if ctx.options.bracket_spacing {
-            Doc::line_or_space()
-        } else {
-            Doc::line_or_nil()
-        };
-
-        let mut docs = vec![Doc::text("[")];
-        if let Some(token) = self
-            .l_bracket()
-            .and_then(|token| token.next_token())
-            .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
-        {
-            if token.text().contains(['\n', '\r']) {
-                docs.push(Doc::hard_line());
-            } else {
-                docs.push(bracket_space.clone());
-            }
-            let mut trivia_docs = format_trivias_after_token(&token, ctx);
-            docs.append(&mut trivia_docs);
-        } else {
-            docs.push(bracket_space.clone());
-        }
-
-        let mut has_trailing_comment = false;
         if let Some(entries) = self.entries() {
-            docs.push(entries.doc(ctx));
-            let last_ws_index = self
-                .r_bracket()
-                .and_then(|token| token.prev_token())
-                .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
-                .map(|token| token.index());
-            if let Some(index) = last_ws_index {
-                let mut trivia_docs = format_trivias(
-                    entries
-                        .syntax()
-                        .siblings_with_tokens(Direction::Next)
-                        .filter(|element| element.index() != index),
-                    &mut has_trailing_comment,
-                    ctx,
-                );
-                docs.append(&mut trivia_docs);
-            }
+            FlowCollectionFormatter::flow_seq(self.l_bracket(), self.r_bracket(), ctx)
+                .format(entries.doc(ctx))
+        } else {
+            Doc::nil()
         }
-
-        Doc::list(docs)
-            .nest(ctx.indent_width)
-            .append(if has_trailing_comment {
-                Doc::hard_line()
-            } else {
-                bracket_space
-            })
-            .append(Doc::text("]"))
-            .group()
     }
 }
 
@@ -952,6 +858,131 @@ where
     Doc::list(docs).group()
 }
 
+struct FlowCollectionFormatter<'a> {
+    open_text: &'static str,
+    close_text: &'static str,
+    space: Doc<'static>,
+    open_token: Option<SyntaxToken>,
+    close_token: Option<SyntaxToken>,
+    prefer_single_line: bool,
+    ctx: &'a Ctx<'a>,
+}
+impl<'a> FlowCollectionFormatter<'a> {
+    fn flow_seq(open: Option<SyntaxToken>, close: Option<SyntaxToken>, ctx: &'a Ctx) -> Self {
+        Self {
+            open_text: "[",
+            close_text: "]",
+            space: if ctx.options.bracket_spacing {
+                Doc::line_or_space()
+            } else {
+                Doc::line_or_nil()
+            },
+            open_token: open,
+            close_token: close,
+            prefer_single_line: ctx
+                .options
+                .flow_sequence_prefer_single_line
+                .unwrap_or(ctx.options.prefer_single_line),
+            ctx,
+        }
+    }
+    fn flow_map(open: Option<SyntaxToken>, close: Option<SyntaxToken>, ctx: &'a Ctx) -> Self {
+        Self {
+            open_text: "{",
+            close_text: "}",
+            space: if ctx.options.brace_spacing {
+                Doc::line_or_space()
+            } else {
+                Doc::line_or_nil()
+            },
+            open_token: open,
+            close_token: close,
+            prefer_single_line: ctx
+                .options
+                .flow_map_prefer_single_line
+                .unwrap_or(ctx.options.prefer_single_line),
+            ctx,
+        }
+    }
+    fn format(self, body: Doc<'static>) -> Doc<'static> {
+        let ctx = self.ctx;
+        let mut docs = Vec::with_capacity(5);
+
+        docs.push(Doc::text(self.open_text));
+
+        if let Some(open) = self.open_token {
+            if let Some(token) = open
+                .next_token()
+                .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
+            {
+                if self.prefer_single_line {
+                    docs.push(self.space.clone());
+                } else {
+                    if token.text().contains(['\n', '\r']) {
+                        docs.push(Doc::hard_line());
+                    } else {
+                        docs.push(self.space.clone());
+                    }
+                }
+                let mut trivia_docs = format_trivias_after_token(&token, ctx);
+                docs.append(&mut trivia_docs);
+            } else {
+                docs.push(self.space.clone());
+                let mut trivia_docs = format_trivias_after_token(&open, ctx);
+                docs.append(&mut trivia_docs);
+            }
+        }
+
+        docs.push(body);
+
+        let mut has_comment = false;
+        if let Some(close) = self.close_token {
+            let last_ws_index = close
+                .prev_token()
+                .filter(|token| token.kind() == SyntaxKind::WHITESPACE)
+                .map(|token| token.index());
+            let last_non_trivia =
+                close
+                    .siblings_with_tokens(Direction::Prev)
+                    .skip(1)
+                    .find(|element| {
+                        !matches!(element.kind(), SyntaxKind::WHITESPACE | SyntaxKind::COMMENT)
+                    });
+            let mut trivias = match last_non_trivia {
+                Some(SyntaxElement::Node(node)) => format_trivias(
+                    node.siblings_with_tokens(Direction::Next).filter(|token| {
+                        last_ws_index
+                            .map(|index| token.index() != index)
+                            .unwrap_or(true)
+                    }),
+                    &mut has_comment,
+                    ctx,
+                ),
+                Some(SyntaxElement::Token(token)) => format_trivias(
+                    token.siblings_with_tokens(Direction::Next).filter(|token| {
+                        last_ws_index
+                            .map(|index| token.index() != index)
+                            .unwrap_or(true)
+                    }),
+                    &mut has_comment,
+                    ctx,
+                ),
+                None => vec![],
+            };
+            docs.append(&mut trivias);
+        }
+
+        Doc::list(docs)
+            .nest(ctx.indent_width)
+            .append(if has_comment {
+                Doc::hard_line()
+            } else {
+                self.space
+            })
+            .append(Doc::text(self.close_text))
+            .group()
+    }
+}
 fn format_flow_collection_entries<N, Entry>(
     node: &N,
     entries: AstChildren<Entry>,

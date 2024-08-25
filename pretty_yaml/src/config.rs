@@ -88,6 +88,25 @@ pub struct LanguageOptions {
     #[cfg_attr(feature = "config_serde", serde(alias = "dashSpacing"))]
     pub dash_spacing: DashSpacing,
 
+    #[cfg_attr(feature = "config_serde", serde(alias = "preferSingleLine"))]
+    pub prefer_single_line: bool,
+    #[cfg_attr(
+        feature = "config_serde",
+        serde(
+            rename = "flow_sequence.prefer_single_line",
+            alias = "flowSequence.preferSingleLine"
+        )
+    )]
+    pub flow_sequence_prefer_single_line: Option<bool>,
+    #[cfg_attr(
+        feature = "config_serde",
+        serde(
+            rename = "flow_map.prefer_single_line",
+            alias = "flowMap.preferSingleLine"
+        )
+    )]
+    pub flow_map_prefer_single_line: Option<bool>,
+
     #[cfg_attr(feature = "config_serde", serde(alias = "trimTrailingWhitespaces"))]
     pub trim_trailing_whitespaces: bool,
 
@@ -108,6 +127,9 @@ impl Default for LanguageOptions {
             brace_spacing: true,
             bracket_spacing: false,
             dash_spacing: DashSpacing::default(),
+            prefer_single_line: false,
+            flow_sequence_prefer_single_line: None,
+            flow_map_prefer_single_line: None,
             trim_trailing_whitespaces: true,
             trim_trailing_zero: false,
             ignore_comment_directive: "pretty-yaml-ignore".into(),

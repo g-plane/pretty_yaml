@@ -1,0 +1,17 @@
+[enabled]
+preferSingleLine = true
+
+[disabled]
+preferSingleLine = false
+
+[seq-enabled]
+"flowSequence.preferSingleLine" = true
+
+[seq-disabled]
+"flowSequence.preferSingleLine" = false
+
+[map-enabled]
+"flowMap.preferSingleLine" = true
+
+[map-disabled]
+"flowMap.preferSingleLine" = false
