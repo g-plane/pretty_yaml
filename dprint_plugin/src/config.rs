@@ -17,12 +17,6 @@ pub(crate) fn resolve_config(
                 global_config.line_width.unwrap_or(80),
                 &mut diagnostics,
             ) as usize,
-            use_tabs: get_value(
-                &mut config,
-                "useTabs",
-                global_config.use_tabs.unwrap_or_default(),
-                &mut diagnostics,
-            ),
             indent_width: get_value(
                 &mut config,
                 "indentWidth",

@@ -30,11 +30,7 @@ pub fn print_tree(root: &Root, options: &FormatOptions) -> String {
     print(
         &root.doc(&ctx),
         &PrintOptions {
-            indent_kind: if options.layout.use_tabs {
-                IndentKind::Tab
-            } else {
-                IndentKind::Space
-            },
+            indent_kind: IndentKind::Space,
             line_break: options.layout.line_break.clone().into(),
             width: options.layout.print_width,
             tab_size: options.layout.indent_width,

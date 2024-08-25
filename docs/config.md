@@ -9,16 +9,9 @@ The line width limitation that Pretty YAML should *(but not must)* avoid exceedi
 
 Default option is `80`.
 
-## `useTabs`
-
-Specify use space or tab for indentation.
-
-Default option is `false`.
-
 ## `indentWidth`
 
-Size of indentation. When enabled `useTabs`, this option may be disregarded,
-since only one tab will be inserted when indented once.
+Size of indentation.
 
 Default option is `2`. This can't be zero.
 

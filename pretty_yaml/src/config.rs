@@ -25,10 +25,6 @@ pub struct LayoutOptions {
     /// See [`printWidth`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#printwidth) on GitHub
     pub print_width: usize,
 
-    #[cfg_attr(feature = "config_serde", serde(alias = "useTabs"))]
-    /// See [`useTabs`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#usetabs) on GitHub
-    pub use_tabs: bool,
-
     #[cfg_attr(feature = "config_serde", serde(alias = "indentWidth"))]
     /// See [`indentWidth`](https://github.com/g-plane/pretty_yaml/blob/main/docs/config.md#indentwidth) on GitHub
     pub indent_width: usize,
@@ -45,7 +41,6 @@ impl Default for LayoutOptions {
     fn default() -> Self {
         Self {
             print_width: 80,
-            use_tabs: false,
             indent_width: 2,
             line_break: LineBreak::Lf,
         }

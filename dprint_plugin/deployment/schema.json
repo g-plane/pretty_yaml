@@ -11,13 +11,8 @@
       "default": 80,
       "minimum": 0
     },
-    "useTabs": {
-      "description": "Specify use space or tab for indentation.",
-      "type": "boolean",
-      "default": false
-    },
     "indentWidth": {
-      "description": "Size of indentation. When enabled `useTabs`, this option may be disregarded, since only one tab will be inserted when indented once.",
+      "description": "Size of indentation.",
       "type": "integer",
       "default": 2,
       "minimum": 0
