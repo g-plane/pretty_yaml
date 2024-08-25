@@ -149,6 +149,12 @@ pub enum Quotes {
     #[cfg_attr(feature = "config_serde", serde(alias = "preferSingle"))]
     /// Make string to single quoted unless it contains double quotes inside.
     PreferSingle,
+
+    #[cfg_attr(feature = "config_serde", serde(alias = "forceDouble"))]
+    ForceDouble,
+
+    #[cfg_attr(feature = "config_serde", serde(alias = "forceSingle"))]
+    ForceSingle,
 }
 
 #[derive(Clone, Debug, Default)]

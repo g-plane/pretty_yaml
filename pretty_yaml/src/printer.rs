@@ -337,11 +337,20 @@ impl DocGen for Flow {
             let text = text
                 .get(1..text.len() - 1)
                 .expect("expected double quoted scalar");
-            let is_double_preferred = matches!(ctx.options.quotes, Quotes::PreferDouble);
-            let (quotes_option, quote) = if is_double_preferred || text.contains('\\') {
+            let (quotes_option, quote) = if text.contains('\\') {
                 (None, "\"")
             } else {
-                (Some(&ctx.options.quotes), "'")
+                match &ctx.options.quotes {
+                    Quotes::PreferSingle => {
+                        if text.contains(['\'', '"']) {
+                            (None, "\"")
+                        } else {
+                            (Some(&ctx.options.quotes), "'")
+                        }
+                    }
+                    Quotes::PreferDouble | Quotes::ForceDouble => (None, "\""),
+                    Quotes::ForceSingle => (Some(&ctx.options.quotes), "'"),
+                }
             };
             docs.push(Doc::text(quote));
             format_quoted_scalar(text, quotes_option, &mut docs, ctx);
@@ -351,11 +360,20 @@ impl DocGen for Flow {
             let text = text
                 .get(1..text.len() - 1)
                 .expect("expected single quoted scalar");
-            let is_single_preferred = matches!(ctx.options.quotes, Quotes::PreferSingle);
-            let (quotes_option, quote) = if is_single_preferred || text.contains(['\\', '"']) {
+            let (quotes_option, quote) = if text.contains(['\\', '"']) {
                 (None, "'")
             } else {
-                (Some(&ctx.options.quotes), "\"")
+                match &ctx.options.quotes {
+                    Quotes::PreferDouble => {
+                        if text.contains(['\'', '"']) {
+                            (None, "'")
+                        } else {
+                            (Some(&ctx.options.quotes), "\"")
+                        }
+                    }
+                    Quotes::PreferSingle | Quotes::ForceSingle => (None, "'"),
+                    Quotes::ForceDouble => (Some(&ctx.options.quotes), "\""),
+                }
             };
             docs.push(Doc::text(quote));
             format_quoted_scalar(text, quotes_option, &mut docs, ctx);
@@ -1207,9 +1225,9 @@ fn format_quoted_scalar(
 }
 fn format_quoted_scalar_line(s: &str, quotes_option: Option<&Quotes>) -> String {
     match quotes_option {
-        Some(Quotes::PreferDouble) => s.replace("''", "'"),
-        Some(Quotes::PreferSingle) => s.replace('\'', "''"),
-        None => s.to_owned(),
+        Some(Quotes::ForceDouble) => s.replace("''", "'"),
+        Some(Quotes::ForceSingle) => s.replace('\'', "''"),
+        Some(Quotes::PreferDouble | Quotes::PreferSingle) | None => s.to_owned(),
     }
 }
 

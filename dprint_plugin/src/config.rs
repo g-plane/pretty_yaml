@@ -54,6 +54,8 @@ pub(crate) fn resolve_config(
             ) {
                 "preferDouble" => Quotes::PreferDouble,
                 "preferSingle" => Quotes::PreferSingle,
+                "forceDouble" => Quotes::ForceDouble,
+                "forceSingle" => Quotes::ForceSingle,
                 _ => {
                     diagnostics.push(ConfigurationDiagnostic {
                         property_name: "quotes".into(),

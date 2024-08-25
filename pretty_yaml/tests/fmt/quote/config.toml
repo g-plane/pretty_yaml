@@ -3,3 +3,9 @@ quotes = "preferDouble"
 
 [prefer-single]
 quotes = "preferSingle"
+
+[force-double]
+quotes = "forceDouble"
+
+[force-single]
+quotes = "forceSingle"

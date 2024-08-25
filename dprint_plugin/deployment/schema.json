@@ -36,10 +36,18 @@
       "oneOf": [
         {
           "const": "preferDouble",
-          "description": "Use double quotes as possible. However if there're escaped characters in strings, quotes will be kept as-is. (Recommended)"
+          "description": "Use double quotes as possible. However if there're quotes or escaped characters in strings, quotes will be kept as-is."
         },
         {
           "const": "preferSingle",
+          "description": "Use single quotes as possible. However if there're quotes or `\\` characters in strings, quotes will be kept as-is."
+        },
+        {
+          "const": "forceDouble",
+          "description": "Use double quotes as possible. However if there're escaped characters in strings, quotes will be kept as-is. (Recommended)"
+        },
+        {
+          "const": "forceSingle",
           "description": "Use single quotes as possible. However if there're `\\` char or `\"` char in strings, quotes will be kept as-is."
         }
       ],
