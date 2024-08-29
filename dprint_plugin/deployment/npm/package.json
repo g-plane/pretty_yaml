@@ -1,0 +1,20 @@
+{
+  "name": "dprint-plugin-yaml",
+  "description": "Pretty YAML as dprint plugin.",
+  "version": "0.5.0",
+  "author": "Pig Fang <g-plane@hotmail.com>",
+  "repository": "g-plane/pretty_yaml",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "dprint",
+    "dprint-plugin"
+  ],
+  "files": [
+    "*.wasm"
+  ],
+  "exports": {
+    "./plugin.wasm": "./plugin.wasm",
+    "./package.json": "./package.json"
+  }
+}
