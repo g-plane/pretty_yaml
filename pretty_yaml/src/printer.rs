@@ -1294,11 +1294,13 @@ fn parse_float(literal: &str) -> Option<(Range<usize>, Range<usize>)> {
     if let Some(mut rest) = s.strip_prefix(['e', 'E']) {
         fraction_end = literal.len() - s.len();
         rest = rest.strip_prefix(['+', '-']).unwrap_or(rest);
-        if !rest.chars().all(|c| c.is_ascii_digit()) {
-            return None;
-        }
+        s = rest.trim_start_matches(|c: char| c.is_ascii_digit());
     }
-    Some((int_start..int_end, fraction_start..fraction_end))
+    if s.is_empty() {
+        Some((int_start..int_end, fraction_start..fraction_end))
+    } else {
+        None
+    }
 }
 
 fn intersperse_lines(docs: &mut Vec<Doc<'static>>, mut lines: impl Iterator<Item = String>) {
