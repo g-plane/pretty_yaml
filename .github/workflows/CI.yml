@@ -43,6 +43,8 @@ jobs:
           echo `pwd`/mdbook >> $GITHUB_PATH
       - run: mdbook build docs
       - name: Deploy Production
-        run: netlify deploy --dir=docs/book --site=pretty-yaml --prod
+        run: |
+          npm i --location=global netlify-cli
+          netlify deploy --dir=docs/book --site=pretty-yaml --prod
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
