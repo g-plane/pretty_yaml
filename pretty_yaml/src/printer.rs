@@ -935,12 +935,10 @@ impl<'a> FlowCollectionFormatter<'a> {
             {
                 if self.prefer_single_line {
                     docs.push(self.space.clone());
+                } else if token.text().contains(['\n', '\r']) {
+                    docs.push(Doc::hard_line());
                 } else {
-                    if token.text().contains(['\n', '\r']) {
-                        docs.push(Doc::hard_line());
-                    } else {
-                        docs.push(self.space.clone());
-                    }
+                    docs.push(self.space.clone());
                 }
                 let mut trivia_docs = format_trivias_after_token(&token, ctx);
                 docs.append(&mut trivia_docs);
