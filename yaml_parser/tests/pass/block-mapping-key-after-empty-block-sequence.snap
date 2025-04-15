@@ -1,0 +1,49 @@
+---
+source: yaml_parser/tests/pass.rs
+---
+ROOT@0..44
+  DOCUMENT@0..43
+    BLOCK@0..43
+      BLOCK_MAP@0..43
+        BLOCK_MAP_ENTRY@0..43
+          BLOCK_MAP_KEY@0..1
+            FLOW@0..1
+              PLAIN_SCALAR@0..1 "a"
+          COLON@1..2 ":"
+          WHITESPACE@2..5 "\n  "
+          BLOCK_MAP_VALUE@5..43
+            BLOCK@5..43
+              BLOCK_MAP@5..43
+                BLOCK_MAP_ENTRY@5..38
+                  BLOCK_MAP_KEY@5..6
+                    FLOW@5..6
+                      PLAIN_SCALAR@5..6 "b"
+                  COLON@6..7 ":"
+                  WHITESPACE@7..12 "\n    "
+                  BLOCK_MAP_VALUE@12..38
+                    BLOCK@12..38
+                      BLOCK_MAP@12..38
+                        BLOCK_MAP_ENTRY@12..38
+                          BLOCK_MAP_KEY@12..19
+                            FLOW@12..19
+                              PLAIN_SCALAR@12..19 "aliases"
+                          COLON@19..20 ":"
+                          WHITESPACE@20..27 "\n      "
+                          BLOCK_MAP_VALUE@27..38
+                            BLOCK@27..38
+                              BLOCK_SEQ@27..38
+                                BLOCK_SEQ_ENTRY@27..30
+                                  MINUS@27..28 "-"
+                                  WHITESPACE@28..29 " "
+                                  FLOW@29..30
+                                    PLAIN_SCALAR@29..30 "a"
+                                WHITESPACE@30..37 "\n      "
+                                BLOCK_SEQ_ENTRY@37..38
+                                  MINUS@37..38 "-"
+                WHITESPACE@38..41 "\n  "
+                BLOCK_MAP_ENTRY@41..43
+                  BLOCK_MAP_KEY@41..42
+                    FLOW@41..42
+                      PLAIN_SCALAR@41..42 "c"
+                  COLON@42..43 ":"
+  WHITESPACE@43..44 "\n"

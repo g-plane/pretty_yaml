@@ -758,6 +758,7 @@ fn block_sequence(input: &mut Input) -> GreenResult {
 }
 
 fn block_sequence_entry(input: &mut Input) -> GreenResult {
+    let indent = input.state.indent;
     trace(
         "block_sequence_entry",
         (
@@ -765,7 +766,14 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
                 .context(StrContext::Expected(StrContextValue::CharLiteral('-'))),
             alt((
                 block_compact_collection,
-                (cmts_or_ws1.store_prev_indent().track_indent(), block).map(Some),
+                (
+                    terminated(
+                        cmts_or_ws1.store_prev_indent().track_indent(),
+                        verify_state(move |state| state.indent >= indent),
+                    ),
+                    block,
+                )
+                    .map(Some),
                 peek((opt(space1), opt(comment), alt((line_ending, eof)))).value(None),
             ))
             .set_state(|state| {
