@@ -375,6 +375,8 @@ fn plain_scalar_one_line(input: &mut Input) -> PResult<()> {
         )),
         plain_scalar_chars,
     )
+        .take()
+        .verify(|line: &str| line != "---")
         .void()
         .parse_next(input)
 }
