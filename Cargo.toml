@@ -2,6 +2,10 @@
 resolver = "2"
 members = ["dprint_plugin", "pretty_yaml", "yaml_parser"]
 
+[workspace.dependencies]
+insta = { version = "1.43", features = ["glob"] }
+rowan = "0.16"
+
 [profile.release]
 lto = true
 opt-level = "s"

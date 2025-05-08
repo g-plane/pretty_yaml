@@ -11,8 +11,8 @@ keywords = ["yaml", "parser"]
 exclude = ["/tests"]
 
 [dependencies]
-rowan = "0.15"
+rowan.workspace = true
 winnow = "0.7"
 
 [dev-dependencies]
-insta = { version = "1.39", features = ["glob"] }
+insta.workspace = true

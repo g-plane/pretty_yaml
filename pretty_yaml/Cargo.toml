@@ -10,13 +10,13 @@ keywords = ["yaml", "formatter"]
 exclude = ["/tests"]
 
 [dependencies]
-rowan = "0.15"
+rowan.workspace = true
 serde = { version = "1.0", features = ["derive"], optional = true }
 tiny_pretty = "0.2"
 yaml_parser = { version = "0.2", path = "../yaml_parser" }
 
 [dev-dependencies]
-insta = { version = "1.39", features = ["glob"] }
+insta.workspace = true
 similar-asserts = "1.5"
 toml = "0.8"
 
