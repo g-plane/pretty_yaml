@@ -25,7 +25,7 @@ After adding the dprint plugin, update your `dprint.json` and add configuration:
     // Pretty YAML config comes here
   },
   "plugins": [
-    "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.0.wasm"
+    "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.1.wasm"
   ]
 }
 ```

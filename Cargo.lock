@@ -59,7 +59,7 @@ dependencies = [
 
 [[package]]
 name = "dprint_plugin_yaml"
-version = "0.5.0"
+version = "0.5.1"
 dependencies = [
  "anyhow",
  "dprint-core",
@@ -160,7 +160,7 @@ checksum = "42f5e15c9953c5e4ccceeb2e7382a716482c34515315f7b03532b8b4e8393d2d"
 
 [[package]]
 name = "pretty_yaml"
-version = "0.5.0"
+version = "0.5.1"
 dependencies = [
  "insta",
  "rowan",
@@ -479,7 +479,7 @@ dependencies = [
 
 [[package]]
 name = "yaml_parser"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
  "insta",
  "rowan",
