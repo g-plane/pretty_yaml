@@ -1,11 +1,11 @@
 use super::{Input, State};
 use winnow::{
     combinator::trace,
-    error::{ErrMode, ErrorKind, ParserError},
-    Parser,
+    error::{ErrMode, ParserError},
+    ModalParser,
 };
 
-pub(super) fn verify_state<'s, E, F>(mut predicate: F) -> impl Parser<Input<'s>, (), E>
+pub(super) fn verify_state<'s, E, F>(mut predicate: F) -> impl ModalParser<Input<'s>, (), E>
 where
     E: ParserError<Input<'s>>,
     F: FnMut(&State) -> bool,
@@ -14,10 +14,7 @@ where
         if predicate(&input.state) {
             Ok(())
         } else {
-            Err(ErrMode::Backtrack(E::from_error_kind(
-                input,
-                ErrorKind::Verify,
-            )))
+            Err(ErrMode::Backtrack(E::from_input(input)))
         }
     })
 }

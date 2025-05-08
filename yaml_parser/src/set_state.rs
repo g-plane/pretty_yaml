@@ -1,6 +1,6 @@
 use super::{Input, State};
 use std::marker::PhantomData;
-use winnow::{PResult, Parser};
+use winnow::Parser;
 
 pub(super) struct SetState<'s, O, E, F, P>
 where
@@ -19,7 +19,7 @@ where
     F: FnMut(&mut State),
     P: Parser<Input<'s>, O, E>,
 {
-    fn parse_next(&mut self, input: &mut Input<'s>) -> PResult<O, E> {
+    fn parse_next(&mut self, input: &mut Input<'s>) -> Result<O, E> {
         let original_state = input.state.clone();
         (self.f)(&mut input.state);
         let result = self.parser.parse_next(input);

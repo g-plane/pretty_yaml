@@ -33,10 +33,10 @@ use winnow::{
         alt, cond, cut_err, dispatch, eof, fail, not, opt, peek, preceded, repeat, repeat_till,
         terminated, trace,
     },
-    error::{ContextError, StrContext, StrContextValue},
+    error::{ContextError, ModalResult, StrContext, StrContextValue},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
-    PResult, Parser,
+    ModalParser, Parser,
 };
 
 pub mod ast;
@@ -148,7 +148,7 @@ pub type SyntaxToken = rowan::SyntaxToken<YamlLanguage>;
 pub type SyntaxElement = rowan::SyntaxElement<YamlLanguage>;
 
 type GreenElement = NodeOrToken<GreenNode, GreenToken>;
-type GreenResult = PResult<GreenElement>;
+type GreenResult = ModalResult<GreenElement>;
 type Input<'s> = Stateful<&'s str, State>;
 
 fn tok(kind: SyntaxKind, text: &str) -> GreenElement {
@@ -362,7 +362,7 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
             .map(|text| tok(PLAIN_SCALAR, text))
     }
 }
-fn plain_scalar_one_line(input: &mut Input) -> PResult<()> {
+fn plain_scalar_one_line(input: &mut Input) -> ModalResult<()> {
     (
         alt((
             none_of(|c: char| c.is_ascii_whitespace() || is_indicator(c)),
@@ -380,7 +380,7 @@ fn plain_scalar_one_line(input: &mut Input) -> PResult<()> {
         .void()
         .parse_next(input)
 }
-fn plain_scalar_chars(input: &mut Input) -> PResult<()> {
+fn plain_scalar_chars(input: &mut Input) -> ModalResult<()> {
     let safe_in = matches!(
         input.state.bf_ctx,
         BlockFlowCtx::FlowIn | BlockFlowCtx::FlowKey
@@ -588,9 +588,9 @@ fn flow_map_entry_key(input: &mut Input) -> GreenResult {
 
 fn flow_collection_entries<'s, const END: char, Entry>(
     entry: Entry,
-) -> impl Parser<Input<'s>, Vec<GreenElement>, ContextError>
+) -> impl ModalParser<Input<'s>, Vec<GreenElement>, ContextError>
 where
-    Entry: Parser<Input<'s>, GreenElement, ContextError>,
+    Entry: ModalParser<Input<'s>, GreenElement, ContextError>,
 {
     repeat(
         0..,
@@ -714,7 +714,7 @@ fn block_scalar(input: &mut Input) -> GreenResult {
         })
         .parse_next(input)
 }
-fn indent_indicator(input: &mut Input) -> PResult<(GreenElement, usize)> {
+fn indent_indicator(input: &mut Input) -> ModalResult<(GreenElement, usize)> {
     one_of(|c: char| c.is_ascii_digit())
         .take()
         .try_map(|text: &str| {
@@ -800,7 +800,7 @@ fn block_sequence_entry(input: &mut Input) -> GreenResult {
 
 fn block_compact_collection(
     input: &mut Input,
-) -> PResult<Option<(Vec<GreenElement>, GreenElement)>> {
+) -> ModalResult<Option<(Vec<GreenElement>, GreenElement)>> {
     let original_state = input.state.clone();
     let result = (
         space_before_block_compact_collection.track_indent(),
@@ -960,7 +960,7 @@ fn block_map_implicit_key(input: &mut Input) -> GreenResult {
 
 fn block_collection_trailing_trivias<'s>(
     indent: usize,
-) -> impl Parser<Input<'s>, Vec<(GreenElement, GreenElement)>, ContextError> {
+) -> impl ModalParser<Input<'s>, Vec<(GreenElement, GreenElement)>, ContextError> {
     // 1. We don't use `verify_indent` or `state.prev_indent` because they were changed after
     //    the last entry. Comments and whitespaces will be parsed after each entry but they're
     //    discarded because there're no entries any more, but state is still changed.
@@ -970,7 +970,7 @@ fn block_collection_trailing_trivias<'s>(
 }
 
 fn block(input: &mut Input) -> GreenResult {
-    let mut bf_ctx = |input: &mut Input| -> PResult<_> { Ok(input.state.bf_ctx.clone()) };
+    let mut bf_ctx = |input: &mut Input| -> ModalResult<_> { Ok(input.state.bf_ctx.clone()) };
 
     trace(
         "block",
@@ -1184,7 +1184,7 @@ fn document_end(input: &mut Input) -> GreenResult {
     }
 }
 
-fn root(input: &mut Input) -> PResult<SyntaxNode> {
+fn root(input: &mut Input) -> ModalResult<SyntaxNode> {
     // `eof` parser is required because winnow will still try to parse the input even if it's empty,
     // but the validation of `directives_end` will fail since there's no input.
     repeat_till(0.., alt((cmt_or_ws, document)), eof)
@@ -1207,7 +1207,7 @@ fn space(input: &mut Input) -> GreenResult {
     Ok(tok(WHITESPACE, text))
 }
 /// Without tabs.
-fn linebreaks_or_spaces<'s>(input: &mut Input<'s>) -> PResult<&'s str> {
+fn linebreaks_or_spaces<'s>(input: &mut Input<'s>) -> ModalResult<&'s str> {
     take_while(1.., |c| c == ' ' || c == '\n' || c == '\r').parse_next(input)
 }
 fn ws(input: &mut Input) -> GreenResult {
@@ -1234,11 +1234,11 @@ fn cmt_or_ws(input: &mut Input) -> GreenResult {
     .parse_next(input)
 }
 /// Parse zero or more comments or whitespaces.
-fn cmts_or_ws0(input: &mut Input) -> PResult<Vec<GreenElement>> {
+fn cmts_or_ws0(input: &mut Input) -> ModalResult<Vec<GreenElement>> {
     repeat(0.., cmt_or_ws).parse_next(input)
 }
 /// Parse one or more comments or whitespaces.
-fn cmts_or_ws1(input: &mut Input) -> PResult<Vec<GreenElement>> {
+fn cmts_or_ws1(input: &mut Input) -> ModalResult<Vec<GreenElement>> {
     repeat(1.., cmt_or_ws).parse_next(input)
 }
 /// Parse one or more comments or whitespaces without updating state.
@@ -1254,15 +1254,15 @@ fn stateless_cmt_or_ws(input: &mut Input) -> GreenResult {
     .parse_next(input)
 }
 /// Parse zero or more comments or whitespaces without updating state.
-fn stateless_cmts_or_ws0(input: &mut Input) -> PResult<Vec<GreenElement>> {
+fn stateless_cmts_or_ws0(input: &mut Input) -> ModalResult<Vec<GreenElement>> {
     repeat(0.., stateless_cmt_or_ws).parse_next(input)
 }
 /// Parse one or more comments or whitespaces without updating state.
-fn stateless_cmts_or_ws1(input: &mut Input) -> PResult<Vec<GreenElement>> {
+fn stateless_cmts_or_ws1(input: &mut Input) -> ModalResult<Vec<GreenElement>> {
     repeat(1.., stateless_cmt_or_ws).parse_next(input)
 }
 /// Parse "s-separate" rule of YAML spec without updating state.
-fn stateless_separate(input: &mut Input) -> PResult<Vec<GreenElement>> {
+fn stateless_separate(input: &mut Input) -> ModalResult<Vec<GreenElement>> {
     if matches!(
         input.state.bf_ctx,
         BlockFlowCtx::FlowKey | BlockFlowCtx::BlockKey

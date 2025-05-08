@@ -1,15 +1,15 @@
 use super::Input;
 use std::marker::PhantomData;
 use winnow::{
-    combinator::Context,
-    error::{AddContext, ErrMode, ErrorKind, ParserError, StrContext},
-    PResult, Parser,
+    combinator::impls::Context,
+    error::{AddContext, ErrMode, ParserError, StrContext},
+    ModalParser, ModalResult, Parser,
 };
 
 pub(super) struct TrackIndent<'s, O, E, P>
 where
     E: ParserError<Input<'s>>,
-    P: Parser<Input<'s>, O, E>,
+    P: ModalParser<Input<'s>, O, E>,
 {
     parser: P,
     s: PhantomData<&'s ()>,
@@ -17,12 +17,12 @@ where
     e: PhantomData<E>,
 }
 
-impl<'s, O, E, P> Parser<Input<'s>, O, E> for TrackIndent<'s, O, E, P>
+impl<'s, O, E, P> Parser<Input<'s>, O, ErrMode<E>> for TrackIndent<'s, O, E, P>
 where
     E: ParserError<Input<'s>>,
-    P: Parser<Input<'s>, O, E>,
+    P: ModalParser<Input<'s>, O, E>,
 {
-    fn parse_next(&mut self, input: &mut Input<'s>) -> PResult<O, E> {
+    fn parse_next(&mut self, input: &mut Input<'s>) -> ModalResult<O, E> {
         let result = self.parser.parse_next(input);
         if result.is_ok() {
             input.state.tracked_indents |= 1 << input.state.indent;
@@ -34,7 +34,7 @@ where
 pub(super) struct VerifyIndent<'s, O, E, P>
 where
     E: ParserError<Input<'s>>,
-    P: Parser<Input<'s>, O, E>,
+    P: ModalParser<Input<'s>, O, E>,
 {
     parser: P,
     s: PhantomData<&'s ()>,
@@ -42,24 +42,21 @@ where
     e: PhantomData<E>,
 }
 
-impl<'s, O, E, P> Parser<Input<'s>, O, E> for VerifyIndent<'s, O, E, P>
+impl<'s, O, E, P> Parser<Input<'s>, O, ErrMode<E>> for VerifyIndent<'s, O, E, P>
 where
     E: ParserError<Input<'s>>,
-    P: Parser<Input<'s>, O, E>,
+    P: ModalParser<Input<'s>, O, E>,
 {
-    fn parse_next(&mut self, input: &mut Input<'s>) -> PResult<O, E> {
+    fn parse_next(&mut self, input: &mut Input<'s>) -> ModalResult<O, E> {
         let indent = input.state.indent;
         let output = self.parser.parse_next(input)?;
         if input.state.indent == indent || input.is_empty() {
             Ok(output)
         } else if input.state.tracked_indents & (1 << input.state.indent) == 0 {
-            Err(ErrMode::Cut(E::from_error_kind(input, ErrorKind::Verify)))
+            Err(ErrMode::Cut(E::from_input(input)))
         } else {
             input.state.tracked_indents -= 1 << indent;
-            Err(ErrMode::Backtrack(E::from_error_kind(
-                input,
-                ErrorKind::Verify,
-            )))
+            Err(ErrMode::Backtrack(E::from_input(input)))
         }
     }
 }
@@ -67,7 +64,7 @@ where
 pub(super) struct StorePrevIndent<'s, O, E, P>
 where
     E: ParserError<Input<'s>>,
-    P: Parser<Input<'s>, O, E>,
+    P: ModalParser<Input<'s>, O, E>,
 {
     parser: P,
     s: PhantomData<&'s ()>,
@@ -75,12 +72,12 @@ where
     e: PhantomData<E>,
 }
 
-impl<'s, O, E, P> Parser<Input<'s>, O, E> for StorePrevIndent<'s, O, E, P>
+impl<'s, O, E, P> Parser<Input<'s>, O, ErrMode<E>> for StorePrevIndent<'s, O, E, P>
 where
     E: ParserError<Input<'s>>,
-    P: Parser<Input<'s>, O, E>,
+    P: ModalParser<Input<'s>, O, E>,
 {
-    fn parse_next(&mut self, input: &mut Input<'s>) -> PResult<O, E> {
+    fn parse_next(&mut self, input: &mut Input<'s>) -> ModalResult<O, E> {
         let prev_indent = input.state.prev_indent;
         input.state.prev_indent = Some(input.state.indent);
         let result = self.parser.parse_next(input);
@@ -94,7 +91,7 @@ where
 pub(super) struct RequireDeeperIndent<'s, O, E, P>
 where
     E: ParserError<Input<'s>>,
-    P: Parser<Input<'s>, O, E>,
+    P: ModalParser<Input<'s>, O, E>,
 {
     parser: P,
     s: PhantomData<&'s ()>,
@@ -102,12 +99,12 @@ where
     e: PhantomData<E>,
 }
 
-impl<'s, O, E, P> Parser<Input<'s>, O, E> for RequireDeeperIndent<'s, O, E, P>
+impl<'s, O, E, P> Parser<Input<'s>, O, ErrMode<E>> for RequireDeeperIndent<'s, O, E, P>
 where
     E: ParserError<Input<'s>>,
-    P: Parser<Input<'s>, O, E>,
+    P: ModalParser<Input<'s>, O, E>,
 {
-    fn parse_next(&mut self, input: &mut Input<'s>) -> PResult<O, E> {
+    fn parse_next(&mut self, input: &mut Input<'s>) -> ModalResult<O, E> {
         if !input.state.document_top
             && input.state.last_ws_has_nl
             && input
@@ -115,10 +112,7 @@ where
                 .prev_indent
                 .is_some_and(|prev_indent| prev_indent >= input.state.indent)
         {
-            Err(ErrMode::Backtrack(E::from_error_kind(
-                input,
-                ErrorKind::Verify,
-            )))
+            Err(ErrMode::Backtrack(E::from_input(input)))
         } else {
             self.parser.parse_next(input)
         }
@@ -128,10 +122,12 @@ where
 pub(super) trait ParserExt<'s, O, E, P>
 where
     E: ParserError<Input<'s>> + AddContext<Input<'s>, StrContext>,
-    P: Parser<Input<'s>, O, E>,
+    P: ModalParser<Input<'s>, O, E>,
 {
     fn track_indent(self) -> TrackIndent<'s, O, E, P>;
-    fn verify_indent(self) -> Context<VerifyIndent<'s, O, E, P>, Input<'s>, O, E, StrContext>;
+    fn verify_indent(
+        self,
+    ) -> Context<VerifyIndent<'s, O, E, P>, Input<'s>, O, ErrMode<E>, StrContext>;
     fn store_prev_indent(self) -> StorePrevIndent<'s, O, E, P>;
     fn require_deeper_indent(self) -> RequireDeeperIndent<'s, O, E, P>;
 }
@@ -139,7 +135,7 @@ where
 impl<'s, O, E, P> ParserExt<'s, O, E, P> for P
 where
     E: ParserError<Input<'s>> + AddContext<Input<'s>, StrContext>,
-    P: Parser<Input<'s>, O, E>,
+    P: ModalParser<Input<'s>, O, E>,
 {
     fn track_indent(self) -> TrackIndent<'s, O, E, P> {
         TrackIndent {
@@ -150,7 +146,9 @@ where
         }
     }
 
-    fn verify_indent(self) -> Context<VerifyIndent<'s, O, E, P>, Input<'s>, O, E, StrContext> {
+    fn verify_indent(
+        self,
+    ) -> Context<VerifyIndent<'s, O, E, P>, Input<'s>, O, ErrMode<E>, StrContext> {
         VerifyIndent {
             parser: self,
             s: PhantomData,
