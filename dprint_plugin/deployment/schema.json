@@ -90,7 +90,8 @@
           "const": "indent",
           "description": "Insert spaces to align indentation, respecting `indentWidth` option."
         }
-      ]
+      ],
+      "default": "oneSpace"
     },
     "preferSingleLine": {
       "$ref": "#/definitions/preferSingleLine"
