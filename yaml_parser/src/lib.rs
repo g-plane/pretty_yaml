@@ -28,6 +28,7 @@ pub use self::error::SyntaxError;
 use self::{indent::ParserExt as _, set_state::ParserExt as _, verify_state::verify_state};
 use rowan::{GreenNode, GreenToken, NodeOrToken};
 use winnow::{
+    ModalParser, Parser,
     ascii::{digit1, line_ending, multispace1, space1, take_escaped, till_line_ending},
     combinator::{
         alt, cond, cut_err, dispatch, eof, fail, not, opt, peek, preceded, repeat, repeat_till,
@@ -36,7 +37,6 @@ use winnow::{
     error::{ContextError, ModalResult, StrContext, StrContextValue},
     stream::Stateful,
     token::{any, none_of, one_of, take_till, take_while},
-    ModalParser, Parser,
 };
 
 pub mod ast;

@@ -1,4 +1,4 @@
-use insta::{assert_snapshot, glob, Settings};
+use insta::{Settings, assert_snapshot, glob};
 use std::{fs, path::Path};
 
 #[test]

@@ -1,4 +1,4 @@
-use insta::{assert_snapshot, glob, Settings};
+use insta::{Settings, assert_snapshot, glob};
 use pretty_yaml::{config::FormatOptions, format_text};
 use std::{collections::HashMap, fs, path::Path};
 

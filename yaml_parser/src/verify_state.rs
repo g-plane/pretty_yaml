@@ -1,8 +1,8 @@
 use super::{Input, State};
 use winnow::{
+    ModalParser,
     combinator::trace,
     error::{ErrMode, ParserError},
-    ModalParser,
 };
 
 pub(super) fn verify_state<'s, E, F>(mut predicate: F) -> impl ModalParser<Input<'s>, (), E>

@@ -1,9 +1,9 @@
 use super::Input;
 use std::marker::PhantomData;
 use winnow::{
+    ModalParser, ModalResult, Parser,
     combinator::impls::Context,
     error::{AddContext, ErrMode, ParserError, StrContext},
-    ModalParser, ModalResult, Parser,
 };
 
 pub(super) struct TrackIndent<'s, O, E, P>

@@ -4,10 +4,10 @@ use crate::{
     config::FormatOptions,
     printer::{Ctx, DocGen},
 };
-use tiny_pretty::{print, IndentKind, PrintOptions};
+use tiny_pretty::{IndentKind, PrintOptions, print};
 use yaml_parser::{
-    ast::{AstNode, Root},
     SyntaxError,
+    ast::{AstNode, Root},
 };
 
 pub mod config;

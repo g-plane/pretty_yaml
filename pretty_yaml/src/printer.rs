@@ -2,7 +2,7 @@ use crate::config::{LanguageOptions, Quotes};
 use rowan::Direction;
 use std::ops::Range;
 use tiny_pretty::Doc;
-use yaml_parser::{ast::*, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken};
+use yaml_parser::{SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken, ast::*};
 
 pub(super) struct Ctx<'a> {
     pub indent_width: usize,
@@ -747,17 +747,15 @@ where
             .syntax()
             .children()
             .find(|node| node.kind() == SyntaxKind::FLOW)
-        {
-            if flow
+            && (flow
                 .children()
                 .any(|child| child.kind() == SyntaxKind::ALIAS)
                 // when there's only properties, we must add a space
                 || flow
                     .last_child_or_token()
-                    .is_some_and(|last| last.kind() == SyntaxKind::PROPERTIES)
-            {
-                docs.push(Doc::space());
-            }
+                    .is_some_and(|last| last.kind() == SyntaxKind::PROPERTIES))
+        {
+            docs.push(Doc::space());
         }
     }
 
