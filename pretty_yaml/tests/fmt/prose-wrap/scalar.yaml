@@ -1,0 +1,12 @@
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ullamcorper turpis. Curabitur facilisis ut libero a varius. Vivamus nec diam volutpat, semper augue a, semper sapien. Integer ornare ut.
+
+preserve-consecutive: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec     ac      ullamcorper      turpis. Curabitur facilisis ut libero a varius. Vivamus nec diam volutpat, semper augue a, semper sapien. Integer ornare ut.
+
+ignore-manual-breaks: Lorem ipsum dolor sit amet, consectetur
+    adipiscing elit.
+    Donec ac ullamcorper turpis. Curabitur facilisis ut libero a varius. Vivamus
+    nec diam volutpat, semper augue a, semper sapien. Integer ornare ut.
+
+# never wrap for block scalars
+block-scalar: |
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ullamcorper turpis. Curabitur facilisis ut libero a varius. Vivamus nec diam volutpat, semper augue a, semper sapien. Integer ornare ut.

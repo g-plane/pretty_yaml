@@ -113,6 +113,9 @@ pub struct LanguageOptions {
     #[cfg_attr(feature = "config_serde", serde(alias = "trimTrailingZero"))]
     pub trim_trailing_zero: bool,
 
+    #[cfg_attr(feature = "config_serde", serde(alias = "proseWrap"))]
+    pub prose_wrap: ProseWrap,
+
     #[cfg_attr(feature = "config_serde", serde(alias = "ignoreCommentDirective"))]
     pub ignore_comment_directive: String,
 }
@@ -132,6 +135,7 @@ impl Default for LanguageOptions {
             flow_map_prefer_single_line: None,
             trim_trailing_whitespaces: true,
             trim_trailing_zero: false,
+            prose_wrap: ProseWrap::default(),
             ignore_comment_directive: "pretty-yaml-ignore".into(),
         }
     }
@@ -165,4 +169,13 @@ pub enum DashSpacing {
     #[cfg_attr(feature = "config_serde", serde(alias = "oneSpace"))]
     OneSpace,
     Indent,
+}
+
+#[derive(Clone, Debug, Default)]
+#[cfg_attr(feature = "config_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "config_serde", serde(rename_all = "kebab-case"))]
+pub enum ProseWrap {
+    #[default]
+    Preserve,
+    Always,
 }

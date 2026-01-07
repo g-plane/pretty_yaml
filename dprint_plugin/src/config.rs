@@ -108,6 +108,22 @@ pub(crate) fn resolve_config(
                 &mut diagnostics,
             ),
             trim_trailing_zero: get_value(&mut config, "trimTrailingZero", false, &mut diagnostics),
+            prose_wrap: match &*get_value(
+                &mut config,
+                "proseWrap",
+                "preserve".to_string(),
+                &mut diagnostics,
+            ) {
+                "preserve" => ProseWrap::Preserve,
+                "always" => ProseWrap::Always,
+                _ => {
+                    diagnostics.push(ConfigurationDiagnostic {
+                        property_name: "proseWrap".into(),
+                        message: "invalid value for config `proseWrap`".into(),
+                    });
+                    ProseWrap::default()
+                }
+            },
             ignore_comment_directive: get_value(
                 &mut config,
                 "ignoreCommentDirective",

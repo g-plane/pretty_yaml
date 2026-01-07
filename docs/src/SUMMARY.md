@@ -14,4 +14,5 @@
   - [preferSingleLine](./config/prefer-single-line.md)
   - [trimTrailingWhitespaces](./config/trim-trailing-whitespaces.md)
   - [trimTrailingZero](./config/trim-trailing-zero.md)
+  - [proseWrap](./config/prose-wrap.md)
   - [ignoreCommentDirective](./config/ignore-comment-directive.md)

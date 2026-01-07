@@ -1,8 +1,9 @@
-use crate::config::{LanguageOptions, Quotes};
+use crate::config::{LanguageOptions, ProseWrap, Quotes};
 use rowan::{
     Direction,
     ast::{AstChildren, AstNode},
 };
+use std::mem;
 use std::ops::Range;
 use tiny_pretty::Doc;
 use yaml_parser::{SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken, YamlLanguage, ast::*};
@@ -165,7 +166,7 @@ impl DocGen for BlockScalar {
                                     }
                                 });
                                 let mut docs = vec![];
-                                intersperse_lines(&mut docs, lines);
+                                intersperse_lines(&mut docs, lines, ProseWrap::Preserve, ctx);
                                 if node
                                     .parent()
                                     .and_then(|parent| parent.parent())
@@ -417,7 +418,7 @@ impl DocGen for Flow {
                     }
                 }
                 let lines = token_text.lines().map(|s| s.trim().to_owned());
-                intersperse_lines(&mut docs, lines);
+                intersperse_lines(&mut docs, lines, ctx.options.prose_wrap.clone(), ctx);
             }
         } else if let Some(flow_seq) = self.flow_seq() {
             docs.push(flow_seq.doc(ctx));
@@ -1312,9 +1313,35 @@ fn parse_float(literal: &str) -> Option<(Range<usize>, Range<usize>)> {
     }
 }
 
-fn intersperse_lines(docs: &mut Vec<Doc<'static>>, mut lines: impl Iterator<Item = String>) {
+fn intersperse_lines(
+    docs: &mut Vec<Doc<'static>>,
+    mut lines: impl Iterator<Item = String>,
+    prose_wrap: ProseWrap,
+    ctx: &Ctx,
+) {
     if let Some(line) = lines.next() {
-        docs.push(Doc::text(line));
+        match prose_wrap {
+            ProseWrap::Preserve => {
+                docs.push(Doc::text(line));
+            }
+            ProseWrap::Always => {
+                let mut piece = String::new();
+                let mut chars = line.chars().peekable();
+                while let Some(c) = chars.next() {
+                    if c == ' ' && chars.peek().is_some_and(|next| !next.is_ascii_whitespace()) {
+                        docs.extend_from_slice(&[
+                            Doc::text(mem::take(&mut piece)),
+                            Doc::soft_line().nest(ctx.indent_width),
+                        ]);
+                    } else {
+                        piece.push(c);
+                    }
+                }
+                if !piece.is_empty() {
+                    docs.push(Doc::text(piece));
+                }
+            }
+        }
     }
     for line in lines {
         if line.is_empty() {

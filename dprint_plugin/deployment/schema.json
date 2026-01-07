@@ -112,6 +112,21 @@
       "type": "boolean",
       "default": false
     },
+    "proseWrap": {
+      "description": "Control whether to wrap prose in plain scalars when they exceed the print width.",
+      "type": "string",
+      "oneOf": [
+        {
+          "const": "preserve",
+          "description": "Don't change how prose is wrapped."
+        },
+        {
+          "const": "always",
+          "description": "Wrap prose if it exceeds the print width."
+        }
+      ],
+      "default": "preserve"
+    },
     "ignoreCommentDirective": {
       "description": "Text directive for ignoring formatting specific content.",
       "type": "string",
