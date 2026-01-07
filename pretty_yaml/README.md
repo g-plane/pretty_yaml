@@ -30,7 +30,8 @@ you can use [`print_tree`] to print it.
 
 ```rust
 use pretty_yaml::{config::FormatOptions, print_tree};
-use yaml_parser::{ast::{AstNode, Root}, parse};
+use rowan::ast::AstNode;
+use yaml_parser::{ast::Root, parse};
 
 let input = "-  a\n-     b";
 let tree = parse(input).unwrap();

@@ -16,7 +16,8 @@
 //! To build AST from CST:
 //!
 //! ```
-//! use yaml_parser::{ast::{AstNode, Root}, parse};
+//! use rowan::ast::AstNode;
+//! use yaml_parser::{ast::Root, parse};
 //!
 //! let code = "";
 //! let tree = parse(code).unwrap();

@@ -1,78 +1,10 @@
 //! Abstract Syntax Tree, layered on top of untyped `SyntaxNode`s.
 
 use super::{SyntaxKind, SyntaxNode, SyntaxToken, YamlLanguage};
-use rowan::SyntaxNodeChildren;
-use std::marker::PhantomData;
-
-// --------------- Code below are copied from rust-analyzer ----------------
-
-/// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
-/// conversion itself has zero runtime cost: ast and syntax nodes have exactly
-/// the same representation: a pointer to the tree root and a pointer to the
-/// node itself.
-pub trait AstNode {
-    fn can_cast(kind: SyntaxKind) -> bool
-    where
-        Self: Sized;
-
-    fn cast(syntax: SyntaxNode) -> Option<Self>
-    where
-        Self: Sized;
-
-    fn syntax(&self) -> &SyntaxNode;
-    fn clone_for_update(&self) -> Self
-    where
-        Self: Sized,
-    {
-        Self::cast(self.syntax().clone_for_update()).unwrap()
-    }
-    fn clone_subtree(&self) -> Self
-    where
-        Self: Sized,
-    {
-        Self::cast(self.syntax().clone_subtree()).unwrap()
-    }
-}
-
-/// An iterator over `SyntaxNode` children of a particular AST type.
-#[derive(Debug, Clone)]
-pub struct AstChildren<N> {
-    inner: SyntaxNodeChildren<YamlLanguage>,
-    ph: PhantomData<N>,
-}
-
-impl<N> AstChildren<N> {
-    fn new(parent: &SyntaxNode) -> Self {
-        AstChildren {
-            inner: parent.children(),
-            ph: PhantomData,
-        }
-    }
-}
-
-impl<N: AstNode> Iterator for AstChildren<N> {
-    type Item = N;
-    fn next(&mut self) -> Option<N> {
-        self.inner.find_map(N::cast)
-    }
-}
-
-fn child<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
-    parent.children().find_map(N::cast)
-}
-
-fn children<N: AstNode>(parent: &SyntaxNode) -> AstChildren<N> {
-    AstChildren::new(parent)
-}
-
-fn token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
-    parent
-        .children_with_tokens()
-        .filter_map(|it| it.into_token())
-        .find(|it| it.kind() == kind)
-}
-
-// -------------------------------------------------------------------------
+use rowan::ast::{
+    AstChildren, AstNode,
+    support::{child, children, token},
+};
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 /// Syntax for `&anchor` and/or `!!tag`.
@@ -88,6 +20,7 @@ impl Properties {
     }
 }
 impl AstNode for Properties {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::PROPERTIES
     }
@@ -120,6 +53,7 @@ impl TagProperty {
     }
 }
 impl AstNode for TagProperty {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::TAG_PROPERTY
     }
@@ -152,6 +86,7 @@ impl TagHandle {
     }
 }
 impl AstNode for TagHandle {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::TAG_HANDLE
     }
@@ -181,6 +116,7 @@ impl ShorthandTag {
     }
 }
 impl AstNode for ShorthandTag {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::SHORTHAND_TAG
     }
@@ -207,6 +143,7 @@ impl NonSpecificTag {
     }
 }
 impl AstNode for NonSpecificTag {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::NON_SPECIFIC_TAG
     }
@@ -236,6 +173,7 @@ impl AnchorProperty {
     }
 }
 impl AstNode for AnchorProperty {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::ANCHOR_PROPERTY
     }
@@ -265,6 +203,7 @@ impl Alias {
     }
 }
 impl AstNode for Alias {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::ALIAS
     }
@@ -297,6 +236,7 @@ impl FlowSeq {
     }
 }
 impl AstNode for FlowSeq {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::FLOW_SEQ
     }
@@ -323,6 +263,7 @@ impl FlowSeqEntries {
     }
 }
 impl AstNode for FlowSeqEntries {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::FLOW_SEQ_ENTRIES
     }
@@ -352,6 +293,7 @@ impl FlowSeqEntry {
     }
 }
 impl AstNode for FlowSeqEntry {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::FLOW_SEQ_ENTRY
     }
@@ -384,6 +326,7 @@ impl FlowMap {
     }
 }
 impl AstNode for FlowMap {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::FLOW_MAP
     }
@@ -410,6 +353,7 @@ impl FlowMapEntries {
     }
 }
 impl AstNode for FlowMapEntries {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::FLOW_MAP_ENTRIES
     }
@@ -442,6 +386,7 @@ impl FlowMapEntry {
     }
 }
 impl AstNode for FlowMapEntry {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::FLOW_MAP_ENTRY
     }
@@ -471,6 +416,7 @@ impl FlowMapKey {
     }
 }
 impl AstNode for FlowMapKey {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::FLOW_MAP_KEY
     }
@@ -497,6 +443,7 @@ impl FlowMapValue {
     }
 }
 impl AstNode for FlowMapValue {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::FLOW_MAP_VALUE
     }
@@ -529,6 +476,7 @@ impl FlowPair {
     }
 }
 impl AstNode for FlowPair {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::FLOW_PAIR
     }
@@ -573,6 +521,7 @@ impl Flow {
     }
 }
 impl AstNode for Flow {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::FLOW
     }
@@ -608,6 +557,7 @@ impl ChompingIndicator {
     }
 }
 impl AstNode for ChompingIndicator {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::CHOMPING_INDICATOR
     }
@@ -652,6 +602,7 @@ impl BlockScalar {
     }
 }
 impl AstNode for BlockScalar {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::BLOCK_SCALAR
     }
@@ -682,6 +633,7 @@ impl BlockSeq {
     }
 }
 impl AstNode for BlockSeq {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::BLOCK_SEQ
     }
@@ -714,6 +666,7 @@ impl BlockSeqEntry {
     }
 }
 impl AstNode for BlockSeqEntry {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::BLOCK_SEQ_ENTRY
     }
@@ -744,6 +697,7 @@ impl BlockMap {
     }
 }
 impl AstNode for BlockMap {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::BLOCK_MAP
     }
@@ -776,6 +730,7 @@ impl BlockMapEntry {
     }
 }
 impl AstNode for BlockMapEntry {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::BLOCK_MAP_ENTRY
     }
@@ -808,6 +763,7 @@ impl BlockMapKey {
     }
 }
 impl AstNode for BlockMapKey {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::BLOCK_MAP_KEY
     }
@@ -837,6 +793,7 @@ impl BlockMapValue {
     }
 }
 impl AstNode for BlockMapValue {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::BLOCK_MAP_VALUE
     }
@@ -872,6 +829,7 @@ impl Block {
     }
 }
 impl AstNode for Block {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::BLOCK
     }
@@ -901,6 +859,7 @@ impl YamlDirective {
     }
 }
 impl AstNode for YamlDirective {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::YAML_DIRECTIVE
     }
@@ -933,6 +892,7 @@ impl TagDirective {
     }
 }
 impl AstNode for TagDirective {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::TAG_DIRECTIVE
     }
@@ -962,6 +922,7 @@ impl ReservedDirective {
     }
 }
 impl AstNode for ReservedDirective {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::RESERVED_DIRECTIVE
     }
@@ -997,6 +958,7 @@ impl Directive {
     }
 }
 impl AstNode for Directive {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::DIRECTIVE
     }
@@ -1035,6 +997,7 @@ impl Document {
     }
 }
 impl AstNode for Document {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::DOCUMENT
     }
@@ -1061,6 +1024,7 @@ impl Root {
     }
 }
 impl AstNode for Root {
+    type Language = YamlLanguage;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == SyntaxKind::ROOT
     }

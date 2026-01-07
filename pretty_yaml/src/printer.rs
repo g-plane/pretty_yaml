@@ -1,8 +1,11 @@
 use crate::config::{LanguageOptions, Quotes};
-use rowan::Direction;
+use rowan::{
+    Direction,
+    ast::{AstChildren, AstNode},
+};
 use std::ops::Range;
 use tiny_pretty::Doc;
-use yaml_parser::{SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken, ast::*};
+use yaml_parser::{SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken, YamlLanguage, ast::*};
 
 pub(super) struct Ctx<'a> {
     pub indent_width: usize,
@@ -639,8 +642,8 @@ fn format_key<K, C>(
     ctx: &Ctx,
 ) -> Doc<'static>
 where
-    K: AstNode,
-    C: AstNode + DocGen,
+    K: AstNode<Language = YamlLanguage>,
+    C: AstNode<Language = YamlLanguage> + DocGen,
 {
     let mut docs = Vec::with_capacity(1);
 
@@ -720,8 +723,8 @@ fn format_key_value_pair<K, V>(
     ctx: &Ctx,
 ) -> Doc<'static>
 where
-    K: AstNode + DocGen,
-    V: AstNode + DocGen,
+    K: AstNode<Language = YamlLanguage> + DocGen,
+    V: AstNode<Language = YamlLanguage> + DocGen,
 {
     let mut docs = Vec::with_capacity(4);
 
@@ -1003,8 +1006,8 @@ fn format_flow_collection_entries<N, Entry>(
     ctx: &Ctx,
 ) -> Doc<'static>
 where
-    N: AstNode,
-    Entry: AstNode + DocGen,
+    N: AstNode<Language = YamlLanguage>,
+    Entry: AstNode<Language = YamlLanguage> + DocGen,
 {
     let mut docs = vec![];
     let mut entries = entries.peekable();
@@ -1063,8 +1066,8 @@ fn format_line_break_separated_list<N, Item, const SKIP_SIDE_WS: bool>(
     ctx: &Ctx,
 ) -> Vec<Doc<'static>>
 where
-    N: AstNode,
-    Item: AstNode + DocGen,
+    N: AstNode<Language = YamlLanguage>,
+    Item: AstNode<Language = YamlLanguage> + DocGen,
 {
     let mut docs = Vec::with_capacity(2);
 

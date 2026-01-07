@@ -20,6 +20,8 @@ For consuming the tree, see [rowan's docs](https://docs.rs/rowan).
 If you need to build AST from CST, use `ast` module:
 
 ```rust
+use rowan::ast::AstNode;
+
 let root = yaml_parser::ast::Root::cast(tree).unwrap();
 dbg!(root);
 ```

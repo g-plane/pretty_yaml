@@ -4,11 +4,9 @@ use crate::{
     config::FormatOptions,
     printer::{Ctx, DocGen},
 };
+use rowan::ast::AstNode;
 use tiny_pretty::{IndentKind, PrintOptions, print};
-use yaml_parser::{
-    SyntaxError,
-    ast::{AstNode, Root},
-};
+use yaml_parser::{SyntaxError, ast::Root};
 
 pub mod config;
 mod printer;
