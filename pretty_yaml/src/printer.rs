@@ -126,9 +126,9 @@ impl DocGen for BlockMapValue {
 
 impl DocGen for BlockScalar {
     fn doc(&self, ctx: &Ctx) -> Doc<'static> {
+        let node = self.syntax();
         Doc::list(
-            self.syntax()
-                .children_with_tokens()
+            node.children_with_tokens()
                 .map(|element| match element {
                     SyntaxElement::Token(token) => match token.kind() {
                         SyntaxKind::WHITESPACE => Doc::nil(),
@@ -166,7 +166,17 @@ impl DocGen for BlockScalar {
                                 });
                                 let mut docs = vec![];
                                 intersperse_lines(&mut docs, lines);
-                                Doc::list(docs).nest(ctx.indent_width)
+                                if node
+                                    .parent()
+                                    .and_then(|parent| parent.parent())
+                                    .is_some_and(|grand| {
+                                        grand.kind() == SyntaxKind::BLOCK_SEQ_ENTRY
+                                    })
+                                {
+                                    Doc::list(docs)
+                                } else {
+                                    Doc::list(docs).nest(ctx.indent_width)
+                                }
                             } else {
                                 Doc::nil()
                             }

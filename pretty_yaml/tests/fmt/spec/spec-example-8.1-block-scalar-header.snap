@@ -2,11 +2,11 @@
 source: pretty_yaml/tests/fmt.rs
 ---
 - | # Empty header↓
-    literal
+  literal
 - >1 # Indentation indicator↓
   folded
 - |+ # Chomping indicator↓
-    keep
+  keep
 
 - >1- # Both indicators↓
   strip

@@ -5,5 +5,5 @@ source: pretty_yaml/tests/fmt.rs
 - "double quoted"
 - "single quoted"
 - >
-    block
+  block
 - plain again

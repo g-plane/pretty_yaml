@@ -2,6 +2,6 @@
 source: pretty_yaml/tests/fmt.rs
 ---
 - |
-    x
+  x
 - foo: bar
 - - 42

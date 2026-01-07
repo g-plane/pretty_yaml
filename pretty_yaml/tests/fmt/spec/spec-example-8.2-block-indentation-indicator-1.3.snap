@@ -2,12 +2,12 @@
 source: pretty_yaml/tests/fmt.rs
 ---
 - |
-    detected
+  detected
 - >
 
 
-    # detected
+  # detected
 - |1
   explicit
 - >
-    detected
+  detected
