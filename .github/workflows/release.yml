@@ -14,7 +14,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 2
       - run: rustup target add wasm32-unknown-unknown
@@ -22,7 +22,7 @@ jobs:
           cargo build --release -p dprint_plugin_yaml --target wasm32-unknown-unknown
           cp target/wasm32-unknown-unknown/release/dprint_plugin_yaml.wasm dprint_plugin/deployment/plugin.wasm
       - name: Publish dprint plugin
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2.4.2
         with:
           files: |
             dprint_plugin/deployment/plugin.wasm
