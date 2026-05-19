@@ -5,15 +5,22 @@
   "author": "Pig Fang <g-plane@hotmail.com>",
   "repository": "g-plane/pretty_yaml",
   "license": "MIT",
-  "type": "module",
   "keywords": [
     "dprint",
     "dprint-plugin"
   ],
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "files": [
+    "index.js",
+    "index.d.ts",
     "*.wasm"
   ],
   "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
     "./plugin.wasm": "./plugin.wasm",
     "./package.json": "./package.json"
   }
