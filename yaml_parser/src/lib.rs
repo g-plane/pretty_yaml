@@ -364,11 +364,21 @@ fn plain_scalar(input: &mut Input) -> GreenResult {
     }
 }
 fn plain_scalar_one_line(input: &mut Input) -> ModalResult<()> {
+    let safe_in = matches!(
+        input.state.bf_ctx,
+        BlockFlowCtx::FlowIn | BlockFlowCtx::FlowKey
+    );
     (
         alt((
             none_of(|c: char| c.is_ascii_whitespace() || is_indicator(c)),
             terminated(
-                one_of(['-', ':', '?']),
+                '-',
+                peek(none_of(move |c: char| {
+                    c.is_ascii_whitespace() || safe_in && is_flow_indicator(c)
+                })),
+            ),
+            terminated(
+                one_of([':', '?']),
                 peek(none_of(|c: char| {
                     c.is_ascii_whitespace() || is_flow_indicator(c)
                 })),

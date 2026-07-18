@@ -1,10 +1,10 @@
 ---
 source: yaml_parser/tests/pass.rs
 ---
-ROOT@0..148
-  DOCUMENT@0..147
-    BLOCK@0..147
-      BLOCK_MAP@0..147
+ROOT@0..202
+  DOCUMENT@0..201
+    BLOCK@0..201
+      BLOCK_MAP@0..201
         BLOCK_MAP_ENTRY@0..89
           BLOCK_MAP_KEY@0..4
             FLOW@0..4
@@ -44,4 +44,24 @@ ROOT@0..148
           BLOCK_MAP_VALUE@143..147
             FLOW@143..147
               PLAIN_SCALAR@143..147 "-foo"
-  WHITESPACE@147..148 "\n"
+        WHITESPACE@147..148 "\n"
+        BLOCK_MAP_ENTRY@148..175
+          BLOCK_MAP_KEY@148..167
+            FLOW@148..167
+              PLAIN_SCALAR@148..167 "dash before bracket"
+          COLON@167..168 ":"
+          WHITESPACE@168..169 " "
+          BLOCK_MAP_VALUE@169..175
+            FLOW@169..175
+              PLAIN_SCALAR@169..175 "-[foo]"
+        WHITESPACE@175..176 "\n"
+        BLOCK_MAP_ENTRY@176..201
+          BLOCK_MAP_KEY@176..193
+            FLOW@176..193
+              PLAIN_SCALAR@176..193 "dash before brace"
+          COLON@193..194 ":"
+          WHITESPACE@194..195 " "
+          BLOCK_MAP_VALUE@195..201
+            FLOW@195..201
+              PLAIN_SCALAR@195..201 "-{foo}"
+  WHITESPACE@201..202 "\n"
