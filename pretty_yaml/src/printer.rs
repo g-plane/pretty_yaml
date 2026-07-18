@@ -1098,23 +1098,23 @@ where
                 SyntaxKind::COMMENT => {
                     docs.push(format_comment(&token, ctx));
                 }
-                SyntaxKind::WHITESPACE => {
-                    if !SKIP_SIDE_WS || token.index() > 0 && children.peek().is_some() {
-                        match token.text().chars().filter(|c| *c == '\n').count() {
-                            0 => {
-                                if prev_kind == SyntaxKind::COMMENT {
-                                    docs.push(Doc::hard_line());
-                                } else {
-                                    docs.push(Doc::space());
-                                }
-                            }
-                            1 => {
+                SyntaxKind::WHITESPACE
+                    if !SKIP_SIDE_WS || token.index() > 0 && children.peek().is_some() =>
+                {
+                    match token.text().chars().filter(|c| *c == '\n').count() {
+                        0 => {
+                            if prev_kind == SyntaxKind::COMMENT {
                                 docs.push(Doc::hard_line());
+                            } else {
+                                docs.push(Doc::space());
                             }
-                            _ => {
-                                docs.push(Doc::empty_line());
-                                docs.push(Doc::hard_line());
-                            }
+                        }
+                        1 => {
+                            docs.push(Doc::hard_line());
+                        }
+                        _ => {
+                            docs.push(Doc::empty_line());
+                            docs.push(Doc::hard_line());
                         }
                     }
                 }
