@@ -12,7 +12,7 @@ exclude = ["/tests"]
 
 [dependencies]
 rowan.workspace = true
-winnow = "0.7"
+winnow = "1.0"
 
 [dev-dependencies]
 insta.workspace = true
