@@ -1,13 +1,16 @@
-use dprint_core::configuration::{
-    get_nullable_value, get_unknown_property_diagnostics, get_value, ConfigKeyMap,
-    ConfigurationDiagnostic, GlobalConfiguration, NewLineKind, ResolveConfigurationResult,
+use dprint_core::{
+    configuration::{
+        get_nullable_value, get_unknown_property_diagnostics, get_value, ConfigKeyMap,
+        ConfigurationDiagnostic, GlobalConfiguration, NewLineKind,
+    },
+    plugins::{FileMatchingInfo, PluginResolveConfigurationResult},
 };
 use pretty_yaml::config::*;
 
 pub(crate) fn resolve_config(
     mut config: ConfigKeyMap,
     global_config: &GlobalConfiguration,
-) -> ResolveConfigurationResult<FormatOptions> {
+) -> PluginResolveConfigurationResult<FormatOptions> {
     let mut diagnostics = Vec::new();
     let pretty_yaml_config = FormatOptions {
         layout: LayoutOptions {
@@ -135,8 +138,12 @@ pub(crate) fn resolve_config(
 
     diagnostics.extend(get_unknown_property_diagnostics(config));
 
-    ResolveConfigurationResult {
+    PluginResolveConfigurationResult {
         config: pretty_yaml_config,
         diagnostics,
+        file_matching: FileMatchingInfo {
+            file_extensions: ["yaml", "yml"].into_iter().map(String::from).collect(),
+            file_names: vec![],
+        },
     }
 }

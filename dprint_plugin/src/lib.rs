@@ -1,42 +1,32 @@
 use crate::config::resolve_config;
 use anyhow::Result;
-#[cfg(target_arch = "wasm32")]
-use dprint_core::generate_plugin_code;
 use dprint_core::{
-    configuration::{ConfigKeyMap, GlobalConfiguration, ResolveConfigurationResult},
-    plugins::{FileMatchingInfo, PluginInfo, SyncPluginHandler, SyncPluginInfo},
+    configuration::{ConfigKeyMap, GlobalConfiguration},
+    plugins::{
+        CheckConfigUpdatesMessage, ConfigChange, FormatError, FormatResult, PluginInfo,
+        PluginResolveConfigurationResult, SyncFormatRequest, SyncHostFormatRequest,
+        SyncPluginHandler,
+    },
 };
 use pretty_yaml::{config::FormatOptions, format_text};
-use std::path::Path;
 
 mod config;
-
-#[cfg(target_arch = "wasm32")]
-type Configuration = FormatOptions;
 
 pub struct PrettyYamlPluginHandler;
 
 impl SyncPluginHandler<FormatOptions> for PrettyYamlPluginHandler {
-    fn plugin_info(&mut self) -> SyncPluginInfo {
+    fn plugin_info(&mut self) -> PluginInfo {
         let version = env!("CARGO_PKG_VERSION").to_string();
-        SyncPluginInfo {
-            info: PluginInfo {
-                name: env!("CARGO_PKG_NAME").into(),
-                version: version.clone(),
-                config_key: "yaml".into(),
-                help_url: "https://github.com/g-plane/pretty_yaml".into(),
-                config_schema_url: format!(
-                    "https://plugins.dprint.dev/g-plane/pretty_yaml/v{}/schema.json",
-                    version
-                ),
-                update_url: Some(
-                    "https://plugins.dprint.dev/g-plane/pretty_yaml/latest.json".into(),
-                ),
-            },
-            file_matching: FileMatchingInfo {
-                file_extensions: ["yaml", "yml"].into_iter().map(String::from).collect(),
-                file_names: vec![],
-            },
+        PluginInfo {
+            name: env!("CARGO_PKG_NAME").into(),
+            version: version.clone(),
+            config_key: "yaml".into(),
+            help_url: "https://github.com/g-plane/pretty_yaml".into(),
+            config_schema_url: format!(
+                "https://plugins.dprint.dev/g-plane/pretty_yaml/v{}/schema.json",
+                version
+            ),
+            update_url: Some("https://plugins.dprint.dev/g-plane/pretty_yaml/latest.json".into()),
         }
     }
 
@@ -48,24 +38,33 @@ impl SyncPluginHandler<FormatOptions> for PrettyYamlPluginHandler {
         &mut self,
         config: ConfigKeyMap,
         global_config: &GlobalConfiguration,
-    ) -> ResolveConfigurationResult<FormatOptions> {
+    ) -> PluginResolveConfigurationResult<FormatOptions> {
         resolve_config(config, global_config)
+    }
+
+    fn check_config_updates(
+        &self,
+        _: CheckConfigUpdatesMessage,
+    ) -> Result<Vec<ConfigChange>, FormatError> {
+        Ok(Vec::new())
     }
 
     fn format(
         &mut self,
-        _: &Path,
-        file_text: Vec<u8>,
-        config: &FormatOptions,
-        _: impl FnMut(&Path, Vec<u8>, &ConfigKeyMap) -> Result<Option<Vec<u8>>>,
-    ) -> Result<Option<Vec<u8>>> {
-        let format_result = format_text(std::str::from_utf8(&file_text)?, config);
+        request: SyncFormatRequest<FormatOptions>,
+        _: impl FnMut(SyncHostFormatRequest) -> FormatResult,
+    ) -> FormatResult {
+        let format_result = format_text(std::str::from_utf8(&request.file_bytes)?, request.config);
         match format_result {
             Ok(code) => Ok(Some(code.into_bytes())),
-            Err(err) => Err(err.into()),
+            Err(err) => Err(FormatError::new(err)),
         }
     }
 }
 
 #[cfg(target_arch = "wasm32")]
-generate_plugin_code!(PrettyYamlPluginHandler, PrettyYamlPluginHandler);
+dprint_core::generate_plugin_code!(
+    PrettyYamlPluginHandler,
+    PrettyYamlPluginHandler,
+    FormatOptions
+);
